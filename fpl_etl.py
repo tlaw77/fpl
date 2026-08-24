@@ -10,9 +10,16 @@ BASE = "https://fantasy.premierleague.com/api"
 
 
 def get_json(url):
-    req = urllib.request.Request(url, headers={"User-Agent": "fpl-etl/3.0"})
+    req = urllib.request.Request(url, headers={"User-Agent": "fpl-etl/4.0"})
     with urllib.request.urlopen(req, timeout=30) as response:
         return json.load(response)
+
+
+def num(v, default=0.0):
+    try:
+        return float(v)
+    except (TypeError, ValueError):
+        return default
 
 
 def detect_gw(events):
@@ -38,6 +45,75 @@ def fetch_all_standings():
         page += 1
 
 
+def build_fixture_map(fixtures, teams, current_gw, horizon=5):
+    result = defaultdict(list)
+    min_event, max_event = current_gw + 1, current_gw + horizon
+    for f in fixtures:
+        event = f.get("event")
+        if event is None or not (min_event <= event <= max_event):
+            continue
+        home, away = f.get("team_h"), f.get("team_a")
+        result[home].append({
+            "gw": event,
+            "opponent": teams.get(away),
+            "opponent_id": away,
+            "venue": "H",
+            "difficulty": f.get("team_h_difficulty"),
+            "kickoff_time": f.get("kickoff_time"),
+        })
+        result[away].append({
+            "gw": event,
+            "opponent": teams.get(home),
+            "opponent_id": home,
+            "venue": "A",
+            "difficulty": f.get("team_a_difficulty"),
+            "kickoff_time": f.get("kickoff_time"),
+        })
+    for team_id in result:
+        result[team_id].sort(key=lambda x: (x["gw"], x["kickoff_time"] or ""))
+    return result
+
+
+def fixture_ease(fixtures):
+    if not fixtures:
+        return 0.0
+    vals = [6 - num(f.get("difficulty"), 3) for f in fixtures]
+    return round(sum(vals) / len(vals), 3)
+
+
+def availability_score(p):
+    chance = p.get("chance_of_playing_next_round")
+    if chance is None:
+        chance = 100 if p.get("status") == "a" else 75
+    return max(0.0, min(1.0, num(chance) / 100.0))
+
+
+def player_decision_score(p, fixtures, aggressive=False):
+    ease = fixture_ease(fixtures[:5])
+    next_ease = fixture_ease(fixtures[:1])
+    form = num(p.get("form"))
+    ppg = num(p.get("points_per_game"))
+    xgi = num(p.get("expected_goal_involvements_per_90"))
+    minutes = num(p.get("minutes"))
+    starts = num(p.get("starts"))
+    own = num(p.get("selected_by_percent"))
+    availability = availability_score(p)
+    security = min(1.0, minutes / 450.0) * 0.6 + min(1.0, starts / 5.0) * 0.4
+    base = (
+        1.7 * form
+        + 1.2 * ppg
+        + 1.4 * xgi
+        + 1.0 * ease
+        + 1.2 * next_ease
+        + 2.0 * security
+    ) * availability
+    if aggressive:
+        base += max(0.0, 20.0 - own) * 0.11
+    else:
+        base += min(35.0, own) * 0.025
+    return round(base, 3)
+
+
 def pick_record(pick, players, teams, positions, slot, live_points):
     p = players.get(pick["element"], {})
     multiplier = pick.get("multiplier", 0)
@@ -48,6 +124,8 @@ def pick_record(pick, players, teams, positions, slot, live_points):
         "player": p.get("name"),
         "club": teams.get(p.get("team")),
         "position": positions.get(p.get("position")),
+        "position_id": p.get("position"),
+        "team_id": p.get("team"),
         "price": p.get("price"),
         "multiplier": multiplier,
         "captain": bool(pick.get("is_captain")),
@@ -59,8 +137,6 @@ def pick_record(pick, players, teams, positions, slot, live_points):
 
 
 def classify(in_my_team, own_pct, effective_ownership_pct, my_multiplier):
-    # Effective ownership matters more than raw squad ownership because captaincy
-    # changes how strongly a player's points move the mini-league.
     if in_my_team:
         if effective_ownership_pct >= 75:
             return "shield"
@@ -78,12 +154,37 @@ def classify(in_my_team, own_pct, effective_ownership_pct, my_multiplier):
     return "differential_against"
 
 
+def candidate_record(pid, raw_players, teams, positions, fixture_map, aggressive=False):
+    p = raw_players[pid]
+    fx = fixture_map.get(p["team"], [])
+    return {
+        "player_id": pid,
+        "player": p.get("web_name"),
+        "club": teams.get(p.get("team")),
+        "position": positions.get(p.get("element_type")),
+        "position_id": p.get("element_type"),
+        "price": p.get("now_cost", 0) / 10,
+        "form": num(p.get("form")),
+        "points_per_game": num(p.get("points_per_game")),
+        "selected_by_percent": num(p.get("selected_by_percent")),
+        "chance_next_round": p.get("chance_of_playing_next_round"),
+        "status": p.get("status"),
+        "news": p.get("news") or "",
+        "fixture_ease_next5": fixture_ease(fx[:5]),
+        "fixtures": fx[:5],
+        "decision_score": player_decision_score(p, fx, aggressive=aggressive),
+    }
+
+
 def main():
     bootstrap = get_json(f"{BASE}/bootstrap-static/")
+    fixtures = get_json(f"{BASE}/fixtures/")
     gw = detect_gw(bootstrap["events"])
+    next_gw = min(38, gw + 1)
     live = get_json(f"{BASE}/event/{gw}/live/")
     live_points = {x["id"]: x.get("stats", {}).get("total_points", 0) for x in live.get("elements", [])}
 
+    raw_players = {p["id"]: p for p in bootstrap["elements"]}
     players = {
         p["id"]: {
             "name": p["web_name"],
@@ -95,6 +196,7 @@ def main():
     }
     teams = {t["id"]: t["name"] for t in bootstrap["teams"]}
     positions = {p["id"]: p["singular_name_short"] for p in bootstrap["element_types"]}
+    fixture_map = build_fixture_map(fixtures, teams, gw)
 
     league_name, standings = fetch_all_standings()
     me = next((r for r in standings if r.get("entry") == MY_ENTRY_ID), None)
@@ -110,10 +212,7 @@ def main():
     for row in standings:
         entry_id = row["entry"]
         picks_data = get_json(f"{BASE}/entry/{entry_id}/event/{gw}/picks/")
-        picks = [
-            pick_record(p, players, teams, positions, i, live_points)
-            for i, p in enumerate(picks_data.get("picks", []), 1)
-        ]
+        picks = [pick_record(p, players, teams, positions, i, live_points) for i, p in enumerate(picks_data.get("picks", []), 1)]
         if len(picks) != 15:
             raise RuntimeError(f"Entry {entry_id} returned {len(picks)} picks, expected 15")
 
@@ -160,7 +259,6 @@ def main():
         pts = live_points.get(pid, 0)
         swing = round(pts * (mine - avg_multiplier), 2)
         in_my_team = pid in my_ids
-
         player_exposure.append({
             "player_id": pid,
             "player": p.get("name"),
@@ -179,7 +277,6 @@ def main():
             "points_swing_vs_league_avg": swing,
             "classification": classify(in_my_team, own_pct, eo_pct, mine),
         })
-
     player_exposure.sort(key=lambda x: (-x["effective_ownership_pct"], -x["ownership_pct"], x["player"] or ""))
 
     rivals = []
@@ -189,11 +286,7 @@ def main():
         ids = {p["player_id"] for p in team["picks"]}
         shared = my_ids & ids
         rivals.append({
-            **{k: team[k] for k in [
-                "rank", "entry_id", "team_name", "manager", "gw_points", "total_points",
-                "active_chip", "event_transfers", "event_transfers_cost", "points_on_bench",
-                "team_value", "bank", "live_calculated_points"
-            ]},
+            **{k: team[k] for k in ["rank", "entry_id", "team_name", "manager", "gw_points", "total_points", "active_chip", "event_transfers", "event_transfers_cost", "points_on_bench", "team_value", "bank", "live_calculated_points"]},
             "gap_to_me": (team.get("total_points") or 0) - (me.get("total") or 0),
             "overlap_count": len(shared),
             "overlap_pct": round(100 * len(shared) / 15, 1),
@@ -202,29 +295,85 @@ def main():
             "vice_captain": next((p["player"] for p in team["picks"] if p["vice_captain"]), None),
             "picks": team["picks"],
         })
-
     rivals.sort(key=lambda x: (x["rank"] if x["rank"] is not None else 999999, x["entry_id"]))
-
-    my_player_swings = [x for x in player_exposure if x["in_my_team"]]
-    biggest_gains = sorted(my_player_swings, key=lambda x: x["points_swing_vs_league_avg"], reverse=True)[:5]
-    biggest_threats = sorted(
-        [x for x in player_exposure if not x["in_my_team"]],
-        key=lambda x: (x["points_swing_vs_league_avg"], -x["effective_ownership_pct"]),
-    )[:5]
 
     league_live_scores = [x["live_calculated_points"] for x in manager_rows]
     league_avg_live = round(sum(league_live_scores) / n, 2) if n else 0
+
+    # Next-GW decision engine. These are transparent heuristics, not model projections.
+    my_bank = my_team.get("bank") or 0.0
+    candidate_ids = [pid for pid, p in raw_players.items() if pid not in my_ids and p.get("status") != "u"]
+    safe_candidates = [candidate_record(pid, raw_players, teams, positions, fixture_map, aggressive=False) for pid in candidate_ids]
+    aggressive_candidates = [candidate_record(pid, raw_players, teams, positions, fixture_map, aggressive=True) for pid in candidate_ids]
+    safe_candidates.sort(key=lambda x: x["decision_score"], reverse=True)
+    aggressive_candidates.sort(key=lambda x: x["decision_score"], reverse=True)
+
+    my_eval = []
+    for p in my_team["picks"]:
+        raw = raw_players[p["player_id"]]
+        fx = fixture_map.get(raw["team"], [])
+        my_eval.append({
+            **p,
+            "availability": availability_score(raw),
+            "news": raw.get("news") or "",
+            "fixtures": fx[:5],
+            "fixture_ease_next5": fixture_ease(fx[:5]),
+            "decision_score": player_decision_score(raw, fx, aggressive=False),
+        })
+    my_eval.sort(key=lambda x: x["decision_score"])
+
+    def build_moves(pool, limit=5):
+        moves = []
+        for outgoing in my_eval:
+            budget = (outgoing.get("price") or 0) + my_bank
+            options = [c for c in pool if c["position_id"] == outgoing["position_id"] and c["price"] <= budget]
+            if not options:
+                continue
+            incoming = options[0]
+            improvement = round(incoming["decision_score"] - outgoing["decision_score"], 3)
+            if improvement <= 0:
+                continue
+            moves.append({
+                "out": outgoing,
+                "in": incoming,
+                "budget": round(budget, 1),
+                "score_improvement": improvement,
+                "reason": f"{incoming['player']} combines stronger recent output/fixture profile than {outgoing['player']} under this heuristic.",
+            })
+        moves.sort(key=lambda x: x["score_improvement"], reverse=True)
+        return moves[:limit]
+
+    captain_candidates = []
+    for p in my_team["picks"]:
+        raw = raw_players[p["player_id"]]
+        fx = fixture_map.get(raw["team"], [])
+        next_fixture = fx[0] if fx else None
+        captain_score = player_decision_score(raw, fx[:1] or fx, aggressive=False)
+        captain_candidates.append({
+            "player_id": p["player_id"],
+            "player": p["player"],
+            "club": p["club"],
+            "price": p["price"],
+            "next_fixture": next_fixture,
+            "form": num(raw.get("form")),
+            "points_per_game": num(raw.get("points_per_game")),
+            "selected_by_percent": num(raw.get("selected_by_percent")),
+            "chance_next_round": raw.get("chance_of_playing_next_round"),
+            "news": raw.get("news") or "",
+            "captain_score": captain_score,
+        })
+    captain_candidates.sort(key=lambda x: x["captain_score"], reverse=True)
+
+    my_player_swings = [x for x in player_exposure if x["in_my_team"]]
+    biggest_gains = sorted(my_player_swings, key=lambda x: x["points_swing_vs_league_avg"], reverse=True)[:5]
+    biggest_threats = sorted([x for x in player_exposure if not x["in_my_team"]], key=lambda x: (x["points_swing_vs_league_avg"], -x["effective_ownership_pct"]))[:5]
 
     result = {
         "status": "SUCCESS",
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
         "current_gw": gw,
-        "league": {
-            "id": LEAGUE_ID,
-            "name": league_name,
-            "manager_count": n,
-            "average_live_calculated_points": league_avg_live,
-        },
+        "next_gw": next_gw,
+        "league": {"id": LEAGUE_ID, "name": league_name, "manager_count": n, "average_live_calculated_points": league_avg_live},
         "me": {
             "entry_id": MY_ENTRY_ID,
             "rank": me.get("rank"),
@@ -239,13 +388,14 @@ def main():
             "event_transfers_cost": my_team.get("event_transfers_cost"),
             "points_on_bench": my_team.get("points_on_bench"),
             "team_value": my_team.get("team_value"),
-            "bank": my_team.get("bank"),
+            "bank": my_bank,
             "live_calculated_points": my_team.get("live_calculated_points"),
             "live_vs_league_average": round(my_team.get("live_calculated_points", 0) - league_avg_live, 2),
         },
         "squad_count": 15,
         "squad_valid": True,
         "squad": my_team["picks"],
+        "squad_next5": my_eval,
         "rival_entry_ids": [r["entry_id"] for r in rivals],
         "rivals": rivals,
         "player_exposure": player_exposure,
@@ -255,6 +405,15 @@ def main():
             "major_dangers_not_owned": [x for x in player_exposure if x["classification"] == "major_danger"],
             "my_leverage_players": [x for x in player_exposure if x["classification"] in {"leverage", "aggressive_leverage"}],
             "my_shields": [x for x in player_exposure if x["classification"] == "shield"],
+        },
+        "next_gw_decisions": {
+            "method": "heuristic_v1_form_ppg_xgi_minutes_fixture_availability_ownership",
+            "note": "Decision scores are transparent heuristics for prioritisation, not projected FPL points.",
+            "captain_candidates": captain_candidates[:5],
+            "safe_transfer_moves": build_moves(safe_candidates),
+            "aggressive_transfer_moves": build_moves(aggressive_candidates),
+            "safe_candidates": safe_candidates[:12],
+            "aggressive_candidates": aggressive_candidates[:12],
         },
     }
 
@@ -267,11 +426,14 @@ def main():
     print(json.dumps({
         "status": "SUCCESS",
         "gw": gw,
+        "next_gw": next_gw,
         "managers": n,
         "rivals": len(rivals),
         "exposure_players": len(player_exposure),
         "league_avg_live": league_avg_live,
         "my_live": my_team.get("live_calculated_points"),
+        "safe_moves": len(result["next_gw_decisions"]["safe_transfer_moves"]),
+        "aggressive_moves": len(result["next_gw_decisions"]["aggressive_transfer_moves"]),
     }))
 
 
