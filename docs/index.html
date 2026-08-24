@@ -17,6 +17,21 @@
     <section class="panel"><div class="panel-head"><div><p class="eyebrow">NEXT ACTION</p><h2>What matters now</h2></div></div><div class="action-grid" id="action-grid"></div></section>
 
     <section class="panel">
+      <div class="panel-head"><div><p class="eyebrow">RIVAL TARGETING</p><h2>Who you are trying to beat next</h2></div><div class="subtle">Nearest managers above you</div></div>
+      <div id="target-rivals" class="target-grid"></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head"><div><p class="eyebrow">EXPLAINED DECISIONS</p><h2>Protect vs chase</h2></div><div class="subtle">Confidence reflects fixtures, availability and model strength</div></div>
+      <div class="explain-grid">
+        <div><h3>🛡️ Protect captains</h3><div id="protect-captains"></div></div>
+        <div><h3>🎯 Chase captains</h3><div id="chase-captains"></div></div>
+        <div><h3>🛡️ Protective transfers</h3><div id="protect-moves"></div></div>
+        <div><h3>🔥 Chase transfers</h3><div id="chase-moves"></div></div>
+      </div>
+    </section>
+
+    <section class="panel">
       <div class="panel-head"><div><p class="eyebrow">NEXT GAMEWEEK</p><h2>Captain & transfer decision board</h2></div><div class="subtle">Relative mini-league heuristic — not projected points</div></div>
       <div class="decision-board">
         <div><h3>Captain shortlist</h3><div id="captain-board"></div></div>
@@ -37,5 +52,6 @@
   </main>
   <script src="app.js"></script>
   <script src="relative.js"></script>
+  <script src="explainability.js"></script>
 </body>
 </html>
