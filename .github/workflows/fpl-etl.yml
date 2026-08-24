@@ -8,6 +8,7 @@ on:
     paths:
       - "fpl_etl.py"
       - "strategy_watch.py"
+      - "market_watch.py"
       - ".github/workflows/fpl-etl.yml"
 
 permissions:
@@ -31,6 +32,9 @@ jobs:
       - name: Run strategy watch
         run: python strategy_watch.py
 
+      - name: Run market watch
+        run: python market_watch.py
+
       - name: Validate output
         run: |
           python - <<'PY'
@@ -38,6 +42,7 @@ jobs:
           from pathlib import Path
           data = json.loads(Path('data/latest.json').read_text())
           strategy = json.loads(Path('data/strategy.json').read_text())
+          market = json.loads(Path('data/market.json').read_text())
           assert data['status'] == 'SUCCESS'
           assert data['squad_valid'] is True
           assert data['squad_count'] == 15
@@ -45,6 +50,7 @@ jobs:
           assert 'next_gw_decisions' in data
           assert strategy['status'] == 'SUCCESS'
           assert len(strategy['managers']) == data['league']['manager_count']
+          assert market['status'] == 'SUCCESS'
           print('Validation passed')
           PY
 
