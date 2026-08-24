@@ -1,100 +1,25 @@
-const DATA_URL = 'https://raw.githubusercontent.com/tlaw77/fpl/main/data/latest.json';
-
-const fmt = (v, fallback='—') => (v === null || v === undefined ? fallback : v);
-const pct = v => `${Number(v || 0).toFixed(1)}%`;
-const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
-
-function intensity(v){ const n=Number(v||0); return n>=80?5:n>=60?4:n>=40?3:n>=20?2:n>0?1:0; }
-function badgeClass(label=''){ const x=label.toLowerCase(); if(x.includes('shield'))return 'shield'; if(x.includes('leverage'))return 'leverage'; if(x.includes('danger')||x.includes('risk')||x.includes('against'))return 'danger'; return 'neutral'; }
-function labelText(label='neutral'){ return String(label).replaceAll('_',' '); }
-
-function kpi(label,value,note=''){
-  return `<div class="kpi"><div class="kpi-label">${esc(label)}</div><div class="kpi-value">${esc(value)}</div><div class="kpi-note">${esc(note)}</div></div>`;
-}
-
-function renderKpis(d){
-  const me=d.me||{}; const rivals=d.rivals||[];
-  const leader=Math.max(...[me.total_points||0,...rivals.map(r=>r.total_points||0)]);
-  const above=rivals.filter(r=>(r.total_points||0)>(me.total_points||0)).sort((a,b)=>(a.total_points||0)-(b.total_points||0))[0];
-  const avgLive=d.live_summary?.league_average_live ?? d.live_summary?.league_average ?? null;
-  const live=me.live_points ?? d.live_summary?.my_live_points ?? me.gw_points;
-  const gapNext=above ? (above.total_points||0)-(me.total_points||0) : 0;
-  document.querySelector('#kpi-grid').innerHTML=[
-    kpi('Rank',`#${fmt(me.rank)}`,`${d.league?.manager_count||0} managers`),
-    kpi('GW / Live',fmt(live),`Official GW: ${fmt(me.gw_points)}`),
-    kpi('Gap to leader',leader-(me.total_points||0),leader===me.total_points?'You lead':'points'),
-    kpi('Gap to next place',gapNext,above?above.team_name:'No one above'),
-    kpi('Captain',fmt(me.captain),avgLive!==null?`League avg ${Number(avgLive).toFixed(1)}`:`VC ${fmt(me.vice_captain)}`)
-  ].join('');
-}
-
-function renderStandings(d){
-  const me={...(d.me||{}),overlap_pct:100,captain:d.me?.captain,active_chip:d.me?.active_chip};
-  const rows=[me,...(d.rivals||[])].sort((a,b)=>(a.rank||999)-(b.rank||999));
-  const myTotal=d.me?.total_points||0;
-  document.querySelector('#rivals-table tbody').innerHTML=rows.map(r=>{
-    const mine=r.entry_id===d.me?.entry_id;
-    const gap=(r.total_points||0)-myTotal;
-    return `<tr class="${mine?'you-row':''}"><td><span class="rank-chip">${fmt(r.rank)}</span></td><td><strong>${esc(r.team_name)}</strong><br><span class="subtle">${esc(r.manager||'')}</span></td><td>${fmt(r.live_points ?? r.gw_points)}</td><td>${fmt(r.total_points)}</td><td>${mine?'—':gap>0?`+${gap}`:gap}</td><td>${esc(r.captain||'—')}</td><td>${esc(r.active_chip||'—')}</td><td>${mine?'100%':pct(r.overlap_pct)}</td></tr>`;
-  }).join('');
-}
-
-function topExposure(d, predicate, max=5){ return (d.player_exposure||[]).filter(predicate).slice(0,max); }
-function signalCard(title,items,metric){
-  return `<div class="signal-card"><h3>${esc(title)}</h3>${items.length?items.map(p=>`<div class="signal-item"><span>${esc(p.player)}</span><strong>${esc(metric(p))}</strong></div>`).join(''):'<div class="subtle">None currently</div>'}</div>`;
-}
-
-function renderSignals(d){
-  const ex=[...(d.player_exposure||[])];
-  const threats=ex.filter(p=>!p.in_my_team && (p.classification||'').match(/danger|risk|against/)).sort((a,b)=>(b.effective_ownership_pct??b.ownership_pct)-(a.effective_ownership_pct??a.ownership_pct));
-  const leverage=ex.filter(p=>p.in_my_team && (p.classification||'').includes('leverage')).sort((a,b)=>(a.ownership_pct||0)-(b.ownership_pct||0));
-  const shields=ex.filter(p=>p.in_my_team && (p.classification||'').includes('shield')).sort((a,b)=>(b.ownership_pct||0)-(a.ownership_pct||0));
-  const swings=ex.filter(p=>p.points_swing_vs_league!==undefined).sort((a,b)=>Math.abs(b.points_swing_vs_league)-Math.abs(a.points_swing_vs_league));
-  document.querySelector('#signals').innerHTML=[
-    signalCard('🔥 Biggest threats',threats.slice(0,5),p=>pct(p.effective_ownership_pct??p.ownership_pct)),
-    signalCard('🎯 Your leverage',leverage.slice(0,5),p=>pct(p.ownership_pct)),
-    signalCard('🛡️ Your shields',shields.slice(0,5),p=>pct(p.ownership_pct)),
-    signalCard('↕ Biggest swings',swings.slice(0,5),p=>`${Number(p.points_swing_vs_league).toFixed(1)}`)
-  ].join('');
-}
-
-function renderSquad(d){
-  const exposure=new Map((d.player_exposure||[]).map(p=>[p.player_id,p]));
-  const squad=d.squad||[];
-  document.querySelector('#squad-grid').innerHTML=squad.map(p=>{
-    const e=exposure.get(p.player_id)||{};
-    const live=p.live_points ?? e.live_points ?? '—';
-    const label=e.classification||'neutral';
-    return `<div class="player-card ${p.captain?'captain-ring':''}"><div class="player-name">${p.captain?'© ':''}${esc(p.player)}</div><div class="player-meta">${esc(p.position)} · ${esc(p.club)} · £${fmt(p.price)}</div><div class="player-points">${esc(live)}</div><div><span class="badge ${badgeClass(label)}">${esc(labelText(label))}</span></div></div>`;
-  }).join('');
-}
-
-function renderHeatmap(d){
-  const players=[...(d.player_exposure||[])].sort((a,b)=>(b.effective_ownership_pct??b.ownership_pct)-(a.effective_ownership_pct??a.ownership_pct)).slice(0,30);
-  const head=`<div class="heat-row"><div class="heat-name">Player</div><div class="heat-cell">Owned</div><div class="heat-cell">Start</div><div class="heat-cell">Captain</div><div class="heat-cell">EO</div><div class="heat-cell">Signal</div></div>`;
-  const rows=players.map(p=>{
-    const eo=p.effective_ownership_pct??((p.starter_pct||0)+(p.captaincy_pct||0));
-    return `<div class="heat-row"><div class="heat-name">${p.in_my_team?'★ ':''}${esc(p.player)}<br><span class="subtle">${esc(p.club||'')}</span></div><div class="heat-cell" data-intensity="${intensity(p.ownership_pct)}">${pct(p.ownership_pct)}</div><div class="heat-cell" data-intensity="${intensity(p.starter_pct)}">${pct(p.starter_pct)}</div><div class="heat-cell" data-intensity="${intensity(p.captaincy_pct)}">${pct(p.captaincy_pct)}</div><div class="heat-cell" data-intensity="${intensity(eo)}">${pct(eo)}</div><div class="heat-cell"><span class="badge ${badgeClass(p.classification)}">${esc(labelText(p.classification))}</span></div></div>`;
-  }).join('');
-  document.querySelector('#heatmap').innerHTML=head+rows;
-}
-
-function renderOverlap(d){
-  const rivals=[...(d.rivals||[])].sort((a,b)=>(b.overlap_pct||0)-(a.overlap_pct||0));
-  document.querySelector('#overlap-list').innerHTML=rivals.map(r=>`<div class="overlap-row"><div><strong>${esc(r.team_name)}</strong><div class="subtle">${fmt(r.overlap_count)}/15 shared</div></div><div class="bar"><span style="width:${Math.min(100,r.overlap_pct||0)}%"></span></div><div><strong>${pct(r.overlap_pct)}</strong></div></div>`).join('');
-}
-
-async function main(){
-  try{
-    const res=await fetch(`${DATA_URL}?t=${Date.now()}`,{cache:'no-store'}); if(!res.ok) throw new Error(`HTTP ${res.status}`);
-    const d=await res.json();
-    document.querySelector('#league-title').textContent=d.league?.name||'FPL Dashboard';
-    document.querySelector('#gw-pill').textContent=`GW ${fmt(d.current_gw)}`;
-    const stamp=d.generated_at_utc?new Date(d.generated_at_utc).toLocaleString():null;
-    document.querySelector('#last-updated').textContent=stamp?`Snapshot updated ${stamp}`:'Latest snapshot';
-    renderKpis(d); renderStandings(d); renderSignals(d); renderSquad(d); renderHeatmap(d); renderOverlap(d);
-  }catch(err){
-    document.body.innerHTML=`<main class="shell"><div class="error"><strong>Dashboard data could not be loaded.</strong><br>${esc(err.message)}<br><br>The dashboard files are present; check that data/latest.json exists in the public repository.</div></main>`;
-  }
-}
+const RAW_BASE='https://raw.githubusercontent.com/tlaw77/fpl/main/data';
+const DATA_URL=`${RAW_BASE}/latest.json`;
+const fmt=(v,f='—')=>(v===null||v===undefined?f:v);
+const pct=v=>`${Number(v||0).toFixed(1)}%`;
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
+function intensity(v){const n=Number(v||0);return n>=80?5:n>=60?4:n>=40?3:n>=20?2:n>0?1:0}
+function badgeClass(label=''){const x=label.toLowerCase();if(x.includes('shield'))return'shield';if(x.includes('leverage'))return'leverage';if(x.includes('danger')||x.includes('risk')||x.includes('against'))return'danger';return'neutral'}
+function labelText(label='neutral'){return String(label).replaceAll('_',' ')}
+function kpi(label,value,note=''){return `<div class="kpi"><div class="kpi-label">${esc(label)}</div><div class="kpi-value">${esc(value)}</div><div class="kpi-note">${esc(note)}</div></div>`}
+function allManagers(d){return [{...(d.me||{}),picks:d.squad||[],overlap_pct:100},...(d.rivals||[])]}
+function renderKpis(d){const me=d.me||{},r=d.rivals||[];const leader=Math.max(...[me.total_points||0,...r.map(x=>x.total_points||0)]);const above=r.filter(x=>(x.total_points||0)>(me.total_points||0)).sort((a,b)=>(a.total_points||0)-(b.total_points||0))[0];const avg=d.live_summary?.league_average_live??d.live_summary?.league_average??null;const live=me.live_points??d.live_summary?.my_live_points??me.gw_points;document.querySelector('#kpi-grid').innerHTML=[kpi('Rank',`#${fmt(me.rank)}`,`${d.league?.manager_count||0} managers`),kpi('GW / Live',fmt(live),`Official GW: ${fmt(me.gw_points)}`),kpi('Gap to leader',leader-(me.total_points||0),leader===me.total_points?'You lead':'points'),kpi('Gap to next',above?(above.total_points||0)-(me.total_points||0):0,above?above.team_name:'No one above'),kpi('Captain',fmt(me.captain),avg!==null?`League avg ${Number(avg).toFixed(1)}`:`VC ${fmt(me.vice_captain)}`)].join('')}
+function renderStandings(d){const me={...(d.me||{}),overlap_pct:100,captain:d.me?.captain};const rows=[me,...(d.rivals||[])].sort((a,b)=>(a.rank||999)-(b.rank||999));const mt=d.me?.total_points||0;document.querySelector('#rivals-table tbody').innerHTML=rows.map(r=>{const mine=r.entry_id===d.me?.entry_id;const gap=(r.total_points||0)-mt;return `<tr class="${mine?'you-row':''}"><td><span class="rank-chip">${fmt(r.rank)}</span></td><td><strong>${esc(r.team_name)}</strong><br><span class="subtle">${esc(r.manager||'')}</span></td><td>${fmt(r.live_points??r.gw_points)}</td><td>${fmt(r.total_points)}</td><td>${mine?'—':gap>0?`+${gap}`:gap}</td><td>${esc(r.captain||'—')}</td><td>${esc(r.active_chip||'—')}</td><td>${mine?'100%':pct(r.overlap_pct)}</td></tr>`}).join('')}
+function signalCard(title,items,metric){return `<div class="signal-card"><h3>${esc(title)}</h3>${items.length?items.map(p=>`<div class="signal-item"><span>${esc(p.player)}</span><strong>${esc(metric(p))}</strong></div>`).join(''):'<div class="subtle">None currently</div>'}</div>`}
+function renderSignals(d){const ex=[...(d.player_exposure||[])];const threats=ex.filter(p=>!p.in_my_team&&(p.classification||'').match(/danger|risk|against/)).sort((a,b)=>(b.effective_ownership_pct??b.ownership_pct)-(a.effective_ownership_pct??a.ownership_pct));const lev=ex.filter(p=>p.in_my_team&&(p.classification||'').includes('leverage')).sort((a,b)=>(a.ownership_pct||0)-(b.ownership_pct||0));const sh=ex.filter(p=>p.in_my_team&&(p.classification||'').includes('shield')).sort((a,b)=>(b.ownership_pct||0)-(a.ownership_pct||0));const sw=ex.filter(p=>p.points_swing_vs_league!==undefined).sort((a,b)=>Math.abs(b.points_swing_vs_league)-Math.abs(a.points_swing_vs_league));document.querySelector('#signals').innerHTML=[signalCard('🔥 Biggest threats',threats.slice(0,5),p=>pct(p.effective_ownership_pct??p.ownership_pct)),signalCard('🎯 Your leverage',lev.slice(0,5),p=>pct(p.ownership_pct)),signalCard('🛡️ Your shields',sh.slice(0,5),p=>pct(p.ownership_pct)),signalCard('↕ Biggest swings',sw.slice(0,5),p=>Number(p.points_swing_vs_league).toFixed(1))].join('')}
+function renderActions(d){const ex=[...(d.player_exposure||[])];const danger=ex.filter(p=>!p.in_my_team).sort((a,b)=>(b.effective_ownership_pct??b.ownership_pct)-(a.effective_ownership_pct??a.ownership_pct))[0];const leverage=ex.filter(p=>p.in_my_team).sort((a,b)=>(a.ownership_pct||0)-(b.ownership_pct||0))[0];const closest=[...(d.rivals||[])].filter(r=>(r.total_points||0)>(d.me?.total_points||0)).sort((a,b)=>(a.total_points||0)-(b.total_points||0))[0];const cap=(d.player_exposure||[]).find(p=>p.player===d.me?.captain);const cards=[['Protect',cap?`${d.me.captain} EO ${pct(cap.effective_ownership_pct??cap.ownership_pct)}`:`Captain ${fmt(d.me?.captain)}`],['Primary threat',danger?`${danger.player} · ${pct(danger.effective_ownership_pct??danger.ownership_pct)} EO`:'No major threat'],['Best leverage',leverage?`${leverage.player} · ${pct(leverage.ownership_pct)} owned`:'No clear leverage'],['Nearest target',closest?`${closest.team_name} · ${(closest.total_points||0)-(d.me?.total_points||0)} pts`:'You lead']];document.querySelector('#action-grid').innerHTML=cards.map(([a,b])=>`<div class="action-card"><div class="action-label">${esc(a)}</div><strong>${esc(b)}</strong></div>`).join('')}
+function renderSquad(d){const eMap=new Map((d.player_exposure||[]).map(p=>[p.player_id,p]));document.querySelector('#squad-grid').innerHTML=(d.squad||[]).map(p=>{const e=eMap.get(p.player_id)||{};const live=p.live_points??e.live_points??'—';const label=e.classification||'neutral';return `<div class="player-card ${p.captain?'captain-ring':''}"><div class="player-name">${p.captain?'© ':''}${esc(p.player)}</div><div class="player-meta">${esc(p.position)} · ${esc(p.club)} · £${fmt(p.price)}</div><div class="player-points">${esc(live)}</div><span class="badge ${badgeClass(label)}">${esc(labelText(label))}</span></div>`}).join('')}
+function renderHeatmap(d){const ps=[...(d.player_exposure||[])].sort((a,b)=>(b.effective_ownership_pct??b.ownership_pct)-(a.effective_ownership_pct??a.ownership_pct)).slice(0,30);const head=`<div class="heat-row"><div class="heat-name">Player</div><div class="heat-cell">Owned</div><div class="heat-cell">Start</div><div class="heat-cell">Captain</div><div class="heat-cell">EO</div><div class="heat-cell">Signal</div></div>`;document.querySelector('#heatmap').innerHTML=head+ps.map(p=>{const eo=p.effective_ownership_pct??((p.starter_pct||0)+(p.captaincy_pct||0));return `<div class="heat-row"><div class="heat-name">${p.in_my_team?'★ ':''}${esc(p.player)}<br><span class="subtle">${esc(p.club||'')}</span></div><div class="heat-cell" data-intensity="${intensity(p.ownership_pct)}">${pct(p.ownership_pct)}</div><div class="heat-cell" data-intensity="${intensity(p.starter_pct)}">${pct(p.starter_pct)}</div><div class="heat-cell" data-intensity="${intensity(p.captaincy_pct)}">${pct(p.captaincy_pct)}</div><div class="heat-cell" data-intensity="${intensity(eo)}">${pct(eo)}</div><div class="heat-cell"><span class="badge ${badgeClass(p.classification)}">${esc(labelText(p.classification))}</span></div></div>`}).join('')}
+function renderOverlap(d){document.querySelector('#overlap-list').innerHTML=[...(d.rivals||[])].sort((a,b)=>(b.overlap_pct||0)-(a.overlap_pct||0)).map(r=>`<div class="overlap-row"><div><strong>${esc(r.team_name)}</strong><div class="subtle">${fmt(r.overlap_count)}/15 shared</div></div><div class="bar"><span style="width:${clamp(r.overlap_pct||0,0,100)}%"></span></div><strong>${pct(r.overlap_pct)}</strong></div>`).join('')}
+function renderSwing(d){let rows=[...(d.player_exposure||[])].filter(p=>p.points_swing_vs_league!==undefined).sort((a,b)=>Math.abs(b.points_swing_vs_league)-Math.abs(a.points_swing_vs_league)).slice(0,12);if(!rows.length){rows=[...(d.player_exposure||[])].filter(p=>p.live_points!==undefined).map(p=>({...p,points_swing_vs_league:p.in_my_team?(p.live_points||0)*(1-(p.effective_ownership_pct??p.ownership_pct||0)/100):-(p.live_points||0)*((p.effective_ownership_pct??p.ownership_pct||0)/100)})).sort((a,b)=>Math.abs(b.points_swing_vs_league)-Math.abs(a.points_swing_vs_league)).slice(0,12)}const max=Math.max(1,...rows.map(x=>Math.abs(x.points_swing_vs_league||0)));document.querySelector('#swing-chart').innerHTML=rows.length?rows.map(p=>{const v=Number(p.points_swing_vs_league||0),w=100*Math.abs(v)/max;return `<div class="swing-row"><div class="swing-name">${esc(p.player)}</div><div class="swing-track"><span class="${v>=0?'gain':'loss'}" style="width:${w}%"></span></div><div class="swing-value ${v>=0?'positive':'negative'}">${v>0?'+':''}${v.toFixed(1)}</div></div>`}).join(''):'<div class="subtle">Live swing data will appear as matches are played.</div>'}
+function renderMatrix(d){const managers=allManagers(d);const ids=new Set();managers.forEach(m=>(m.picks||[]).forEach(p=>ids.add(p.player_id)));const exMap=new Map((d.player_exposure||[]).map(p=>[p.player_id,p]));const players=[...ids].map(id=>exMap.get(id)||managers.flatMap(m=>m.picks||[]).find(p=>p.player_id===id)).filter(Boolean).sort((a,b)=>(b.ownership_pct||0)-(a.ownership_pct||0)).slice(0,28);const head=`<div class="matrix-row matrix-head"><div class="matrix-manager">Manager</div>${players.map(p=>`<div class="matrix-player" title="${esc(p.player)}">${esc((p.player||'').slice(0,7))}</div>`).join('')}</div>`;const body=managers.sort((a,b)=>(a.rank||999)-(b.rank||999)).map(m=>{const picks=new Map((m.picks||[]).map(p=>[p.player_id,p]));return `<div class="matrix-row ${m.entry_id===d.me?.entry_id?'matrix-you':''}"><div class="matrix-manager">${esc((m.team_name||'').slice(0,18))}</div>${players.map(p=>{const x=picks.get(p.player_id);return `<div class="matrix-cell ${x?'owned':'empty'} ${x?.captain?'cap':''}" title="${esc(p.player)}">${x?(x.captain?'C':'●'):''}</div>`}).join('')}</div>`}).join('');document.querySelector('#manager-matrix').innerHTML=head+body}
+async function loadHistory(gw){const out=[];for(let i=1;i<=gw;i++){try{const r=await fetch(`${RAW_BASE}/gw${i}.json?t=${Date.now()}`,{cache:'no-store'});if(r.ok)out.push(await r.json())}catch{}}return out}
+function renderTrend(history,d){const hs=history.length?history:[d];const pts=hs.map(x=>({gw:x.current_gw,rank:x.me?.rank,total:x.me?.total_points,gwpts:x.me?.gw_points}));const maxPts=Math.max(1,...pts.map(x=>x.total||0));const maxRank=Math.max(d.league?.manager_count||1,...pts.map(x=>x.rank||1));const width=520,height=170,pad=24;const x=i=>pad+(pts.length===1?(width-2*pad)/2:i*(width-2*pad)/(pts.length-1));const yP=v=>height-pad-(v/maxPts)*(height-2*pad);const yR=v=>pad+((v-1)/Math.max(1,maxRank-1))*(height-2*pad);const path=(fn)=>pts.map((p,i)=>`${i?'L':'M'} ${x(i)} ${fn(p)}`).join(' ');document.querySelector('#trend-chart').innerHTML=`<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="FPL trend chart"><path class="trend-line points" d="${path(p=>yP(p.total||0))}"/><path class="trend-line rank" d="${path(p=>yR(p.rank||maxRank))}"/>${pts.map((p,i)=>`<circle class="trend-dot" cx="${x(i)}" cy="${yP(p.total||0)}" r="4"><title>GW${p.gw}: ${p.total} pts, rank ${p.rank}</title></circle>`).join('')}</svg><div class="trend-legend"><span><i class="line-points"></i>Total points</span><span><i class="line-rank"></i>Rank (higher is better)</span></div><div class="subtle">${pts.length===1?'History will build automatically each gameweek.':`${pts.length} gameweeks loaded.`}</div>`}
+async function main(){try{const res=await fetch(`${DATA_URL}?t=${Date.now()}`,{cache:'no-store'});if(!res.ok)throw new Error(`HTTP ${res.status}`);const d=await res.json();document.querySelector('#league-title').textContent=d.league?.name||'FPL Dashboard';document.querySelector('#gw-pill').textContent=`GW ${fmt(d.current_gw)}`;document.querySelector('#last-updated').textContent=d.generated_at_utc?`Snapshot updated ${new Date(d.generated_at_utc).toLocaleString()}`:'Latest snapshot';renderKpis(d);renderActions(d);renderStandings(d);renderSignals(d);renderSquad(d);renderSwing(d);renderMatrix(d);renderHeatmap(d);renderOverlap(d);const history=await loadHistory(Number(d.current_gw||1));renderTrend(history,d)}catch(err){document.body.innerHTML=`<main class="shell"><div class="error"><strong>Dashboard data could not be loaded.</strong><br>${esc(err.message)}</div></main>`}}
 main();
