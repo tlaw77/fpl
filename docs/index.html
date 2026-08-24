@@ -21,6 +21,11 @@
     <section class="kpi-grid" id="kpi-grid"></section>
 
     <section class="panel">
+      <div class="panel-head"><div><p class="eyebrow">NEXT ACTION</p><h2>What matters now</h2></div></div>
+      <div class="action-grid" id="action-grid"></div>
+    </section>
+
+    <section class="panel">
       <div class="panel-head">
         <div><p class="eyebrow">STANDINGS</p><h2>League race</h2></div>
         <div class="legend"><span class="dot me"></span>You</div>
@@ -33,11 +38,20 @@
         <div class="panel-head"><div><p class="eyebrow">DECISION MAP</p><h2>Threats & opportunities</h2></div></div>
         <div class="signal-grid" id="signals"></div>
       </section>
-
       <section class="panel">
         <div class="panel-head"><div><p class="eyebrow">YOUR TEAM</p><h2>Squad exposure</h2></div></div>
         <div class="squad-grid" id="squad-grid"></div>
       </section>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head"><div><p class="eyebrow">LIVE SWING</p><h2>Who is helping or hurting you</h2></div></div>
+      <div class="swing-chart" id="swing-chart"></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head"><div><p class="eyebrow">MANAGER × PLAYER</p><h2>Squad ownership matrix</h2></div><div class="subtle">C = captain · ★ = you own</div></div>
+      <div class="matrix-wrap" id="manager-matrix"></div>
     </section>
 
     <section class="panel">
@@ -48,9 +62,15 @@
       <div class="heatmap" id="heatmap"></div>
     </section>
 
-    <section class="panel">
-      <div class="panel-head"><div><p class="eyebrow">SIMILARITY</p><h2>Rival overlap</h2></div></div>
-      <div class="overlap-list" id="overlap-list"></div>
+    <section class="two-col">
+      <section class="panel">
+        <div class="panel-head"><div><p class="eyebrow">SIMILARITY</p><h2>Rival overlap</h2></div></div>
+        <div class="overlap-list" id="overlap-list"></div>
+      </section>
+      <section class="panel">
+        <div class="panel-head"><div><p class="eyebrow">HISTORY</p><h2>Rank & points trend</h2></div></div>
+        <div class="trend-chart" id="trend-chart"></div>
+      </section>
     </section>
 
     <footer>Live data from your GitHub Actions FPL pipeline.</footer>
