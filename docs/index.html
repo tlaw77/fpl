@@ -7,15 +7,23 @@
   <title>FPL Mini-League Dashboard</title>
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="strategy.css" />
+  <link rel="stylesheet" href="market.css" />
 </head>
 <body>
   <main class="shell">
     <header class="topbar">
-      <div><p class="eyebrow">FPL MINI-LEAGUE INTELLIGENCE</p><h1 id="league-title">Loading…</h1><p class="subtle" id="last-updated">Fetching latest snapshot</p><p class="subtle" id="strategy-updated"></p></div>
+      <div><p class="eyebrow">FPL MINI-LEAGUE INTELLIGENCE</p><h1 id="league-title">Loading…</h1><p class="subtle" id="last-updated">Fetching latest snapshot</p><p class="subtle" id="strategy-updated"></p><p class="subtle" id="market-updated"></p></div>
       <div class="gw-pill" id="gw-pill">GW —</div>
     </header>
     <section class="kpi-grid" id="kpi-grid"></section>
     <section class="panel"><div class="panel-head"><div><p class="eyebrow">NEXT ACTION</p><h2>What matters now</h2></div></div><div class="action-grid" id="action-grid"></div></section>
+
+    <section class="panel"><div class="panel-head"><div><p class="eyebrow">MARKET & URGENCY</p><h2>Price pressure before tonight's change</h2></div><div class="subtle">Football decision first · price changes 00:00 UK</div></div><div id="market-urgency"></div></section>
+    <section class="market-grid">
+      <section class="panel"><div class="panel-head"><div><p class="eyebrow">RISE WATCH</p><h2>Popular transfer-ins</h2></div></div><div id="rise-watch"></div></section>
+      <section class="panel"><div class="panel-head"><div><p class="eyebrow">FALL WATCH</p><h2>Popular transfer-outs</h2></div></div><div id="fall-watch"></div></section>
+      <section class="panel"><div class="panel-head"><div><p class="eyebrow">SQUAD FRAGILITY</p><h2>Availability & value risk</h2></div></div><div id="squad-fragility"></div></section>
+    </section>
 
     <section class="panel">
       <div class="panel-head"><div><p class="eyebrow">RIVAL TARGETING</p><h2>Who you are trying to beat next</h2></div><div class="subtle">Nearest managers above you</div></div>
@@ -28,42 +36,17 @@
     </section>
 
     <section class="strategy-grid">
-      <section class="panel">
-        <div class="panel-head"><div><p class="eyebrow">BLANK / DOUBLE WATCH</p><h2>Schedule pivots</h2></div><div class="subtle">Official FPL assignment = confirmed</div></div>
-        <div id="schedule-watch" class="schedule-watch"></div>
-      </section>
-      <section class="panel">
-        <div class="panel-head"><div><p class="eyebrow">SCOUT WATCH</p><h2>Fantasy Football Scout signals</h2></div><div class="subtle">Potential / early-warning only</div></div>
-        <div id="scout-watch" class="scout-list"></div>
-      </section>
+      <section class="panel"><div class="panel-head"><div><p class="eyebrow">BLANK / DOUBLE WATCH</p><h2>Schedule pivots</h2></div><div class="subtle">Official FPL assignment = confirmed</div></div><div id="schedule-watch" class="schedule-watch"></div></section>
+      <section class="panel"><div class="panel-head"><div><p class="eyebrow">SCOUT WATCH</p><h2>Fantasy Football Scout signals</h2></div><div class="subtle">Potential / early-warning only</div></div><div id="scout-watch" class="scout-list"></div></section>
     </section>
 
-    <section class="panel">
-      <div class="panel-head"><div><p class="eyebrow">CHIP STRATEGY</p><h2>Potential pivots versus nearby rivals</h2></div></div>
-      <div id="chip-notes" class="strategy-notes"></div>
-    </section>
+    <section class="panel"><div class="panel-head"><div><p class="eyebrow">CHIP STRATEGY</p><h2>Potential pivots versus nearby rivals</h2></div></div><div id="chip-notes" class="strategy-notes"></div></section>
 
-    <section class="panel">
-      <div class="panel-head"><div><p class="eyebrow">EXPLAINED DECISIONS</p><h2>Protect vs chase</h2></div><div class="subtle">Confidence reflects fixtures, availability and model strength</div></div>
-      <div class="explain-grid">
-        <div><h3>🛡️ Protect captains</h3><div id="protect-captains"></div></div>
-        <div><h3>🎯 Chase captains</h3><div id="chase-captains"></div></div>
-        <div><h3>🛡️ Protective transfers</h3><div id="protect-moves"></div></div>
-        <div><h3>🔥 Chase transfers</h3><div id="chase-moves"></div></div>
-      </div>
-    </section>
+    <section class="panel"><div class="panel-head"><div><p class="eyebrow">EXPLAINED DECISIONS</p><h2>Protect vs chase</h2></div><div class="subtle">Confidence reflects fixtures, availability and model strength</div></div><div class="explain-grid"><div><h3>🛡️ Protect captains</h3><div id="protect-captains"></div></div><div><h3>🎯 Chase captains</h3><div id="chase-captains"></div></div><div><h3>🛡️ Protective transfers</h3><div id="protect-moves"></div></div><div><h3>🔥 Chase transfers</h3><div id="chase-moves"></div></div></div></section>
 
-    <section class="panel">
-      <div class="panel-head"><div><p class="eyebrow">NEXT GAMEWEEK</p><h2>Captain & transfer decision board</h2></div><div class="subtle">Relative mini-league heuristic — not projected points</div></div>
-      <div class="decision-board">
-        <div><h3>Captain shortlist</h3><div id="captain-board"></div></div>
-        <div><h3>Safe moves</h3><div id="safe-moves"></div></div>
-        <div><h3>Aggressive moves</h3><div id="aggressive-moves"></div></div>
-      </div>
-    </section>
+    <section class="panel"><div class="panel-head"><div><p class="eyebrow">NEXT GAMEWEEK</p><h2>Captain & transfer decision board</h2></div><div class="subtle">Relative mini-league heuristic — not projected points</div></div><div class="decision-board"><div><h3>Captain shortlist</h3><div id="captain-board"></div></div><div><h3>Safe moves</h3><div id="safe-moves"></div></div><div><h3>Aggressive moves</h3><div id="aggressive-moves"></div></div></div></section>
 
     <section class="panel"><div class="panel-head"><div><p class="eyebrow">FIXTURES</p><h2>Your squad — next 5</h2></div><div class="subtle">Lower difficulty is easier</div></div><div id="fixture-strip" class="fixture-table"></div></section>
-
     <section class="panel"><div class="panel-head"><div><p class="eyebrow">STANDINGS</p><h2>League race</h2></div><div class="legend"><span class="dot me"></span>You</div></div><div class="table-wrap"><table id="rivals-table"><thead><tr><th>Rank</th><th>Manager</th><th>GW</th><th>Total</th><th>Gap vs you</th><th>Captain</th><th>Chip</th><th>Overlap</th></tr></thead><tbody></tbody></table></div></section>
     <section class="two-col"><section class="panel"><div class="panel-head"><div><p class="eyebrow">DECISION MAP</p><h2>Threats & opportunities</h2></div></div><div class="signal-grid" id="signals"></div></section><section class="panel"><div class="panel-head"><div><p class="eyebrow">YOUR TEAM</p><h2>Squad exposure</h2></div></div><div class="squad-grid" id="squad-grid"></div></section></section>
     <section class="panel"><div class="panel-head"><div><p class="eyebrow">LIVE SWING</p><h2>Who is helping or hurting you</h2></div></div><div class="swing-chart" id="swing-chart"></div></section>
@@ -77,5 +60,6 @@
   <script src="explainability.js"></script>
   <script src="owner-names.js"></script>
   <script src="strategy.js"></script>
+  <script src="market.js"></script>
 </body>
 </html>
