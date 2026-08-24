@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0b1020" />
+  <title>FPL Mini-League Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">FPL MINI-LEAGUE INTELLIGENCE</p>
+        <h1 id="league-title">Loading…</h1>
+        <p class="subtle" id="last-updated">Fetching latest snapshot</p>
+      </div>
+      <div class="gw-pill" id="gw-pill">GW —</div>
+    </header>
+
+    <section class="kpi-grid" id="kpi-grid"></section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div><p class="eyebrow">STANDINGS</p><h2>League race</h2></div>
+        <div class="legend"><span class="dot me"></span>You</div>
+      </div>
+      <div class="table-wrap"><table id="rivals-table"><thead><tr><th>Rank</th><th>Team</th><th>GW</th><th>Total</th><th>Gap vs you</th><th>Captain</th><th>Chip</th><th>Overlap</th></tr></thead><tbody></tbody></table></div>
+    </section>
+
+    <section class="two-col">
+      <section class="panel">
+        <div class="panel-head"><div><p class="eyebrow">DECISION MAP</p><h2>Threats & opportunities</h2></div></div>
+        <div class="signal-grid" id="signals"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head"><div><p class="eyebrow">YOUR TEAM</p><h2>Squad exposure</h2></div></div>
+        <div class="squad-grid" id="squad-grid"></div>
+      </section>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div><p class="eyebrow">HEATMAP</p><h2>Mini-league player exposure</h2></div>
+        <div class="legend"><span class="badge shield">Shield</span><span class="badge leverage">Leverage</span><span class="badge danger">Danger</span></div>
+      </div>
+      <div class="heatmap" id="heatmap"></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head"><div><p class="eyebrow">SIMILARITY</p><h2>Rival overlap</h2></div></div>
+      <div class="overlap-list" id="overlap-list"></div>
+    </section>
+
+    <footer>Live data from your GitHub Actions FPL pipeline.</footer>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
