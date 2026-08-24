@@ -1,0 +1,53 @@
+name: FPL ETL
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/30 * * * *"
+  push:
+    paths:
+      - "fpl_etl.py"
+      - ".github/workflows/fpl-etl.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  run-etl:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run FPL ETL
+        run: python fpl_etl.py
+
+      - name: Validate output
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          data = json.loads(Path('data/latest.json').read_text())
+          assert data['status'] == 'SUCCESS'
+          assert data['squad_valid'] is True
+          assert data['squad_count'] == 15
+          assert data['league']['manager_count'] >= 1
+          print('Validation passed')
+          PY
+
+      - name: Commit latest snapshot
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/latest.json
+          if git diff --cached --quiet; then
+            echo "No snapshot changes to commit"
+          else
+            git commit -m "Update FPL snapshot"
+            git push
+          fi
