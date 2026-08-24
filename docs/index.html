@@ -6,11 +6,12 @@
   <meta name="theme-color" content="#0b1020" />
   <title>FPL Mini-League Dashboard</title>
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="strategy.css" />
 </head>
 <body>
   <main class="shell">
     <header class="topbar">
-      <div><p class="eyebrow">FPL MINI-LEAGUE INTELLIGENCE</p><h1 id="league-title">Loading…</h1><p class="subtle" id="last-updated">Fetching latest snapshot</p></div>
+      <div><p class="eyebrow">FPL MINI-LEAGUE INTELLIGENCE</p><h1 id="league-title">Loading…</h1><p class="subtle" id="last-updated">Fetching latest snapshot</p><p class="subtle" id="strategy-updated"></p></div>
       <div class="gw-pill" id="gw-pill">GW —</div>
     </header>
     <section class="kpi-grid" id="kpi-grid"></section>
@@ -19,6 +20,27 @@
     <section class="panel">
       <div class="panel-head"><div><p class="eyebrow">RIVAL TARGETING</p><h2>Who you are trying to beat next</h2></div><div class="subtle">Nearest managers above you</div></div>
       <div id="target-rivals" class="target-grid"></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head"><div><p class="eyebrow">CHIP INTELLIGENCE</p><h2>What everyone has spent — and still holds</h2></div><div class="subtle">Current half-season chip inventory</div></div>
+      <div id="chip-table" class="chip-table"></div>
+    </section>
+
+    <section class="strategy-grid">
+      <section class="panel">
+        <div class="panel-head"><div><p class="eyebrow">BLANK / DOUBLE WATCH</p><h2>Schedule pivots</h2></div><div class="subtle">Official FPL assignment = confirmed</div></div>
+        <div id="schedule-watch" class="schedule-watch"></div>
+      </section>
+      <section class="panel">
+        <div class="panel-head"><div><p class="eyebrow">SCOUT WATCH</p><h2>Fantasy Football Scout signals</h2></div><div class="subtle">Potential / early-warning only</div></div>
+        <div id="scout-watch" class="scout-list"></div>
+      </section>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head"><div><p class="eyebrow">CHIP STRATEGY</p><h2>Potential pivots versus nearby rivals</h2></div></div>
+      <div id="chip-notes" class="strategy-notes"></div>
     </section>
 
     <section class="panel">
@@ -54,5 +76,6 @@
   <script src="relative.js"></script>
   <script src="explainability.js"></script>
   <script src="owner-names.js"></script>
+  <script src="strategy.js"></script>
 </body>
 </html>
