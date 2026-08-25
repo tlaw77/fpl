@@ -14,13 +14,13 @@ function loadSquadIntel(){
     const subtle=panel?.querySelector('.panel-head .subtle');
     if(eyebrow)eyebrow.textContent='SQUAD INTELLIGENCE';
     if(title)title.textContent='How rivals are building and behaving';
-    if(subtle)subtle.textContent='Chips · club stacks · squad style · transfer history';
+    if(subtle)subtle.textContent='Free transfers · chips · club stacks · squad style · transfer history';
   }
   if(!document.querySelector('link[data-squad-intel]')){
     const l=document.createElement('link');l.rel='stylesheet';l.href='squad-intelligence.css?v=20260825-1523';l.dataset.squadIntel='1';document.head.appendChild(l);
   }
   if(!document.querySelector('script[data-squad-intel]')){
-    const s=document.createElement('script');s.src='squad-intelligence.js?v=20260825-1523';s.dataset.squadIntel='1';document.body.appendChild(s);
+    const s=document.createElement('script');s.src='squad-intelligence.js?v=20260825-1541';s.dataset.squadIntel='1';document.body.appendChild(s);
   }
 }
 async function renderStrategy(){try{const r=await fetch(`${STRATEGY_URL}?t=${Date.now()}`,{cache:'no-store'});if(!r.ok)throw new Error(`HTTP ${r.status}`);const d=await r.json();renderChipTable(d);renderSchedule(d);renderScout(d);renderStrategyNotes(d);const stamp=document.querySelector('#strategy-updated');if(stamp)stamp.textContent=`Strategy watch: ${new Date(d.generated_at_utc).toLocaleString()}`;loadSquadIntel();}catch(e){for(const id of ['#chip-table','#schedule-watch','#scout-watch','#chip-notes']){const el=document.querySelector(id);if(el)el.innerHTML='<div class="subtle">Strategy watch is waiting for its first successful refresh.</div>';}}}
