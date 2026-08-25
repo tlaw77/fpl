@@ -1,0 +1,23 @@
+(()=>{
+const DATA='https://raw.githubusercontent.com/tlaw77/fpl/main/data/latest.json';
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+function fxEase(p){const f=(p.fixtures||[])[0];return f?6-Number(f.difficulty||3):3}
+function avail(p){return p.availability==null?1:Number(p.availability)}
+function score(p){return Number(p.decision_score||0)+fxEase(p)*.55+avail(p)*.8}
+function chooseXI(rows){const gk=rows.filter(p=>p.position==='GKP').sort((a,b)=>score(b)-score(a))[0];const out=rows.filter(p=>p.position!=='GKP').sort((a,b)=>score(b)-score(a));let xi=gk?[gk]:[];for(const [pos,min] of Object.entries({DEF:3,MID:2,FWD:1}))xi.push(...out.filter(p=>p.position===pos).slice(0,min));for(const p of out){if(xi.includes(p))continue;const c={DEF:xi.filter(x=>x.position==='DEF').length,MID:xi.filter(x=>x.position==='MID').length,FWD:xi.filter(x=>x.position==='FWD').length};if((p.position==='DEF'&&c.DEF>=5)||(p.position==='MID'&&c.MID>=5)||(p.position==='FWD'&&c.FWD>=3))continue;if(xi.length<11)xi.push(p)}return xi.slice(0,11)}
+function fixtureText(p){const f=(p.fixtures||[])[0];return f?`${esc(f.opponent)} ${f.venue} · FDR ${Number(f.difficulty||3)}`:'No fixture'}
+function why(bench,starter){const bBase=Number(bench.decision_score||0),sBase=Number(starter.decision_score||0);const bFx=fxEase(bench),sFx=fxEase(starter);const parts=[];
+ if(bFx>sFx+.15)parts.push(`${esc(bench.player)} has the easier next fixture`);else if(sFx>bFx+.15)parts.push(`${esc(starter.player)} has the easier next fixture`);
+ if(sBase>bBase+.1)parts.push(`${esc(starter.player)}'s underlying player score is ${ (sBase-bBase).toFixed(1)} higher`);else if(bBase>sBase+.1)parts.push(`${esc(bench.player)}'s underlying player score is ${(bBase-sBase).toFixed(1)} higher`);
+ if(avail(starter)>avail(bench)+.05)parts.push(`${esc(starter.player)} has the stronger availability signal`);
+ const gap=score(starter)-score(bench);parts.push(`${esc(starter.player)} stays ahead by ${Math.abs(gap).toFixed(1)} on the XI selection score`);
+ return parts.join('; ') + '.';
+}
+function comparison(bench,starter){return `<div class="xi-call"><div class="xi-call-head"><div><span class="xi-kicker">BENCH CALL · ${esc(bench.position)}</span><strong>${esc(bench.player)} vs ${esc(starter.player)}</strong></div><span class="xi-gap">${score(bench).toFixed(1)} vs ${score(starter).toFixed(1)}</span></div><p>${why(bench,starter)}</p><div class="xi-factors"><span>${esc(bench.player)}: model ${Number(bench.decision_score||0).toFixed(1)} · ${fixtureText(bench)}</span><span>${esc(starter.player)}: model ${Number(starter.decision_score||0).toFixed(1)} · ${fixtureText(starter)}</span></div></div>`}
+async function render(){try{const host=document.querySelector('.pitch-impact');if(!host)return;const r=await fetch(`${DATA}?t=${Date.now()}`,{cache:'no-store'});if(!r.ok)return;const d=await r.json();const base=d.current_squad_next5||d.squad_next5||[];const plan=window.FPLPlan?.reconcile?window.FPLPlan.reconcile(d):null;const rows=window.FPLPlan?.apply?window.FPLPlan.apply(base,plan):[...base];const xi=chooseXI(rows),ids=new Set(xi.map(p=>p.player_id));const bench=rows.filter(p=>!ids.has(p.player_id)&&p.position!=='GKP');const calls=[];
+ for(const b of bench){const same=xi.filter(x=>x.position===b.position).sort((a,z)=>score(a)-score(z));if(!same.length)continue;const s=same[0],gap=score(s)-score(b);calls.push({b,s,gap});}
+ calls.sort((a,b)=>a.gap-b.gap);let box=document.querySelector('#xi-rationale');if(!box){box=document.createElement('section');box.id='xi-rationale';box.className='xi-rationale';host.insertAdjacentElement('afterend',box)}
+ box.innerHTML=`<div class="xi-rationale-head"><div><p class="eyebrow">WHY THIS XI?</p><h3>Closest selection calls</h3></div><span class="xi-method">Model + fixture + availability</span></div>${calls.slice(0,3).map(x=>comparison(x.b,x.s)).join('')||'<div class="subtle">No close bench/start calls to explain.</div>'}<div class="xi-price-note"><strong>Price is not a start/bench factor.</strong> A more expensive defender only starts if the football and fixture signals put him ahead.</div>`;
+ }catch(e){console.warn('XI rationale',e)}}
+setTimeout(render,700);window.addEventListener('load',()=>setTimeout(render,500));window.addEventListener('fplPlanChanged',()=>setTimeout(render,220));window.addEventListener('effectiveSquadRendered',()=>setTimeout(render,180));
+})();
