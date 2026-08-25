@@ -49,4 +49,12 @@
   bindAll();
   setTimeout(()=>{bindAll();status('READY')},500);
   window.FPLButtonBindV28={bindAll};
+  if(!document.querySelector('script[data-fpl-debug29]')){
+    const s=document.createElement('script');
+    s.src='commit-debug.js?v=20260825-1319';
+    s.dataset.fplDebug29='1';
+    s.onload=()=>status('READY · DEBUG29 LOADED');
+    s.onerror=()=>status('READY · DEBUG29 FAILED',false);
+    document.head.appendChild(s);
+  }
 })();
