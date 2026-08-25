@@ -8,6 +8,7 @@ on:
     paths:
       - "fpl_etl.py"
       - "current_squad.py"
+      - "recommendation_history.py"
       - "strategy_watch.py"
       - "market_watch.py"
       - ".github/workflows/fpl-etl.yml"
@@ -30,6 +31,9 @@ jobs:
       - name: Run FPL ETL
         run: python fpl_etl.py
 
+      - name: Preserve recommendation snapshot
+        run: python recommendation_history.py
+
       - name: Reconstruct current squad and decision journal
         run: python current_squad.py
 
@@ -48,6 +52,7 @@ jobs:
           strategy = json.loads(Path('data/strategy.json').read_text())
           market = json.loads(Path('data/market.json').read_text())
           history = json.loads(Path('data/decision_history.json').read_text())
+          rec_history = json.loads(Path('data/recommendation_history.json').read_text())
           assert data['status'] == 'SUCCESS'
           assert data['squad_valid'] is True
           assert data['squad_count'] == 15
@@ -59,6 +64,7 @@ jobs:
           assert len(strategy['managers']) == data['league']['manager_count']
           assert market['status'] == 'SUCCESS'
           assert 'decisions' in history
+          assert 'snapshots' in rec_history
           print('Validation passed')
           PY
 
