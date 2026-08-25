@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="pick-team-pitch.css?v=20260825-1247" />
   <link rel="stylesheet" href="pick-team-rationale.css?v=20260825-1606" />
   <link rel="stylesheet" href="chip-window.css?v=20260825-1624" />
+  <link rel="stylesheet" href="player-pool.css?v=20260825-1641" />
   <link rel="stylesheet" href="fdr-ui.css?v=20260825-1247" />
   <link rel="stylesheet" href="plan-state.css?v=20260825-1247" />
   <link rel="stylesheet" href="eo-strategy.css?v=20260825-1247" />
@@ -29,20 +30,24 @@
       <button data-view="transfer">Transfer</button>
       <button data-view="team">Pick Team</button>
       <button data-view="shape">Squad Shape</button>
+      <button data-view="pool">Player Pool</button>
       <button data-view="intel">League Intel</button>
     </nav>
 
     <section class="dashboard-view" id="view-transfer"><div id="dc-transfer-view"></div></section>
     <section class="dashboard-view" id="view-team"><div id="dc-team-view"></div></section>
     <section class="dashboard-view" id="view-shape"><div id="eo-strategy"></div><div id="dc-shape-view"></div></section>
+    <section class="dashboard-view" id="view-pool">
+      <div id="player-pool"></div>
+      <section class="market-grid">
+        <section class="panel"><div class="panel-head"><div><p class="eyebrow">RISE WATCH</p><h2>Popular transfer-ins</h2></div><div class="subtle">Broader market context</div></div><div id="rise-watch"></div></section>
+        <section class="panel"><div class="panel-head"><div><p class="eyebrow">FALL WATCH</p><h2>Popular transfer-outs</h2></div><div class="subtle">Broader market context</div></div><div id="fall-watch"></div></section>
+      </section>
+    </section>
 
     <section class="dashboard-view" id="view-intel">
       <section class="panel"><div class="panel-head"><div><p class="eyebrow">NEXT ACTION</p><h2>What matters now</h2></div></div><div class="action-grid" id="action-grid"></div></section>
       <section class="panel"><div class="panel-head"><div><p class="eyebrow">MARKET & URGENCY</p><h2>Price pressure before tonight's change</h2></div><div class="subtle">Football decision first · price changes 00:00 UK</div></div><div id="market-urgency"></div></section>
-      <section class="market-grid">
-        <section class="panel"><div class="panel-head"><div><p class="eyebrow">RISE WATCH</p><h2>Popular transfer-ins</h2></div></div><div id="rise-watch"></div></section>
-        <section class="panel"><div class="panel-head"><div><p class="eyebrow">FALL WATCH</p><h2>Popular transfer-outs</h2></div></div><div id="fall-watch"></div></section>
-      </section>
       <section class="panel"><div class="panel-head"><div><p class="eyebrow">RIVAL TARGETING</p><h2>Who you are trying to beat next</h2></div><div class="subtle">Nearest managers above you</div></div><div id="target-rivals" class="target-grid"></div></section>
       <section class="panel"><div class="panel-head"><div><p class="eyebrow">CHIP INTELLIGENCE</p><h2>What everyone has spent — and still holds</h2></div><div class="subtle">Current half-season chip inventory</div></div><div id="chip-table" class="chip-table"></div></section>
       <section class="strategy-grid"><section class="panel"><div class="panel-head"><div><p class="eyebrow">BLANK / DOUBLE WATCH</p><h2>Schedule pivots</h2></div><div class="subtle">Official FPL assignment = confirmed</div></div><div id="schedule-watch" class="schedule-watch"></div></section><section class="panel"><div class="panel-head"><div><p class="eyebrow">SCOUT WATCH</p><h2>Fantasy Football Scout signals</h2></div><div class="subtle">Potential / early-warning only</div></div><div id="scout-watch" class="scout-list"></div></section></section>
@@ -72,11 +77,12 @@
   <script src="plan-state-v2.js?v=20260825-1329"></script>
   <script src="pick-team-pitch.js?v=20260825-1247"></script>
   <script src="pick-team-rationale.js?v=20260825-1606"></script>
+  <script src="player-pool.js?v=20260825-1641"></script>
   <script src="eo-strategy.js?v=20260825-1247"></script>
   <script src="exposure-ui.js?v=20260825-1247"></script>
   <script src="effective-squad-sync.js?v=20260825-1247"></script>
   <script src="metrics-consistency.js?v=20260825-1247"></script>
   <script src="fdr-ui.js?v=20260825-1247"></script>
-  <script src="swipe-tabs.js?v=20260825-1508"></script>
+  <script src="swipe-tabs.js?v=20260825-1641"></script>
 </body>
 </html>
