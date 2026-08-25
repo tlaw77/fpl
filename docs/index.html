@@ -9,11 +9,11 @@
   <link rel="stylesheet" href="strategy.css" />
   <link rel="stylesheet" href="market.css" />
   <link rel="stylesheet" href="decision-centre.css" />
-  <link rel="stylesheet" href="pick-team-pitch.css?v=20260825-1159" />
-  <link rel="stylesheet" href="fdr-ui.css?v=20260825-1159" />
-  <link rel="stylesheet" href="plan-state.css?v=20260825-1159" />
-  <link rel="stylesheet" href="eo-strategy.css?v=20260825-1159" />
-  <link rel="stylesheet" href="exposure-ui.css?v=20260825-1159" />
+  <link rel="stylesheet" href="pick-team-pitch.css?v=20260825-1241" />
+  <link rel="stylesheet" href="fdr-ui.css?v=20260825-1241" />
+  <link rel="stylesheet" href="plan-state.css?v=20260825-1241" />
+  <link rel="stylesheet" href="eo-strategy.css?v=20260825-1241" />
+  <link rel="stylesheet" href="exposure-ui.css?v=20260825-1241" />
 </head>
 <body>
   <main class="shell">
@@ -21,7 +21,7 @@
       <div><p class="eyebrow">FPL DECISION CENTRE</p><h1 id="league-title">Loading…</h1><p class="subtle" id="last-updated">Fetching latest snapshot</p><p class="subtle" id="strategy-updated"></p><p class="subtle" id="market-updated"></p></div>
       <div class="gw-pill" id="gw-pill">GW —</div>
     </header>
-    <div id="ui-build-status" style="margin:0 0 10px;padding:7px 10px;border:1px solid rgba(232,255,93,.24);border-radius:10px;background:rgba(232,255,93,.06);color:#aab8cc;font:700 10px/1.35 system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;letter-spacing:.02em">UI BUILD 25 AUG 11:59 IST · PLAN JS checking · TOUCH CTRL checking · STORAGE checking · COMMIT waiting</div>
+    <div id="ui-build-status" style="margin:0 0 10px;padding:7px 10px;border:1px solid rgba(232,255,93,.24);border-radius:10px;background:rgba(232,255,93,.06);color:#aab8cc;font:700 10px/1.35 system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;letter-spacing:.02em">UI BUILD 26 · PLAN V2 loading · COMMIT waiting</div>
     <section class="kpi-grid" id="kpi-grid"></section>
 
     <nav class="decision-nav" id="decision-nav" aria-label="Dashboard views">
@@ -62,28 +62,18 @@
   </main>
   <script src="app.js"></script>
   <script src="relative.js"></script>
-  <script src="explainability.js?v=20260825-1159"></script>
+  <script src="explainability.js?v=20260825-1241"></script>
   <script src="owner-names.js"></script>
   <script src="strategy.js"></script>
-  <script src="market.js?v=20260825-1159"></script>
+  <script src="market.js?v=20260825-1241"></script>
   <script src="timestamps.js"></script>
   <script src="decision-centre.js"></script>
-  <script src="plan-state.js?v=20260825-1159"></script>
-  <script src="plan-commit-fallback.js?v=20260825-1159"></script>
-  <script src="plan-commit-direct.js?v=20260825-1159"></script>
-  <script src="pick-team-pitch.js?v=20260825-1159"></script>
-  <script src="eo-strategy.js?v=20260825-1159"></script>
-  <script src="exposure-ui.js?v=20260825-1159"></script>
-  <script src="effective-squad-sync.js?v=20260825-1159"></script>
-  <script src="metrics-consistency.js?v=20260825-1159"></script>
-  <script src="fdr-ui.js?v=20260825-1159"></script>
-  <script>
-    (function(){
-      const el=document.getElementById('ui-build-status');
-      function storageState(){try{const k='__fpl_diag__';localStorage.setItem(k,'1');localStorage.removeItem(k);return 'OK'}catch(e){return 'BLOCKED'}}
-      function refresh(){if(!el)return;const plan=window.FPLPlan?'READY':'MISSING';const touch=window.FPLCommitFallback?'READY':'MISSING';const direct=window.FPLDirectCommit?'READY':'MISSING';const storage=storageState();const commit=(el.textContent.match(/ · COMMIT (.*)$/)||[])[1]||'waiting';el.textContent=`UI BUILD 25 AUG 11:59 IST · PLAN JS ${plan} · TOUCH CTRL ${touch} · DIRECT ${direct} · STORAGE ${storage} · COMMIT ${commit}`;el.style.borderColor=(plan==='READY'&&touch==='READY'&&direct==='READY'&&storage==='OK')?'rgba(94,234,212,.38)':'rgba(251,113,133,.5)';el.style.color=(plan==='READY'&&touch==='READY'&&direct==='READY'&&storage==='OK')?'#9ff4df':'#fda4af'}
-      setTimeout(refresh,250);setTimeout(refresh,1000);setTimeout(refresh,2500);
-    })();
-  </script>
+  <script src="plan-state-v2.js?v=20260825-1241"></script>
+  <script src="pick-team-pitch.js?v=20260825-1241"></script>
+  <script src="eo-strategy.js?v=20260825-1241"></script>
+  <script src="exposure-ui.js?v=20260825-1241"></script>
+  <script src="effective-squad-sync.js?v=20260825-1241"></script>
+  <script src="metrics-consistency.js?v=20260825-1241"></script>
+  <script src="fdr-ui.js?v=20260825-1241"></script>
 </body>
 </html>
