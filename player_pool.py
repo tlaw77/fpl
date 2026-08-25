@@ -7,13 +7,14 @@ BASE='https://fantasy.premierleague.com/api'
 LATEST=Path('data/latest.json'); OUT=Path('data/player_pool.json')
 
 def get(url):
-    req=urllib.request.Request(url,headers={'User-Agent':'fpl-player-pool/1.0'})
+    req=urllib.request.Request(url,headers={'User-Agent':'fpl-player-pool/1.1'})
     with urllib.request.urlopen(req,timeout=30) as r:return json.load(r)
 
 def main():
     b=get(f'{BASE}/bootstrap-static/'); fixtures=get(f'{BASE}/fixtures/')
     latest=json.loads(LATEST.read_text())
-    next_gw=int(latest.get('next_gw') or 2)
+    current_gw=int(latest.get('current_gw') or 1); next_gw=int(latest.get('next_gw') or current_gw+1)
+    reliability=min(1.0,max(.20,current_gw/5.0))
     teams={t['id']:t['name'] for t in b['teams']}; pos={x['id']:x['singular_name_short'] for x in b['element_types']}
     fx=defaultdict(list)
     for f in fixtures:
@@ -33,10 +34,11 @@ def main():
         avail=(p.get('chance_of_playing_next_round') if p.get('chance_of_playing_next_round') is not None else 100)/100
         form=float(p.get('form') or 0); ppg=float(p.get('points_per_game') or 0); global_own=float(p.get('selected_by_percent') or 0)
         mini=float((exposure.get(p['id']) or {}).get('ownership_pct') or 0); eo=float((exposure.get(p['id']) or {}).get('effective_ownership_pct') or mini)
-        score=round(form*1.35+ppg*1.15+ease*1.8+avail*2.0+global_own*.025+mini*.012,2)
+        observed=(min(form,12)*1.15+min(ppg,12)*.95)*reliability
+        score=round(observed+ease*2.15+avail*1.8+global_own*.045+mini*.018,2)
         role='Shield' if eo>=75 else ('Neutral' if eo>=40 else 'Leverage')
-        rows.append({'player_id':p['id'],'player':p['web_name'],'club':teams[p['team']],'position':pos[p['element_type']],'price':p['now_cost']/10,'availability':avail,'global_ownership_pct':global_own,'mini_league_ownership_pct':mini,'effective_ownership_pct':eo,'role':role,'form':form,'points_per_game':ppg,'fixtures':fs,'fixture_ease_6':round(ease,2),'six_gw_score':score,'in_public_squad':p['id'] in mine,'news':p.get('news') or ''})
+        rows.append({'player_id':p['id'],'player':p['web_name'],'club':teams[p['team']],'position':pos[p['element_type']],'price':p['now_cost']/10,'availability':avail,'global_ownership_pct':global_own,'mini_league_ownership_pct':mini,'effective_ownership_pct':eo,'role':role,'form':form,'points_per_game':ppg,'fixtures':fs,'fixture_ease_6':round(ease,2),'six_gw_score':score,'sample_reliability':round(reliability,2),'in_public_squad':p['id'] in mine,'news':p.get('news') or ''})
     rows.sort(key=lambda x:x['six_gw_score'],reverse=True)
-    OUT.write_text(json.dumps({'status':'SUCCESS','generated_at_utc':datetime.now(timezone.utc).isoformat(),'next_gw':next_gw,'horizon':6,'players':rows},indent=2,ensure_ascii=False)+'\n')
-    print(f'Wrote {OUT} with {len(rows)} players')
+    OUT.write_text(json.dumps({'status':'SUCCESS','generated_at_utc':datetime.now(timezone.utc).isoformat(),'current_gw':current_gw,'next_gw':next_gw,'horizon':6,'sample_reliability':round(reliability,2),'players':rows},indent=2,ensure_ascii=False)+'\n')
+    print(f'Wrote {OUT} with {len(rows)} players, reliability={reliability:.2f}')
 if __name__=='__main__':main()
