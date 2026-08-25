@@ -13,9 +13,17 @@
     const n=Number(d.league?.manager_count||8);
     el.innerHTML=(d.squad||[]).map(p=>{
       const e=exposureFor(d,p);const eo=e.effective_ownership_pct;const own=e.ownership_pct;const owned=e.owned_by;
-      const label=e.classification||'neutral';const gw=p.live_points??e.live_points;
-      const roleClass=typeof badgeClass==='function'?badgeClass(label):'neutral';
-      const roleText=typeof labelText==='function'?labelText(label):label;
+      const active=Number(e.my_multiplier??(p.starter?1:0))>0;
+      let label=e.classification||'neutral';let roleText,roleClass;
+      if(!active&&p.position!=='GKP'){
+        roleText='Bench differential';roleClass='neutral';
+      }else if(!active){
+        roleText='Bench';roleClass='neutral';
+      }else{
+        roleClass=typeof badgeClass==='function'?badgeClass(label):'neutral';
+        roleText=typeof labelText==='function'?labelText(label):label;
+      }
+      const gw=p.live_points??e.live_points;
       return `<div class="player-card exposure-card ${p.captain?'captain-ring':''}">
         <div class="player-name">${p.captain?'© ':''}${xEsc(p.player)}</div>
         <div class="player-meta">${xEsc(p.position)} · ${xEsc(p.club)} · £${Number(p.price||0).toFixed(1)}m</div>
