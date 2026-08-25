@@ -12,6 +12,7 @@ on:
       - "strategy_watch.py"
       - "market_watch.py"
       - "squad_intelligence.py"
+      - "chip_window.py"
       - ".github/workflows/fpl-etl.yml"
 
 permissions:
@@ -47,6 +48,9 @@ jobs:
       - name: Run squad intelligence
         run: python squad_intelligence.py
 
+      - name: Run chip window evaluation
+        run: python chip_window.py
+
       - name: Validate output
         run: |
           python - <<'PY'
@@ -56,6 +60,7 @@ jobs:
           strategy = json.loads(Path('data/strategy.json').read_text())
           market = json.loads(Path('data/market.json').read_text())
           squad_intel = json.loads(Path('data/squad_intelligence.json').read_text())
+          chip_window = json.loads(Path('data/chip_window.json').read_text())
           history = json.loads(Path('data/decision_history.json').read_text())
           rec_history = json.loads(Path('data/recommendation_history.json').read_text())
           assert data['status'] == 'SUCCESS'
@@ -70,6 +75,8 @@ jobs:
           assert market['status'] == 'SUCCESS'
           assert squad_intel['status'] == 'SUCCESS'
           assert len(squad_intel['managers']) == data['league']['manager_count']
+          assert chip_window['status'] == 'SUCCESS'
+          assert len(chip_window['evaluations']) == 4
           assert 'decisions' in history
           assert 'snapshots' in rec_history
           print('Validation passed')
