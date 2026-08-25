@@ -11,6 +11,7 @@ on:
       - "recommendation_history.py"
       - "strategy_watch.py"
       - "market_watch.py"
+      - "squad_intelligence.py"
       - ".github/workflows/fpl-etl.yml"
 
 permissions:
@@ -43,6 +44,9 @@ jobs:
       - name: Run market watch
         run: python market_watch.py
 
+      - name: Run squad intelligence
+        run: python squad_intelligence.py
+
       - name: Validate output
         run: |
           python - <<'PY'
@@ -51,6 +55,7 @@ jobs:
           data = json.loads(Path('data/latest.json').read_text())
           strategy = json.loads(Path('data/strategy.json').read_text())
           market = json.loads(Path('data/market.json').read_text())
+          squad_intel = json.loads(Path('data/squad_intelligence.json').read_text())
           history = json.loads(Path('data/decision_history.json').read_text())
           rec_history = json.loads(Path('data/recommendation_history.json').read_text())
           assert data['status'] == 'SUCCESS'
@@ -63,6 +68,8 @@ jobs:
           assert strategy['status'] == 'SUCCESS'
           assert len(strategy['managers']) == data['league']['manager_count']
           assert market['status'] == 'SUCCESS'
+          assert squad_intel['status'] == 'SUCCESS'
+          assert len(squad_intel['managers']) == data['league']['manager_count']
           assert 'decisions' in history
           assert 'snapshots' in rec_history
           print('Validation passed')
