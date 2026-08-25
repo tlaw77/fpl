@@ -1,7 +1,7 @@
 (()=>{
 const DATA='https://raw.githubusercontent.com/tlaw77/fpl/main/data/player_pool.json';
 const LATEST='https://raw.githubusercontent.com/tlaw77/fpl/main/data/latest.json';
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#039;'}[c]));
 let pool=null,latest=null,state={pos:'ALL',max:20,sort:'score',q:''};
 function plan(){try{return JSON.parse(localStorage.getItem('fplWorkingPlanV2')||'null')}catch{return null}}
 function effectiveIds(){const ids=new Set((latest?.current_squad_next5||latest?.squad_next5||[]).map(x=>x.player_id));for(const m of plan()?.moves||[]){ids.delete(m.out?.player_id);ids.add(m.in?.player_id)}return ids}
@@ -27,5 +27,11 @@ bindTab();boot();window.addEventListener('fplPlanChanged',render);window.FPLPlay
   }
   if(!document.querySelector('script[data-strategic-outlook]')){
     const js=document.createElement('script');js.src='strategic-outlook.js?v=20260825-1658';js.dataset.strategicOutlook='1';document.body.appendChild(js);
+  }
+  if(!document.querySelector('link[data-scout-consensus]')){
+    const css=document.createElement('link');css.rel='stylesheet';css.href='scout-consensus.css?v=20260825-1740';css.dataset.scoutConsensus='1';document.head.appendChild(css);
+  }
+  if(!document.querySelector('script[data-scout-consensus]')){
+    const js=document.createElement('script');js.src='scout-consensus.js?v=20260825-1740';js.dataset.scoutConsensus='1';document.body.appendChild(js);
   }
 })();
