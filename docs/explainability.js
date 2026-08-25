@@ -1,6 +1,6 @@
 const Explainability = (()=>{
-  const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#039;'}[c]));
-  const pct=v=>`${Number(v||0).toFixed(0)}%`;
+  const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+  const pct=v=>`${Number(v||0).toFixed(1)}%`;
   const confidence=(p,extra=0)=>{const availability=Number(p?.availability??1);const fixtures=Number(p?.fixture_ease_next5??3);const score=Number(p?.decision_score??0);const newsPenalty=p?.news?18:0;const raw=50+(availability*20)+((fixtures-3)*8)+Math.min(15,score)+extra-newsPenalty;return Math.max(5,Math.min(95,Math.round(raw)))};
   const tone=c=>c>=80?'high':c>=60?'medium':'low';
   const fixtureReason=p=>{const fs=(p?.fixtures||[]).slice(0,3);if(!fs.length)return'Fixture run unavailable';const avg=fs.reduce((a,f)=>a+Number(f.difficulty||3),0)/fs.length;return avg<=2.4?'Strong short-term fixtures':avg>=3.6?'Difficult short-term fixtures':'Mixed short-term fixtures'};
