@@ -16,3 +16,16 @@ async function boot(){try{const [a,b]=await Promise.all([fetch(`${DATA}?t=${Date
 function bindTab(){const btn=document.querySelector('#decision-nav button[data-view="pool"]');if(btn)btn.addEventListener('click',()=>{document.querySelectorAll('.dashboard-view').forEach(v=>v.style.display='none');document.querySelectorAll('#decision-nav button').forEach(x=>x.classList.remove('active'));document.getElementById('view-pool').style.display='block';btn.classList.add('active')});document.querySelectorAll('#decision-nav button:not([data-view="pool"])').forEach(b=>b.addEventListener('click',()=>{const p=document.getElementById('view-pool');if(p)p.style.display='none'}))}
 bindTab();boot();window.addEventListener('fplPlanChanged',render);window.FPLPlayerPool={render};
 })();
+
+(()=>{
+  const shape=document.getElementById('view-shape');
+  if(shape&&!document.getElementById('strategic-outlook')){
+    const host=document.createElement('div');host.id='strategic-outlook';shape.prepend(host);
+  }
+  if(!document.querySelector('link[data-strategic-outlook]')){
+    const css=document.createElement('link');css.rel='stylesheet';css.href='strategic-outlook.css?v=20260825-1658';css.dataset.strategicOutlook='1';document.head.appendChild(css);
+  }
+  if(!document.querySelector('script[data-strategic-outlook]')){
+    const js=document.createElement('script');js.src='strategic-outlook.js?v=20260825-1658';js.dataset.strategicOutlook='1';document.body.appendChild(js);
+  }
+})();
