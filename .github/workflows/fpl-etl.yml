@@ -15,6 +15,7 @@ on:
       - "chip_window.py"
       - "player_pool.py"
       - "scout_consensus.py"
+      - "exposure_semantics.py"
       - ".github/workflows/fpl-etl.yml"
 
 permissions:
@@ -40,6 +41,9 @@ jobs:
 
       - name: Reconstruct current squad and decision journal
         run: python current_squad.py
+
+      - name: Normalize exposure semantics
+        run: python exposure_semantics.py
 
       - name: Run strategy watch
         run: python strategy_watch.py
@@ -80,6 +84,8 @@ jobs:
           assert data['league']['manager_count'] >= 1
           assert 'next_gw_decisions' in data
           assert 'current_next_gw_decisions' in data
+          assert data.get('exposure_semantics', {}).get('version') == 2
+          assert all(x.get('classification') != 'leverage' or (x.get('my_multiplier') or 0) > 0 for x in data.get('player_exposure', []) if x.get('in_my_team'))
           assert strategy['status'] == 'SUCCESS'
           assert len(strategy['managers']) == data['league']['manager_count']
           assert market['status'] == 'SUCCESS'
@@ -106,8 +112,6 @@ jobs:
             echo "No snapshot changes to commit"
           else
             git commit -m "Update FPL snapshot"
-            # UI/code commits can land while this job is running. Rebase the data-only
-            # snapshot commit onto the latest main before pushing so that doesn't fail.
             git pull --rebase origin main
             git push origin main
           fi
