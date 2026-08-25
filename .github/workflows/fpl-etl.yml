@@ -106,5 +106,8 @@ jobs:
             echo "No snapshot changes to commit"
           else
             git commit -m "Update FPL snapshot"
-            git push
+            # UI/code commits can land while this job is running. Rebase the data-only
+            # snapshot commit onto the latest main before pushing so that doesn't fail.
+            git pull --rebase origin main
+            git push origin main
           fi
