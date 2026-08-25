@@ -5,5 +5,23 @@ function renderChipTable(d){const el=document.querySelector('#chip-table');if(!e
 function renderSchedule(d){const el=document.querySelector('#schedule-watch');if(!el)return;const events=d.confirmed_blank_double_events||[];const unassigned=d.unassigned_fixtures||[];const confirmed=events.length?events.slice(0,8).map(e=>`<div class="schedule-card"><div class="schedule-gw">GW${e.gw}</div><div><strong>${e.double_teams?.length?'Double: '+e.double_teams.join(', '):'No confirmed doubles'}</strong><div class="subtle">${e.blank_teams?.length?'Blank: '+e.blank_teams.join(', '):'No confirmed blanks'}</div></div></div>`).join(''):'<div class="subtle">No confirmed future blanks or doubles in the current official FPL fixture assignment.</div>';const pending=unassigned.length?`<div class="schedule-warning"><strong>${unassigned.length} unassigned fixture${unassigned.length===1?'':'s'}</strong><div class="subtle">These are the strongest official signal that a future Blank/Double pivot may emerge.</div>${unassigned.slice(0,6).map(f=>`<div>${sEsc(f.home)} v ${sEsc(f.away)}</div>`).join('')}</div>`:'';el.innerHTML=confirmed+pending}
 function renderScout(d){const el=document.querySelector('#scout-watch');if(!el)return;const w=d.scout_watch||{};const items=w.items||[];if(!items.length){el.innerHTML=`<div class="subtle">Fantasy Football Scout watch has no current-season alerts yet${w.errors?.length?' (source access issue recorded)':''}.</div>`;return;}el.innerHTML=items.slice(0,8).map(i=>`<a class="scout-item" href="${sEsc(i.url)}" target="_blank" rel="noopener"><strong>${sEsc(i.title)}</strong><span>${sEsc(i.published||'')} · Fantasy Football Scout</span></a>`).join('')}
 function renderStrategyNotes(d){const el=document.querySelector('#chip-notes');if(!el)return;const chipCtx=d.current_gw_chip_context||[];const notes=d.strategic_notes||[];const ctx=chipCtx.map(x=>`<div class="strategy-note"><strong>${sEsc(x.manager)} · ${sEsc(x.chip)}</strong><span>${x.estimated_chip_gain!==null&&x.estimated_chip_gain!==undefined?`Estimated chip-driven gain: ${x.estimated_chip_gain} pts${x.estimated_no_chip_points!==null&&x.estimated_no_chip_points!==undefined?` · approx no-chip score ${x.estimated_no_chip_points}`:''}. `:''}${sEsc(x.note)}</span></div>`).join('');const strategic=notes.map(n=>`<div class="strategy-note"><strong>${sEsc(n.manager)}</strong><span>${sEsc(n.note)}</span></div>`).join('');el.innerHTML=(ctx+strategic)||'<div class="subtle">No current chip edge/disadvantage versus the nearest rivals.</div>'}
-async function renderStrategy(){try{const r=await fetch(`${STRATEGY_URL}?t=${Date.now()}`,{cache:'no-store'});if(!r.ok)throw new Error(`HTTP ${r.status}`);const d=await r.json();renderChipTable(d);renderSchedule(d);renderScout(d);renderStrategyNotes(d);const stamp=document.querySelector('#strategy-updated');if(stamp)stamp.textContent=`Strategy watch: ${new Date(d.generated_at_utc).toLocaleString()}`;}catch(e){for(const id of ['#chip-table','#schedule-watch','#scout-watch','#chip-notes']){const el=document.querySelector(id);if(el)el.innerHTML='<div class="subtle">Strategy watch is waiting for its first successful refresh.</div>';}}}
+function loadSquadIntel(){
+  const host=document.querySelector('#chip-table');
+  if(host){
+    const panel=host.closest('.panel');
+    const eyebrow=panel?.querySelector('.eyebrow');
+    const title=panel?.querySelector('h2');
+    const subtle=panel?.querySelector('.panel-head .subtle');
+    if(eyebrow)eyebrow.textContent='SQUAD INTELLIGENCE';
+    if(title)title.textContent='How rivals are building and behaving';
+    if(subtle)subtle.textContent='Chips · club stacks · squad style · transfer history';
+  }
+  if(!document.querySelector('link[data-squad-intel]')){
+    const l=document.createElement('link');l.rel='stylesheet';l.href='squad-intelligence.css?v=20260825-1523';l.dataset.squadIntel='1';document.head.appendChild(l);
+  }
+  if(!document.querySelector('script[data-squad-intel]')){
+    const s=document.createElement('script');s.src='squad-intelligence.js?v=20260825-1523';s.dataset.squadIntel='1';document.body.appendChild(s);
+  }
+}
+async function renderStrategy(){try{const r=await fetch(`${STRATEGY_URL}?t=${Date.now()}`,{cache:'no-store'});if(!r.ok)throw new Error(`HTTP ${r.status}`);const d=await r.json();renderChipTable(d);renderSchedule(d);renderScout(d);renderStrategyNotes(d);const stamp=document.querySelector('#strategy-updated');if(stamp)stamp.textContent=`Strategy watch: ${new Date(d.generated_at_utc).toLocaleString()}`;loadSquadIntel();}catch(e){for(const id of ['#chip-table','#schedule-watch','#scout-watch','#chip-notes']){const el=document.querySelector(id);if(el)el.innerHTML='<div class="subtle">Strategy watch is waiting for its first successful refresh.</div>';}}}
 renderStrategy();
