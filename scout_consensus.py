@@ -4,7 +4,7 @@ import re
 import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
-from collections import Counter, defaultdict
+from collections import defaultdict
 from datetime import datetime, timezone, timedelta
 from email.utils import parsedate_to_datetime
 from pathlib import Path
@@ -14,7 +14,6 @@ LATEST = Path('data/latest.json')
 POOL = Path('data/player_pool.json')
 OUT = Path('data/scout_consensus.json')
 
-# Source weights are credibility/context weights, not truth scores.
 SOURCE_WEIGHTS = {
     'Premier League': 1.00,
     'Fantasy Football Scout': 0.95,
@@ -38,7 +37,7 @@ DIRECT = [
 
 
 def get_text(url):
-    req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 fpl-scout-consensus/1.0'})
+    req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 fpl-scout-consensus/1.1'})
     with urllib.request.urlopen(req, timeout=25) as r:
         return r.read().decode('utf-8', errors='ignore')
 
@@ -75,7 +74,6 @@ def player_aliases(elements):
         full = f"{p.get('first_name') or ''} {p.get('second_name') or ''}".strip()
         if full:
             names.add(full)
-        # Avoid ambiguous one/two-letter aliases and common first names.
         for n in names:
             n = n.strip()
             if len(n) >= 4:
@@ -130,7 +128,6 @@ def direct_mentions(gw):
             text = get_text(url)
         except Exception:
             continue
-        # Keep only anchors that look FPL/GW relevant. This is intentionally shallow; news RSS carries the breadth.
         for href, raw_title in re.findall(r'<a[^>]+href=["\']([^"\']+)["\'][^>]*>(.*?)</a>', text, re.I | re.S):
             title = strip_tags(raw_title)
             if len(title) < 12:
@@ -160,6 +157,60 @@ def merit_label(source_count, weighted_mentions, model_score, pool_rank, owned):
     return 'Monitor'
 
 
+def article_topics(arts):
+    text = ' '.join(f"{a.get('title','')} {a.get('summary','')}" for a in arts).lower()
+    topics = []
+    tests = [
+        ('Scout Picks consideration', r'scout picks|picks team|bus team|top picks'),
+        ('buy/hold/sell debate', r'buy|keep or sell|hold|transfer in|transfer out'),
+        ('captaincy consideration', r'captain|captaincy|armband'),
+        ('differential/value appeal', r'differential|budget|bargain|value'),
+        ('fixture-run appeal', r'fixture|fixtures|run of games|schedule'),
+        ('team-news/minutes discussion', r'team news|predicted line|minutes|start|rotation|injur'),
+        ('form/underlying-performance discussion', r'form|xg|xa|expected|shots|chances|returns'),
+    ]
+    for label, pattern in tests:
+        if re.search(pattern, text, re.I):
+            topics.append(label)
+    return topics[:4]
+
+
+def synopsis(arts, sources):
+    topics = article_topics(arts)
+    src = ', '.join(sources[:3]) if sources else 'scouting sources'
+    if not topics:
+        return f'Mentioned by {src} in current-Gameweek scouting coverage.'
+    if len(topics) == 1:
+        return f'{src} coverage centres on {topics[0]}.'
+    return f"{src} coverage centres on {', '.join(topics[:-1])} and {topics[-1]}."
+
+
+def why_it_matters(poolp, rank, owned, source_count):
+    bits = []
+    if rank is not None:
+        if rank <= 10:
+            bits.append(f'our 6GW model ranks him #{rank}')
+        elif rank <= 25:
+            bits.append(f'our 6GW model also rates him strongly at #{rank}')
+        elif rank > 50 and source_count >= 2:
+            bits.append(f'our 6GW model is much cooler at #{rank}, so this may be hype ahead of evidence')
+    fixtures = poolp.get('fixtures') or []
+    if fixtures:
+        easy = sum(1 for f in fixtures if (f.get('difficulty') or 3) <= 2)
+        hard = sum(1 for f in fixtures if (f.get('difficulty') or 3) >= 4)
+        if easy >= 3:
+            bits.append(f'{easy} of the next {len(fixtures)} fixtures are favourable')
+        elif hard >= 3:
+            bits.append(f'{hard} of the next {len(fixtures)} fixtures are difficult')
+    if owned:
+        bits.append('you already own him, so this primarily strengthens or challenges a hold decision')
+    elif source_count >= 2:
+        bits.append('multiple independent mentions make him worth comparing with your weakest same-position asset')
+    if not bits:
+        bits.append('the external mention is useful discovery context, but not yet strong enough to override the model')
+    return '; '.join(bits) + '.'
+
+
 def main():
     latest = json.loads(LATEST.read_text())
     pool = json.loads(POOL.read_text()) if POOL.exists() else {'players': []}
@@ -174,7 +225,6 @@ def main():
     effective_ids = {p.get('player_id') for p in (latest.get('current_squad_next5') or latest.get('squad_next5') or [])}
 
     raw = google_news(gw) + direct_mentions(gw)
-    # de-dupe by normalized title + source
     dedup = []
     seen = set()
     for x in raw:
@@ -198,6 +248,7 @@ def main():
         poolp = pool_by_id.get(pid, {})
         score = poolp.get('six_gw_score')
         rank = pool_rank.get(pid)
+        owned = pid in effective_ids
         players.append({
             'player_id': pid,
             'player': p.get('web_name'),
@@ -210,8 +261,11 @@ def main():
             'sources': sources,
             'six_gw_score': score,
             'six_gw_rank': rank,
-            'in_public_squad': pid in effective_ids,
-            'merit': merit_label(len(sources), weighted, score, rank, pid in effective_ids),
+            'in_public_squad': owned,
+            'merit': merit_label(len(sources), weighted, score, rank, owned),
+            'synopsis': synopsis(arts, sources),
+            'why_it_matters': why_it_matters(poolp, rank, owned, len(sources)),
+            'topics': article_topics(arts),
             'articles': sorted(arts, key=lambda a: a.get('published') or '', reverse=True)[:6],
         })
 
@@ -223,7 +277,7 @@ def main():
         'next_gw': gw,
         'article_count': len(dedup),
         'players': players[:60],
-        'method_note': 'Public scouting mentions are discovery signals, not recommendations. Source breadth is weighted by source type, then compared with the dashboard six-GW model. Article text is not reproduced.',
+        'method_note': 'Public scouting mentions are discovery signals, not recommendations. Source breadth is weighted by source type, then compared with the dashboard six-GW model. Synopses are generated from article titles/search summaries and do not reproduce article text.',
     }
     OUT.write_text(json.dumps(out, indent=2, ensure_ascii=False) + '\n')
     print(json.dumps({'status': 'SUCCESS', 'gw': gw, 'articles': len(dedup), 'players': len(players)}))
