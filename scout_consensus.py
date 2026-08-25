@@ -17,6 +17,7 @@ OUT = Path('data/scout_consensus.json')
 SOURCE_WEIGHTS = {
     'Premier League': 1.00,
     'Fantasy Football Scout': 0.95,
+    'BBC Sport': 0.88,
     'Fantasy Football Hub': 0.80,
     'Fantasy Football Fix': 0.78,
     'The Athletic': 0.78,
@@ -28,6 +29,7 @@ NEWS_QUERIES = [
     'FPL Gameweek {gw} scout picks',
     'FPL Gameweek {gw} differentials',
     'FPL Gameweek {gw} captain transfers',
+    'BBC Sport Premier League Gameweek {gw} injuries team news players',
 ]
 
 DIRECT = [
@@ -37,7 +39,7 @@ DIRECT = [
 
 
 def get_text(url):
-    req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 fpl-scout-consensus/1.1'})
+    req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 fpl-scout-consensus/1.2'})
     with urllib.request.urlopen(req, timeout=25) as r:
         return r.read().decode('utf-8', errors='ignore')
 
@@ -56,6 +58,8 @@ def source_bucket(name, url=''):
         return 'Premier League'
     if 'fantasy football scout' in text or 'fantasyfootballscout' in text:
         return 'Fantasy Football Scout'
+    if 'bbc sport' in text or 'bbc.co.uk/sport' in text or 'bbc.com/sport' in text:
+        return 'BBC Sport'
     if 'fantasy football hub' in text or 'fantasyfootballhub' in text:
         return 'Fantasy Football Hub'
     if 'fantasy football fix' in text or 'fantasyfootballfix' in text:
@@ -166,7 +170,7 @@ def article_topics(arts):
         ('captaincy consideration', r'captain|captaincy|armband'),
         ('differential/value appeal', r'differential|budget|bargain|value'),
         ('fixture-run appeal', r'fixture|fixtures|run of games|schedule'),
-        ('team-news/minutes discussion', r'team news|predicted line|minutes|start|rotation|injur'),
+        ('team-news/minutes discussion', r'team news|predicted line|minutes|start|rotation|injur|fitness|doubt'),
         ('form/underlying-performance discussion', r'form|xg|xa|expected|shots|chances|returns'),
     ]
     for label, pattern in tests:
@@ -277,7 +281,7 @@ def main():
         'next_gw': gw,
         'article_count': len(dedup),
         'players': players[:60],
-        'method_note': 'Public scouting mentions are discovery signals, not recommendations. Source breadth is weighted by source type, then compared with the dashboard six-GW model. Synopses are generated from article titles/search summaries and do not reproduce article text.',
+        'method_note': 'Public scouting mentions are discovery signals, not recommendations. Premier League/FFS provide direct FPL analysis; BBC Sport is weighted strongly for team news and football context; forums are lower-confidence. Source breadth is then compared with the dashboard six-GW model. Synopses are generated from article titles/search summaries and do not reproduce article text.',
     }
     OUT.write_text(json.dumps(out, indent=2, ensure_ascii=False) + '\n')
     print(json.dumps({'status': 'SUCCESS', 'gw': gw, 'articles': len(dedup), 'players': len(players)}))
