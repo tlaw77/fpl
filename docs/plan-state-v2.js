@@ -1,5 +1,5 @@
 (()=>{
-const BUILD='30', KEY='fplWorkingPlanV2', DATA='https://raw.githubusercontent.com/tlaw77/fpl/main/data/latest.json';
+const BUILD='31', KEY='fplWorkingPlanV2', DATA='https://raw.githubusercontent.com/tlaw77/fpl/main/data/latest.json';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
 const read=()=>{try{return JSON.parse(localStorage.getItem(KEY)||'null')}catch{return null}};
 const emit=p=>window.dispatchEvent(new CustomEvent('fplPlanChanged',{detail:p}));
@@ -11,8 +11,6 @@ function apply(rows,plan){let out=(rows||[]).map(x=>({...x}));for(const m of pla
 function bank(d,plan){let b=Number(d.current_bank??d.me?.bank??0);for(const m of plan?.moves||[])b+=Number(m.out.price||0)-Number(m.in.price||0);return b}
 function officialFeedCaughtUp(d){return d?.current_squad_source==='transfer_history_reconstruction'&&Array.isArray(d?.current_squad_transfers)&&d.current_squad_transfers.length>0}
 function reconcile(d){let p=read();if(!p)return null;if(String(p.entry_id)!==String(d.me?.entry_id)||Number(p.base_gw)!==Number(d.current_gw)){clear();return null}
-  // Critical: never infer official catch-up from locally overlaid/effective rows.
-  // Only reconcile committed moves away when the explicit public transfer-history reconstruction says the official feed caught up.
   if(!officialFeedCaughtUp(d))return p;
   const ids=new Set((d.current_squad_next5||d.squad_next5||[]).map(x=>x.player_id));
   const remaining=(p.moves||[]).filter(m=>!(!ids.has(m.out.player_id)&&ids.has(m.in.player_id)));
