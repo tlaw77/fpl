@@ -14,6 +14,7 @@ on:
       - "squad_intelligence.py"
       - "chip_window.py"
       - "player_pool.py"
+      - "scout_consensus.py"
       - ".github/workflows/fpl-etl.yml"
 
 permissions:
@@ -55,6 +56,9 @@ jobs:
       - name: Run six-GW player pool
         run: python player_pool.py
 
+      - name: Run scout consensus
+        run: python scout_consensus.py
+
       - name: Validate output
         run: |
           python - <<'PY'
@@ -66,6 +70,7 @@ jobs:
           squad_intel = json.loads(Path('data/squad_intelligence.json').read_text())
           chip_window = json.loads(Path('data/chip_window.json').read_text())
           player_pool = json.loads(Path('data/player_pool.json').read_text())
+          scout_consensus = json.loads(Path('data/scout_consensus.json').read_text())
           history = json.loads(Path('data/decision_history.json').read_text())
           rec_history = json.loads(Path('data/recommendation_history.json').read_text())
           assert data['status'] == 'SUCCESS'
@@ -85,6 +90,8 @@ jobs:
           assert player_pool['status'] == 'SUCCESS'
           assert player_pool['horizon'] == 6
           assert len(player_pool['players']) > 50
+          assert scout_consensus['status'] == 'SUCCESS'
+          assert 'players' in scout_consensus
           assert 'decisions' in history
           assert 'snapshots' in rec_history
           print('Validation passed')
