@@ -1,6 +1,6 @@
 (()=>{
   const cls=n=>`fdr-${Math.max(1,Math.min(5,Number(n)||3))}`;
-  const badge=(n,compact=false)=>`<span class="fdr-decal ${cls(n)}${compact?' compact':''}" title="Fixture Difficulty Rating ${Number(n)||3}">${Number(n)||3}</span>`;
+  const badge=(n,compact=false)=>`<span class="fdr-decal ${cls(n)}${compact?' compact':''}" title="Fixture Difficulty Rating ${Number(n)||3}" aria-label="Fixture Difficulty Rating ${Number(n)||3}"></span>`;
   function decorate(root=document){
     const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode(node){
       if(!node.nodeValue||!/(?:FDR\s*[1-5]|\([1-5]\))/.test(node.nodeValue))return NodeFilter.FILTER_REJECT;
@@ -14,7 +14,7 @@
       const re=/FDR\s*([1-5])|\(([1-5])\)/g;let m;
       while((m=re.exec(text))){
         if(m.index>last)frag.append(document.createTextNode(text.slice(last,m.index)));
-        const n=Number(m[1]||m[2]);const span=document.createElement('span');span.className=`fdr-decal ${cls(n)}`;span.title=`Fixture Difficulty Rating ${n}`;span.textContent=String(n);frag.append(span);last=re.lastIndex;
+        const n=Number(m[1]||m[2]);const span=document.createElement('span');span.className=`fdr-decal ${cls(n)}`;span.title=`Fixture Difficulty Rating ${n}`;span.setAttribute('aria-label',`Fixture Difficulty Rating ${n}`);frag.append(span);last=re.lastIndex;
       }
       if(last<text.length)frag.append(document.createTextNode(text.slice(last)));node.replaceWith(frag);
     }
