@@ -30,4 +30,5 @@
   window.addEventListener('effectiveSquadRendered',()=>{if(window.__effectiveData)renderExposureSquad(window.__effectiveData)});
   window.addEventListener('fplPlanChanged',()=>setTimeout(()=>{if(window.__effectiveData)renderExposureSquad(window.__effectiveData)},70));
   window.addEventListener('load',()=>setTimeout(()=>{if(window.__effectiveData)renderExposureSquad(window.__effectiveData)},1100));
+  if(!document.querySelector('script[data-metrics-consistency]')){const s=document.createElement('script');s.src='metrics-consistency.js';s.dataset.metricsConsistency='1';document.body.appendChild(s)}
 })();
