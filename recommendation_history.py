@@ -26,9 +26,9 @@ def simplify_move(m, kind):
         rationale.append('Next-3 fixtures: ' + ', '.join(f"{f['opponent']} {f['venue']} FDR {f['fdr']}" for f in next3))
     if target_own is not None:
         if kind == 'lower_variance':
-            rationale.append(f"Nearest-rival ownership {target_own:.0f}%: more protective if the football case is strong.")
+            rationale.append(f"Nearest-rival ownership {target_own:.0f}%: ownership context only; the football case still leads.")
         else:
-            rationale.append(f"Nearest-rival ownership {target_own:.0f}%: lower ownership offers more leverage if the football case is strong.")
+            rationale.append(f"Nearest-rival ownership {target_own:.0f}%: lower ownership can add leverage if the football case is strong.")
     rationale.append(f"Model uplift {float(m.get(gain_key) or m.get('score_improvement') or 0):.1f} versus the outgoing player on the dashboard heuristic.")
     return {
         'type': kind,
@@ -43,6 +43,38 @@ def simplify_move(m, kind):
         'next3': next3,
         'rationale': rationale,
     }
+
+
+def route_key(x):
+    return (x.get('out_player_id') or x.get('out'), x.get('in_player_id') or x.get('in'))
+
+
+def meaningful_signature(snapshot):
+    # Journal history should change only when the meaningful decision set changes,
+    # not because ranks/scores/order drift slightly between 30-minute refreshes.
+    safe = sorted(set(route_key(x) for x in snapshot.get('lower_variance', [])[:3]))
+    chase = sorted(set(route_key(x) for x in snapshot.get('variety', [])[:3]))
+    return {
+        'current_gw': snapshot.get('current_gw'),
+        'next_gw': snapshot.get('next_gw'),
+        'safe_top3': safe,
+        'chase_top3': chase,
+    }
+
+
+def compact_existing(history):
+    """Collapse adjacent historical snapshots with the same meaningful signature."""
+    out = []
+    last_sig = None
+    for s in history.get('snapshots', []):
+        sig = meaningful_signature(s)
+        if sig == last_sig:
+            continue
+        s['fingerprint'] = json.dumps(sig, sort_keys=True)
+        out.append(s)
+        last_sig = sig
+    history['snapshots'] = out
+    return history
 
 
 def main():
@@ -61,12 +93,11 @@ def main():
         'lower_variance': safe,
         'variety': chase,
     }
-    history = json.loads(OUT.read_text()) if OUT.exists() else {'version': 1, 'snapshots': []}
-    fingerprint = json.dumps({
-        'gw': snapshot['current_gw'],
-        'safe': [(x['out'], x['in']) for x in safe],
-        'chase': [(x['out'], x['in']) for x in chase],
-    }, sort_keys=True)
+    history = json.loads(OUT.read_text()) if OUT.exists() else {'version': 2, 'snapshots': []}
+    history['version'] = 2
+    history = compact_existing(history)
+    sig = meaningful_signature(snapshot)
+    fingerprint = json.dumps(sig, sort_keys=True)
     if not history['snapshots'] or history['snapshots'][-1].get('fingerprint') != fingerprint:
         snapshot['fingerprint'] = fingerprint
         history['snapshots'].append(snapshot)
