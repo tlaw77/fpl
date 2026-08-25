@@ -1,11 +1,11 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-08-25T15:15:30.842895+00:00",
+  "generated_at_utc": "2026-08-25T15:18:51.833804+00:00",
   "current_gw": 1,
   "next_gw": 2,
   "summary": {
-    "status": "candidate_window",
-    "headline": "Triple Captain has a credible current case",
+    "status": "hold",
+    "headline": "Preserve chips",
     "best_current_chip": "Triple Captain",
     "next_confirmed_pivot": null,
     "principle": "Use a chip when the current squad creates unusual incremental value, not simply because a chip is available."
@@ -14,7 +14,7 @@
     {
       "chip": "Triple Captain",
       "available": true,
-      "status": "candidate_window",
+      "status": "hold",
       "current_window": {
         "gw": 2,
         "score": 51.71,
@@ -32,15 +32,15 @@
         "double_signal": false
       },
       "reasons": [
-        "Best current captain case: João Pedro vs Brighton H",
-        "A confirmed Double Gameweek materially raises Triple Captain value.",
+        "Current single-fixture model leader: João Pedro vs Brighton H",
+        "Only one completed Gameweek: single-fixture form is too noisy to justify Triple Captain.",
         "Best modeled window in the next five is GW2"
       ]
     },
     {
       "chip": "Bench Boost",
       "available": true,
-      "status": "candidate_window",
+      "status": "hold",
       "current_window": {
         "gw": 2,
         "score": 41.74,
@@ -57,8 +57,8 @@
       },
       "reasons": [
         "4/4 bench players have a playable fixture; 2 have an easy one.",
-        "Bench Boost is strongest when all 15 players are healthy and the bench itself has real upside.",
-        "Best modeled bench window in the next five is GW4"
+        "The stronger modeled bench window is GW4.",
+        "Bench Boost should exploit unusual bench strength, not simply avoid wasting playable substitutes."
       ]
     },
     {
@@ -90,21 +90,21 @@
     {
       "chip": "Wildcard",
       "available": true,
-      "status": "watch",
+      "status": "hold",
       "current_window": {
         "gw": 2,
-        "score": 16.0,
-        "weak_assets": 8,
+        "score": 0.0,
+        "weak_assets": 0,
         "poor_next3": 0,
         "good_next3": 0
       },
       "best_window_next5": null,
       "reasons": [
-        "Current structure flags 8 weak/availability-risk assets and 0 players with a poor next-three fixture run.",
-        "0 squad players already have a good next-three fixture run, reducing the need for a reset.",
+        "Current structure has 0 genuine availability-risk assets and 0 players with a poor next-three fixture run.",
+        "0 squad players have a good next-three fixture run.",
         "Very early Wildcards carry a high information cost: waiting reveals roles, form and team strength unless the squad is genuinely broken."
       ]
     }
   ],
-  "method_note": "Heuristic decision support using current squad strength, availability, next-five fixtures, bench depth and confirmed FPL blank/double assignments. It is not a projected-points model."
+  "method_note": "Conservative heuristic decision support using current squad availability, next-five fixtures, bench depth, confirmed FPL blank/double assignments and an early-season information-value guardrail. It is not a projected-points model."
 }
