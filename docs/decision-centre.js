@@ -21,9 +21,9 @@ function renderShapeView(d){
 function setupViews(){
   const nav=document.querySelector('#decision-nav');if(!nav||nav.dataset.ready==='1')return;nav.dataset.ready='1';
   const ids=['transfer','team','shape','pool','intel'];
-  function activate(name){if(!ids.includes(name))name='transfer';ids.forEach(v=>document.querySelector(`#view-${v}`)?.classList.toggle('active',v===name));nav.querySelectorAll('button[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===name));try{localStorage.setItem('fplDashboardView',name)}catch{}}
+  function activate(name){if(!ids.includes(name))name='transfer';ids.forEach(v=>document.querySelector(`#view-${v}`)?.classList.toggle('active',v===name));nav.querySelectorAll('button[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===name));try{localStorage.setItem('fplDashboardView',name)}catch{};window.dispatchEvent(new CustomEvent('fplViewChanged',{detail:{view:name}}))}
   nav.addEventListener('click',e=>{const b=e.target.closest('button[data-view]');if(b)activate(b.dataset.view)});
-  let initial='transfer';try{initial=localStorage.getItem('fplDashboardView')||'transfer'}catch{}activate(initial);
+  activate('transfer');
   window.FPLViews={activate};
 }
 async function bootDecisionCentre(){
