@@ -11,7 +11,7 @@ OUT = Path("data/squad_intelligence.json")
 
 
 def get_json(url):
-    req = urllib.request.Request(url, headers={"User-Agent": "fpl-squad-intel/1.0"})
+    req = urllib.request.Request(url, headers={"User-Agent": "fpl-squad-intel/1.1"})
     with urllib.request.urlopen(req, timeout=30) as response:
         return json.load(response)
 
@@ -151,6 +151,27 @@ def squad_profile(manager, exposure):
     }
 
 
+def ft_state(current_gw):
+    # At the end of GW1 every manager enters GW2 with exactly one FT.
+    # Current-GW transfers are private until the deadline, so do not pretend
+    # we know a rival's live remaining FT before FPL publishes those moves.
+    if int(current_gw or 0) == 1:
+        return {
+            "entering_next_gw": 1,
+            "next_gw": 2,
+            "remaining_publicly_known": None,
+            "current_use_hidden": True,
+            "confidence": "known_starting_allowance",
+        }
+    return {
+        "entering_next_gw": None,
+        "next_gw": int(current_gw or 0) + 1 if current_gw is not None else None,
+        "remaining_publicly_known": None,
+        "current_use_hidden": True,
+        "confidence": "not_modelled_yet",
+    }
+
+
 def main():
     latest = json.loads(LATEST.read_text())
     strategy = json.loads(STRATEGY.read_text()) if STRATEGY.exists() else {}
@@ -160,10 +181,10 @@ def main():
 
     managers = []
     me = latest.get("me", {})
+    current_gw = latest.get("current_gw")
     everyone = []
     if latest.get("rivals"):
         everyone.extend(latest["rivals"])
-    # Include user for context if full own picks are available.
     everyone.append({
         **me,
         "picks": latest.get("squad", []),
@@ -178,6 +199,7 @@ def main():
         squad = squad_profile(m, exposure)
         transfer = transfer_profile(entry_id, players)
         chip = chips.get(entry_id, {"used": [], "remaining": [], "remaining_count": 0, "chip_edge_vs_me": {}})
+        ft = ft_state(current_gw)
 
         signals = []
         if squad["triple_stacks"]:
@@ -206,6 +228,7 @@ def main():
             "is_me": entry_id == me.get("entry_id"),
             "squad": squad,
             "chips": chip,
+            "free_transfers": ft,
             "transfers": transfer,
             "signals": signals[:5],
         })
@@ -215,7 +238,7 @@ def main():
     OUT.write_text(json.dumps({
         "status": "SUCCESS",
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
-        "current_gw": latest.get("current_gw"),
+        "current_gw": current_gw,
         "me": {"entry_id": me.get("entry_id")},
         "managers": managers,
     }, indent=2))
