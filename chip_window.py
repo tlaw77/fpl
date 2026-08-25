@@ -1,5 +1,4 @@
 import json
-from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -46,13 +45,13 @@ def evaluate():
                 'availability': float(p.get('availability') if p.get('availability') is not None else 1),
             })
         playable = [x for x in player_rows if x['fixture'] and x['availability'] >= .75]
-        strong = [x for x in playable if x['ease'] >= 3]
         weak = [x for x in playable if x['ease'] <= 1]
-        per_gw[gw] = {'players': player_rows, 'playable': playable, 'strong': strong, 'weak': weak}
+        per_gw[gw] = {'players': player_rows, 'playable': playable, 'weak': weak}
 
     evaluations = []
+    early_sample = current_gw < 4
 
-    # Triple Captain: strongest captainable asset + fixture, with double-GW bonus.
+    # Triple Captain: current single-GW strength is only a watch signal early in the season.
     tc_windows = []
     for gw, ctx in per_gw.items():
         cands = [x for x in ctx['playable'] if x['position'] != 'GKP']
@@ -68,18 +67,24 @@ def evaluate():
     tc_now = next((x for x in tc_windows if x['gw'] == next_gw), None)
     tc_status = 'hold'
     if tc_now and best_tc:
-        if tc_now['double_signal'] and tc_now['score'] >= best_tc['score'] - 1: tc_status = 'strong_window'
-        elif tc_now['score'] >= best_tc['score'] - 1 and tc_now['score'] >= 22: tc_status = 'candidate_window'
-        elif tc_now['score'] >= best_tc['score'] - 3: tc_status = 'watch'
+        if tc_now['double_signal'] and tc_now['score'] >= best_tc['score'] - 1:
+            tc_status = 'strong_window'
+        elif not early_sample and tc_now['score'] >= best_tc['score'] - 1:
+            tc_status = 'candidate_window'
+        elif not early_sample and tc_now['score'] >= best_tc['score'] - 3:
+            tc_status = 'watch'
+    tc_reasons = []
+    if tc_now and tc_now['best_player']:
+        tc_reasons.append(f"Current single-fixture model leader: {tc_now['best_player']} vs {tc_now['opponent']} {tc_now['venue']}")
+    if early_sample and not (tc_now and tc_now['double_signal']):
+        tc_reasons.append('Only one completed Gameweek: single-fixture form is too noisy to justify Triple Captain.')
+    else:
+        tc_reasons.append('A confirmed Double Gameweek materially raises Triple Captain value.' if not (tc_now and tc_now['double_signal']) else 'Current window includes a confirmed double signal.')
+    tc_reasons.append(f"Best modeled window in the next five is GW{best_tc['gw']}" if best_tc else 'No future window available.')
     evaluations.append({'chip':'Triple Captain','available':'Triple Captain' in remaining,'status':tc_status,
-        'current_window':tc_now,'best_window_next5':best_tc,
-        'reasons':[
-            f"Best current captain case: {tc_now['best_player']} vs {tc_now['opponent']} {tc_now['venue']}" if tc_now and tc_now['best_player'] else 'No strong captain case identified.',
-            'A confirmed Double Gameweek materially raises Triple Captain value.' if not (tc_now and tc_now['double_signal']) else 'Current window includes a confirmed double signal.',
-            f"Best modeled window in the next five is GW{best_tc['gw']}" if best_tc else 'No future window available.'
-        ]})
+        'current_window':tc_now,'best_window_next5':best_tc,'reasons':tc_reasons})
 
-    # Bench Boost: reward 15 playable players and strong bench fixtures.
+    # Bench Boost: require a clearly superior 15-man window rather than merely four playable bench players.
     bb_windows=[]
     for gw,ctx in per_gw.items():
         bench = [x for x in ctx['players'] if not x['starter_now']]
@@ -89,36 +94,46 @@ def evaluate():
         bb_windows.append({'gw':gw,'score':round(score,2),'bench_playable':len(bench_playable),
                            'bench_easy':sum(1 for x in bench_playable if x['ease']>=3),
                            'all_playable':len(ctx['playable'])})
-    best_bb=max(bb_windows,key=lambda x:x['score'],default=None); bb_now=next((x for x in bb_windows if x['gw']==next_gw),None)
+    best_bb=max(bb_windows,key=lambda x:x['score'],default=None)
+    bb_now=next((x for x in bb_windows if x['gw']==next_gw),None)
     bb_status='hold'
     if bb_now and best_bb:
-        if bb_now['bench_playable']==4 and bb_now['bench_easy']>=3 and bb_now['score']>=best_bb['score']-1: bb_status='strong_window'
-        elif bb_now['bench_playable']==4 and bb_now['bench_easy']>=2: bb_status='candidate_window'
-        elif bb_now['bench_playable']==4: bb_status='watch'
+        is_best_now = bb_now['gw'] == best_bb['gw'] and bb_now['score'] >= best_bb['score'] - .5
+        if bb_now['bench_playable']==4 and bb_now['bench_easy']>=3 and is_best_now and (current_gw>=3 or bool(schedule.get(next_gw,{}).get('double_teams'))):
+            bb_status='strong_window'
+        elif bb_now['bench_playable']==4 and bb_now['bench_easy']>=3 and is_best_now and not early_sample:
+            bb_status='candidate_window'
+        elif bb_now['bench_playable']==4 and bb_now['bench_easy']>=3 and is_best_now:
+            bb_status='watch'
     evaluations.append({'chip':'Bench Boost','available':'Bench Boost' in remaining,'status':bb_status,
         'current_window':bb_now,'best_window_next5':best_bb,
         'reasons':[
             f"{bb_now['bench_playable']}/4 bench players have a playable fixture; {bb_now['bench_easy']} have an easy one." if bb_now else 'Bench window unavailable.',
-            'Bench Boost is strongest when all 15 players are healthy and the bench itself has real upside.',
-            f"Best modeled bench window in the next five is GW{best_bb['gw']}" if best_bb else 'No future window available.'
+            f"The stronger modeled bench window is GW{best_bb['gw']}." if best_bb and bb_now and best_bb['gw'] != bb_now['gw'] else 'Current week is close to the best bench window visible.',
+            'Bench Boost should exploit unusual bench strength, not simply avoid wasting playable substitutes.'
         ]})
 
-    # Free Hit: poor current coverage / blanks / doubles increase value.
+    # Free Hit: preserve unless a real blank/double or severe squad-coverage problem appears.
     fh_windows=[]
     for gw,ctx in per_gw.items():
         sched=schedule.get(gw,{})
-        blank_count=len(sched.get('blank_teams') or []); double_count=len(sched.get('double_teams') or [])
+        blank_count=len(sched.get('blank_teams') or [])
+        double_count=len(sched.get('double_teams') or [])
         missing=15-len(ctx['playable'])
         weak=len(ctx['weak'])
         score=missing*3.2 + weak*.7 + blank_count*.45 + double_count*.9
         fh_windows.append({'gw':gw,'score':round(score,2),'squad_players_without_playable_fixture':missing,
                            'weak_fixture_count':weak,'blank_team_count':blank_count,'double_team_count':double_count})
-    best_fh=max(fh_windows,key=lambda x:x['score'],default=None); fh_now=next((x for x in fh_windows if x['gw']==next_gw),None)
+    best_fh=max(fh_windows,key=lambda x:x['score'],default=None)
+    fh_now=next((x for x in fh_windows if x['gw']==next_gw),None)
     fh_status='hold'
     if fh_now and best_fh:
-        if fh_now['squad_players_without_playable_fixture']>=5 or fh_now['blank_team_count']>=6: fh_status='strong_window'
-        elif fh_now['squad_players_without_playable_fixture']>=3 or fh_now['double_team_count']>=4: fh_status='candidate_window'
-        elif fh_now['score']>=best_fh['score']-1 and fh_now['score']>=5: fh_status='watch'
+        if fh_now['squad_players_without_playable_fixture']>=5 or fh_now['blank_team_count']>=6:
+            fh_status='strong_window'
+        elif fh_now['squad_players_without_playable_fixture']>=3 or fh_now['double_team_count']>=4:
+            fh_status='candidate_window'
+        elif not early_sample and fh_now['score']>=best_fh['score']-1 and fh_now['score']>=5:
+            fh_status='watch'
     evaluations.append({'chip':'Free Hit','available':'Free Hit' in remaining,'status':fh_status,
         'current_window':fh_now,'best_window_next5':best_fh,
         'reasons':[
@@ -127,47 +142,51 @@ def evaluate():
             f"Best disruption window currently visible is GW{best_fh['gw']}" if best_fh else 'No disruption window available.'
         ]})
 
-    # Wildcard: structural weakness + poor fixture runway, but early-season information value favours patience.
-    weak_assets=sum(1 for p in rows if player_strength(p)<15 or float(p.get('availability') if p.get('availability') is not None else 1)<.75)
-    next3_bad=0; next3_good=0
+    # Wildcard: use structural/availability evidence, not noisy one-week decision-score thresholds.
+    availability_risks=sum(1 for p in rows if float(p.get('availability') if p.get('availability') is not None else 1)<.75)
+    next3_bad=0
+    next3_good=0
     for p in rows:
         fs=(p.get('fixtures') or [])[:3]
         if fs:
             avg=sum(float(f.get('difficulty') or 3) for f in fs)/len(fs)
             if avg>=3.7: next3_bad+=1
             if avg<=2.3: next3_good+=1
-    structural_score=weak_assets*2 + next3_bad*1.2 - next3_good*.5
+    structural_score=availability_risks*4 + next3_bad*1.2 - next3_good*.5
     wc_status='hold'
-    if current_gw>=4 and structural_score>=18: wc_status='strong_window'
-    elif current_gw>=3 and structural_score>=13: wc_status='candidate_window'
-    elif structural_score>=10: wc_status='watch'
+    if current_gw>=4 and structural_score>=16:
+        wc_status='strong_window'
+    elif current_gw>=3 and structural_score>=11:
+        wc_status='candidate_window'
+    elif current_gw>=3 and structural_score>=7:
+        wc_status='watch'
     evaluations.append({'chip':'Wildcard','available':'Wildcard' in remaining,'status':wc_status,
-        'current_window':{'gw':next_gw,'score':round(structural_score,2),'weak_assets':weak_assets,'poor_next3':next3_bad,'good_next3':next3_good},
+        'current_window':{'gw':next_gw,'score':round(structural_score,2),'weak_assets':availability_risks,'poor_next3':next3_bad,'good_next3':next3_good},
         'best_window_next5':None,
         'reasons':[
-            f"Current structure flags {weak_assets} weak/availability-risk assets and {next3_bad} players with a poor next-three fixture run.",
-            f"{next3_good} squad players already have a good next-three fixture run, reducing the need for a reset.",
+            f"Current structure has {availability_risks} genuine availability-risk assets and {next3_bad} players with a poor next-three fixture run.",
+            f"{next3_good} squad players have a good next-three fixture run.",
             'Very early Wildcards carry a high information cost: waiting reveals roles, form and team strength unless the squad is genuinely broken.'
         ]})
 
     rank={'strong_window':4,'candidate_window':3,'watch':2,'hold':1}
     available_evals=[e for e in evaluations if e['available']]
     best_action=max(available_evals,key=lambda e:rank[e['status']],default=None)
-    overall='hold'
-    if best_action: overall=best_action['status']
+    overall=best_action['status'] if best_action else 'hold'
     summary={
         'status':overall,
-        'headline': 'Preserve chips' if overall=='hold' else ('Monitor, but no urgent chip use' if overall=='watch' else f"{best_action['chip']} has a credible current case"),
-        'best_current_chip': best_action['chip'] if best_action else None,
-        'next_confirmed_pivot': min((x['gw'] for x in strategy.get('confirmed_blank_double_events',[]) if x.get('gw')), default=None),
+        'headline':'Preserve chips' if overall=='hold' else ('Monitor, but no urgent chip use' if overall=='watch' else f"{best_action['chip']} has a credible current case"),
+        'best_current_chip':best_action['chip'] if best_action else None,
+        'next_confirmed_pivot':min((x['gw'] for x in strategy.get('confirmed_blank_double_events',[]) if x.get('gw')),default=None),
         'principle':'Use a chip when the current squad creates unusual incremental value, not simply because a chip is available.'
     }
     return {'status':'SUCCESS','generated_at_utc':datetime.now(timezone.utc).isoformat(),'current_gw':current_gw,'next_gw':next_gw,
             'summary':summary,'evaluations':evaluations,
-            'method_note':'Heuristic decision support using current squad strength, availability, next-five fixtures, bench depth and confirmed FPL blank/double assignments. It is not a projected-points model.'}
+            'method_note':'Conservative heuristic decision support using current squad availability, next-five fixtures, bench depth, confirmed FPL blank/double assignments and an early-season information-value guardrail. It is not a projected-points model.'}
 
 
 if __name__=='__main__':
     OUT.parent.mkdir(parents=True,exist_ok=True)
-    result=evaluate(); OUT.write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n')
+    result=evaluate()
+    OUT.write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n')
     print(json.dumps({'status':result['status'],'summary':result['summary']}))
