@@ -9,11 +9,11 @@
   <link rel="stylesheet" href="strategy.css" />
   <link rel="stylesheet" href="market.css" />
   <link rel="stylesheet" href="decision-centre.css" />
-  <link rel="stylesheet" href="pick-team-pitch.css?v=20260825-1102" />
-  <link rel="stylesheet" href="fdr-ui.css?v=20260825-1102" />
-  <link rel="stylesheet" href="plan-state.css?v=20260825-1102" />
-  <link rel="stylesheet" href="eo-strategy.css?v=20260825-1102" />
-  <link rel="stylesheet" href="exposure-ui.css?v=20260825-1102" />
+  <link rel="stylesheet" href="pick-team-pitch.css?v=20260825-1144" />
+  <link rel="stylesheet" href="fdr-ui.css?v=20260825-1144" />
+  <link rel="stylesheet" href="plan-state.css?v=20260825-1144" />
+  <link rel="stylesheet" href="eo-strategy.css?v=20260825-1144" />
+  <link rel="stylesheet" href="exposure-ui.css?v=20260825-1144" />
 </head>
 <body>
   <main class="shell">
@@ -21,6 +21,7 @@
       <div><p class="eyebrow">FPL DECISION CENTRE</p><h1 id="league-title">Loading…</h1><p class="subtle" id="last-updated">Fetching latest snapshot</p><p class="subtle" id="strategy-updated"></p><p class="subtle" id="market-updated"></p></div>
       <div class="gw-pill" id="gw-pill">GW —</div>
     </header>
+    <div id="ui-build-status" style="margin:0 0 10px;padding:7px 10px;border:1px solid rgba(232,255,93,.24);border-radius:10px;background:rgba(232,255,93,.06);color:#aab8cc;font:700 10px/1.35 system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;letter-spacing:.02em">UI BUILD 25 AUG 11:44 IST · PLAN JS checking · TOUCH CTRL checking · STORAGE checking</div>
     <section class="kpi-grid" id="kpi-grid"></section>
 
     <nav class="decision-nav" id="decision-nav" aria-label="Dashboard views">
@@ -36,29 +37,18 @@
 
     <section class="dashboard-view" id="view-intel">
       <section class="panel"><div class="panel-head"><div><p class="eyebrow">NEXT ACTION</p><h2>What matters now</h2></div></div><div class="action-grid" id="action-grid"></div></section>
-
       <section class="panel"><div class="panel-head"><div><p class="eyebrow">MARKET & URGENCY</p><h2>Price pressure before tonight's change</h2></div><div class="subtle">Football decision first · price changes 00:00 UK</div></div><div id="market-urgency"></div></section>
       <section class="market-grid">
         <section class="panel"><div class="panel-head"><div><p class="eyebrow">RISE WATCH</p><h2>Popular transfer-ins</h2></div></div><div id="rise-watch"></div></section>
         <section class="panel"><div class="panel-head"><div><p class="eyebrow">FALL WATCH</p><h2>Popular transfer-outs</h2></div></div><div id="fall-watch"></div></section>
         <section class="panel"><div class="panel-head"><div><p class="eyebrow">SQUAD FRAGILITY</p><h2>Availability & value risk</h2></div></div><div id="squad-fragility"></div></section>
       </section>
-
       <section class="panel"><div class="panel-head"><div><p class="eyebrow">RIVAL TARGETING</p><h2>Who you are trying to beat next</h2></div><div class="subtle">Nearest managers above you</div></div><div id="target-rivals" class="target-grid"></div></section>
-
       <section class="panel"><div class="panel-head"><div><p class="eyebrow">CHIP INTELLIGENCE</p><h2>What everyone has spent — and still holds</h2></div><div class="subtle">Current half-season chip inventory</div></div><div id="chip-table" class="chip-table"></div></section>
-
-      <section class="strategy-grid">
-        <section class="panel"><div class="panel-head"><div><p class="eyebrow">BLANK / DOUBLE WATCH</p><h2>Schedule pivots</h2></div><div class="subtle">Official FPL assignment = confirmed</div></div><div id="schedule-watch" class="schedule-watch"></div></section>
-        <section class="panel"><div class="panel-head"><div><p class="eyebrow">SCOUT WATCH</p><h2>Fantasy Football Scout signals</h2></div><div class="subtle">Potential / early-warning only</div></div><div id="scout-watch" class="scout-list"></div></section>
-      </section>
-
+      <section class="strategy-grid"><section class="panel"><div class="panel-head"><div><p class="eyebrow">BLANK / DOUBLE WATCH</p><h2>Schedule pivots</h2></div><div class="subtle">Official FPL assignment = confirmed</div></div><div id="schedule-watch" class="schedule-watch"></div></section><section class="panel"><div class="panel-head"><div><p class="eyebrow">SCOUT WATCH</p><h2>Fantasy Football Scout signals</h2></div><div class="subtle">Potential / early-warning only</div></div><div id="scout-watch" class="scout-list"></div></section></section>
       <section class="panel"><div class="panel-head"><div><p class="eyebrow">CHIP STRATEGY</p><h2>Potential pivots versus nearby rivals</h2></div></div><div id="chip-notes" class="strategy-notes"></div></section>
-
       <section class="panel"><div class="panel-head"><div><p class="eyebrow">EXPLAINED DECISIONS</p><h2>Protect vs chase</h2></div><div class="subtle">Confidence reflects fixtures, availability and model strength</div></div><div class="explain-grid"><div><h3>🛡️ Protect captains</h3><div id="protect-captains"></div></div><div><h3>🎯 Chase captains</h3><div id="chase-captains"></div></div><div><h3>🛡️ Protective transfers</h3><div id="protect-moves"></div></div><div><h3>🔥 Chase transfers</h3><div id="chase-moves"></div></div></div></section>
-
       <section class="panel"><div class="panel-head"><div><p class="eyebrow">NEXT GAMEWEEK</p><h2>Captain & transfer decision board</h2></div><div class="subtle">Relative mini-league heuristic — not projected points</div></div><div class="decision-board"><div><h3>Captain shortlist</h3><div id="captain-board"></div></div><div><h3>Safe moves</h3><div id="safe-moves"></div></div><div><h3>Aggressive moves</h3><div id="aggressive-moves"></div></div></div></section>
-
       <section class="panel"><div class="panel-head"><div><p class="eyebrow">FIXTURES</p><h2>Your squad — next 5</h2></div><div class="subtle">Lower difficulty is easier</div></div><div id="fixture-strip" class="fixture-table"></div></section>
       <section class="panel"><div class="panel-head"><div><p class="eyebrow">STANDINGS</p><h2>League race</h2></div><div class="legend"><span class="dot me"></span>You</div></div><div class="table-wrap"><table id="rivals-table"><thead><tr><th>Rank</th><th>Manager</th><th>GW</th><th>Total</th><th>Gap vs you</th><th>Captain</th><th>Chip</th><th>Overlap</th></tr></thead><tbody></tbody></table></div></section>
       <section class="two-col"><section class="panel"><div class="panel-head"><div><p class="eyebrow">DECISION MAP</p><h2>Threats & opportunities</h2></div></div><div class="signal-grid" id="signals"></div></section><section class="panel"><div class="panel-head"><div><p class="eyebrow">YOUR TEAM</p><h2>Squad exposure</h2></div></div><div class="squad-grid" id="squad-grid"></div></section></section>
@@ -72,19 +62,27 @@
   </main>
   <script src="app.js"></script>
   <script src="relative.js"></script>
-  <script src="explainability.js?v=20260825-1102"></script>
+  <script src="explainability.js?v=20260825-1144"></script>
   <script src="owner-names.js"></script>
   <script src="strategy.js"></script>
-  <script src="market.js?v=20260825-1102"></script>
+  <script src="market.js?v=20260825-1144"></script>
   <script src="timestamps.js"></script>
   <script src="decision-centre.js"></script>
-  <script src="plan-state.js?v=20260825-1102"></script>
-  <script src="plan-commit-fallback.js?v=20260825-1137"></script>
-  <script src="pick-team-pitch.js?v=20260825-1102"></script>
-  <script src="eo-strategy.js?v=20260825-1102"></script>
-  <script src="exposure-ui.js?v=20260825-1102"></script>
-  <script src="effective-squad-sync.js?v=20260825-1102"></script>
-  <script src="metrics-consistency.js?v=20260825-1102"></script>
-  <script src="fdr-ui.js?v=20260825-1102"></script>
+  <script src="plan-state.js?v=20260825-1144"></script>
+  <script src="plan-commit-fallback.js?v=20260825-1144"></script>
+  <script src="pick-team-pitch.js?v=20260825-1144"></script>
+  <script src="eo-strategy.js?v=20260825-1144"></script>
+  <script src="exposure-ui.js?v=20260825-1144"></script>
+  <script src="effective-squad-sync.js?v=20260825-1144"></script>
+  <script src="metrics-consistency.js?v=20260825-1144"></script>
+  <script src="fdr-ui.js?v=20260825-1144"></script>
+  <script>
+    (function(){
+      const el=document.getElementById('ui-build-status');
+      function storageState(){try{const k='__fpl_diag__';localStorage.setItem(k,'1');localStorage.removeItem(k);return 'OK'}catch(e){return 'BLOCKED'}}
+      function refresh(){if(!el)return;const plan=window.FPLPlan?'READY':'MISSING';const touch=window.FPLCommitFallback?'READY':'MISSING';const storage=storageState();el.textContent=`UI BUILD 25 AUG 11:44 IST · PLAN JS ${plan} · TOUCH CTRL ${touch} · STORAGE ${storage}`;el.style.borderColor=(plan==='READY'&&touch==='READY'&&storage==='OK')?'rgba(94,234,212,.38)':'rgba(251,113,133,.5)';el.style.color=(plan==='READY'&&touch==='READY'&&storage==='OK')?'#9ff4df':'#fda4af'}
+      setTimeout(refresh,250);setTimeout(refresh,1000);setTimeout(refresh,2500);
+    })();
+  </script>
 </body>
 </html>
