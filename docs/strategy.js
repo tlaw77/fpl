@@ -1,5 +1,5 @@
 const STRATEGY_URL='https://raw.githubusercontent.com/tlaw77/fpl/main/data/strategy.json';
-const sEsc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#039;'}[c]));
+const sEsc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
 function chipBadge(name,used){return `<span class="chip-badge ${used?'used':'remaining'}">${sEsc(name)}</span>`}
 function renderChipTable(d){const el=document.querySelector('#chip-table');if(!el)return;const rows=[...(d.managers||[])].sort((a,b)=>(a.rank||999)-(b.rank||999));el.innerHTML=rows.map(m=>{const used=m.inventory?.used_this_half||[];const remaining=m.inventory?.remaining_this_half||[];const edge=m.chip_edge_vs_me||{};return `<div class="chip-row"><div class="chip-manager"><strong>${sEsc(m.manager)}</strong><span>${sEsc(m.team_name)} · #${m.rank}</span></div><div class="chip-history">${used.length?used.map(c=>chipBadge(`${c.chip} GW${c.gw}`,true)).join(''): '<span class="subtle">No chips used</span>'}</div><div class="chip-remaining">${remaining.map(c=>chipBadge(c,false)).join('')}</div><div class="chip-edge ${Number(edge.net_remaining_delta||0)>0?'positive':Number(edge.net_remaining_delta||0)<0?'negative':''}">${m.entry_id===d.me?.entry_id?'You':Number(edge.net_remaining_delta||0)>0?`You +${edge.net_remaining_delta}`:Number(edge.net_remaining_delta||0)<0?`You ${edge.net_remaining_delta}`:'Even'}</div></div>`}).join('')}
 function renderSchedule(d){const el=document.querySelector('#schedule-watch');if(!el)return;const events=d.confirmed_blank_double_events||[];const unassigned=d.unassigned_fixtures||[];const confirmed=events.length?events.slice(0,8).map(e=>`<div class="schedule-card"><div class="schedule-gw">GW${e.gw}</div><div><strong>${e.double_teams?.length?'Double: '+e.double_teams.join(', '):'No confirmed doubles'}</strong><div class="subtle">${e.blank_teams?.length?'Blank: '+e.blank_teams.join(', '):'No confirmed blanks'}</div></div></div>`).join(''):'<div class="subtle">No confirmed future blanks or doubles in the current official FPL fixture assignment.</div>';const pending=unassigned.length?`<div class="schedule-warning"><strong>${unassigned.length} unassigned fixture${unassigned.length===1?'':'s'}</strong><div class="subtle">These are the strongest official signal that a future Blank/Double pivot may emerge.</div>${unassigned.slice(0,6).map(f=>`<div>${sEsc(f.home)} v ${sEsc(f.away)}</div>`).join('')}</div>`:'';el.innerHTML=confirmed+pending}
@@ -31,12 +31,13 @@ function loadDecisionJournal(){
     const first=intel.querySelector('.panel');
     if(first?.nextSibling)intel.insertBefore(host,first.nextSibling);else intel.prepend(host);
   }
-  if(!document.querySelector('link[data-decision-journal]')){
-    const l=document.createElement('link');l.rel='stylesheet';l.href='decision-history.css?v=20260826-1420';l.dataset.decisionJournal='1';document.head.appendChild(l);
-  }
-  if(!document.querySelector('script[data-decision-journal-v4]')){
-    const s=document.createElement('script');s.src='decision-journal-v4.js?v=20260826-1420';s.dataset.decisionJournalV4='1';document.body.appendChild(s);
-  }
+  const cssVersion='20260826-1535';
+  let l=document.querySelector('link[data-decision-journal]');
+  if(!l){l=document.createElement('link');l.rel='stylesheet';l.dataset.decisionJournal='1';document.head.appendChild(l)}
+  l.href=`decision-history.css?v=${cssVersion}`;
+  const oldScript=document.querySelector('script[data-decision-journal-v4]');
+  if(oldScript)oldScript.remove();
+  const s=document.createElement('script');s.src=`decision-journal-v4.js?v=${cssVersion}`;s.dataset.decisionJournalV4='1';document.body.appendChild(s);
 }
 async function renderStrategy(){try{const r=await fetch(`${STRATEGY_URL}?t=${Date.now()}`,{cache:'no-store'});if(!r.ok)throw new Error(`HTTP ${r.status}`);const d=await r.json();renderChipTable(d);renderSchedule(d);renderScout(d);renderStrategyNotes(d);const stamp=document.querySelector('#strategy-updated');if(stamp)stamp.textContent=`Strategy watch: ${new Date(d.generated_at_utc).toLocaleString()}`;loadSquadIntel();loadDecisionJournal();}catch(e){for(const id of ['#chip-table','#schedule-watch','#scout-watch','#chip-notes']){const el=document.querySelector(id);if(el)el.innerHTML='<div class="subtle">Strategy watch is waiting for its first successful refresh.</div>';}loadDecisionJournal();}}
 renderStrategy();
