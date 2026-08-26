@@ -23,5 +23,20 @@ function loadSquadIntel(){
     const s=document.createElement('script');s.src='squad-intelligence.js?v=20260825-1541';s.dataset.squadIntel='1';document.body.appendChild(s);
   }
 }
-async function renderStrategy(){try{const r=await fetch(`${STRATEGY_URL}?t=${Date.now()}`,{cache:'no-store'});if(!r.ok)throw new Error(`HTTP ${r.status}`);const d=await r.json();renderChipTable(d);renderSchedule(d);renderScout(d);renderStrategyNotes(d);const stamp=document.querySelector('#strategy-updated');if(stamp)stamp.textContent=`Strategy watch: ${new Date(d.generated_at_utc).toLocaleString()}`;loadSquadIntel();}catch(e){for(const id of ['#chip-table','#schedule-watch','#scout-watch','#chip-notes']){const el=document.querySelector(id);if(el)el.innerHTML='<div class="subtle">Strategy watch is waiting for its first successful refresh.</div>';}}}
+function loadDecisionJournal(){
+  const intel=document.getElementById('view-intel');
+  if(!intel)return;
+  if(!document.getElementById('decision-history-panel')){
+    const host=document.createElement('div');host.id='decision-history-panel';
+    const first=intel.querySelector('.panel');
+    if(first?.nextSibling)intel.insertBefore(host,first.nextSibling);else intel.prepend(host);
+  }
+  if(!document.querySelector('link[data-decision-journal]')){
+    const l=document.createElement('link');l.rel='stylesheet';l.href='decision-history.css?v=20260826-1218';l.dataset.decisionJournal='1';document.head.appendChild(l);
+  }
+  if(!document.querySelector('script[data-decision-journal]')){
+    const s=document.createElement('script');s.src='decision-history.js?v=20260826-1218';s.dataset.decisionJournal='1';document.body.appendChild(s);
+  }
+}
+async function renderStrategy(){try{const r=await fetch(`${STRATEGY_URL}?t=${Date.now()}`,{cache:'no-store'});if(!r.ok)throw new Error(`HTTP ${r.status}`);const d=await r.json();renderChipTable(d);renderSchedule(d);renderScout(d);renderStrategyNotes(d);const stamp=document.querySelector('#strategy-updated');if(stamp)stamp.textContent=`Strategy watch: ${new Date(d.generated_at_utc).toLocaleString()}`;loadSquadIntel();loadDecisionJournal();}catch(e){for(const id of ['#chip-table','#schedule-watch','#scout-watch','#chip-notes']){const el=document.querySelector(id);if(el)el.innerHTML='<div class="subtle">Strategy watch is waiting for its first successful refresh.</div>';}loadDecisionJournal();}}
 renderStrategy();
