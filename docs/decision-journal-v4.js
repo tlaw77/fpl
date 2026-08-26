@@ -1,10 +1,10 @@
 (()=>{
 const BASE='https://raw.githubusercontent.com/tlaw77/fpl/main/data/';
 const PLAN_KEY='fplWorkingPlanV2';
-const STYLE_BUILD='20260826-1520';
-function ensureStyles(){let l=document.querySelector('link[data-decision-journal-style]');if(!l){l=document.createElement('link');l.rel='stylesheet';l.dataset.decisionJournalStyle='1';document.head.appendChild(l)}const wanted=`decision-history.css?v=${STYLE_BUILD}`;if(!String(l.getAttribute('href')||'').includes(STYLE_BUILD))l.href=wanted}
+const STYLE_BUILD='20260826-1535';
+function ensureStyles(){let l=document.querySelector('link[data-decision-journal]');if(!l){l=document.createElement('link');l.rel='stylesheet';l.dataset.decisionJournal='1';document.head.appendChild(l)}const wanted=`decision-history.css?v=${STYLE_BUILD}`;if(l.getAttribute('href')!==wanted)l.href=wanted}
 ensureStyles();
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#039;'}[c]));
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
 async function json(name){try{const r=await fetch(`${BASE}${name}?v=decision-journal-4`,{cache:'no-store'});return r.ok?await r.json():null}catch{return null}}
 function plan(){try{return JSON.parse(localStorage.getItem(PLAN_KEY)||'null')}catch{return null}}
 function fmtWhen(x){if(!x)return'';try{return new Date(x).toLocaleString([],{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}catch{return x}}
