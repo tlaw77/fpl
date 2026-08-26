@@ -31,8 +31,15 @@ function patch(){
   host.querySelectorAll('.market-row').forEach(patchRow);
   host.dataset.marketDirectionBuild=BUILD;
 }
+function loadUplift(){
+  if(window.FPLTransferUplift||document.querySelector('script[data-transfer-uplift-loader]'))return;
+  const s=document.createElement('script');
+  s.src='transfer-uplift.js?v=20260826-2125';
+  s.dataset.transferUpliftLoader='1';
+  document.body.appendChild(s);
+}
 function start(){
-  patch();setTimeout(patch,400);setTimeout(patch,1200);
+  patch();setTimeout(patch,400);setTimeout(patch,1200);loadUplift();
   const host=document.querySelector('#market-urgency');
   if(host)new MutationObserver(()=>patch()).observe(host,{childList:true,subtree:true});
   window.addEventListener('fplPlanChanged',()=>setTimeout(patch,60));
