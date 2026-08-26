@@ -1,5 +1,5 @@
 (()=>{
-const BUILD='journal-fix-v1-20260826-1730';
+const BUILD='journal-fix-v1-20260826-1842';
 function css(el,styles){if(!el)return;Object.assign(el.style,styles)}
 function patch(){
   const panel=document.querySelector('#decision-history-panel');
@@ -32,7 +32,8 @@ function patch(){
   panel.querySelectorAll('.history-reasoning summary').forEach(el=>css(el,{display:'block',fontSize:'8px',color:'#dce9fb',fontWeight:'850'}));
   panel.querySelectorAll('.history-model-note').forEach(el=>css(el,{fontSize:'7px',color:'#9fb0c8',marginTop:'6px'}));
 }
-function start(){patch();setTimeout(patch,300);setTimeout(patch,900);const root=document.querySelector('#decision-history-panel');if(root)new MutationObserver(()=>patch()).observe(root,{childList:true,subtree:true});window.addEventListener('fplPlanChanged',()=>setTimeout(patch,80));}
+function loadSemantic(){if(window.FPLSemanticMetrics||document.querySelector('script[data-semantic-metrics]'))return;const s=document.createElement('script');s.src='semantic-metrics.js?v=20260826-1840';s.dataset.semanticMetrics='1';document.body.appendChild(s)}
+function start(){patch();loadSemantic();setTimeout(patch,300);setTimeout(patch,900);const root=document.querySelector('#decision-history-panel');if(root)new MutationObserver(()=>patch()).observe(root,{childList:true,subtree:true});window.addEventListener('fplPlanChanged',()=>setTimeout(patch,80));}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
 window.FPLJournalFix={build:BUILD,patch};
 })();
