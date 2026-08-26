@@ -9,6 +9,7 @@ on:
       - "fpl_etl.py"
       - "current_squad.py"
       - "recommendation_history.py"
+      - "decision_journal.py"
       - "strategy_watch.py"
       - "market_watch.py"
       - "squad_intelligence.py"
@@ -39,8 +40,11 @@ jobs:
       - name: Preserve recommendation snapshot
         run: python recommendation_history.py
 
-      - name: Reconstruct current squad and decision journal
+      - name: Reconstruct current squad
         run: python current_squad.py
+
+      - name: Build durable decision journal
+        run: python decision_journal.py
 
       - name: Normalize exposure semantics
         run: python exposure_semantics.py
@@ -98,6 +102,8 @@ jobs:
           assert len(player_pool['players']) > 50
           assert scout_consensus['status'] == 'SUCCESS'
           assert 'players' in scout_consensus
+          assert history.get('version') == 3
+          assert 'weeks' in history
           assert 'decisions' in history
           assert 'snapshots' in rec_history
           print('Validation passed')
