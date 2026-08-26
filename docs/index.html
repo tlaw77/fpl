@@ -85,41 +85,21 @@
   <script src="metrics-consistency.js?v=20260825-1247"></script>
   <script src="fdr-ui.js?v=20260825-1247"></script>
   <script src="swipe-tabs.js?v=20260825-1641"></script>
+  <script src="journal-fix-v1.js?v=20260826-1730"></script>
   <script>
   (()=>{
     if(!new URLSearchParams(location.search).has('debug'))return;
-    const BUILD='page-debug-20260826-1630';
+    const BUILD='page-debug-20260826-1730';
     const esc=s=>String(s??'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
     function report(){
-      const scripts=[...document.scripts].map(s=>s.src).filter(Boolean).filter(x=>/strategy|decision-journal/.test(x));
+      const scripts=[...document.scripts].map(s=>s.src).filter(Boolean).filter(x=>/strategy|decision-journal|journal-fix/.test(x));
       const links=[...document.querySelectorAll('link[rel="stylesheet"]')].map(l=>l.href).filter(x=>/decision-history/.test(x));
       const panel=document.getElementById('decision-history-panel');
-      const textNodes=panel?[...panel.querySelectorAll('*')].filter(x=>x.textContent?.trim()==='Lower-variance uplift'):[];
-      const label=textNodes[0]||null;
-      const metric=label?.parentElement||null;
-      const card=panel?.querySelector('[style*="linear-gradient"]')||panel?.querySelector('.history-decision');
+      const metric=panel?.querySelector('.history-metric')||null;
       const cs=metric?getComputedStyle(metric):null;
-      const details={
-        build:BUILD,
-        href:location.href,
-        viewport:`${innerWidth}x${innerHeight} @${devicePixelRatio}`,
-        userAgent:navigator.userAgent,
-        strategyScripts:scripts,
-        journalObject:!!window.FPLDecisionJournal,
-        journalPanel:!!panel,
-        panelChildCount:panel?.children.length??0,
-        lowerVarianceLabels:textNodes.length,
-        metricInlineStyle:metric?.getAttribute('style')||'(none)',
-        metricDisplay:cs?.display||'(n/a)',
-        metricBorder:cs?.border||'(n/a)',
-        metricFontSize:cs?.fontSize||'(n/a)',
-        cardInlineStyle:card?.getAttribute('style')||'(none)',
-        journalStylesheets:links
-      };
-      let box=document.getElementById('fpl-debug-box');
-      if(!box){box=document.createElement('div');box.id='fpl-debug-box';document.body.appendChild(box)}
-      box.style.cssText='position:fixed;left:8px;right:8px;bottom:8px;z-index:2147483647;max-height:58vh;overflow:auto;background:#020817;color:#dbeafe;border:2px solid #22d3ee;border-radius:12px;padding:10px;font:11px/1.35 ui-monospace,SFMono-Regular,Menlo,monospace;white-space:pre-wrap;word-break:break-word;box-shadow:0 12px 50px #000';
-      box.innerHTML='<b style="color:#67e8f9">FPL DEBUG</b>\n'+esc(JSON.stringify(details,null,2));
+      const details={build:BUILD,href:location.href,viewport:`${innerWidth}x${innerHeight} @${devicePixelRatio}`,strategyScripts:scripts,journalFix:window.FPLJournalFix?.build||null,journalPanel:!!panel,metricCount:panel?.querySelectorAll('.history-metric').length??0,metricInlineStyle:metric?.getAttribute('style')||'(none)',metricDisplay:cs?.display||'(n/a)',metricBorder:cs?.border||'(n/a)',journalStylesheets:links};
+      let box=document.getElementById('fpl-debug-box');if(!box){box=document.createElement('div');box.id='fpl-debug-box';document.body.appendChild(box)}
+      box.style.cssText='position:fixed;left:8px;right:8px;bottom:8px;z-index:2147483647;max-height:58vh;overflow:auto;background:#020817;color:#dbeafe;border:2px solid #22d3ee;border-radius:12px;padding:10px;font:11px/1.35 ui-monospace,SFMono-Regular,Menlo,monospace;white-space:pre-wrap;word-break:break-word;box-shadow:0 12px 50px #000';box.innerHTML='<b style="color:#67e8f9">FPL DEBUG</b>\n'+esc(JSON.stringify(details,null,2));
     }
     setTimeout(report,1200);setTimeout(report,3500);window.addEventListener('load',()=>setTimeout(report,700));
   })();
