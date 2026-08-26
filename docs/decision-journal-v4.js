@@ -1,41 +1,12 @@
 (()=>{
-const BASE='https://raw.githubusercontent.com/tlaw77/fpl/main/data/';
-const PLAN_KEY='fplWorkingPlanV2';
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
-async function json(name){try{const r=await fetch(`${BASE}${name}?v=decision-journal-inline-1`,{cache:'no-store'});return r.ok?await r.json():null}catch{return null}}
-function plan(){try{return JSON.parse(localStorage.getItem(PLAN_KEY)||'null')}catch{return null}}
-function fmtWhen(x){if(!x)return'';try{return new Date(x).toLocaleString([],{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}catch{return x}}
-function key(event,outId,inId,outName,inName){return `${event||''}:${outId||outName||''}>${inId||inName||''}`}
-function sameRoute(rec,t){const ri=rec?.in_player_id,ro=rec?.out_player_id,ti=t?.element_in,to=t?.element_out;if(ri!=null&&ti!=null&&Number(ri)!==Number(ti))return false;if(ro!=null&&to!=null&&Number(ro)!==Number(to))return false;return String(rec?.out||'').trim().toLowerCase()===String(t?.out_name||t?.out||'').trim().toLowerCase()&&String(rec?.in||'').trim().toLowerCase()===String(t?.in_name||t?.in||'').trim().toLowerCase()}
-function priorContext(event,t,rh){const cutoff=t?.time||t?.committed_at;let best=null;for(const s of rh?.snapshots||[]){if(Number(s.next_gw)!==Number(event))continue;if(cutoff&&s.captured_at_utc&&new Date(s.captured_at_utc)>new Date(cutoff))continue;const lenses=[];for(const [type,field,label] of [['lower_variance','lower_variance','Lower variance'],['variety','variety','Leverage']]){const r=(s[field]||[]).find(x=>sameRoute(x,t));if(r)lenses.push({type,label,model_uplift:r.gain,target_rival_ownership_pct:r.target_rival_ownership_pct,next3:r.next3||[],rationale:r.rationale||[]})}if(lenses.length){const at=new Date(s.captured_at_utc||0).getTime();if(!best||at>best.at)best={at,matched:true,match_type:'exact_route',snapshot_at_utc:s.captured_at_utc,strategy:s.strategy,team_rank_at_snapshot:s.team_rank,bank_at_snapshot:s.bank,lenses}}}return best?({...best,at:undefined}):null}
-const S={
- card:'background:linear-gradient(180deg,rgba(24,43,72,.96),rgba(20,36,61,.96));border:1px dashed rgba(250,204,21,.46);border-radius:16px;padding:14px;margin:8px 0 10px;overflow:hidden',
- head:'display:flex;align-items:flex-start;justify-content:space-between;gap:10px',
- title:'font-size:13px;line-height:1.25;font-weight:850;color:#f8fafc',
- meta:'margin-top:5px;font-size:9px;color:#9fb0c8',
- pill:'display:inline-flex;align-items:center;padding:6px 9px;border-radius:999px;background:rgba(250,204,21,.12);border:1px solid rgba(250,204,21,.18);color:#fde68a;font-size:8px;line-height:1;font-weight:850;white-space:nowrap',
- divider:'height:1px;background:rgba(255,255,255,.08);margin:11px 0',
- ctxHead:'display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:8px',
- ctxTitle:'font-size:9px;font-weight:850;color:#e2e8f0',
- ctxMeta:'font-size:8px;line-height:1.3;color:#9fb0c8;text-align:right',
- grid:'display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px',
- metric:'min-width:0;padding:9px 10px;border:1px solid rgba(148,163,184,.18);border-radius:11px;background:rgba(7,20,39,.30)',
- metricLabel:'display:block;font-size:7px;line-height:1.2;color:#aebbd0;font-weight:750;margin-bottom:4px',
- metricValue:'display:block;font-size:14px;line-height:1;color:#f8fafc;font-weight:900;letter-spacing:-.02em',
- fixtureWrap:'margin-top:9px;padding-top:9px;border-top:1px solid rgba(255,255,255,.07)',
- fixtureLabel:'display:block;font-size:8px;color:#dce9fb;font-weight:850;margin-bottom:7px',
- fixtures:'display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px',
- fixture:'display:flex;align-items:center;gap:5px;min-width:0;padding:6px 7px;border-radius:9px;background:rgba(255,255,255,.035);font-size:8px;line-height:1.2;color:#e5edf8',
- dot:'display:inline-block;flex:0 0 8px;width:8px;height:8px;border-radius:999px',
- reason:'margin-top:9px;padding-top:8px;border-top:1px solid rgba(255,255,255,.07)',
- reasonSum:'font-size:8px;color:#dce9fb;font-weight:850;cursor:pointer',
- note:'font-size:7px;color:#9fb0c8;margin-top:6px'
-};
-function metric(label,value){return `<div style="${S.metric}"><span style="${S.metricLabel}">${esc(label)}</span><strong style="${S.metricValue}">${esc(value)}</strong></div>`}
-function fdrColor(n){n=Number(n);return n<=2?'#22c55e':n===3?'#64748b':n===4?'#f59e0b':'#ef4444'}
-function evidence(ctx){if(!ctx?.lenses?.length)return '<div style="font-size:8px;color:#9fb0c8;margin-top:8px">No exact prior model recommendation captured for this route.</div>';const low=ctx.lenses.find(x=>x.type==='lower_variance');const lev=ctx.lenses.find(x=>x.type==='variety');const base=lev||low||ctx.lenses[0];const own=base?.target_rival_ownership_pct;const fs=base?.next3||[];const reasons=[];for(const l of ctx.lenses)for(const r of l.rationale||[]){if(/^Model uplift/i.test(r))continue;if(!reasons.includes(r))reasons.push(r)}const metrics=[low?.model_uplift!=null?metric('Lower-variance uplift',Number(low.model_uplift).toFixed(1)):'',lev?.model_uplift!=null?metric('Leverage uplift',Number(lev.model_uplift).toFixed(1)):'',own!=null?metric('Nearest-rival ownership',`${Number(own).toFixed(0)}%`):'',ctx.bank_at_snapshot!=null?metric('Bank then',`£${Number(ctx.bank_at_snapshot).toFixed(1)}m`):''].join('');const fixtures=fs.map(f=>`<div style="${S.fixture}"><i style="${S.dot};background:${fdrColor(f.fdr)}"></i><span style="min-width:0;overflow-wrap:anywhere">${esc(f.opponent)} ${esc(f.venue)}</span></div>`).join('');return `<div><div style="${S.divider}"></div><div style="${S.ctxHead}"><strong style="${S.ctxTitle}">Prior model context</strong><span style="${S.ctxMeta}">${ctx.snapshot_at_utc?fmtWhen(ctx.snapshot_at_utc):'Captured before decision'}${ctx.team_rank_at_snapshot?` · rank ${ctx.team_rank_at_snapshot}`:''}</span></div><div style="${S.grid}">${metrics}</div>${fs.length?`<div style="${S.fixtureWrap}"><b style="${S.fixtureLabel}">Fixture case</b><div style="${S.fixtures}">${fixtures}</div></div>`:''}<details style="${S.reason}"><summary style="${S.reasonSum}">Why it was considered</summary>${reasons.slice(0,4).map(r=>`<p style="font-size:8px;line-height:1.4;color:#cbd5e1;margin:6px 0 0">${esc(r)}</p>`).join('')}</details><div style="${S.note}">Historical dashboard heuristic · not projected FPL points.</div></div>`}
-function transferCard(t,pending=false,ctx=null){const evidenceCtx=t.recommendation_context||ctx;return `<div style="${S.card}"><div style="${S.head}"><div style="min-width:0"><strong style="${S.title}">${esc(t.out_name||t.out||'—')} → ${esc(t.in_name||t.in||'—')}</strong><div style="${S.meta}">${t.time?fmtWhen(t.time):pending&&t.committed_at?fmtWhen(t.committed_at):''}${t.in_cost!=null?` · £${Number(t.in_cost).toFixed(1)}m in`:''}</div></div><span style="${S.pill}">${pending?'Pending · committed here':'Confirmed'}</span></div>${evidence(evidenceCtx)}</div>`}
-function weekCard(w,pending,rh){const transfers=[...(w.transfers||[])];const officialKeys=new Set(transfers.map(t=>key(w.event,t.element_out,t.element_in,t.out_name,t.in_name)));const extras=(pending||[]).filter(t=>!officialKeys.has(key(w.event,t.element_out,t.element_in,t.out_name,t.in_name)));const hasTx=transfers.length||extras.length;const chip=w.active_chip?`<span class="history-chip">${esc(String(w.active_chip).replaceAll('_',' '))}</span>`:'';return `<details class="history-snapshot" ${extras.length?'open':''}><summary><span>GW${w.event}</span><small>${hasTx?`${transfers.length+extras.length} transfer${transfers.length+extras.length===1?'':'s'} · `:''}${w.captain_name?`C ${esc(w.captain_name)}`:'No captain record'}</small></summary><div class="history-week-meta">${w.captain_name?`Captain <strong>${esc(w.captain_name)}</strong>`:''}${w.vice_name?` · Vice ${esc(w.vice_name)}`:''}${chip}</div>${hasTx?`<div style="display:grid;grid-template-columns:1fr;gap:8px;margin-top:8px">${transfers.map(t=>transferCard(t,false,t.recommendation_context||priorContext(w.event,t,rh))).join('')}${extras.map(t=>transferCard(t,true,priorContext(w.event,t,rh))).join('')}</div>`:'<p class="subtle">No transfer made this gameweek.</p>'}</details>`}
-async function render(){const el=document.querySelector('#decision-history-panel');if(!el)return;const [hist,latest,rh]=await Promise.all([json('decision_history.json'),json('latest.json'),json('recommendation_history.json')]);const weeks=[...(hist?.weeks||[])];const p=plan();const nextGw=Number(latest?.next_gw||0);const pending=[];for(const m of p?.moves||[]){pending.push({event:nextGw,element_out:m.out?.player_id,out_name:m.out?.player,element_in:m.in?.player_id,in_name:m.in?.player,committed_at:m.committed_at,status:'pending_local_commit'})}if(pending.length&&!weeks.some(w=>Number(w.event)===nextGw))weeks.push({event:nextGw,captain_name:null,vice_name:null,active_chip:null,transfers:[],source:'local_commit'});weeks.sort((a,b)=>Number(b.event)-Number(a.event));el.innerHTML=`<section class="history-panel"><div class="panel-head"><div><p class="eyebrow">DECISION JOURNAL</p><h2>Decisions actually made</h2></div><div class="subtle">Decision first · model evidence when captured</div></div>${weeks.length?weeks.map(w=>weekCard(w,pending.filter(t=>Number(t.event)===Number(w.event)),rh)).join(''):'<p class="subtle">No recorded decisions yet.</p>'}</section>`}
-setTimeout(render,700);window.addEventListener('load',()=>setTimeout(render,400));window.addEventListener('fplPlanChanged',()=>setTimeout(render,50));window.FPLDecisionJournal={render};
+// Legacy loader retained only for compatibility. The Decision Journal is now
+// owned by journal-standalone-v1.js. Do not render into #decision-history-panel
+// from this bundle, otherwise the legacy renderer can overwrite the standalone
+// mobile-safe markup after it has already been drawn.
+function render(){
+  if(window.FPLJournalStandalone?.render){
+    return window.FPLJournalStandalone.render();
+  }
+}
+window.FPLDecisionJournal={render,legacyDisabled:true};
 })();
