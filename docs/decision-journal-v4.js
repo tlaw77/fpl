@@ -1,8 +1,50 @@
 (()=>{
 const BASE='https://raw.githubusercontent.com/tlaw77/fpl/main/data/';
 const PLAN_KEY='fplWorkingPlanV2';
-const STYLE_BUILD='20260826-1535';
-function ensureStyles(){let l=document.querySelector('link[data-decision-journal]');if(!l){l=document.createElement('link');l.rel='stylesheet';l.dataset.decisionJournal='1';document.head.appendChild(l)}const wanted=`decision-history.css?v=${STYLE_BUILD}`;if(l.getAttribute('href')!==wanted)l.href=wanted}
+const STYLE_BUILD='20260826-1545';
+const CRITICAL_CSS=`
+#decision-history-panel .history-decision{position:relative!important;background:linear-gradient(180deg,rgba(24,43,72,.96),rgba(20,36,61,.96))!important;border:1px solid rgba(255,255,255,.065)!important;border-radius:14px!important;padding:12px!important;margin:6px 0!important}
+#decision-history-panel .history-decision.pending{border:1px dashed rgba(250,204,21,.45)!important}
+#decision-history-panel .history-rec-head{display:flex!important;justify-content:space-between!important;gap:12px!important;align-items:flex-start!important}
+#decision-history-panel .history-rec-head>div{min-width:0!important}
+#decision-history-panel .history-rec-head strong{display:block!important;font-size:13px!important;line-height:1.25!important}
+#decision-history-panel .history-rec-head>span{font-size:8px!important;padding:5px 8px!important;border-radius:999px!important;background:rgba(250,204,21,.12)!important;color:#fde68a!important;font-weight:800!important;white-space:nowrap!important;border:1px solid rgba(250,204,21,.12)!important}
+#decision-history-panel .history-rec-meta{font-size:9px!important;color:var(--muted)!important;margin-top:4px!important}
+#decision-history-panel .history-evidence{margin-top:9px!important;padding-top:9px!important;border-top:1px solid rgba(255,255,255,.07)!important}
+#decision-history-panel .history-evidence-head{display:flex!important;justify-content:space-between!important;gap:8px!important;align-items:center!important}
+#decision-history-panel .history-evidence-head strong{font-size:9px!important;color:#e2e8f0!important}
+#decision-history-panel .history-evidence-head span{font-size:8px!important;color:var(--muted)!important}
+#decision-history-panel .history-metrics{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:6px!important;margin-top:8px!important}
+#decision-history-panel .history-metric{display:flex!important;align-items:center!important;gap:8px!important;padding:8px 9px!important;border:1px solid rgba(148,163,184,.18)!important;border-radius:10px!important;background:rgba(6,18,35,.22)!important;min-width:0!important}
+#decision-history-panel .history-metric-icon{display:block!important;flex:0 0 26px!important;width:26px!important;height:26px!important;border-radius:999px!important;background:rgba(59,130,246,.11)!important;border:1px solid rgba(96,165,250,.16)!important}
+#decision-history-panel .history-metric-copy{display:block!important;min-width:0!important}
+#decision-history-panel .history-metric b{display:block!important;font-size:7px!important;color:#aebbd0!important;font-weight:700!important;line-height:1.2!important;white-space:normal!important}
+#decision-history-panel .history-metric strong{display:block!important;font-size:13px!important;line-height:1.05!important;margin-top:2px!important;color:#f8fafc!important}
+#decision-history-panel .history-fixture-case{display:block!important;margin-top:8px!important;padding-top:8px!important;border-top:1px solid rgba(255,255,255,.06)!important}
+#decision-history-panel .history-fixture-case>b{display:block!important;font-size:8px!important;color:#e2e8f0!important;margin-bottom:6px!important}
+#decision-history-panel .history-fixtures{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:0!important;align-items:center!important}
+#decision-history-panel .history-fixture{display:flex!important;align-items:center!important;gap:6px!important;font-size:8px!important;color:#e5edf8!important;white-space:nowrap!important;padding:2px 8px!important;min-width:0!important}
+#decision-history-panel .history-fixture:first-child{padding-left:0!important}
+#decision-history-panel .history-fixture+.history-fixture{border-left:1px solid rgba(255,255,255,.08)!important}
+#decision-history-panel .history-fdr{display:inline-block!important;flex:0 0 9px!important;width:9px!important;height:9px!important;border-radius:999px!important;background:#64748b!important}
+#decision-history-panel .history-fdr.fdr-1,#decision-history-panel .history-fdr.fdr-2{background:#22c55e!important}
+#decision-history-panel .history-fdr.fdr-4{background:#f59e0b!important}
+#decision-history-panel .history-fdr.fdr-5{background:#ef4444!important}
+#decision-history-panel .history-reasoning{margin-top:8px!important;border-top:1px solid rgba(255,255,255,.06)!important;padding-top:7px!important}
+#decision-history-panel .history-reasoning summary{display:block!important;font-size:8px!important;color:#dce9fb!important;font-weight:800!important}
+#decision-history-panel .history-model-note{font-size:7px!important;color:var(--muted)!important;margin-top:5px!important}
+@media(max-width:700px){
+#decision-history-panel .history-metrics{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:5px!important}
+#decision-history-panel .history-metric{padding:7px!important}
+#decision-history-panel .history-metric-icon{width:24px!important;height:24px!important;flex-basis:24px!important}
+#decision-history-panel .history-metric strong{font-size:12px!important}
+#decision-history-panel .history-fixtures{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+#decision-history-panel .history-fixture{font-size:7px!important;padding:2px 5px!important;white-space:normal!important}
+#decision-history-panel .history-evidence-head{align-items:flex-start!important}
+#decision-history-panel .history-evidence-head span{text-align:right!important;white-space:normal!important}
+}
+`;
+function ensureStyles(){let style=document.getElementById('decision-journal-critical-style');if(!style){style=document.createElement('style');style.id='decision-journal-critical-style';document.head.appendChild(style)}if(style.textContent!==CRITICAL_CSS)style.textContent=CRITICAL_CSS;let l=document.querySelector('link[data-decision-journal]');if(!l){l=document.createElement('link');l.rel='stylesheet';l.dataset.decisionJournal='1';document.head.appendChild(l)}const wanted=`decision-history.css?v=${STYLE_BUILD}`;if(l.getAttribute('href')!==wanted)l.href=wanted}
 ensureStyles();
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
 async function json(name){try{const r=await fetch(`${BASE}${name}?v=decision-journal-4`,{cache:'no-store'});return r.ok?await r.json():null}catch{return null}}
