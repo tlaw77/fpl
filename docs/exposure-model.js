@@ -91,12 +91,21 @@
       card.classList.remove('role-shield','role-leverage');
       card.classList.add('role-neutral');
       const icon=card.querySelector('.pitch-exposure');
-      if(icon){icon.textContent='•';icon.title='Bench differential · not active leverage';icon.setAttribute('aria-label','Bench differential, not active leverage');}
+      if(icon){
+        if(icon.textContent!=='•')icon.textContent='•';
+        if(icon.title!=='Bench differential · not active leverage')icon.title='Bench differential · not active leverage';
+        if(icon.getAttribute('aria-label')!=='Bench differential, not active leverage')icon.setAttribute('aria-label','Bench differential, not active leverage');
+      }
     });
   }
 
   window.FPLExposureModel={SHIELD_EO,NEUTRAL_EO,STYLE_WEIGHTS,startingXI,band,exposureMap,roleFor,ratingBand,styleRating,normalizeExposure,normalizeRenderedPitchBench};
-  const obs=new MutationObserver(()=>normalizeRenderedPitchBench());
+  let queued=false;
+  const obs=new MutationObserver(()=>{
+    if(queued)return;
+    queued=true;
+    requestAnimationFrame(()=>{queued=false;normalizeRenderedPitchBench();});
+  });
   const start=()=>{const host=document.querySelector('#dc-team-view');if(host){obs.observe(host,{childList:true,subtree:true});normalizeRenderedPitchBench();}};
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
 })();
