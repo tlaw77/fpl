@@ -31,7 +31,7 @@ function loadDecisionJournal(){
     const first=intel.querySelector('.panel');
     if(first?.nextSibling)intel.insertBefore(host,first.nextSibling);else intel.prepend(host);
   }
-  const bundleVersion='20260826-1545';
+  const bundleVersion='20260826-1625';
   let l=document.querySelector('link[data-decision-journal]');
   if(!l){l=document.createElement('link');l.rel='stylesheet';l.dataset.decisionJournal='1';document.head.appendChild(l)}
   l.href=`decision-history.css?v=${bundleVersion}`;
