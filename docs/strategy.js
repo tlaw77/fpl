@@ -32,10 +32,10 @@ function loadDecisionJournal(){
     if(first?.nextSibling)intel.insertBefore(host,first.nextSibling);else intel.prepend(host);
   }
   if(!document.querySelector('link[data-decision-journal]')){
-    const l=document.createElement('link');l.rel='stylesheet';l.href='decision-history.css?v=20260826-1218';l.dataset.decisionJournal='1';document.head.appendChild(l);
+    const l=document.createElement('link');l.rel='stylesheet';l.href='decision-history.css?v=20260826-1229';l.dataset.decisionJournal='1';document.head.appendChild(l);
   }
-  if(!document.querySelector('script[data-decision-journal]')){
-    const s=document.createElement('script');s.src='decision-history.js?v=20260826-1218';s.dataset.decisionJournal='1';document.body.appendChild(s);
+  if(!document.querySelector('script[data-decision-journal-v3]')){
+    const s=document.createElement('script');s.src='decision-journal-v3.js?v=20260826-1229';s.dataset.decisionJournalV3='1';document.body.appendChild(s);
   }
 }
 async function renderStrategy(){try{const r=await fetch(`${STRATEGY_URL}?t=${Date.now()}`,{cache:'no-store'});if(!r.ok)throw new Error(`HTTP ${r.status}`);const d=await r.json();renderChipTable(d);renderSchedule(d);renderScout(d);renderStrategyNotes(d);const stamp=document.querySelector('#strategy-updated');if(stamp)stamp.textContent=`Strategy watch: ${new Date(d.generated_at_utc).toLocaleString()}`;loadSquadIntel();loadDecisionJournal();}catch(e){for(const id of ['#chip-table','#schedule-watch','#scout-watch','#chip-notes']){const el=document.querySelector(id);if(el)el.innerHTML='<div class="subtle">Strategy watch is waiting for its first successful refresh.</div>';}loadDecisionJournal();}}
