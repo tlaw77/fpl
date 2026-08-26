@@ -48,9 +48,9 @@ bindTab();boot();window.addEventListener('fplPlanChanged',render);window.FPLPlay
     const js=document.createElement('script');js.src='strategic-outlook.js?v=20260825-1658';js.dataset.strategicOutlook='1';document.body.appendChild(js);
   }
   if(!document.querySelector('link[data-scout-consensus]')){
-    const css=document.createElement('link');css.rel='stylesheet';css.href='scout-consensus.css?v=20260825-1740';css.dataset.scoutConsensus='1';document.head.appendChild(css);
+    const css=document.createElement('link');css.rel='stylesheet';css.href='scout-consensus.css?v=20260826-1905';css.dataset.scoutConsensus='1';document.head.appendChild(css);
   }
   if(!document.querySelector('script[data-scout-consensus]')){
-    const js=document.createElement('script');js.src='scout-consensus.js?v=20260825-1740';js.dataset.scoutConsensus='1';document.body.appendChild(js);
+    const js=document.createElement('script');js.src='scout-consensus.js?v=20260826-1905';js.dataset.scoutConsensus='1';document.body.appendChild(js);
   }
 })();
