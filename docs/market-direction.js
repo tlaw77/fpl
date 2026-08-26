@@ -1,5 +1,5 @@
 (()=>{
-const BUILD='market-direction-v1-20260826-2115';
+const BUILD='market-direction-v1-20260826-2122-hotfix';
 function classify(row){
   const text=(row.innerText||'').toLowerCase();
   if(/strong rise pressure|rise pressure/.test(text))return'rise';
@@ -31,15 +31,8 @@ function patch(){
   host.querySelectorAll('.market-row').forEach(patchRow);
   host.dataset.marketDirectionBuild=BUILD;
 }
-function loadUplift(){
-  if(window.FPLTransferUplift||document.querySelector('script[data-transfer-uplift-loader]'))return;
-  const s=document.createElement('script');
-  s.src='transfer-uplift.js?v=20260826-2125';
-  s.dataset.transferUpliftLoader='1';
-  document.body.appendChild(s);
-}
 function start(){
-  patch();setTimeout(patch,400);setTimeout(patch,1200);loadUplift();
+  patch();setTimeout(patch,400);setTimeout(patch,1200);
   const host=document.querySelector('#market-urgency');
   if(host)new MutationObserver(()=>patch()).observe(host,{childList:true,subtree:true});
   window.addEventListener('fplPlanChanged',()=>setTimeout(patch,60));
