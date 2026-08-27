@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#0b1020" />
   <title>FPL Decision Centre</title>
-  <link rel="stylesheet" href="styles.css?v=20260827-0805" />
-  <link rel="stylesheet" href="decision-centre.css?v=20260827-0805" />
+  <link rel="stylesheet" href="styles.css?v=20260827-0810" />
+  <link rel="stylesheet" href="decision-centre.css?v=20260827-0810" />
 </head>
 <body>
   <main class="shell">
@@ -14,11 +14,13 @@
       <div>
         <p class="eyebrow">FPL DECISION CENTRE</p>
         <h1 id="league-title">Loading…</h1>
-        <p class="subtle" id="last-updated">Stage 2 transfer + team bootstrap</p>
+        <p class="subtle" id="last-updated">Stage 3 squad-shape bootstrap</p>
       </div>
       <div class="gw-pill" id="gw-pill">GW —</div>
     </header>
+
     <section class="kpi-grid" id="kpi-grid"></section>
+
     <nav class="decision-nav" id="decision-nav" aria-label="Dashboard views">
       <button data-view="transfer">Transfer</button>
       <button data-view="team">Pick Team</button>
@@ -26,13 +28,15 @@
       <button data-view="pool">Player Pool</button>
       <button data-view="intel">League Intel</button>
     </nav>
+
     <section class="dashboard-view active" id="view-transfer"><div id="dc-transfer-view"></div></section>
     <section class="dashboard-view" id="view-team"><div id="dc-team-view"></div></section>
-    <section class="dashboard-view" id="view-shape"><section class="dc-card"><p class="eyebrow">STAGE 3</p><h3>Squad Shape held back</h3><p>Next module to restore after Transfer + Pick Team are confirmed stable.</p></section></section>
-    <section class="dashboard-view" id="view-pool"><section class="dc-card"><p class="eyebrow">STAGE 4</p><h3>Player Pool held back</h3><p>The large player-pool payload and Scout layer remain isolated.</p></section></section>
-    <section class="dashboard-view" id="view-intel"><section class="dc-card"><p class="eyebrow">STAGE 5+</p><h3>League Intel held back</h3><p>Matrix, heatmap, market, history and journal remain isolated.</p></section></section>
-    <footer>Stage 2 recovery · one snapshot request · Transfer + Pick Team only.</footer>
+    <section class="dashboard-view" id="view-shape"><div id="dc-shape-view"></div></section>
+    <section class="dashboard-view" id="view-pool"><section class="dc-card"><p class="eyebrow">STAGE 4</p><h3>Player Pool held back</h3><p>The large player-pool payload and Scout layer remain isolated for the next controlled test.</p></section></section>
+    <section class="dashboard-view" id="view-intel"><section class="dc-card"><p class="eyebrow">STAGE 5+</p><h3>League Intel held back</h3><p>Market, matrix, heatmap, history and journal are not loaded.</p></section></section>
+
+    <footer>Stage 3 recovery · one live snapshot · Transfer + Pick Team + Squad Shape.</footer>
   </main>
-  <script src="app-stage2-team.js?v=20260827-0805"></script>
+  <script src="app-stage3-shape.js?v=20260827-0810"></script>
 </body>
 </html>
