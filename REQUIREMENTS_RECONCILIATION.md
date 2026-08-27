@@ -15,16 +15,17 @@ This file is the production source-of-truth for the recovered Decision Centre af
 
 - Core preferred transfer recommendation — DONE.
 - Lower-variance and leverage uplift — DONE.
+- Hold / roll decision lens — DONE via safe-transfer-decision-depth-stage22.js.
 - Rival ownership context — DONE.
 - Scout/news corroboration — DONE.
 - Market direction / transfer pressure — DONE.
 - Availability/minutes evidence — DONE.
-- Side-by-side route alternatives — DONE via safe-transfer-routes-stage17.js.
-- Explicit route picking from the comparison list — DONE; each route has a Choose button.
+- Side-by-side route alternatives across different outgoing/incoming players — DONE via safe-transfer-routes-stage17.js.
+- Explicit route picking from the comparison list — DONE.
 - Selected route clearly marked as Your choice — DONE.
-- Working-plan save/clear — DONE; explicit button press only.
-- Decision Journal with historical recommendation context — DONE, read-only render.
-- Automatic uplift_snapshot persistence/backfill — RETIRED intentionally because it contributed to unstable state/event behaviour. Equivalent evidence is rendered directly from current/history data instead.
+- Consequence / urgency context — DONE via safe-transfer-decision-depth-stage22.js.
+- Decision Journal with historical recommendation context — DONE.
+- Automatic uplift_snapshot persistence/backfill — RETIRED intentionally because equivalent evidence is rendered directly and the old persistence mechanism was unsafe.
 
 ## Pick Team
 
@@ -32,26 +33,34 @@ This file is the production source-of-truth for the recovered Decision Centre af
 - Formation, captain, vice-captain and bench order — DONE.
 - Uses decision score, fixture ease, availability, form and PPG — DONE.
 - Rich pitch-style presentation — DONE via safe-pick-team-pitch-stage18.js.
-- Selected working transfer is applied to the effective squad before XI/bench/bank calculations — DONE.
-- Explainable rationale — DONE at summary/player-fixture level; can be expanded without changing selection logic.
+- Selected working transfer is applied before XI/bench/bank calculations — DONE.
+- Incoming working-plan player is visibly marked — DONE.
+- Shield / Neutral / Leverage interpretation and league impact — DONE.
 
 ## Squad Shape / Forward Planning
 
 - Position spend, bench value, club concentration, availability flags — DONE.
-- Selected working transfer is projected into squad structure and bank — DONE via safe-plan-projection-stage19.js.
-- Multi-GW strategic fixture outlook — DONE via safe-requirements-stage16.js.
-- Working-plan-aware forward squad IDs — DONE without background writes.
-- Chip window evaluation and future-window comparison — DONE via safe-requirements-stage16.js using data/chip_window.json.
+- Selected working transfer is projected into squad structure and bank — DONE.
+- Multi-GW strategic fixture outlook — DONE.
+- Six-GW fixture-cliff view — DONE via safe-feature-completion-stage21.js.
+- Fine / Watch / Plan statuses — DONE.
+- Easy/tough fixture stacking — DONE.
+- Self-cancelling fixture count — DONE.
+- Chip window evaluation and future-window comparison — DONE.
 
 ## Player Pool
 
 - Lazy loading — DONE.
 - Model, fixtures, minutes/availability, value, Scout and Market signals — DONE.
-- Positivity score with semantic green/amber/red treatment — DONE.
+- Positivity / overall score with semantic treatment — DONE.
 - Current squad marking — DONE.
-- Selected transfer is visibly labelled YOUR IN / YOUR OUT and shown in a working-plan banner — DONE via safe-plan-projection-stage19.js.
-- Bounded mobile DOM (top 40) — DONE intentionally for Safari stability.
-- Historical full dynamic strategic-outlook injection from player-pool.js — RETIRED; strategic outlook is restored independently and safely.
+- Selected transfer labelled YOUR IN / YOUR OUT — DONE.
+- Search — DONE via safe-feature-completion-stage21.js.
+- Position filter / same-position comparison — DONE.
+- Sorting by overall/model/fixtures/value/EO/price — DONE.
+- Ownership / EO and Shield-Neutral-Leverage role — DONE.
+- Rise / Fall Watch — DONE.
+- Bounded mobile DOM — DONE intentionally for Safari stability.
 
 ## League Intel
 
@@ -61,23 +70,25 @@ This file is the production source-of-truth for the recovered Decision Centre af
 - Manager ownership matrix — DONE, capped for mobile.
 - Recent rank/points trend — DONE, capped parallel history load.
 - Exposure heatmap — DONE, compact top-20 implementation.
-- EO strategy posture and canonical role thresholds — DONE via safe-requirements-stage16.js.
-- Selected working transfer is visibly carried into League Intel — DONE via safe-plan-projection-stage19.js.
+- EO strategy posture and canonical role thresholds — DONE.
+- Squad-style / variance score — DONE via safe-feature-completion-stage21.js.
+- Selected working transfer visibly carried into League Intel — DONE.
 - Full old all-player/all-GW heatmap — RETIRED intentionally; bounded equivalent is used.
 
 ## Decision Journal / Saved State
 
 - Read prior saved plan safely — DONE.
-- Show pending/confirmed decision history — DONE.
+- Distinguish current working choice from confirmed historical decisions — DONE.
+- Show confirmed decision history — DONE.
 - Preserve prior model context where captured — DONE.
-- Explicit save, route-select and clear controls — DONE.
+- Route selection persists across refresh — DONE.
 - One-way safe UI refresh after an explicit user route choice — DONE using fplSafePlanUpdated; listeners render only and do not write.
 - Automatic background localStorage writes/events/observer-driven rerenders — RETIRED intentionally.
 
 ## Architecture / UX
 
 - Five primary tabs: Transfer, Pick Team, Squad Shape, Player Pool, League Intel — DONE.
-- A chosen transfer is identifiable as the user's working choice across all five views — DONE.
+- A chosen transfer becomes the effective working squad across all five views — DONE.
 - Core dashboard one lightweight snapshot request first — DONE.
 - Scout/Market/Pool/Intel/history secondary work lazy or bounded — DONE.
 - No MutationObserver in the recovered production path — DONE.
@@ -85,6 +96,16 @@ This file is the production source-of-truth for the recovered Decision Centre af
 - No transfer-uplift persistence loop — DONE.
 - Recovery/stage diagnostic wording removed from production UI — DONE.
 
+## Deliberately retired implementation details
+
+These are not missing user requirements; they are old implementation mechanisms replaced by safer equivalents:
+
+- self-triggering MutationObservers
+- automatic localStorage backfills
+- recursive fplPlanChanged event propagation
+- unbounded full-season / all-player rendering on first load
+- transfer-uplift persistence loop
+
 ## Definition of done
 
-A requirement is considered complete when its decision-support outcome is available in the production UI with the stable architecture. Old implementation mechanisms are not requirements when an equivalent safer implementation exists.
+A requirement is complete when its decision-support outcome is available in the production UI with the stable architecture. Old mechanisms are not requirements where a safer equivalent now exists.
