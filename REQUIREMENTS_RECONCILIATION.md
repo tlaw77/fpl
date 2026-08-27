@@ -37,8 +37,8 @@ This file is the production source-of-truth for the recovered Decision Centre af
 - Selected working transfer is applied before XI/bench/bank calculations — DONE.
 - Incoming working-plan player is visibly marked — DONE.
 - Shield / Neutral / Leverage interpretation and league impact — DONE.
-- Selection rationale for marginal starters and bench decisions — DONE via safe-team-rationale-stage25.js. The UI explains the closest bench calls using comparative selection score, immediate fixture, availability/minutes and form signals, including which selected same-position player edged the omitted player.
-- Captain / vice rationale — DONE via safe-team-rationale-stage25.js. The UI explains the armband and fallback using the same combined selection score and supporting fixture/availability/form context.
+- Selection rationale for marginal starters and bench decisions — DONE in safe-pick-team-pitch-stage18.js. The UI explains every bench call against the weakest selected same-position player using comparative XI score, immediate fixture, availability/minutes, underlying model score and recent form where relevant.
+- Captain / vice rationale — DONE in safe-pick-team-pitch-stage18.js. The UI explains the armband and fallback using the same combined XI score plus fixture, availability, form and PPG context.
 
 ## Squad Shape / Forward Planning
 
@@ -96,6 +96,7 @@ This file is the production source-of-truth for the recovered Decision Centre af
 - Production cards, Decision Lens and selected-player treatment share one visual language — DONE via production-cohesion-stage23.css.
 - Core dashboard one lightweight snapshot request first — DONE.
 - Scout/Market/Pool/Intel/history secondary work lazy or bounded — DONE.
+- Pick Team only loads Player Pool when the selected incoming player is not already hydrated from the current squad snapshot — DONE.
 - No MutationObserver in the recovered production path — DONE.
 - No recursive fplPlanChanged event loop in the recovered production path — DONE.
 - No transfer-uplift persistence loop — DONE.
