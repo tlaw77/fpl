@@ -37,8 +37,8 @@ This file is the production source-of-truth for the recovered Decision Centre af
 - Selected working transfer is applied before XI/bench/bank calculations — DONE.
 - Incoming working-plan player is visibly marked — DONE.
 - Shield / Neutral / Leverage interpretation and league impact — DONE.
-- Selection rationale for marginal starters and bench decisions — PENDING. The UI must explain why a player is omitted or started (for example why Maguire is left out), using the actual comparative factors that drove the XI: decision score, fixture quality, availability/minutes, form/PPG, formation constraints and the competing player's edge.
-- Captain / vice rationale — PENDING. Explain the main factors behind the armband recommendation rather than only showing C / VC.
+- Selection rationale for marginal starters and bench decisions — DONE via safe-team-rationale-stage25.js. The UI explains the closest bench calls using comparative selection score, immediate fixture, availability/minutes and form signals, including which selected same-position player edged the omitted player.
+- Captain / vice rationale — DONE via safe-team-rationale-stage25.js. The UI explains the armband and fallback using the same combined selection score and supporting fixture/availability/form context.
 
 ## Squad Shape / Forward Planning
 
