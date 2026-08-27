@@ -1,0 +1,16 @@
+(()=>{
+const BUILD='safe-league-heatmap-stage12-20260827-1920';
+const DATA='https://raw.githubusercontent.com/tlaw77/fpl/main/data/latest.json';
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+const n=(v,d=0)=>Number.isFinite(Number(v))?Number(v):d;
+const pct=v=>`${n(v).toFixed(0)}%`;
+let loaded=false,loading=false;
+function tone(v){const x=n(v);return x>=70?'#34d399':x>=40?'#fbbf24':x>0?'#60a5fa':'#334155'}
+function signal(p){const x=String(p.classification||'neutral').toLowerCase();if(/danger|risk/.test(x))return {label:'Threat',c:'#fb7185'};if(/leverage/.test(x))return {label:'Leverage',c:'#34d399'};if(/shield/.test(x))return {label:'Shield',c:'#60a5fa'};return {label:'Neutral',c:'#94a3b8'}}
+function cell(label,value){const c=tone(value);return `<div style="min-width:0;padding:7px 6px;border-radius:9px;background:${c}18;border:1px solid ${c}55;text-align:center"><strong style="display:block;font-size:11px;color:${c}">${esc(pct(value))}</strong><span style="display:block;margin-top:2px;font-size:7px;color:#9fb0c8">${esc(label)}</span></div>`}
+function render(d){const host=document.getElementById('dc-intel-view');if(!host||document.getElementById('safe-heatmap-stage12'))return;const rows=[...(d.player_exposure||[])].sort((a,b)=>n(b.effective_ownership_pct??b.ownership_pct)-n(a.effective_ownership_pct??a.ownership_pct)).slice(0,20);const box=document.createElement('section');box.className='dc-card';box.id='safe-heatmap-stage12';box.innerHTML=`<p class="eyebrow">STAGE 12 · EXPOSURE HEATMAP</p><h3>Top 20 league-impact players</h3><p class="subtle">Compact, fixed-size render from one snapshot. No observers, no scrolling matrix expansion, no continuous recalculation.</p><div style="display:grid;gap:8px;margin-top:12px">${rows.map(p=>{const s=signal(p),eo=p.effective_ownership_pct??(n(p.starter_pct)+n(p.captaincy_pct));return `<div style="display:grid;grid-template-columns:minmax(95px,1.25fr) repeat(4,minmax(50px,.7fr));gap:6px;align-items:center;padding:8px 0;border-top:1px solid #243451"><div style="min-width:0"><strong style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${p.in_my_team?'★ ':''}${esc(p.player)}</strong><span style="font-size:8px;color:${s.c};font-weight:800">${esc(s.label)}</span></div>${cell('Owned',p.ownership_pct)}${cell('Start',p.starter_pct)}${cell('Cap',p.captaincy_pct)}${cell('EO',eo)}</div>`}).join('')}</div>`;const anchor=host.querySelector('#safe-league-trend-stage11')||host.lastElementChild;anchor?.insertAdjacentElement('beforebegin',box);loaded=true;document.documentElement.dataset.leagueHeatmapBuild=BUILD;}
+async function load(){if(loaded||loading)return;loading=true;try{const ctl=new AbortController();const t=setTimeout(()=>ctl.abort(),8000);const r=await fetch(`${DATA}?stage12=${Date.now()}`,{cache:'no-store',signal:ctl.signal});clearTimeout(t);if(r.ok)render(await r.json())}catch(_){}finally{loading=false}}
+function bind(){const b=document.querySelector('#decision-nav button[data-view="intel"]');if(b)b.addEventListener('click',()=>setTimeout(load,250),{passive:true});}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind,{once:true});else bind();
+window.FPLSafeLeagueHeatmap={build:BUILD,load};
+})();
