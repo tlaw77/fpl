@@ -1,0 +1,14 @@
+(()=>{
+const BUILD='production-cohesion-stage23-20260827-2334';
+const KEY='fplWorkingPlanV2';
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+function plan(){try{return JSON.parse(localStorage.getItem(KEY)||'null')}catch{return null}}
+function move(){return plan()?.moves?.[0]||null}
+function renderChoiceBar(){const nav=document.getElementById('decision-nav');if(!nav)return;let bar=document.getElementById('working-choice-strip');if(!bar){bar=document.createElement('div');bar.id='working-choice-strip';nav.insertAdjacentElement('afterend',bar)}const m=move();if(!m?.out?.player||!m?.in?.player){bar.innerHTML='<span class="wc-kicker">WORKING PLAN</span><strong>Roll / no transfer selected</strong><span>Current squad is used across every view.</span>';bar.className='working-choice-strip rolling';return}bar.innerHTML=`<span class="wc-kicker">YOUR WORKING PLAN</span><strong>${esc(m.out.player)} → ${esc(m.in.player)}</strong><span>Applied across Pick Team, Squad Shape, Player Pool and League Intel.</span>`;bar.className='working-choice-strip active'}
+function labelSelectedIncoming(){const m=move();document.querySelectorAll('.pitch-player-card').forEach(card=>card.classList.remove('working-in'));if(!m?.in?.player)return;document.querySelectorAll('.pitch-player-card .pitch-name').forEach(name=>{const txt=(name.textContent||'').replace(/^[CV]\s*/,'').trim().toLowerCase();if(txt.includes(String(m.in.player).toLowerCase()))name.closest('.pitch-player-card')?.classList.add('working-in')})}
+function normalizeHeadings(){document.querySelectorAll('.dc-card,.pitch-panel,.pitch-impact,.pitch-bench-panel,.history-panel').forEach(sec=>{const eye=sec.querySelector(':scope > .eyebrow, :scope > div > .eyebrow, .panel-head .eyebrow, .pitch-head .eyebrow');if(eye)eye.classList.add('product-kicker')});document.querySelectorAll('[data-working-plan-banner]').forEach(x=>x.classList.add('working-choice-card'));}
+function activeTabHint(){const active=document.querySelector('#decision-nav button.active');document.querySelectorAll('#decision-nav button').forEach(b=>b.setAttribute('aria-current',b===active?'page':'false'))}
+function polish(){renderChoiceBar();labelSelectedIncoming();normalizeHeadings();activeTabHint();document.documentElement.dataset.productionCohesionBuild=BUILD}
+function bind(){document.querySelectorAll('#decision-nav button').forEach(b=>b.addEventListener('click',()=>{setTimeout(polish,140);setTimeout(polish,650)},{passive:true}));window.addEventListener('fplSafePlanUpdated',()=>setTimeout(polish,80));polish();setTimeout(polish,900);setTimeout(polish,2000)}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind,{once:true});else bind();
+})();
