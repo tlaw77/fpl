@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#0b1020" />
   <title>FPL Decision Centre</title>
-  <link rel="stylesheet" href="styles.css?v=20260827-1005" />
-  <link rel="stylesheet" href="decision-centre.css?v=20260827-1005" />
+  <link rel="stylesheet" href="styles.css?v=20260827-1245" />
+  <link rel="stylesheet" href="decision-centre.css?v=20260827-1245" />
 </head>
 <body>
   <main class="shell">
@@ -14,7 +14,7 @@
       <div>
         <p class="eyebrow">FPL DECISION CENTRE</p>
         <h1 id="league-title">Loading…</h1>
-        <p class="subtle" id="last-updated">Stage 4 lazy Player Pool bootstrap</p>
+        <p class="subtle" id="last-updated">Stage 5 lazy Scout bootstrap</p>
       </div>
       <div class="gw-pill" id="gw-pill">GW —</div>
     </header>
@@ -32,11 +32,11 @@
     <section class="dashboard-view active" id="view-transfer"><div id="dc-transfer-view"></div></section>
     <section class="dashboard-view" id="view-team"><div id="dc-team-view"></div></section>
     <section class="dashboard-view" id="view-shape"><div id="dc-shape-view"></div></section>
-    <section class="dashboard-view" id="view-pool"><div id="dc-pool-view"><section class="dc-card"><p class="eyebrow">STAGE 4</p><h3>Player Pool ready on demand</h3><p>The large secondary payload will load only when this tab is opened.</p></section></div></section>
-    <section class="dashboard-view" id="view-intel"><section class="dc-card"><p class="eyebrow">STAGE 5+</p><h3>League Intel held back</h3><p>Scout, market, matrix, heatmap, history and journal remain isolated.</p></section></section>
+    <section class="dashboard-view" id="view-pool"><div id="dc-pool-view"><section class="dc-card"><p class="eyebrow">STAGE 5</p><h3>Player Pool + Scout ready on demand</h3><p>Player Pool loads first; Scout enrichment follows as a separate lazy request.</p></section></div></section>
+    <section class="dashboard-view" id="view-intel"><section class="dc-card"><p class="eyebrow">STAGE 6+</p><h3>League Intel held back</h3><p>Market, matrix, heatmap, history, Journal and committed-plan state remain isolated.</p></section></section>
 
-    <footer>Stage 4 recovery · core snapshot first · Player Pool lazy-loaded on demand.</footer>
+    <footer>Stage 5 recovery · core snapshot first · Player Pool + Scout lazy-loaded on demand.</footer>
   </main>
-  <script src="app-stage4-pool.js?v=20260827-1005"></script>
+  <script src="app-stage5-scout.js?v=20260827-1245"></script>
 </body>
 </html>
