@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#0b1020" />
   <title>FPL Decision Centre</title>
-  <link rel="stylesheet" href="styles.css?v=20260827-0215" />
-  <link rel="stylesheet" href="decision-centre.css?v=20260827-0215" />
+  <link rel="stylesheet" href="styles.css?v=20260827-0225" />
+  <link rel="stylesheet" href="decision-centre.css?v=20260827-0225" />
 </head>
 <body>
   <main class="shell">
@@ -14,7 +14,7 @@
       <div>
         <p class="eyebrow">FPL DECISION CENTRE</p>
         <h1 id="league-title">Loading…</h1>
-        <p class="subtle" id="last-updated">Safe recovery bootstrap</p>
+        <p class="subtle" id="last-updated">Stage 1 transfer bootstrap</p>
       </div>
       <div class="gw-pill" id="gw-pill">GW —</div>
     </header>
@@ -30,13 +30,13 @@
     </nav>
 
     <section class="dashboard-view active" id="view-transfer"><div id="dc-transfer-view"></div></section>
-    <section class="dashboard-view" id="view-team"><section class="dc-card"><p class="eyebrow">RECOVERY MODE</p><h3>Pick Team temporarily isolated</h3><p>We are re-enabling modules one at a time after the mobile freeze is resolved.</p></section></section>
-    <section class="dashboard-view" id="view-shape"><section class="dc-card"><p class="eyebrow">RECOVERY MODE</p><h3>Squad Shape temporarily isolated</h3><p>Core data remains available while this module is held out of startup.</p></section></section>
-    <section class="dashboard-view" id="view-pool"><section class="dc-card"><p class="eyebrow">RECOVERY MODE</p><h3>Player Pool temporarily isolated</h3><p>The large player-pool payload is not loaded on startup in this diagnostic build.</p></section></section>
-    <section class="dashboard-view" id="view-intel"><section class="dc-card"><p class="eyebrow">RECOVERY MODE</p><h3>League Intel temporarily isolated</h3><p>The heavy matrix, heatmap and history renderers are not loaded in this build.</p></section></section>
+    <section class="dashboard-view" id="view-team"><section class="dc-card"><p class="eyebrow">STAGE 2</p><h3>Pick Team held back</h3><p>This is the next module to restore after Transfer is confirmed stable.</p></section></section>
+    <section class="dashboard-view" id="view-shape"><section class="dc-card"><p class="eyebrow">STAGE 3</p><h3>Squad Shape held back</h3><p>Not loaded during this stage.</p></section></section>
+    <section class="dashboard-view" id="view-pool"><section class="dc-card"><p class="eyebrow">STAGE 4</p><h3>Player Pool held back</h3><p>The large player-pool payload and Scout layer remain isolated.</p></section></section>
+    <section class="dashboard-view" id="view-intel"><section class="dc-card"><p class="eyebrow">STAGE 5+</p><h3>League Intel held back</h3><p>Matrix, heatmap, market, history and journal are not loaded.</p></section></section>
 
-    <footer>Safe recovery build · one data request · one JavaScript module.</footer>
+    <footer>Stage 1 recovery · live snapshot + transfer engine only.</footer>
   </main>
-  <script src="app-recovery.js?v=20260827-0215"></script>
+  <script src="app-stage1-transfer.js?v=20260827-0225"></script>
 </body>
 </html>
