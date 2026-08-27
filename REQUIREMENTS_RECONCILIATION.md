@@ -16,6 +16,7 @@ This file is the production source-of-truth for the recovered Decision Centre af
 - Core preferred transfer recommendation — DONE.
 - Lower-variance and leverage uplift — DONE.
 - Hold / roll decision lens — DONE via safe-transfer-decision-depth-stage22.js.
+- Hold / roll is a selectable working choice that clears the planned transfer and projects the current squad across all views — DONE.
 - Rival ownership context — DONE.
 - Scout/news corroboration — DONE.
 - Market direction / transfer pressure — DONE.
@@ -89,6 +90,8 @@ This file is the production source-of-truth for the recovered Decision Centre af
 
 - Five primary tabs: Transfer, Pick Team, Squad Shape, Player Pool, League Intel — DONE.
 - A chosen transfer becomes the effective working squad across all five views — DONE.
+- Global working-plan strip consistently shows the current route or Roll / no transfer state — DONE via production-cohesion-stage23.js.
+- Production cards, Decision Lens and selected-player treatment share one visual language — DONE via production-cohesion-stage23.css.
 - Core dashboard one lightweight snapshot request first — DONE.
 - Scout/Market/Pool/Intel/history secondary work lazy or bounded — DONE.
 - No MutationObserver in the recovered production path — DONE.
