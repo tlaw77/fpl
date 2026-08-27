@@ -1,5 +1,5 @@
 (()=>{
-const BUILD='market-direction-v1-20260826-2122-hotfix';
+const BUILD='market-direction-v1-20260826-2115';
 function classify(row){
   const text=(row.innerText||'').toLowerCase();
   if(/strong rise pressure|rise pressure/.test(text))return'rise';
