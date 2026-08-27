@@ -37,6 +37,8 @@ This file is the production source-of-truth for the recovered Decision Centre af
 - Selected working transfer is applied before XI/bench/bank calculations — DONE.
 - Incoming working-plan player is visibly marked — DONE.
 - Shield / Neutral / Leverage interpretation and league impact — DONE.
+- Selection rationale for marginal starters and bench decisions — PENDING. The UI must explain why a player is omitted or started (for example why Maguire is left out), using the actual comparative factors that drove the XI: decision score, fixture quality, availability/minutes, form/PPG, formation constraints and the competing player's edge.
+- Captain / vice rationale — PENDING. Explain the main factors behind the armband recommendation rather than only showing C / VC.
 
 ## Squad Shape / Forward Planning
 
@@ -90,7 +92,7 @@ This file is the production source-of-truth for the recovered Decision Centre af
 
 - Five primary tabs: Transfer, Pick Team, Squad Shape, Player Pool, League Intel — DONE.
 - A chosen transfer becomes the effective working squad across all five views — DONE.
-- Global working-plan strip consistently shows the current route or Roll / no transfer state — DONE via production-cohesion-stage23.js.
+- Compact global plan status shows the current route or Roll without repeating a full banner on every view — DONE via production-cohesion-stage23.js.
 - Production cards, Decision Lens and selected-player treatment share one visual language — DONE via production-cohesion-stage23.css.
 - Core dashboard one lightweight snapshot request first — DONE.
 - Scout/Market/Pool/Intel/history secondary work lazy or bounded — DONE.
