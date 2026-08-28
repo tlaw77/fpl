@@ -93,7 +93,7 @@ def find_minutes(obj):
     if isinstance(obj,dict):
         for k,v in obj.items():
             lk=str(k).lower().replace('_',' ')
-            if 'minute' in lk or lk in {'minsplayed','mins played'}:
+            if lk in {'minutesplayed','minutes played','minsplayed','mins played'} or ('minute' in lk and 'subbed' not in lk):
                 n=numeric(v)
                 if n is not None:return n
         for v in obj.values():
@@ -117,12 +117,27 @@ def pname(p):
 def flatten_players(x):
     out=[]
     if isinstance(x,dict):
-        if pname(x) and any(k in x for k in ('id','playerId','positionId','minutesPlayed','stats','rating')):out.append(x)
+        if pname(x) and any(k in x for k in ('id','playerId','positionId','minutesPlayed','stats','rating','timeSubbedOn','timeSubbedOff')):out.append(x)
         else:
             for v in x.values():out.extend(flatten_players(v))
     elif isinstance(x,list):
         for v in x:out.extend(flatten_players(v))
     return out
+
+def derive_minutes(p,started,duration=90):
+    direct=find_minutes(p)
+    if direct is not None:return max(0,min(float(duration),direct)),'reported'
+    on=numeric(p.get('timeSubbedOn'));off=numeric(p.get('timeSubbedOff'))
+    # Some payloads expose substitution timing inside an events/sub object.
+    sub=(p.get('events') or {}).get('sub') if isinstance(p.get('events'),dict) else None
+    if isinstance(sub,dict):
+        on=on if on is not None else numeric(sub.get('subbedIn') or sub.get('timeSubbedOn'))
+        off=off if off is not None else numeric(sub.get('subbedOut') or sub.get('timeSubbedOff'))
+    if started:
+        if off is not None:return max(0,min(float(duration),off)),'derived_substitution'
+        return float(duration),'derived_full_match'
+    if on is not None:return max(0,float(duration)-min(float(duration),on)),'derived_substitution'
+    return 0.0,'derived_unused_bench'
 
 def extract_lineup(detail,club,index,side):
     content=detail.get('content') or {};line=content.get('lineup') or {};blocks=[]
@@ -141,9 +156,10 @@ def extract_lineup(detail,club,index,side):
         for p in flatten_players(raw_players):
             name=pname(p);pid=match_player(name,club,index)
             if not pid or pid in seen:continue
-            seen.add(pid);mins=find_minutes(p);started=p.get('isStarter') if 'isStarter' in p else p.get('starter')
+            seen.add(pid);started=p.get('isStarter') if 'isStarter' in p else p.get('starter')
             if started is None:started=default_started and not bool(p.get('isSubstitute'))
-            rows.append({'player_id':pid,'name':name,'minutes':mins,'started':bool(started)})
+            mins,source=derive_minutes(p,bool(started),90)
+            rows.append({'player_id':pid,'name':name,'minutes':mins,'minutes_source':source,'started':bool(started)})
     return rows
 
 def filter_unresolved_draw_rows(rows):
@@ -179,12 +195,13 @@ def main():
         if not detail or not detail.get('content'):
             failures.append({'competition':label,'event_id':mid,'type':'match_page','error':'no pre-rendered match content'});continue
         for club,side in mapped:
-            for a in extract_lineup(detail,club,pindex,side):player_rows.setdefault(str(a['player_id']),[]).append({'date':md.isoformat(),'competition':label,'competition_id':next((r['competition_id'] for r in rows if r['event_id']==mid),None),'event_id':mid,'name':f"{home.get('name','')} vs {away.get('name','')}",'home_away':side,'minutes':a.get('minutes'),'started':a.get('started'),'source_name':a.get('name')})
+            for a in extract_lineup(detail,club,pindex,side):player_rows.setdefault(str(a['player_id']),[]).append({'date':md.isoformat(),'competition':label,'competition_id':next((r['competition_id'] for r in rows if r['event_id']==mid),None),'event_id':mid,'name':f"{home.get('name','')} vs {away.get('name','')}",'home_away':side,'minutes':a.get('minutes'),'minutes_source':a.get('minutes_source'),'started':a.get('started'),'source_name':a.get('name')})
     for v in player_rows.values():v.sort(key=lambda x:x['date'])
     raw_count=len(rows);rows=filter_unresolved_draw_rows(rows);filtered_count=raw_count-len(rows)
     rows.sort(key=lambda x:(x['club'],x['date']));by_club={name:[] for name in teams.values()}
     for r in rows:by_club.setdefault(r['club'],[]).append({k:v for k,v in r.items() if k!='club'})
-    observed=sum(1 for apps in player_rows.values() for a in apps if a.get('minutes') is not None)
-    OUT.write_text(json.dumps({'status':'SUCCESS','generated_at_utc':now.isoformat(),'current_gw':current_gw,'next_gw':next_gw,'source':'FotMob public league feed + pre-rendered match pages','coverage':list(PRIMARY_COMPETITIONS.values()),'competition_ids':PRIMARY_COMPETITIONS,'range_start':start.isoformat(),'range_end':end.isoformat(),'clubs':by_club,'players':player_rows,'player_minutes_lookback_days':8,'player_minute_observations':observed,'unresolved_draw_rows_filtered':filtered_count,'failures':failures},indent=2,ensure_ascii=False)+'\n')
-    print(f'Wrote {OUT} with {len(rows)} club-fixture rows, {len(player_rows)} player workload records, {observed} minute observations; filtered={filtered_count} failures={len(failures)}')
+    minute_rows=[a for apps in player_rows.values() for a in apps if a.get('minutes') is not None]
+    source_counts=Counter(a.get('minutes_source') for a in minute_rows)
+    OUT.write_text(json.dumps({'status':'SUCCESS','generated_at_utc':now.isoformat(),'current_gw':current_gw,'next_gw':next_gw,'source':'FotMob public league feed + pre-rendered match pages','coverage':list(PRIMARY_COMPETITIONS.values()),'competition_ids':PRIMARY_COMPETITIONS,'range_start':start.isoformat(),'range_end':end.isoformat(),'clubs':by_club,'players':player_rows,'player_minutes_lookback_days':8,'player_minute_observations':len(minute_rows),'minute_source_counts':dict(source_counts),'unresolved_draw_rows_filtered':filtered_count,'failures':failures},indent=2,ensure_ascii=False)+'\n')
+    print(f'Wrote {OUT} with {len(rows)} club-fixture rows, {len(player_rows)} player workload records, {len(minute_rows)} minute observations {dict(source_counts)}; filtered={filtered_count} failures={len(failures)}')
 if __name__=='__main__':main()
