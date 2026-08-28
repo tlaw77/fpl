@@ -22,7 +22,6 @@ def match_page(match_id):
     try:data=json.loads(html.unescape(m.group(1)))
     except Exception:return None
     pp=((data.get('props') or {}).get('pageProps') or {})
-    # Current pages may place the payload directly in pageProps or under data.
     return pp.get('data') if isinstance(pp.get('data'),dict) and pp.get('data',{}).get('content') else pp
 
 def norm(s):
@@ -127,20 +126,18 @@ def flatten_players(x):
 
 def extract_lineup(detail,club,index,side):
     content=detail.get('content') or {};line=content.get('lineup') or {};blocks=[]
-    # New format: homeTeam/awayTeam with starters/subs.
     side_key='homeTeam' if side=='home' else 'awayTeam'
     if isinstance(line.get(side_key),dict):
-        b=line[side_key];blocks.append((b.get('teamName') or club,b.get('starters') or [],True));blocks.append((b.get('teamName') or club,b.get('subs') or b.get('bench') or [],False))
-    # Older formats: lineup/lineups arrays; players may be nested by pitch row.
+        b=line[side_key];blocks.append((b.get('starters') or [],True));blocks.append((b.get('subs') or b.get('bench') or [],False))
     old=line.get('lineups') or line.get('lineup') or []
     if isinstance(old,list):
         for team in old:
             if not isinstance(team,dict):continue
             team_name=team.get('teamName') or (team.get('team') or {}).get('name') or ''
             if team_name and norm(team_name)!=norm(club):continue
-            blocks.append((team_name or club,team.get('players') or [],True));blocks.append((team_name or club,team.get('bench') or team.get('subs') or [],False))
+            blocks.append((team.get('players') or [],True));blocks.append((team.get('bench') or team.get('subs') or [],False))
     rows=[];seen=set()
-    for _,raw_players,default_started in blocks:
+    for raw_players,default_started in blocks:
         for p in flatten_players(raw_players):
             name=pname(p);pid=match_player(name,club,index)
             if not pid or pid in seen:continue
@@ -152,7 +149,7 @@ def extract_lineup(detail,club,index,side):
 def filter_unresolved_draw_rows(rows):
     europe={'Champions League','Europa League','Conference League'}
     counts=Counter((r['club'],r['competition'],str(r['date'])[:10]) for r in rows if r['competition'] in europe)
-    return [r for r in rows if r['competition'] not in europe or counts[(r['club'],r['competition'],str(r['date'])[:10])<=1]
+    return [r for r in rows if r['competition'] not in europe or counts[(r['club'],r['competition'],str(r['date'])[:10])]<=1]
 
 def main():
     boot=get(f'{FPL}/bootstrap-static/');fpl_fx=get(f'{FPL}/fixtures/');teams={t['id']:t['name'] for t in boot['teams']};team_by_norm={norm(name):name for name in teams.values()};pindex=player_index(boot,teams)
