@@ -36,6 +36,7 @@ This file is the production source-of-truth for the recovered Decision Centre af
 - Rich pitch-style presentation — DONE via safe-pick-team-pitch-stage18.js.
 - Selected working transfer is applied before XI/bench/bank calculations — DONE.
 - Incoming working-plan player is visibly marked — DONE.
+- Selected transfer outcome is explicit — DONE via pick-team-transfer-outcome-stage25.js. Pick Team states whether the incoming player STARTS or is BENCHED this gameweek and, when benched, surfaces the relevant comparative rationale rather than silently placing YOUR IN on the bench.
 - Shield / Neutral / Leverage interpretation and league impact — DONE.
 - Selection rationale for marginal starters and bench decisions — DONE in safe-pick-team-pitch-stage18.js. The UI explains every bench call against the weakest selected same-position player using comparative XI score, immediate fixture, availability/minutes, underlying model score and recent form where relevant.
 - Captain / vice rationale — DONE in safe-pick-team-pitch-stage18.js. The UI explains the armband and fallback using the same combined XI score plus fixture, availability, form and PPG context.
@@ -83,6 +84,7 @@ This file is the production source-of-truth for the recovered Decision Centre af
 - Read prior saved plan safely — DONE.
 - Distinguish current working choice from confirmed historical decisions — DONE.
 - Show confirmed decision history — DONE.
+- Journal summaries only call a transfer confirmed when a confirmed transfer actually exists — DONE in safe-journal-stage8.js; zero confirmed transfers are no longer rendered as misleading text such as `GW10 confirmed`.
 - Preserve prior model context where captured — DONE.
 - Route selection persists across refresh — DONE.
 - One-way safe UI refresh after an explicit user route choice — DONE using fplSafePlanUpdated; listeners render only and do not write.
