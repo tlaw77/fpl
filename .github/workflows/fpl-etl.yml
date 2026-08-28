@@ -21,6 +21,10 @@ on:
       - "archive_week.py"
       - ".github/workflows/fpl-etl.yml"
 
+concurrency:
+  group: fpl-etl-main
+  cancel-in-progress: true
+
 permissions:
   contents: write
 
@@ -66,7 +70,7 @@ jobs:
       - name: Run chip window evaluation
         run: python chip_window.py
 
-      - name: Run club schedule-load watch
+      - name: Run club and player schedule-load watch
         run: python schedule_load.py
 
       - name: Run six-GW player pool
@@ -118,11 +122,12 @@ jobs:
           assert chip_window['status'] == 'SUCCESS'
           assert len(chip_window['evaluations']) == 4
           assert schedule_load['status'] == 'SUCCESS'
-          assert 'clubs' in schedule_load
+          assert 'clubs' in schedule_load and 'players' in schedule_load
+          assert len(schedule_load.get('failures', [])) < len(schedule_load.get('coverage', [])), 'All schedule-load sources failed'
           assert player_pool['status'] == 'SUCCESS'
           assert player_pool['horizon'] == 6
           assert len(player_pool['players']) > 50
-          assert all('adjusted_availability' in p and 'schedule_risk' in p for p in player_pool['players'][:20])
+          assert all('adjusted_availability' in p and 'schedule_risk' in p and 'midweek_minutes' in p and 'player_workload_observed' in p for p in player_pool['players'][:20])
           assert scout_consensus['status'] == 'SUCCESS'
           assert 'players' in scout_consensus
           assert history.get('version') == 4
@@ -132,12 +137,15 @@ jobs:
           assert history_index.get('version') == 1
           current_gw = int(data.get('current_gw') or 0)
           if current_gw > 1:
-              prev_manifest = Path(f'data/history/gw{current_gw-1}/manifest.json')
-              assert prev_manifest.exists(), f'Missing finalized history for GW{current_gw-1}'
+              prev_gw = current_gw - 1
+              prev_manifest = Path(f'data/history/gw{prev_gw}/manifest.json')
+              assert prev_manifest.exists(), f'Missing finalized history for GW{prev_gw}'
               manifest = json.loads(prev_manifest.read_text())
               archived = {x['name'] for x in manifest.get('files', [])}
               required = {'league_snapshot.json','dashboard_snapshot.json','strategy.json','market.json','squad_intelligence.json','chip_window.json','player_pool.json','scout_consensus.json','decision_history.json','recommendation_history.json'}
-              assert required.issubset(archived), f'GW{current_gw-1} archive incomplete: {sorted(required-archived)}'
+              if prev_gw >= 2:
+                  required.add('schedule_load.json')
+              assert required.issubset(archived), f'GW{prev_gw} archive incomplete: {sorted(required-archived)}'
           print('Validation passed')
           PY
 
