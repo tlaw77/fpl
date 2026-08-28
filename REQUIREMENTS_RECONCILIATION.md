@@ -24,6 +24,9 @@ This file is the production source-of-truth for the recovered Decision Centre af
 - Side-by-side route alternatives across different outgoing/incoming players — DONE via safe-transfer-routes-stage17.js.
 - Explicit route picking from the comparison list — DONE.
 - Selected route clearly marked as Your choice — DONE.
+- Route-quality filtering — DONE. Wider explorer routes must be positive six-GW upgrades, budget-valid and club-limit valid before being shown.
+- Diverse alternatives — DONE. Explorer avoids repeatedly showing the same incoming/outgoing combination where credible alternatives exist.
+- Why this route over the alternatives — DONE. The preferred route now explains its decisive lower-variance, leverage, ownership and outgoing-player advantages against the next-best routes.
 - Consequence / urgency context — DONE via safe-transfer-decision-depth-stage22.js.
 - Decision Journal with historical recommendation context — DONE.
 - Automatic uplift_snapshot persistence/backfill — RETIRED intentionally because equivalent evidence is rendered directly and the old persistence mechanism was unsafe.
@@ -46,10 +49,12 @@ This file is the production source-of-truth for the recovered Decision Centre af
 - Position spend, bench value, club concentration, availability flags — DONE.
 - Selected working transfer is projected into squad structure and bank — DONE.
 - Multi-GW strategic fixture outlook — DONE.
-- Six-GW fixture-cliff view — DONE via safe-feature-completion-stage21.js.
+- Six-GW fixture-cliff view — DONE via gap-parity-stage26.js.
 - Fine / Watch / Plan statuses — DONE.
 - Easy/tough fixture stacking — DONE.
 - Self-cancelling fixture count — DONE.
+- Decision timeline — DONE. Each visible gameweek now maps fixture stress to SET TEAM, BENCH / CAPTAINCY CHECK or TRANSFER PLAN.
+- Connected forward-planning rationale — DONE. The UI distinguishes isolated difficult weeks from repeated squad-structure stress and explains when chip value should be reassessed.
 - Chip window evaluation and future-window comparison — DONE.
 
 ## Player Pool
@@ -57,13 +62,15 @@ This file is the production source-of-truth for the recovered Decision Centre af
 - Lazy loading — DONE.
 - Model, fixtures, minutes/availability, value, Scout and Market signals — DONE.
 - Positivity / overall score with semantic treatment — DONE.
+- Rich evidence breakdown — DONE via gap-parity-stage26.js. Factor bars expose model, fixtures, minutes, value and EO rather than relying on one opaque combined score.
+- Decision profile labels — DONE: START NOW, MEDIUM-TERM, DIFFERENTIAL, VALUE, WATCH and MINUTES RISK.
 - Current squad marking — DONE.
 - Selected transfer labelled YOUR IN / YOUR OUT — DONE.
-- Search — DONE via safe-feature-completion-stage21.js.
+- Search — DONE via gap-parity-stage26.js.
 - Position filter / same-position comparison — DONE.
 - Sorting by overall/model/fixtures/value/EO/price — DONE.
 - Ownership / EO and Shield-Neutral-Leverage role — DONE.
-- Rise / Fall Watch — DONE.
+- Rise / Fall / timing watch — DONE.
 - Bounded mobile DOM — DONE intentionally for Safari stability.
 
 ## League Intel
@@ -75,8 +82,10 @@ This file is the production source-of-truth for the recovered Decision Centre af
 - Recent rank/points trend — DONE, capped parallel history load.
 - Exposure heatmap — DONE, compact top-20 implementation.
 - EO strategy posture and canonical role thresholds — DONE.
-- Squad-style / variance score — DONE via safe-feature-completion-stage21.js.
-- Selected working transfer visibly carried into League Intel — DONE.
+- Squad-style / variance score — DONE via gap-parity-stage26.js.
+- Target-rival uniqueness — DONE. League Intel identifies useful differences, shared shields and rival threats you do not own.
+- Direct answer to how to play the rival — DONE. Posture adapts between PROTECT, BALANCED, CONTROLLED CHASE and CHASE using the current gap and season stage, with an explicit rule not to sell a strong shared shield merely to be different.
+- Selected working transfer is included in the effective squad used for rival strategy and variance calculations — DONE.
 - Full old all-player/all-GW heatmap — RETIRED intentionally; bounded equivalent is used.
 
 ## Decision Journal / Saved State
@@ -96,9 +105,13 @@ This file is the production source-of-truth for the recovered Decision Centre af
 - A chosen transfer becomes the effective working squad across all five views — DONE.
 - Compact global plan status shows the current route or Roll without repeating a full banner on every view — DONE via production-cohesion-stage23.js.
 - Production cards, Decision Lens and selected-player treatment share one visual language — DONE via production-cohesion-stage23.css.
-- Core dashboard one lightweight snapshot request first — DONE.
-- Scout/Market/Pool/Intel/history secondary work lazy or bounded — DONE.
+- Core dashboard remains lightweight on first paint — DONE.
+- Wider transfer explorer only loads Player Pool after explicit user request — DONE.
+- Transfer Decision Lens defers heavy Market data until the Transfer tab is actively revisited — DONE.
+- Plan projection no longer fetches latest data on startup when there is no working transfer — DONE.
+- Duplicate safe-feature-completion-stage21.js production loader — RETIRED. Its required outcomes are now supplied by gap-parity-stage26.js, removing one duplicate Pool/Market fetch path.
 - Pick Team only loads Player Pool when the selected incoming player is not already hydrated from the current squad snapshot — DONE.
+- Bounded post-render stabilisation is used for lazy legacy panels — DONE via post-render-stabilizer-stage27.js; no observer or recurring loop is used.
 - No MutationObserver in the recovered production path — DONE.
 - No recursive fplPlanChanged event loop in the recovered production path — DONE.
 - No transfer-uplift persistence loop — DONE.
@@ -113,7 +126,8 @@ These are not missing user requirements; they are old implementation mechanisms 
 - recursive fplPlanChanged event propagation
 - unbounded full-season / all-player rendering on first load
 - transfer-uplift persistence loop
+- duplicate Stage 21 secondary-data loader
 
 ## Definition of done
 
-A requirement is complete when its decision-support outcome is available in the production UI with the stable architecture. Old mechanisms are not requirements where a safer equivalent now exists.
+Gap recovery is complete when every decision-support outcome above is available in production with the stable architecture. At this point the remaining work is enhancement and visual/product polish rather than recovery of missing Decision Centre capability.
