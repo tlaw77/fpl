@@ -3,32 +3,55 @@ from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
 FPL='https://fantasy.premierleague.com/api'
-ESPN='https://site.api.espn.com/apis/site/v2/sports/soccer'
+FOTMOB='https://www.fotmob.com/api'
 OUT=Path('data/schedule_load.json')
-LEAGUES={
-    'uefa.champions':'Champions League','uefa.champions_qual':'Champions League qualifying',
-    'uefa.europa':'Europa League','uefa.europa_qual':'Europa League qualifying',
-    'uefa.europa.conf':'Conference League','uefa.europa.conf_qual':'Conference League qualifying',
-    'eng.fa':'FA Cup','eng.league_cup':'League Cup',
+TARGETS={
+    'champions league':'Champions League',
+    'europa league':'Europa League',
+    'conference league':'Conference League',
+    'uefa conference league':'Conference League',
+    'fa cup':'FA Cup',
+    'efl cup':'League Cup',
+    'league cup':'League Cup',
+    'carabao cup':'League Cup',
 }
-ALIASES={'manchester united':'man utd','manchester city':'man city','tottenham hotspur':'spurs','tottenham':'spurs','wolverhampton wanderers':'wolves','brighton hove albion':'brighton','brighton and hove albion':'brighton','newcastle united':'newcastle','west ham united':'west ham','leeds united':'leeds','nottingham forest':"nott'm forest",'afc bournemouth':'bournemouth','burnley fc':'burnley','chelsea fc':'chelsea','arsenal fc':'arsenal','liverpool fc':'liverpool','everton fc':'everton','fulham fc':'fulham','brentford fc':'brentford','crystal palace':'crystal palace'}
+ALIASES={
+    'manchester united':'man utd','manchester city':'man city','tottenham hotspur':'spurs','tottenham':'spurs',
+    'wolverhampton wanderers':'wolves','brighton hove albion':'brighton','brighton and hove albion':'brighton',
+    'newcastle united':'newcastle','west ham united':'west ham','leeds united':'leeds',
+    'nottingham forest':"nott'm forest",'afc bournemouth':'bournemouth','burnley fc':'burnley',
+}
 
 def get(url):
-    headers={'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/150 Safari/537.36','Accept':'application/json,text/plain,*/*','Accept-Language':'en-GB,en;q=0.9','Referer':'https://www.espn.com/','Origin':'https://www.espn.com'}
+    headers={'User-Agent':'Mozilla/5.0','Accept':'application/json,text/plain,*/*','Accept-Language':'en-GB,en;q=0.9','Referer':'https://www.fotmob.com/'}
     req=urllib.request.Request(url,headers=headers)
     with urllib.request.urlopen(req,timeout=30) as r:return json.load(r)
 
 def norm(s):
-    s=str(s or '').lower().replace('&','and');s=re.sub(r'\b(fc|afc)\b','',s);s=re.sub(r'[^a-z0-9]+',' ',s).strip();return ALIASES.get(s,s)
+    s=unicodedata.normalize('NFKD',str(s or '')).encode('ascii','ignore').decode().lower().replace('&','and')
+    s=re.sub(r'\b(fc|afc)\b','',s);s=re.sub(r'[^a-z0-9]+',' ',s).strip();return ALIASES.get(s,s)
 
 def person_norm(s):
     s=unicodedata.normalize('NFKD',str(s or '')).encode('ascii','ignore').decode().lower();return re.sub(r'[^a-z0-9]+',' ',s).strip()
 
-def iso_dt(s): return datetime.fromisoformat(s.replace('Z','+00:00')) if s else None
+def iso_dt(s):
+    if not s:return None
+    try:return datetime.fromisoformat(str(s).replace('Z','+00:00'))
+    except:return None
 
-def minute_value(v):
-    if v is None:return None
-    m=re.search(r'\d+(?:\.\d+)?',str(v));return float(m.group()) if m else None
+def event_dt(m):
+    st=m.get('status') or {}
+    for raw in (st.get('utcTime'),m.get('utcTime'),m.get('matchTimeUTCDate'),m.get('date')):
+        d=iso_dt(raw)
+        if d:return d
+    for raw in (m.get('timeTS'),st.get('timeTS')):
+        try:return datetime.fromtimestamp(float(raw),timezone.utc)
+        except:pass
+    return None
+
+def event_finished(m):
+    st=m.get('status') or {}
+    return bool(st.get('finished') or st.get('cancelled') is False and st.get('started') and event_dt(m) and event_dt(m)<datetime.now(timezone.utc)-timedelta(hours=2))
 
 def player_index(boot,teams):
     by_club={name:{} for name in teams.values()}
@@ -40,7 +63,7 @@ def player_index(boot,teams):
     return by_club
 
 def match_player(raw_name,club,index):
-    key=person_norm(raw_name); candidates=(index.get(club) or {}).get(key,[])
+    key=person_norm(raw_name);candidates=(index.get(club) or {}).get(key,[])
     if len(candidates)==1:return candidates[0]
     parts=key.split()
     if parts:
@@ -50,54 +73,98 @@ def match_player(raw_name,club,index):
         if len(ids)==1:return next(iter(ids))
     return None
 
-def extract_player_minutes(summary,club,index):
-    out=[]
-    for team_block in (summary.get('boxscore') or {}).get('players',[]) or []:
-        raw_team=(team_block.get('team') or {}).get('displayName') or (team_block.get('team') or {}).get('name') or ''
-        if norm(raw_team)!=norm(club):continue
-        for stat_block in team_block.get('statistics',[]) or []:
-            labels=[str(x).lower() for x in (stat_block.get('labels') or stat_block.get('names') or [])]
-            min_idx=next((i for i,x in enumerate(labels) if x in {'min','mins','minutes'} or 'minute' in x),None)
-            for a in stat_block.get('athletes',[]) or []:
-                athlete=a.get('athlete') or {};name=athlete.get('displayName') or athlete.get('shortName') or athlete.get('fullName') or '';pid=match_player(name,club,index)
-                if not pid:continue
-                stats=a.get('stats') or [];mins=minute_value(stats[min_idx]) if min_idx is not None and min_idx<len(stats) else minute_value(a.get('minutes'))
-                if mins is None: mins=90.0 if a.get('starter') is True else (0.0 if a.get('didNotPlay') else None)
-                out.append({'player_id':pid,'name':name,'minutes':mins,'started':bool(a.get('starter'))})
-    best={}
-    for row in out:
-        old=best.get(row['player_id'])
-        if old is None or (row.get('minutes') is not None and old.get('minutes') is None):best[row['player_id']]=row
-    return list(best.values())
+def find_competitions(directory):
+    found={}
+    def walk(x):
+        if isinstance(x,dict):
+            name=x.get('name');cid=x.get('id')
+            if name and cid is not None:
+                nn=norm(name)
+                if nn in TARGETS:found[int(cid)]=TARGETS[nn]
+            for v in x.values():walk(v)
+        elif isinstance(x,list):
+            for v in x:walk(v)
+    walk(directory)
+    return found
+
+def collect_matches(payload):
+    out={}
+    def walk(x):
+        if isinstance(x,dict):
+            if x.get('id') is not None and isinstance(x.get('home'),dict) and isinstance(x.get('away'),dict):
+                try:out[int(x['id'])]=x
+                except:pass
+            for v in x.values():walk(v)
+        elif isinstance(x,list):
+            for v in x:walk(v)
+    walk(payload)
+    return list(out.values())
+
+def find_minutes(obj):
+    if isinstance(obj,dict):
+        for k,v in obj.items():
+            lk=str(k).lower()
+            if 'minute' in lk and isinstance(v,(int,float)) and 0<=float(v)<=130:return float(v)
+        for v in obj.values():
+            m=find_minutes(v)
+            if m is not None:return m
+    elif isinstance(obj,list):
+        for v in obj:
+            m=find_minutes(v)
+            if m is not None:return m
+    return None
+
+def extract_lineup(detail,club,index):
+    lineup=((detail.get('content') or {}).get('lineup') or {}).get('lineups') or []
+    rows=[]
+    for team in lineup:
+        team_name=team.get('teamName') or (team.get('team') or {}).get('name') or ''
+        if norm(team_name)!=norm(club):continue
+        for p in team.get('players') or []:
+            name=p.get('name') or (p.get('player') or {}).get('name') or (p.get('player') or {}).get('displayName') or ''
+            pid=match_player(name,club,index)
+            if not pid:continue
+            mins=find_minutes(p)
+            started=p.get('isStarter') if 'isStarter' in p else p.get('starter')
+            if started is None:
+                started=bool(p.get('positionId') or p.get('positionString')) and not bool(p.get('isSubstitute'))
+            rows.append({'player_id':pid,'name':name,'minutes':mins,'started':bool(started)})
+    return rows
 
 def main():
     boot=get(f'{FPL}/bootstrap-static/');fpl_fx=get(f'{FPL}/fixtures/');teams={t['id']:t['name'] for t in boot['teams']};team_by_norm={norm(name):name for name in teams.values()};pindex=player_index(boot,teams)
     events=boot.get('events',[]);current=next((e for e in events if e.get('is_current')),None);nxt=next((e for e in events if e.get('is_next')),None);current_gw=int((current or {}).get('id') or max([e['id'] for e in events if e.get('finished')],default=1));next_gw=int((nxt or {}).get('id') or current_gw+1)
-    horizon=[f for f in fpl_fx if f.get('event') and next_gw<=int(f['event'])<next_gw+6 and f.get('kickoff_time')];dates=[iso_dt(f['kickoff_time']) for f in horizon if iso_dt(f['kickoff_time'])];now=datetime.now(timezone.utc);start=min([now-timedelta(days=8),*(dates or [now])]);end=max(dates or [now+timedelta(days=45)])+timedelta(days=3);dr=f"{start:%Y%m%d}-{end:%Y%m%d}"
-    rows=[];seen=set();failures=[];event_meta={}
-    for slug,label in LEAGUES.items():
-        try:data=get(f'{ESPN}/{slug}/scoreboard?{urllib.parse.urlencode({"dates":dr,"limit":500})}')
-        except Exception as exc:failures.append({'league':slug,'error':str(exc)[:180]});continue
-        for ev in data.get('events',[]):
-            dt=iso_dt(ev.get('date'));comp=(ev.get('competitions') or [{}])[0];mapped=[]
-            for c in comp.get('competitors') or []:
-                team=c.get('team') or {};raw=team.get('displayName') or team.get('shortDisplayName') or team.get('name') or '';nn=norm(raw)
-                if nn in team_by_norm:mapped.append((team_by_norm[nn],c.get('homeAway')))
-            if not mapped or not dt:continue
-            key=(ev.get('id'),slug)
-            if key in seen:continue
-            seen.add(key);event_meta[key]={'date':dt,'slug':slug,'label':label,'event':ev,'clubs':mapped}
-            for club,home_away in mapped:rows.append({'club':club,'date':dt.isoformat(),'competition':label,'competition_slug':slug,'event_id':ev.get('id'),'name':ev.get('name') or ev.get('shortName') or '','home_away':home_away})
-    player_rows={};recent_cutoff=now-timedelta(days=8)
-    for (event_id,slug),meta in event_meta.items():
-        if not event_id or meta['date']>now or meta['date']<recent_cutoff:continue
-        try:summary=get(f'{ESPN}/{slug}/summary?event={event_id}')
-        except Exception as exc:failures.append({'league':slug,'event_id':event_id,'type':'summary','error':str(exc)[:180]});continue
-        for club,home_away in meta['clubs']:
-            for a in extract_player_minutes(summary,club,pindex):player_rows.setdefault(str(a['player_id']),[]).append({'date':meta['date'].isoformat(),'competition':meta['label'],'competition_slug':slug,'event_id':event_id,'name':meta['event'].get('name') or meta['event'].get('shortName') or '','home_away':home_away,'minutes':a.get('minutes'),'started':a.get('started'),'source_name':a.get('name')})
+    horizon=[f for f in fpl_fx if f.get('event') and next_gw<=int(f['event'])<next_gw+6 and f.get('kickoff_time')];dates=[iso_dt(f['kickoff_time']) for f in horizon if iso_dt(f['kickoff_time'])];now=datetime.now(timezone.utc);start=min([now-timedelta(days=8),*(dates or [now])]);end=max(dates or [now+timedelta(days=45)])+timedelta(days=3)
+    failures=[];rows=[];player_rows={};seen=set()
+    try:directory=get(f'{FOTMOB}/allLeagues')
+    except Exception as exc:raise RuntimeError(f'FotMob league directory unavailable: {exc}') from exc
+    comps=find_competitions(directory)
+    if not comps:raise RuntimeError('No target cup/European competitions found in FotMob directory')
+    for cid,label in comps.items():
+        try:payload=get(f'{FOTMOB}/leagues?{urllib.parse.urlencode({"id":cid,"ccode3":"GBR"})}')
+        except Exception as exc:failures.append({'competition':label,'id':cid,'error':str(exc)[:180]});continue
+        for m in collect_matches(payload):
+            md=event_dt(m)
+            if not md or md<start or md>end:continue
+            home=m.get('home') or {};away=m.get('away') or {};mapped=[]
+            for side,t in [('home',home),('away',away)]:
+                nn=norm(t.get('name') or t.get('longName') or '')
+                if nn in team_by_norm:mapped.append((team_by_norm[nn],side))
+            if not mapped:continue
+            mid=int(m['id'])
+            for club,side in mapped:
+                key=(mid,club)
+                if key in seen:continue
+                seen.add(key);rows.append({'club':club,'date':md.isoformat(),'competition':label,'competition_id':cid,'event_id':mid,'name':f"{home.get('name','')} vs {away.get('name','')}",'home_away':side})
+            if md<=now and md>=now-timedelta(days=8) and event_finished(m):
+                try:detail=get(f'{FOTMOB}/matchDetails?{urllib.parse.urlencode({"matchId":mid})}')
+                except Exception as exc:failures.append({'competition':label,'event_id':mid,'type':'matchDetails','error':str(exc)[:180]});continue
+                for club,side in mapped:
+                    for a in extract_lineup(detail,club,pindex):
+                        player_rows.setdefault(str(a['player_id']),[]).append({'date':md.isoformat(),'competition':label,'competition_id':cid,'event_id':mid,'name':f"{home.get('name','')} vs {away.get('name','')}",'home_away':side,'minutes':a.get('minutes'),'started':a.get('started'),'source_name':a.get('name')})
     for v in player_rows.values():v.sort(key=lambda x:x['date'])
     rows.sort(key=lambda x:(x['club'],x['date']));by_club={name:[] for name in teams.values()}
     for r in rows:by_club.setdefault(r['club'],[]).append({k:v for k,v in r.items() if k!='club'})
-    OUT.write_text(json.dumps({'status':'SUCCESS','generated_at_utc':now.isoformat(),'current_gw':current_gw,'next_gw':next_gw,'source':'ESPN public scoreboard + match summaries','coverage':list(LEAGUES.values()),'range_start':start.isoformat(),'range_end':end.isoformat(),'clubs':by_club,'players':player_rows,'player_minutes_lookback_days':8,'failures':failures},indent=2,ensure_ascii=False)+'\n')
-    print(f'Wrote {OUT} with {len(rows)} club-fixture rows and {len(player_rows)} player workload records; failures={len(failures)}')
+    OUT.write_text(json.dumps({'status':'SUCCESS','generated_at_utc':now.isoformat(),'current_gw':current_gw,'next_gw':next_gw,'source':'FotMob public API','coverage':sorted(set(comps.values())),'competition_ids':comps,'range_start':start.isoformat(),'range_end':end.isoformat(),'clubs':by_club,'players':player_rows,'player_minutes_lookback_days':8,'failures':failures},indent=2,ensure_ascii=False)+'\n')
+    print(f'Wrote {OUT} with {len(rows)} club-fixture rows and {len(player_rows)} player workload records; competitions={len(comps)} failures={len(failures)}')
 if __name__=='__main__':main()
