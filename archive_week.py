@@ -17,6 +17,7 @@ ARCHIVE_FILES = {
     "market.json": "market.json",
     "squad_intelligence.json": "squad_intelligence.json",
     "chip_window.json": "chip_window.json",
+    "schedule_load.json": "schedule_load.json",
     "player_pool.json": "player_pool.json",
     "scout_consensus.json": "scout_consensus.json",
     "decision_history.json": "decision_history.json",
@@ -125,6 +126,9 @@ def archive_from_ref(gw, ref, force=False):
         try:
             body = get_bytes(f"{RAW_REPO}/{ref}/data/{source_name}")
         except Exception as exc:
+            # Historical refs before schedule-load existed remain valid archives.
+            if dest_name == "schedule_load.json":
+                continue
             raise RuntimeError(f"Cannot backfill GW{gw}: {source_name} unavailable at {ref}: {exc}") from exc
         dest = target / dest_name
         dest.write_bytes(body)
