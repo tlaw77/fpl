@@ -1,14 +1,12 @@
 import json, re, unicodedata, urllib.parse, urllib.request
+from collections import Counter
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
 FPL='https://fantasy.premierleague.com/api'
 FOTMOB='https://www.fotmob.com/api/data'
 OUT=Path('data/schedule_load.json')
-TARGETS={
-    'champions league':'Champions League','europa league':'Europa League','conference league':'Conference League','uefa conference league':'Conference League',
-    'fa cup':'FA Cup','efl cup':'League Cup','league cup':'League Cup','carabao cup':'League Cup',
-}
+PRIMARY_COMPETITIONS={42:'Champions League',73:'Europa League',10216:'Conference League',132:'FA Cup',133:'League Cup'}
 ALIASES={'manchester united':'man utd','manchester city':'man city','tottenham hotspur':'spurs','tottenham':'spurs','wolverhampton wanderers':'wolves','brighton hove albion':'brighton','brighton and hove albion':'brighton','newcastle united':'newcastle','west ham united':'west ham','leeds united':'leeds','nottingham forest':"nott'm forest",'afc bournemouth':'bournemouth','burnley fc':'burnley'}
 
 def get(url):
@@ -60,19 +58,6 @@ def match_player(raw_name,club,index):
         if len(ids)==1:return next(iter(ids))
     return None
 
-def find_competitions(directory):
-    found={}
-    def walk(x):
-        if isinstance(x,dict):
-            name=x.get('name');cid=x.get('id')
-            if name and cid is not None:
-                nn=norm(name)
-                if nn in TARGETS:found[int(cid)]=TARGETS[nn]
-            for v in x.values():walk(v)
-        elif isinstance(x,list):
-            for v in x:walk(v)
-    walk(directory);return found
-
 def collect_matches(payload):
     out={}
     def walk(x):
@@ -111,13 +96,20 @@ def extract_lineup(detail,club,index):
             rows.append({'player_id':pid,'name':name,'minutes':mins,'started':bool(started)})
     return rows
 
+def filter_unresolved_draw_rows(rows):
+    # FotMob can expose all possible league-phase pairings with one placeholder draw date.
+    # A club cannot play multiple opponents in the same competition on the same day,
+    # so suppress those rows until the feed resolves them to real dates.
+    europe={'Champions League','Europa League','Conference League'}
+    counts=Counter((r['club'],r['competition'],str(r['date'])[:10]) for r in rows if r['competition'] in europe)
+    return [r for r in rows if r['competition'] not in europe or counts[(r['club'],r['competition'],str(r['date'])[:10])]<=1]
+
 def main():
     boot=get(f'{FPL}/bootstrap-static/');fpl_fx=get(f'{FPL}/fixtures/');teams={t['id']:t['name'] for t in boot['teams']};team_by_norm={norm(name):name for name in teams.values()};pindex=player_index(boot,teams)
     events=boot.get('events',[]);current=next((e for e in events if e.get('is_current')),None);nxt=next((e for e in events if e.get('is_next')),None);current_gw=int((current or {}).get('id') or max([e['id'] for e in events if e.get('finished')],default=1));next_gw=int((nxt or {}).get('id') or current_gw+1)
     horizon=[f for f in fpl_fx if f.get('event') and next_gw<=int(f['event'])<next_gw+6 and f.get('kickoff_time')];dates=[iso_dt(f['kickoff_time']) for f in horizon if iso_dt(f['kickoff_time'])];now=datetime.now(timezone.utc);start=min([now-timedelta(days=8),*(dates or [now])]);end=max(dates or [now+timedelta(days=45)])+timedelta(days=3)
-    failures=[];rows=[];player_rows={};seen=set();directory=get(f'{FOTMOB}/allLeagues');comps=find_competitions(directory)
-    if not comps:raise RuntimeError('No target cup/European competitions found in FotMob directory')
-    for cid,label in comps.items():
+    failures=[];rows=[];player_rows={};seen=set()
+    for cid,label in PRIMARY_COMPETITIONS.items():
         try:payload=get(f'{FOTMOB}/leagues?{urllib.parse.urlencode({"id":cid,"ccode3":"GBR"})}')
         except Exception as exc:failures.append({'competition':label,'id':cid,'error':str(exc)[:180]});continue
         for m in collect_matches(payload):
@@ -139,8 +131,9 @@ def main():
                 for club,side in mapped:
                     for a in extract_lineup(detail,club,pindex):player_rows.setdefault(str(a['player_id']),[]).append({'date':md.isoformat(),'competition':label,'competition_id':cid,'event_id':mid,'name':f"{home.get('name','')} vs {away.get('name','')}",'home_away':side,'minutes':a.get('minutes'),'started':a.get('started'),'source_name':a.get('name')})
     for v in player_rows.values():v.sort(key=lambda x:x['date'])
+    raw_count=len(rows);rows=filter_unresolved_draw_rows(rows);filtered_count=raw_count-len(rows)
     rows.sort(key=lambda x:(x['club'],x['date']));by_club={name:[] for name in teams.values()}
     for r in rows:by_club.setdefault(r['club'],[]).append({k:v for k,v in r.items() if k!='club'})
-    OUT.write_text(json.dumps({'status':'SUCCESS','generated_at_utc':now.isoformat(),'current_gw':current_gw,'next_gw':next_gw,'source':'FotMob public data API','coverage':sorted(set(comps.values())),'competition_ids':comps,'range_start':start.isoformat(),'range_end':end.isoformat(),'clubs':by_club,'players':player_rows,'player_minutes_lookback_days':8,'failures':failures},indent=2,ensure_ascii=False)+'\n')
-    print(f'Wrote {OUT} with {len(rows)} club-fixture rows and {len(player_rows)} player workload records; competitions={len(comps)} failures={len(failures)}')
+    OUT.write_text(json.dumps({'status':'SUCCESS','generated_at_utc':now.isoformat(),'current_gw':current_gw,'next_gw':next_gw,'source':'FotMob public data API','coverage':list(PRIMARY_COMPETITIONS.values()),'competition_ids':PRIMARY_COMPETITIONS,'range_start':start.isoformat(),'range_end':end.isoformat(),'clubs':by_club,'players':player_rows,'player_minutes_lookback_days':8,'unresolved_draw_rows_filtered':filtered_count,'failures':failures},indent=2,ensure_ascii=False)+'\n')
+    print(f'Wrote {OUT} with {len(rows)} club-fixture rows and {len(player_rows)} player workload records; filtered={filtered_count} failures={len(failures)}')
 if __name__=='__main__':main()
