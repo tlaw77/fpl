@@ -1,14 +1,22 @@
 (()=>{
-const BUILD='pick-team-transfer-outcome-stage25-20260828-0915';
+const BUILD='pick-team-transfer-outcome-stage25-20260828-1856';
 const KEY='fplWorkingPlanV2';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
 function plan(){try{return JSON.parse(localStorage.getItem(KEY)||'null')}catch{return null}}
 function norm(s){return String(s||'').trim().toLowerCase()}
 function cardName(card){return norm(card?.querySelector('.pitch-name')?.childNodes?.length?[...card.querySelector('.pitch-name').childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join(' '):card?.querySelector('.pitch-name')?.textContent).replace(/your in/gi,'').trim()}
+function removeDuplicateSummary(host){
+  [...host.querySelectorAll(':scope > .dc-card')].forEach(card=>{
+    if(card.id==='selected-transfer-outcome')return;
+    const eyebrow=norm(card.querySelector('.eyebrow')?.textContent);
+    if(eyebrow==='your selected transfer')card.remove();
+  });
+}
 function render(){
   const host=document.getElementById('dc-team-view'); if(!host)return;
   host.querySelector('#selected-transfer-outcome')?.remove();
   const m=plan()?.moves?.[0]; if(!m?.in?.player||!m?.out?.player)return;
+  removeDuplicateSummary(host);
   const target=norm(m.in.player);
   const pitchCards=[...host.querySelectorAll('.fpl-pitch .pitch-player-card')];
   const benchCards=[...host.querySelectorAll('.pitch-bench .pitch-player-card')];
@@ -23,14 +31,14 @@ function render(){
   }
   const status=starts?'STARTS':'BENCHED';
   const tone=starts?'#34d399':'#fbbf24';
-  const title=starts?`${m.in.player} starts after your transfer`:`${m.in.player} is currently benched after your transfer`;
+  const title=starts?`${m.in.player} starts after ${m.out.player} → ${m.in.player}`:`${m.in.player} is benched after ${m.out.player} → ${m.in.player}`;
   const copy=starts
-    ?`Your selected move ${m.out.player} → ${m.in.player} is applied to the effective squad and the model puts the incoming player in the XI.`
-    :`The transfer is applied, but the XI model prefers another starter for this gameweek. ${reason||'The bench decision follows the same model, fixture, availability, form and formation rules used for the rest of the XI.'}`;
+    ?`The selected transfer is applied to the effective squad and the model puts the incoming player in the XI.`
+    :`The selected transfer is applied, but the XI model prefers another starter this gameweek. ${reason||'The bench decision follows the same model, fixture, availability, form and formation rules used for the rest of the XI.'}`;
   const el=document.createElement('section');
   el.id='selected-transfer-outcome'; el.className='dc-card';
   el.style.cssText=`border:1px solid ${tone}66;border-left:5px solid ${tone};background:${starts?'#102a22':'#2a2210'};margin:0 0 12px`;
-  el.innerHTML=`<div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start"><div><p class="eyebrow" style="color:${tone};margin-bottom:4px">SELECTED TRANSFER · THIS GW</p><h3 style="margin:0 0 6px">${esc(title)}</h3></div><span style="flex:0 0 auto;padding:5px 8px;border-radius:999px;background:${tone}18;color:${tone};font-size:9px;font-weight:900">${status}</span></div><p class="subtle" style="margin:0">${esc(copy)}</p>`;
+  el.innerHTML=`<div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start"><div><p class="eyebrow" style="color:${tone};margin-bottom:4px">YOUR TRANSFER · THIS GW</p><h3 style="margin:0 0 6px">${esc(title)}</h3></div><span style="flex:0 0 auto;padding:5px 8px;border-radius:999px;background:${tone}18;color:${tone};font-size:9px;font-weight:900">${status}</span></div><p class="subtle" style="margin:0">${esc(copy)}</p>`;
   const pitch=host.querySelector('.pitch-panel');
   if(pitch)pitch.before(el); else host.prepend(el);
   document.documentElement.dataset.transferOutcomeBuild=BUILD;
