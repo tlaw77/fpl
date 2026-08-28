@@ -14,6 +14,7 @@ on:
       - "market_watch.py"
       - "squad_intelligence.py"
       - "chip_window.py"
+      - "schedule_load.py"
       - "player_pool.py"
       - "scout_consensus.py"
       - "exposure_semantics.py"
@@ -65,6 +66,9 @@ jobs:
       - name: Run chip window evaluation
         run: python chip_window.py
 
+      - name: Run club schedule-load watch
+        run: python schedule_load.py
+
       - name: Run six-GW player pool
         run: python player_pool.py
 
@@ -91,6 +95,7 @@ jobs:
           market = json.loads(Path('data/market.json').read_text())
           squad_intel = json.loads(Path('data/squad_intelligence.json').read_text())
           chip_window = json.loads(Path('data/chip_window.json').read_text())
+          schedule_load = json.loads(Path('data/schedule_load.json').read_text())
           player_pool = json.loads(Path('data/player_pool.json').read_text())
           scout_consensus = json.loads(Path('data/scout_consensus.json').read_text())
           history = json.loads(Path('data/decision_history.json').read_text())
@@ -112,9 +117,12 @@ jobs:
           assert len(squad_intel['managers']) == data['league']['manager_count']
           assert chip_window['status'] == 'SUCCESS'
           assert len(chip_window['evaluations']) == 4
+          assert schedule_load['status'] == 'SUCCESS'
+          assert 'clubs' in schedule_load
           assert player_pool['status'] == 'SUCCESS'
           assert player_pool['horizon'] == 6
           assert len(player_pool['players']) > 50
+          assert all('adjusted_availability' in p and 'schedule_risk' in p for p in player_pool['players'][:20])
           assert scout_consensus['status'] == 'SUCCESS'
           assert 'players' in scout_consensus
           assert history.get('version') == 4
