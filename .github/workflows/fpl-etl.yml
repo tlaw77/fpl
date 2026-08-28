@@ -17,6 +17,7 @@ on:
       - "player_pool.py"
       - "scout_consensus.py"
       - "exposure_semantics.py"
+      - "archive_week.py"
       - ".github/workflows/fpl-etl.yml"
 
 permissions:
@@ -33,6 +34,9 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+
+      - name: Preserve completed gameweek before rollover
+        run: python archive_week.py
 
       - name: Run FPL ETL
         run: python fpl_etl.py
@@ -67,6 +71,16 @@ jobs:
       - name: Run scout consensus
         run: python scout_consensus.py
 
+      - name: Refresh history index
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from archive_week import update_index
+          data = json.loads(Path('data/latest.json').read_text())
+          update_index(current_live_gw=data.get('current_gw'))
+          PY
+
       - name: Validate output
         run: |
           python - <<'PY'
@@ -81,6 +95,7 @@ jobs:
           scout_consensus = json.loads(Path('data/scout_consensus.json').read_text())
           history = json.loads(Path('data/decision_history.json').read_text())
           rec_history = json.loads(Path('data/recommendation_history.json').read_text())
+          history_index = json.loads(Path('data/history/index.json').read_text())
           assert data['status'] == 'SUCCESS'
           assert data['squad_valid'] is True
           assert data['squad_count'] == 15
@@ -106,6 +121,15 @@ jobs:
           assert 'weeks' in history
           assert 'decisions' in history
           assert 'snapshots' in rec_history
+          assert history_index.get('version') == 1
+          current_gw = int(data.get('current_gw') or 0)
+          if current_gw > 1:
+              prev_manifest = Path(f'data/history/gw{current_gw-1}/manifest.json')
+              assert prev_manifest.exists(), f'Missing finalized history for GW{current_gw-1}'
+              manifest = json.loads(prev_manifest.read_text())
+              archived = {x['name'] for x in manifest.get('files', [])}
+              required = {'league_snapshot.json','dashboard_snapshot.json','strategy.json','market.json','squad_intelligence.json','chip_window.json','player_pool.json','scout_consensus.json','decision_history.json','recommendation_history.json'}
+              assert required.issubset(archived), f'GW{current_gw-1} archive incomplete: {sorted(required-archived)}'
           print('Validation passed')
           PY
 
