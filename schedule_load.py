@@ -1,4 +1,4 @@
-import json, re, unicodedata, urllib.parse, urllib.request
+import html, json, re, unicodedata, urllib.parse, urllib.request
 from collections import Counter
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
@@ -8,10 +8,22 @@ FOTMOB='https://www.fotmob.com/api/data'
 OUT=Path('data/schedule_load.json')
 PRIMARY_COMPETITIONS={42:'Champions League',73:'Europa League',10216:'Conference League',132:'FA Cup',133:'League Cup'}
 ALIASES={'manchester united':'man utd','manchester city':'man city','tottenham hotspur':'spurs','tottenham':'spurs','wolverhampton wanderers':'wolves','brighton hove albion':'brighton','brighton and hove albion':'brighton','newcastle united':'newcastle','west ham united':'west ham','leeds united':'leeds','nottingham forest':"nott'm forest",'afc bournemouth':'bournemouth','burnley fc':'burnley'}
+HEADERS={'User-Agent':'Mozilla/5.0','Accept-Language':'en-GB,en;q=0.9','Referer':'https://www.fotmob.com/'}
 
 def get(url):
-    req=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0','Accept':'application/json,text/plain,*/*','Accept-Language':'en-GB,en;q=0.9','Referer':'https://www.fotmob.com/'})
+    req=urllib.request.Request(url,headers={**HEADERS,'Accept':'application/json,text/plain,*/*'})
     with urllib.request.urlopen(req,timeout=30) as r:return json.load(r)
+
+def match_page(match_id):
+    req=urllib.request.Request(f'https://www.fotmob.com/match/{match_id}',headers={**HEADERS,'Accept':'text/html,application/xhtml+xml'})
+    with urllib.request.urlopen(req,timeout=30) as r:body=r.read().decode('utf-8','replace')
+    m=re.search(r'<script[^>]+id=["\']__NEXT_DATA__["\'][^>]*>(.*?)</script>',body,re.S|re.I)
+    if not m:return None
+    try:data=json.loads(html.unescape(m.group(1)))
+    except Exception:return None
+    pp=((data.get('props') or {}).get('pageProps') or {})
+    # Current pages may place the payload directly in pageProps or under data.
+    return pp.get('data') if isinstance(pp.get('data'),dict) and pp.get('data',{}).get('content') else pp
 
 def norm(s):
     s=unicodedata.normalize('NFKD',str(s or '')).encode('ascii','ignore').decode().lower().replace('&','and');s=re.sub(r'\b(fc|afc)\b','',s);s=re.sub(r'[^a-z0-9]+',' ',s).strip();return ALIASES.get(s,s)
@@ -33,10 +45,6 @@ def event_dt(m):
         try:return datetime.fromtimestamp(float(raw),timezone.utc)
         except:pass
     return None
-
-def event_finished(m):
-    st=m.get('status') or {};d=event_dt(m)
-    return bool(st.get('finished') or (st.get('started') and d and d<datetime.now(timezone.utc)-timedelta(hours=2)))
 
 def player_index(boot,teams):
     by_club={name:{} for name in teams.values()}
@@ -70,10 +78,25 @@ def collect_matches(payload):
             for v in x:walk(v)
     walk(payload);return list(out.values())
 
+def numeric(v):
+    if isinstance(v,(int,float)) and 0<=float(v)<=130:return float(v)
+    if isinstance(v,str):
+        m=re.search(r'\d+(?:\.\d+)?',v)
+        if m and 0<=float(m.group())<=130:return float(m.group())
+    if isinstance(v,dict):
+        for k in ('value','stat','num','minutesPlayed','minsPlayed'):
+            if k in v:
+                n=numeric(v[k])
+                if n is not None:return n
+    return None
+
 def find_minutes(obj):
     if isinstance(obj,dict):
         for k,v in obj.items():
-            if 'minute' in str(k).lower() and isinstance(v,(int,float)) and 0<=float(v)<=130:return float(v)
+            lk=str(k).lower().replace('_',' ')
+            if 'minute' in lk or lk in {'minsplayed','mins played'}:
+                n=numeric(v)
+                if n is not None:return n
         for v in obj.values():
             m=find_minutes(v)
             if m is not None:return m
@@ -83,32 +106,59 @@ def find_minutes(obj):
             if m is not None:return m
     return None
 
-def extract_lineup(detail,club,index):
-    lineup=((detail.get('content') or {}).get('lineup') or {}).get('lineups') or [];rows=[]
-    for team in lineup:
-        team_name=team.get('teamName') or (team.get('team') or {}).get('name') or ''
-        if norm(team_name)!=norm(club):continue
-        for p in team.get('players') or []:
-            name=p.get('name') or (p.get('player') or {}).get('name') or (p.get('player') or {}).get('displayName') or '';pid=match_player(name,club,index)
-            if not pid:continue
-            mins=find_minutes(p);started=p.get('isStarter') if 'isStarter' in p else p.get('starter')
-            if started is None:started=bool(p.get('positionId') or p.get('positionString')) and not bool(p.get('isSubstitute'))
+def pname(p):
+    for k in ('name','shortName','fullName'):
+        v=p.get(k)
+        if isinstance(v,str) and v:return v
+        if isinstance(v,dict):
+            for kk in ('fullName','name','displayName','lastName'):
+                if isinstance(v.get(kk),str) and v.get(kk):return v[kk]
+    return ''
+
+def flatten_players(x):
+    out=[]
+    if isinstance(x,dict):
+        if pname(x) and any(k in x for k in ('id','playerId','positionId','minutesPlayed','stats','rating')):out.append(x)
+        else:
+            for v in x.values():out.extend(flatten_players(v))
+    elif isinstance(x,list):
+        for v in x:out.extend(flatten_players(v))
+    return out
+
+def extract_lineup(detail,club,index,side):
+    content=detail.get('content') or {};line=content.get('lineup') or {};blocks=[]
+    # New format: homeTeam/awayTeam with starters/subs.
+    side_key='homeTeam' if side=='home' else 'awayTeam'
+    if isinstance(line.get(side_key),dict):
+        b=line[side_key];blocks.append((b.get('teamName') or club,b.get('starters') or [],True));blocks.append((b.get('teamName') or club,b.get('subs') or b.get('bench') or [],False))
+    # Older formats: lineup/lineups arrays; players may be nested by pitch row.
+    old=line.get('lineups') or line.get('lineup') or []
+    if isinstance(old,list):
+        for team in old:
+            if not isinstance(team,dict):continue
+            team_name=team.get('teamName') or (team.get('team') or {}).get('name') or ''
+            if team_name and norm(team_name)!=norm(club):continue
+            blocks.append((team_name or club,team.get('players') or [],True));blocks.append((team_name or club,team.get('bench') or team.get('subs') or [],False))
+    rows=[];seen=set()
+    for _,raw_players,default_started in blocks:
+        for p in flatten_players(raw_players):
+            name=pname(p);pid=match_player(name,club,index)
+            if not pid or pid in seen:continue
+            seen.add(pid);mins=find_minutes(p);started=p.get('isStarter') if 'isStarter' in p else p.get('starter')
+            if started is None:started=default_started and not bool(p.get('isSubstitute'))
             rows.append({'player_id':pid,'name':name,'minutes':mins,'started':bool(started)})
     return rows
 
 def filter_unresolved_draw_rows(rows):
-    # FotMob can expose all possible league-phase pairings with one placeholder draw date.
-    # A club cannot play multiple opponents in the same competition on the same day,
-    # so suppress those rows until the feed resolves them to real dates.
     europe={'Champions League','Europa League','Conference League'}
     counts=Counter((r['club'],r['competition'],str(r['date'])[:10]) for r in rows if r['competition'] in europe)
-    return [r for r in rows if r['competition'] not in europe or counts[(r['club'],r['competition'],str(r['date'])[:10])]<=1]
+    return [r for r in rows if r['competition'] not in europe or counts[(r['club'],r['competition'],str(r['date'])[:10])<=1]
 
 def main():
     boot=get(f'{FPL}/bootstrap-static/');fpl_fx=get(f'{FPL}/fixtures/');teams={t['id']:t['name'] for t in boot['teams']};team_by_norm={norm(name):name for name in teams.values()};pindex=player_index(boot,teams)
     events=boot.get('events',[]);current=next((e for e in events if e.get('is_current')),None);nxt=next((e for e in events if e.get('is_next')),None);current_gw=int((current or {}).get('id') or max([e['id'] for e in events if e.get('finished')],default=1));next_gw=int((nxt or {}).get('id') or current_gw+1)
     horizon=[f for f in fpl_fx if f.get('event') and next_gw<=int(f['event'])<next_gw+6 and f.get('kickoff_time')];dates=[iso_dt(f['kickoff_time']) for f in horizon if iso_dt(f['kickoff_time'])];now=datetime.now(timezone.utc);start=min([now-timedelta(days=8),*(dates or [now])]);end=max(dates or [now+timedelta(days=45)])+timedelta(days=3)
-    failures=[];rows=[];player_rows={};seen=set()
+    failures=[];rows=[];player_rows={};seen=set();recent_matches={}
     for cid,label in PRIMARY_COMPETITIONS.items():
         try:payload=get(f'{FOTMOB}/leagues?{urllib.parse.urlencode({"id":cid,"ccode3":"GBR"})}')
         except Exception as exc:failures.append({'competition':label,'id':cid,'error':str(exc)[:180]});continue
@@ -125,15 +175,19 @@ def main():
                 key=(mid,club)
                 if key in seen:continue
                 seen.add(key);rows.append({'club':club,'date':md.isoformat(),'competition':label,'competition_id':cid,'event_id':mid,'name':f"{home.get('name','')} vs {away.get('name','')}",'home_away':side})
-            if md<=now and md>=now-timedelta(days=8) and event_finished(m):
-                try:detail=get(f'{FOTMOB}/matchDetails?{urllib.parse.urlencode({"matchId":mid})}')
-                except Exception as exc:failures.append({'competition':label,'event_id':mid,'type':'matchDetails','error':str(exc)[:180]});continue
-                for club,side in mapped:
-                    for a in extract_lineup(detail,club,pindex):player_rows.setdefault(str(a['player_id']),[]).append({'date':md.isoformat(),'competition':label,'competition_id':cid,'event_id':mid,'name':f"{home.get('name','')} vs {away.get('name','')}",'home_away':side,'minutes':a.get('minutes'),'started':a.get('started'),'source_name':a.get('name')})
+            if md<=now-timedelta(hours=2) and md>=now-timedelta(days=8):recent_matches[mid]=(md,label,home,away,mapped)
+    for mid,(md,label,home,away,mapped) in recent_matches.items():
+        try:detail=match_page(mid)
+        except Exception as exc:failures.append({'competition':label,'event_id':mid,'type':'match_page','error':str(exc)[:180]});continue
+        if not detail or not detail.get('content'):
+            failures.append({'competition':label,'event_id':mid,'type':'match_page','error':'no pre-rendered match content'});continue
+        for club,side in mapped:
+            for a in extract_lineup(detail,club,pindex,side):player_rows.setdefault(str(a['player_id']),[]).append({'date':md.isoformat(),'competition':label,'competition_id':next((r['competition_id'] for r in rows if r['event_id']==mid),None),'event_id':mid,'name':f"{home.get('name','')} vs {away.get('name','')}",'home_away':side,'minutes':a.get('minutes'),'started':a.get('started'),'source_name':a.get('name')})
     for v in player_rows.values():v.sort(key=lambda x:x['date'])
     raw_count=len(rows);rows=filter_unresolved_draw_rows(rows);filtered_count=raw_count-len(rows)
     rows.sort(key=lambda x:(x['club'],x['date']));by_club={name:[] for name in teams.values()}
     for r in rows:by_club.setdefault(r['club'],[]).append({k:v for k,v in r.items() if k!='club'})
-    OUT.write_text(json.dumps({'status':'SUCCESS','generated_at_utc':now.isoformat(),'current_gw':current_gw,'next_gw':next_gw,'source':'FotMob public data API','coverage':list(PRIMARY_COMPETITIONS.values()),'competition_ids':PRIMARY_COMPETITIONS,'range_start':start.isoformat(),'range_end':end.isoformat(),'clubs':by_club,'players':player_rows,'player_minutes_lookback_days':8,'unresolved_draw_rows_filtered':filtered_count,'failures':failures},indent=2,ensure_ascii=False)+'\n')
-    print(f'Wrote {OUT} with {len(rows)} club-fixture rows and {len(player_rows)} player workload records; filtered={filtered_count} failures={len(failures)}')
+    observed=sum(1 for apps in player_rows.values() for a in apps if a.get('minutes') is not None)
+    OUT.write_text(json.dumps({'status':'SUCCESS','generated_at_utc':now.isoformat(),'current_gw':current_gw,'next_gw':next_gw,'source':'FotMob public league feed + pre-rendered match pages','coverage':list(PRIMARY_COMPETITIONS.values()),'competition_ids':PRIMARY_COMPETITIONS,'range_start':start.isoformat(),'range_end':end.isoformat(),'clubs':by_club,'players':player_rows,'player_minutes_lookback_days':8,'player_minute_observations':observed,'unresolved_draw_rows_filtered':filtered_count,'failures':failures},indent=2,ensure_ascii=False)+'\n')
+    print(f'Wrote {OUT} with {len(rows)} club-fixture rows, {len(player_rows)} player workload records, {observed} minute observations; filtered={filtered_count} failures={len(failures)}')
 if __name__=='__main__':main()
