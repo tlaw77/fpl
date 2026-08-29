@@ -20,6 +20,7 @@ on:
       - "simulation_engine.py"
       - "path_simulation.py"
       - "adaptive_rival_simulation.py"
+      - "chip_path_simulation.py"
       - "exposure_semantics.py"
       - "archive_week.py"
       - ".github/workflows/fpl-etl.yml"
@@ -91,6 +92,9 @@ jobs:
       - name: Run adaptive-rival challenger simulation
         run: python adaptive_rival_simulation.py
 
+      - name: Run exact TC and BB chip-path simulation
+        run: python chip_path_simulation.py
+
       - name: Refresh history index
         run: |
           python - <<'PY'
@@ -117,6 +121,7 @@ jobs:
           simulation = json.loads(Path('data/simulation.json').read_text())
           path_sim = json.loads(Path('data/path_simulation.json').read_text())
           adaptive_sim = json.loads(Path('data/adaptive_rival_simulation.json').read_text())
+          chip_path_sim = json.loads(Path('data/chip_path_simulation.json').read_text())
           history = json.loads(Path('data/decision_history.json').read_text())
           rec_history = json.loads(Path('data/recommendation_history.json').read_text())
           history_index = json.loads(Path('data/history/index.json').read_text())
@@ -158,6 +163,9 @@ jobs:
           assert adaptive_sim['iterations'] >= 1000
           assert len(adaptive_sim.get('paths', [])) >= 1
           assert adaptive_sim.get('recommendation') is not None
+          assert chip_path_sim['status'] == 'SUCCESS'
+          assert chip_path_sim['iterations'] >= 1000
+          assert chip_path_sim.get('best_no_chip_path') is not None
           assert history.get('version') == 4
           assert 'weeks' in history
           assert 'decisions' in history
