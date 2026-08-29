@@ -8,6 +8,8 @@ on:
     paths:
       - "fpl_etl.py"
       - "current_squad.py"
+      - "declared_transfer_overlay.py"
+      - "data/declared_transfers.json"
       - "recommendation_history.py"
       - "decision_journal.py"
       - "strategy_watch.py"
@@ -55,6 +57,9 @@ jobs:
 
       - name: Reconstruct current squad
         run: python current_squad.py
+
+      - name: Apply declared pending transfers
+        run: python declared_transfer_overlay.py
 
       - name: Build durable decision journal
         run: python decision_journal.py
@@ -125,6 +130,7 @@ jobs:
           history = json.loads(Path('data/decision_history.json').read_text())
           rec_history = json.loads(Path('data/recommendation_history.json').read_text())
           history_index = json.loads(Path('data/history/index.json').read_text())
+          declared = json.loads(Path('data/declared_transfers.json').read_text()) if Path('data/declared_transfers.json').exists() else {'transfers': []}
           assert data['status'] == 'SUCCESS'
           assert data['squad_valid'] is True
           assert data['squad_count'] == 15
@@ -132,6 +138,10 @@ jobs:
           assert data['league']['manager_count'] >= 1
           assert 'next_gw_decisions' in data
           assert 'current_next_gw_decisions' in data
+          pending_declared = [t for t in declared.get('transfers', []) if int(t.get('event') or 0) == int(data.get('next_gw') or 0)]
+          if pending_declared and data.get('declared_transfer_overlay_status') == 'pending_official_api':
+              squad_ids = {int(p.get('player_id') or 0) for p in data.get('current_squad_next5', [])}
+              assert all(int(t['element_in']) in squad_ids and int(t['element_out']) not in squad_ids for t in pending_declared)
           assert data.get('exposure_semantics', {}).get('version') == 2
           assert all(x.get('classification') != 'leverage' or (x.get('my_multiplier') or 0) > 0 for x in data.get('player_exposure', []) if x.get('in_my_team'))
           assert strategy['status'] == 'SUCCESS'
