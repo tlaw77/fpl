@@ -1,7 +1,7 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-08-29T23:34:33.290458+00:00",
-  "version": 1,
+  "generated_at_utc": "2026-08-29T23:35:51.345839+00:00",
+  "version": 2,
   "next_gw": 3,
   "portfolio_pressure": "comfortable",
   "latest_safe_start_gw": 16,
@@ -9,7 +9,7 @@
     "status": "HOLD",
     "raw_gain_6gw": 71.61,
     "budget_confidence": "reconstructed",
-    "proxy_bank_left": 3.9,
+    "budget_buffer": 3.9,
     "season_maturity_weight": 0.25,
     "squad_overlap": 4,
     "squad_changes": 11,
@@ -17,16 +17,19 @@
     "effective_stability_evidence": 5.5,
     "portfolio_pressure": "comfortable",
     "positives": [
-      "Large raw six-GW opportunity (+71.6 simulation points).",
-      "Optimiser would change 11/15 players, signalling a materially different structure."
+      "Large six-GW model opportunity (+71.6 modelled points).",
+      "The optimiser would change 11/15 players, so this is a genuinely different squad structure.",
+      "Selling budget is reconstructed and the squad keeps £3.9m spare, giving useful protection against small reconstruction error."
+    ],
+    "cautions": [
+      "Selling prices are reconstructed from purchase history rather than exposed directly by FPL."
     ],
     "blockers": [
-      "Spendable budget is estimated because public FPL picks do not expose exact selling prices.",
-      "Season evidence is only 25%; early roles/form remain noisy.",
-      "First-half chip portfolio still has comfortable calendar slack.",
-      "Current squad is not structurally broken (0 weak availability/fixture assets in the structural check)."
+      "Only 25% of full-season evidence weight is available; early roles and form are still noisy.",
+      "There is still plenty of time to use the first-half chips.",
+      "The current squad is not structurally broken (0 weak availability/fixture assets in the structural check)."
     ],
-    "reason": "Spendable budget is estimated because public FPL picks do not expose exact selling prices."
+    "reason": "Only 25% of full-season evidence weight is available; early roles and form are still noisy."
   },
   "free_hit": {
     "status": "WATCH",
@@ -37,25 +40,41 @@
     "squad_without_fixture": 0,
     "effective_stability_evidence": 5.5,
     "positives": [
-      "Best visible FH squad is +15.6 simulation points in GW6.",
-      "GW6 is the recurring FH scout window in stability history."
+      "Best visible Free Hit squad is +15.6 modelled points in GW6.",
+      "GW6 has repeatedly appeared as the strongest visible Free Hit window."
     ],
     "blockers": [
-      "No confirmed blank/double disruption currently justifies spending Free Hit."
+      "There is no confirmed blank or double-Gameweek disruption that currently justifies spending Free Hit."
     ],
-    "reason": "No confirmed blank/double disruption currently justifies spending Free Hit."
+    "reason": "There is no confirmed blank or double-Gameweek disruption that currently justifies spending Free Hit."
   },
   "bench_boost": {
     "status": "HOLD",
     "best_visible_gw": 4,
     "raw_gain": 11.89,
-    "reason": "Preserve while portfolio pressure is comfortable; require an unusually strong bench window or expiry pressure."
+    "reason": "Keep Bench Boost available while the calendar is comfortable; use it when the full bench has an unusually strong set of fixtures or expiry pressure rises."
   },
   "triple_captain": {
-    "status": "HOLD",
-    "best_visible_gw": 5,
-    "raw_gain": 5.99,
-    "reason": "Preserve while portfolio pressure is comfortable; prefer an elite captain spike or double-gameweek-quality opportunity."
+    "status": "CONSIDER",
+    "best_visible_gw": 3,
+    "candidate": "Haaland",
+    "opponent": "Coventry City",
+    "venue": "H",
+    "raw_gain": 5.56,
+    "tier": "SERIOUS",
+    "reasons_for_now": [
+      "Home fixture against promoted Coventry City.",
+      "Premium/high-ceiling asset already owned.",
+      "13 FPL points in the latest completed/live Gameweek.",
+      "Strong current minutes/availability signal."
+    ],
+    "reasons_to_wait": [
+      "The first-half chip portfolio still has comfortable calendar slack.",
+      "The visible horizon cannot yet price future double-Gameweek-quality opportunities with confidence.",
+      "Season evidence is still only 25%, so early projections remain deliberately shrunk."
+    ],
+    "reason": "Home fixture against promoted Coventry City.",
+    "source": "owned_squad_tc_review"
   },
-  "method_note": "Safety gate over raw chip simulations. It combines current squad structure, calendar pressure, season maturity, budget confidence, stability evidence and visible blank/double disruption. WATCH is an opportunity scout, not an activation recommendation."
+  "method_note": "Decision gate over chip simulations and dedicated chip reviews. It combines squad structure, calendar pressure, season evidence, budget confidence, stability and visible schedule disruption. WATCH means keep an opportunity under observation; CONSIDER means it deserves an explicit decision now, not that activation is automatic."
 }
