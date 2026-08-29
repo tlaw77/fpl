@@ -35,6 +35,12 @@ ARCHIVE_FILES = {
     "captaincy_review.json": "captaincy_review.json",
 }
 
+OUTCOME_FIELDS = (
+    "minutes", "goals_scored", "assists", "clean_sheets", "goals_conceded",
+    "own_goals", "penalties_saved", "penalties_missed", "yellow_cards", "red_cards",
+    "saves", "bonus", "bps",
+)
+
 # One-time recovery refs for gameweeks that had already rolled before durable
 # archival was introduced. These refs are immutable historical ETL commits.
 BACKFILL_REFS = {
@@ -43,13 +49,13 @@ BACKFILL_REFS = {
 
 
 def get_json(url):
-    req = urllib.request.Request(url, headers={"User-Agent": "fpl-history-archive/1.3"})
+    req = urllib.request.Request(url, headers={"User-Agent": "fpl-history-archive/1.4"})
     with urllib.request.urlopen(req, timeout=30) as response:
         return json.load(response)
 
 
 def get_bytes(url):
-    req = urllib.request.Request(url, headers={"User-Agent": "fpl-history-archive/1.3"})
+    req = urllib.request.Request(url, headers={"User-Agent": "fpl-history-archive/1.4"})
     with urllib.request.urlopen(req, timeout=30) as response:
         return response.read()
 
@@ -80,6 +86,10 @@ def write_json(path, payload):
     path.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
+def file_meta(path):
+    return {"name": path.name, "bytes": path.stat().st_size, "sha256": sha256(path)}
+
+
 def write_manifest(gw, target, copied, reason, source_ref=None):
     manifest = {
         "version": 1,
@@ -88,13 +98,80 @@ def write_manifest(gw, target, copied, reason, source_ref=None):
         "archive_reason": reason,
         "source_ref": source_ref,
         "archived_at_utc": datetime.now(timezone.utc).isoformat(),
-        "files": [
-            {"name": p.name, "bytes": p.stat().st_size, "sha256": sha256(p)}
-            for p in sorted(copied)
-        ],
+        "files": [file_meta(p) for p in sorted(copied)],
     }
     write_json(target / "manifest.json", manifest)
     return manifest
+
+
+def player_outcomes(gw):
+    """Compact immutable all-player outcome snapshot for counterfactual backtests."""
+    raw = get_json(f"{BASE}/event/{int(gw)}/live/")
+    rows = []
+    for item in raw.get("elements", []):
+        pid = int(item.get("id") or 0)
+        stats = item.get("stats") or {}
+        if not pid:
+            continue
+        row = {
+            "player_id": pid,
+            "total_points": int(stats.get("total_points") or 0),
+        }
+        for key in OUTCOME_FIELDS:
+            row[key] = int(stats.get(key) or 0)
+        rows.append(row)
+    rows.sort(key=lambda x: x["player_id"])
+    return {
+        "version": 1,
+        "gw": int(gw),
+        "captured_at_utc": datetime.now(timezone.utc).isoformat(),
+        "player_count": len(rows),
+        "players": rows,
+        "method_note": "All-player finalized/live FPL event outcomes from /event/{gw}/live/. Stored at Gameweek archival so future counterfactuals can score transferred-out and unowned players without hindsight reconstruction.",
+    }
+
+
+def write_player_outcomes(gw, target):
+    payload = player_outcomes(gw)
+    if payload["player_count"] < 100:
+        raise RuntimeError(f"GW{gw} all-player outcome snapshot unexpectedly small: {payload['player_count']}")
+    dest = target / "player_outcomes.json"
+    write_json(dest, payload)
+    return dest
+
+
+def amend_manifest_with_file(target, path, marker=None):
+    manifest_path = target / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    files = [x for x in manifest.get("files", []) if x.get("name") != path.name]
+    files.append(file_meta(path))
+    manifest["files"] = sorted(files, key=lambda x: x.get("name", ""))
+    if marker:
+        manifest[marker] = datetime.now(timezone.utc).isoformat()
+    write_json(manifest_path, manifest)
+
+
+def backfill_player_outcomes_for_finalized():
+    results = []
+    for target in sorted(HISTORY.glob("gw*"), key=lambda p: int(p.name[2:]) if p.name[2:].isdigit() else 999):
+        manifest = target / "manifest.json"
+        if not manifest.exists() or not target.name[2:].isdigit():
+            continue
+        gw = int(target.name[2:])
+        dest = target / "player_outcomes.json"
+        if dest.exists():
+            continue
+        try:
+            dest = write_player_outcomes(gw, target)
+            amend_manifest_with_file(target, dest, "player_outcomes_backfilled_at_utc")
+            results.append({"gw": gw, "status": "BACKFILLED", "players": load_json(dest).get("player_count")})
+        except Exception as exc:
+            results.append({"gw": gw, "status": "FAILED", "error": str(exc)})
+    return results
+
+
+def load_json(path):
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
 def archive_gw(gw, reason, force=False):
@@ -118,6 +195,10 @@ def archive_gw(gw, reason, force=False):
         dest = target / dest_name
         shutil.copy2(src, dest)
         copied.append(dest)
+
+    # Capture all players, not only the manager's 15. This is essential for transfer
+    # counterfactuals after ownership has changed.
+    copied.append(write_player_outcomes(gw, target))
 
     write_manifest(gw, target, copied, reason)
     update_index()
@@ -156,6 +237,9 @@ def archive_from_ref(gw, ref, force=False):
     if int(league.get("current_gw") or 0) != gw or int(dashboard.get("current_gw") or 0) != gw:
         raise RuntimeError(f"Backfill ref {ref} does not represent GW{gw}")
 
+    # Outcomes are fetched from FPL rather than the historical ref because they are an
+    # objective completed-GW result, not a historical model belief.
+    copied.append(write_player_outcomes(gw, target))
     write_manifest(gw, target, copied, "historical_ref_backfill", source_ref=ref)
     update_index()
     return {"status": "BACKFILLED", "gw": gw, "files": len(copied), "path": str(target), "source_ref": ref}
@@ -190,6 +274,7 @@ def update_index(current_live_gw=None):
             "archived_at_utc": m.get("archived_at_utc"),
             "files": len(m.get("files", [])),
             "source_ref": m.get("source_ref"),
+            "player_outcomes": (d / "player_outcomes.json").exists(),
         })
     payload = {
         "version": 1,
@@ -209,14 +294,19 @@ def finalize_if_advanced(force=False):
     api_gw = detect_api_gw()
 
     backfills = backfill_missing_before(stored_gw)
+    outcome_backfills = backfill_player_outcomes_for_finalized()
     if stored_gw and api_gw > stored_gw:
         result = archive_gw(stored_gw, f"api_advanced_to_gw{api_gw}", force=force)
         update_index(current_live_gw=api_gw)
         result["api_gw"] = api_gw
         result["backfills"] = backfills
+        result["outcome_backfills"] = outcome_backfills
         return result
     update_index(current_live_gw=api_gw)
-    return {"status": "SKIPPED", "reason": "no_gameweek_advance", "stored_gw": stored_gw, "api_gw": api_gw, "backfills": backfills}
+    return {
+        "status": "SKIPPED", "reason": "no_gameweek_advance", "stored_gw": stored_gw,
+        "api_gw": api_gw, "backfills": backfills, "outcome_backfills": outcome_backfills,
+    }
 
 
 def main():
