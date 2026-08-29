@@ -23,6 +23,7 @@ on:
       - "player_pool.py"
       - "scout_consensus.py"
       - "projection_calibration.py"
+      - "captaincy_model.py"
       - "simulation_engine.py"
       - "simulation_engine_v2.py"
       - "path_simulation.py"
@@ -150,28 +151,36 @@ jobs:
           assert player_pool['status'] == 'SUCCESS' and player_pool['horizon'] == 6 and len(player_pool['players']) > 50
           assert scout_consensus['status'] == 'SUCCESS' and 'players' in scout_consensus
 
-          assert simulation['status'] == 'SUCCESS' and simulation.get('engine_version', 0) >= 3
-          assert simulation.get('projection_model') == 'season-maturity calibrated'
+          assert simulation['status'] == 'SUCCESS' and simulation.get('engine_version', 0) >= 5
+          assert str(simulation.get('projection_model', '')).startswith('season-maturity calibrated')
           assert simulation['iterations'] >= 1000 and simulation['candidate_count'] >= 1 and simulation.get('recommendation') is not None
           assert simulation.get('next_transfer_hit_cost') == data.get('next_transfer_hit_cost')
+          contract = simulation.get('backtest_contract') or {}
+          baseline_xi = {int(x) for x in contract.get('baseline_xi_ids', [])}
+          baseline_cap = int(contract.get('baseline_captain_id') or 0)
+          assert len(baseline_xi) == 11 and baseline_cap in baseline_xi
+          for route in simulation.get('routes', []):
+              xi = {int(x) for x in route.get('post_transfer_xi_ids', [])}
+              cap = int(route.get('post_transfer_captain_id') or 0)
+              assert len(xi) == 11 and cap in xi
 
-          assert path_sim['status'] == 'SUCCESS' and path_sim.get('engine_version', 0) >= 4
-          assert path_sim.get('projection_model') == 'season-maturity calibrated'
+          assert path_sim['status'] == 'SUCCESS' and path_sim.get('engine_version', 0) >= 5
+          assert str(path_sim.get('projection_model', '')).startswith('season-maturity calibrated')
           assert path_sim['iterations'] >= 1000 and len(path_sim.get('paths', [])) >= 1 and path_sim.get('recommendation') is not None
           assert path_sim.get('starting_free_transfers') == data.get('free_transfers_remaining_next_gw')
 
           assert adaptive_sim['status'] == 'SUCCESS' and adaptive_sim.get('engine_version', 0) >= 2
-          assert adaptive_sim.get('projection_model') == 'season-maturity calibrated'
+          assert str(adaptive_sim.get('projection_model', '')).startswith('season-maturity calibrated')
           assert adaptive_sim['iterations'] >= 1000 and len(adaptive_sim.get('paths', [])) >= 1 and adaptive_sim.get('recommendation') is not None
           assert len(adaptive_sim.get('rival_behaviour', [])) == len(data.get('rivals', []))
 
           assert chip_path_sim['status'] == 'SUCCESS' and chip_path_sim.get('engine_version', 0) >= 2
-          assert chip_path_sim.get('projection_model') == 'season-maturity calibrated'
+          assert str(chip_path_sim.get('projection_model', '')).startswith('season-maturity calibrated')
           assert chip_path_sim['iterations'] >= 1000 and chip_path_sim.get('best_no_chip_path') is not None
 
           assert budget_state['status'] == 'SUCCESS' and budget_state.get('spendable_budget', 0) > 0
           assert full_chip['status'] == 'SUCCESS' and full_chip.get('version', 0) >= 1
-          assert full_chip.get('projection_model') == 'season-maturity calibrated'
+          assert str(full_chip.get('projection_model', '')).startswith('season-maturity calibrated')
           assert full_chip.get('best_wildcard') is not None and full_chip.get('best_free_hit') is not None
           for candidate in [full_chip['best_wildcard'], full_chip['best_free_hit']]:
               squad = candidate.get('squad', [])
@@ -197,7 +206,7 @@ jobs:
               assert prev_manifest.exists(), f'Missing finalized history for GW{prev_gw}'
               manifest = json.loads(prev_manifest.read_text())
               archived = {x['name'] for x in manifest.get('files', [])}
-              required = {'league_snapshot.json','dashboard_snapshot.json','strategy.json','market.json','squad_intelligence.json','chip_window.json','player_pool.json','scout_consensus.json','decision_history.json','recommendation_history.json'}
+              required = {'league_snapshot.json','dashboard_snapshot.json','strategy.json','market.json','squad_intelligence.json','chip_window.json','player_pool.json','scout_consensus.json','decision_history.json','recommendation_history.json','player_outcomes.json'}
               if prev_gw >= 2: required.add('schedule_load.json')
               assert required.issubset(archived), f'GW{prev_gw} archive incomplete: {sorted(required-archived)}'
           print('Validation passed')
