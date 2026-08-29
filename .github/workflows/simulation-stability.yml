@@ -9,6 +9,7 @@ on:
     paths:
       - "simulation_stability.py"
       - "chip_activation_gate.py"
+      - "triple_captain_review.py"
       - ".github/workflows/simulation-stability.yml"
 
 concurrency:
@@ -35,6 +36,8 @@ jobs:
         run: python simulation_stability.py
       - name: Build chip activation gate
         run: python chip_activation_gate.py
+      - name: Build owned-squad Triple Captain review
+        run: python triple_captain_review.py
       - name: Validate supplemental outputs
         run: |
           python - <<'PY'
@@ -42,6 +45,7 @@ jobs:
           from pathlib import Path
           data = json.loads(Path('data/simulation_stability.json').read_text())
           gate = json.loads(Path('data/chip_activation_gate.json').read_text())
+          tc = json.loads(Path('data/triple_captain_review.json').read_text())
           assert data['status'] == 'SUCCESS'
           assert data.get('version', 0) >= 2
           assert data.get('snapshot_count', 0) >= 1
@@ -54,17 +58,21 @@ jobs:
           assert gate['status'] == 'SUCCESS'
           for key in ('wildcard','free_hit','bench_boost','triple_captain'):
               assert gate[key]['status'] in ('HOLD','WATCH','CONSIDER')
-          print('Simulation stability and chip gate validation passed')
+          assert tc['status'] == 'SUCCESS'
+          assert tc.get('version', 0) >= 1
+          assert tc.get('decision', {}).get('status') in ('HOLD','WATCH','CONSIDER')
+          assert len(tc.get('current_gw_shortlist', [])) >= 1
+          print('Simulation stability, chip gate and Triple Captain review validation passed')
           PY
       - name: Commit supplemental snapshots
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/simulation_stability.json data/chip_activation_gate.json
+          git add data/simulation_stability.json data/chip_activation_gate.json data/triple_captain_review.json
           if git diff --cached --quiet; then
             echo "No supplemental changes"
           else
-            git commit -m "Update simulation stability and chip gate"
+            git commit -m "Update simulation stability chip gate and TC review"
             git pull --rebase origin main
             git push origin main
           fi
