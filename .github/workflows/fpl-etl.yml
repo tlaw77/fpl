@@ -19,11 +19,13 @@ on:
       - "schedule_load.py"
       - "player_pool.py"
       - "scout_consensus.py"
+      - "projection_calibration.py"
       - "simulation_engine.py"
       - "simulation_engine_v2.py"
       - "path_simulation.py"
       - "path_simulation_v3.py"
       - "adaptive_rival_simulation.py"
+      - "adaptive_rival_simulation_v2.py"
       - "chip_path_simulation.py"
       - "exposure_semantics.py"
       - "archive_week.py"
@@ -90,14 +92,14 @@ jobs:
       - name: Run scout consensus
         run: python scout_consensus.py
 
-      - name: Run rival-aware Monte Carlo simulation
+      - name: Run calibrated rival-aware Monte Carlo simulation
         run: python simulation_engine_v2.py
 
-      - name: Run multi-gameweek path simulation
+      - name: Run calibrated multi-gameweek path simulation
         run: python path_simulation_v3.py
 
-      - name: Run adaptive-rival challenger simulation
-        run: python adaptive_rival_simulation.py
+      - name: Run probabilistic adaptive-rival challenger simulation
+        run: python adaptive_rival_simulation_v2.py
 
       - name: Run exact TC and BB chip-path simulation
         run: python chip_path_simulation.py
@@ -165,21 +167,26 @@ jobs:
           assert scout_consensus['status'] == 'SUCCESS'
           assert 'players' in scout_consensus
           assert simulation['status'] == 'SUCCESS'
-          assert simulation.get('engine_version', 0) >= 2
+          assert simulation.get('engine_version', 0) >= 3
+          assert simulation.get('projection_model') == 'season-maturity calibrated'
           assert simulation['iterations'] >= 1000
           assert simulation['candidate_count'] >= 1
           assert simulation.get('recommendation') is not None
           assert simulation.get('next_transfer_hit_cost') == data.get('next_transfer_hit_cost')
           assert path_sim['status'] == 'SUCCESS'
-          assert path_sim.get('engine_version', 0) >= 3
+          assert path_sim.get('engine_version', 0) >= 4
+          assert path_sim.get('projection_model') == 'season-maturity calibrated'
           assert path_sim['iterations'] >= 1000
           assert len(path_sim.get('paths', [])) >= 1
           assert path_sim.get('recommendation') is not None
           assert path_sim.get('starting_free_transfers') == data.get('free_transfers_remaining_next_gw')
           assert adaptive_sim['status'] == 'SUCCESS'
+          assert adaptive_sim.get('engine_version', 0) >= 2
+          assert adaptive_sim.get('projection_model') == 'season-maturity calibrated'
           assert adaptive_sim['iterations'] >= 1000
           assert len(adaptive_sim.get('paths', [])) >= 1
           assert adaptive_sim.get('recommendation') is not None
+          assert len(adaptive_sim.get('rival_behaviour', [])) == len(data.get('rivals', []))
           assert chip_path_sim['status'] == 'SUCCESS'
           assert chip_path_sim['iterations'] >= 1000
           assert chip_path_sim.get('best_no_chip_path') is not None
