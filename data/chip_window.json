@@ -1,6 +1,6 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-08-29T18:50:34.411343+00:00",
+  "generated_at_utc": "2026-08-29T19:43:43.859640+00:00",
   "current_gw": 2,
   "next_gw": 3,
   "summary": {
@@ -8,7 +8,64 @@
     "headline": "Preserve chips",
     "best_current_chip": "Triple Captain",
     "next_confirmed_pivot": null,
-    "principle": "Use a chip when the current squad creates unusual incremental value, not simply because a chip is available."
+    "principle": "Maximise total incremental chip value across the half-season, not the isolated score of the next Gameweek. Preserve a chip only while its expected future option value exceeds the current window and there is enough calendar slack to use every remaining chip.",
+    "chip_set_pressure": "comfortable",
+    "latest_safe_start_gw": 16,
+    "expires_after_gw": 19
+  },
+  "portfolio": {
+    "half": 1,
+    "window": "GW1-GW19",
+    "expires_after_gw": 19,
+    "remaining_chips": [
+      "Bench Boost",
+      "Free Hit",
+      "Triple Captain",
+      "Wildcard"
+    ],
+    "remaining_count": 4,
+    "gameweeks_left": 17,
+    "slack_gameweeks": 13,
+    "latest_safe_start_gw": 16,
+    "pressure": "comfortable",
+    "hard_inflection_explanation": "With 4 unused chip(s), GW16 is the latest point at which all can still be deployed in separate Gameweeks before GW19.",
+    "provisional_visible_plan": [
+      {
+        "chip": "Triple Captain",
+        "preferred_gw": 3,
+        "provisional_gw": 3,
+        "status": "hold",
+        "visible_score": 53.15
+      },
+      {
+        "chip": "Bench Boost",
+        "preferred_gw": 4,
+        "provisional_gw": 4,
+        "status": "hold",
+        "visible_score": 42.77
+      },
+      {
+        "chip": "Free Hit",
+        "preferred_gw": 3,
+        "provisional_gw": 5,
+        "status": "hold",
+        "visible_score": 1.4
+      },
+      {
+        "chip": "Wildcard",
+        "preferred_gw": 3,
+        "provisional_gw": 6,
+        "status": "hold",
+        "visible_score": 0.0
+      }
+    ],
+    "rules": [
+      "One chip per Gameweek.",
+      "Unused first-half chips expire after GW19 and do not carry into the second half.",
+      "A fresh set of all four chips is available in the second half.",
+      "If the first Free Hit is used in GW19, the second-half Free Hit cannot be used in GW20 because Free Hits cannot be consecutive."
+    ],
+    "optimisation_principle": "Maximise total incremental chip value across the half-season, not the isolated score of the next Gameweek. Preserve a chip only while its expected future option value exceeds the current window and there is enough calendar slack to use every remaining chip."
   },
   "evaluations": [
     {
@@ -33,9 +90,14 @@
       },
       "reasons": [
         "Current single-fixture model leader: De Cuyper vs Leeds H",
-        "Only one completed Gameweek: single-fixture form is too noisy to justify Triple Captain.",
+        "Early-season single-fixture form is too noisy to justify Triple Captain.",
         "Best modeled window in the next five is GW3"
-      ]
+      ],
+      "half_season": 1,
+      "expires_after_gw": 19,
+      "gameweeks_left_in_set": 17,
+      "current_vs_best_visible_ratio": 1.0,
+      "preservation_value": "high"
     },
     {
       "chip": "Bench Boost",
@@ -59,7 +121,12 @@
         "4/4 bench players have a playable fixture; 4 have an easy one.",
         "The stronger modeled bench window is GW4.",
         "Bench Boost should exploit unusual bench strength, not simply avoid wasting playable substitutes."
-      ]
+      ],
+      "half_season": 1,
+      "expires_after_gw": 19,
+      "gameweeks_left_in_set": 17,
+      "current_vs_best_visible_ratio": 0.958,
+      "preservation_value": "high"
     },
     {
       "chip": "Free Hit",
@@ -85,7 +152,12 @@
         "Current squad has 0 players without a playable fixture and 2 weak fixtures.",
         "Free Hit value rises sharply in a major blank or unusually concentrated double.",
         "Best disruption window currently visible is GW3"
-      ]
+      ],
+      "half_season": 1,
+      "expires_after_gw": 19,
+      "gameweeks_left_in_set": 17,
+      "current_vs_best_visible_ratio": 1.0,
+      "preservation_value": "high"
     },
     {
       "chip": "Wildcard",
@@ -103,8 +175,13 @@
         "Current structure has 0 genuine availability-risk assets and 0 players with a poor next-three fixture run.",
         "0 squad players have a good next-three fixture run.",
         "Very early Wildcards carry a high information cost: waiting reveals roles, form and team strength unless the squad is genuinely broken."
-      ]
+      ],
+      "half_season": 1,
+      "expires_after_gw": 19,
+      "gameweeks_left_in_set": 17,
+      "current_vs_best_visible_ratio": 0,
+      "preservation_value": "high"
     }
   ],
-  "method_note": "Conservative heuristic decision support using current squad availability, next-five fixtures, bench depth, confirmed FPL blank/double assignments and an early-season information-value guardrail. It is not a projected-points model."
+  "method_note": "Half-season portfolio decision support. It combines current squad availability, visible fixtures, confirmed blank/double assignments, individual chip heuristics, hard chip-set expiry, one-chip-per-GW scheduling constraints, and the option value of waiting. Visible fixture scores are not directly comparable between chip types; they are used to rank windows within each chip, while status and calendar pressure govern cross-chip prioritisation."
 }
