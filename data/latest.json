@@ -1,6 +1,6 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-08-29T20:29:33.542835+00:00",
+  "generated_at_utc": "2026-08-29T20:32:34.246873+00:00",
   "current_gw": 2,
   "next_gw": 3,
   "league": {
@@ -8529,7 +8529,7 @@
     ]
   },
   "decision_history_count": 1,
-  "current_squad_generated_at_utc": "2026-08-29T20:29:33.904746+00:00",
+  "current_squad_generated_at_utc": "2026-08-29T20:32:34.639433+00:00",
   "free_transfers_available_before_moves": 1,
   "free_transfers_used_next_gw": 1,
   "free_transfers_remaining_next_gw": 0,
@@ -8550,12 +8550,178 @@
       "status": "pending_official_api"
     }
   ],
-  "declared_transfer_overlay_generated_at_utc": "2026-08-29T20:29:34.214331+00:00",
+  "declared_transfer_overlay_generated_at_utc": "2026-08-29T20:32:34.968397+00:00",
   "exposure_semantics": {
     "version": 2,
     "shield_eo_min": 75.0,
     "neutral_eo_min": 40.0,
     "leverage_requires_active": true,
     "direct_rival_leverage_is_separate": true
+  },
+  "decision_synthesis": {
+    "status": "SUCCESS",
+    "generated_at_utc": "2026-08-29T20:33:22.074622+00:00",
+    "version": 1,
+    "current_gw": 2,
+    "next_gw": 3,
+    "current_action": {
+      "action": "HOLD",
+      "headline": "Transfer complete · hold",
+      "confidence": 76,
+      "reason": "Mbeumo → Cherki is already applied. A further move costs -4. The best six-GW alternative is only 4.4 projected points ahead of holding, below the 8.0-point early-season hurdle, and the models disagree on the best second move.",
+      "completed_transfer": {
+        "event": 3,
+        "out": "Mbeumo",
+        "in": "Cherki",
+        "route": "Mbeumo → Cherki",
+        "source": "user_declared_pending_api"
+      },
+      "free_transfers_remaining": 0,
+      "next_transfer_hit_cost": 4
+    },
+    "robustness": {
+      "season_maturity_weight": 0.25,
+      "single_step_leader": "Dubravka → Tzolakis",
+      "single_step_edge_over_hold_6gw": 4.38,
+      "multi_gw_first_action": "B.Fernandes → Ødegaard",
+      "adaptive_rival_first_action": "B.Fernandes → Ødegaard",
+      "exact_route_consensus_models": 2,
+      "same_incoming_target_consensus_models": 2,
+      "required_edge": 8.0,
+      "required_consensus_models": 2,
+      "transfer_clears_gate": false
+    },
+    "forward_plan": {
+      "primary_path_first_action": {
+        "gw": 3,
+        "action": "TRANSFER",
+        "route": "B.Fernandes → Ødegaard",
+        "hit": 4,
+        "out_id": 426,
+        "in_id": 15
+      },
+      "adaptive_path_first_action": {
+        "gw": 3,
+        "action": "TRANSFER",
+        "route": "B.Fernandes → Ødegaard",
+        "hit": 4,
+        "out_id": 426,
+        "in_id": 15
+      },
+      "note": "Forward paths are planning evidence, not instructions to pre-commit future transfers. Re-optimise after each deadline and new information."
+    },
+    "chips": {
+      "action": "HOLD",
+      "reason": "Hold chips. Best visible TC uplift is 6.0 and BB uplift is 11.9, but the first-half portfolio remains comfortable with 13 slack Gameweeks. Preserve option value for stronger blank/double or squad-structure windows.",
+      "best_visible_triple_captain": {
+        "actions": [
+          {
+            "gw": 3,
+            "action": "TRANSFER",
+            "route": "B.Fernandes → Ødegaard",
+            "hit": 4,
+            "out_id": 426,
+            "in_id": 15
+          },
+          {
+            "gw": 4,
+            "action": "TRANSFER",
+            "route": "Hughes → Palmer",
+            "hit": 0,
+            "out_id": 212,
+            "in_id": 154
+          },
+          {
+            "gw": 5,
+            "action": "TRANSFER",
+            "route": "Groß → Elanga",
+            "hit": 0,
+            "out_id": 124,
+            "in_id": 454
+          },
+          {
+            "gw": 6,
+            "action": "TRANSFER",
+            "route": "Calvert-Lewin → Emersonn",
+            "hit": 0,
+            "out_id": 346,
+            "in_id": 316
+          }
+        ],
+        "chip": "Triple Captain",
+        "chip_gw": 4,
+        "expected_points": 224.71,
+        "chip_incremental_expected_points": 6.05,
+        "p10_points": 184.24,
+        "p90_points": 267.65,
+        "expected_rank_after_path": 5.65,
+        "prob_finish_ahead_each_rival": [
+          0.108,
+          0.135,
+          0.31,
+          0.325,
+          0.282,
+          0.531,
+          0.658
+        ],
+        "utility_score": 231.604
+      },
+      "best_visible_bench_boost": {
+        "actions": [
+          {
+            "gw": 3,
+            "action": "TRANSFER",
+            "route": "Dubravka → Tzolakis",
+            "hit": 4,
+            "out_id": 497,
+            "in_id": 572
+          },
+          {
+            "gw": 4,
+            "action": "TRANSFER",
+            "route": "B.Fernandes → Ødegaard",
+            "hit": 0,
+            "out_id": 426,
+            "in_id": 15
+          },
+          {
+            "gw": 5,
+            "action": "TRANSFER",
+            "route": "Hughes → Elanga",
+            "hit": 0,
+            "out_id": 212,
+            "in_id": 454
+          },
+          {
+            "gw": 6,
+            "action": "TRANSFER",
+            "route": "Calvert-Lewin → Emersonn",
+            "hit": 0,
+            "out_id": 346,
+            "in_id": 316
+          }
+        ],
+        "chip": "Bench Boost",
+        "chip_gw": 4,
+        "expected_points": 230.66,
+        "chip_incremental_expected_points": 11.95,
+        "p10_points": 191.42,
+        "p90_points": 272.54,
+        "expected_rank_after_path": 5.28,
+        "prob_finish_ahead_each_rival": [
+          0.146,
+          0.171,
+          0.363,
+          0.385,
+          0.346,
+          0.586,
+          0.725
+        ],
+        "utility_score": 239.56
+      },
+      "portfolio_pressure": "comfortable",
+      "latest_safe_start_gw": 16
+    },
+    "method_note": "Authoritative decision gate. It synthesises single-step Monte Carlo, multi-GW beam search, probabilistic rival response, live transfer-hit state, season maturity and chip option value. A high-scoring route is not promoted unless it clears both magnitude and cross-model robustness thresholds."
   }
 }
