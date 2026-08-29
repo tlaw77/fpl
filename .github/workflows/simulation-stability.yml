@@ -11,6 +11,7 @@ on:
       - "chip_activation_gate.py"
       - "triple_captain_review.py"
       - "captaincy_review.py"
+      - "backtest_engine.py"
       - ".github/workflows/simulation-stability.yml"
 
 concurrency:
@@ -41,6 +42,8 @@ jobs:
         run: python triple_captain_review.py
       - name: Build dedicated captaincy review
         run: python captaincy_review.py
+      - name: Evaluate archived decision performance
+        run: python backtest_engine.py
       - name: Validate supplemental outputs
         run: |
           python - <<'PY'
@@ -50,6 +53,7 @@ jobs:
           gate = json.loads(Path('data/chip_activation_gate.json').read_text())
           tc = json.loads(Path('data/triple_captain_review.json').read_text())
           cap = json.loads(Path('data/captaincy_review.json').read_text())
+          backtest = json.loads(Path('data/backtest_summary.json').read_text())
           assert data['status'] == 'SUCCESS'
           assert data.get('version', 0) >= 2
           assert data.get('snapshot_count', 0) >= 1
@@ -71,17 +75,20 @@ jobs:
           assert cap.get('captain') is not None
           assert len(cap.get('shortlist', [])) >= 2
           assert 0 <= int(cap.get('confidence', 0)) <= 100
-          print('Simulation stability, chip gate, TC review and captaincy review validation passed')
+          assert backtest['status'] == 'SUCCESS'
+          assert backtest.get('version', 0) >= 1
+          assert backtest.get('evaluable_gameweeks', 0) >= 0
+          print('Simulation stability, chip gate, captaincy reviews and backtest validation passed')
           PY
       - name: Commit supplemental snapshots
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/simulation_stability.json data/chip_activation_gate.json data/triple_captain_review.json data/captaincy_review.json
+          git add data/simulation_stability.json data/chip_activation_gate.json data/triple_captain_review.json data/captaincy_review.json data/backtest_summary.json
           if git diff --cached --quiet; then
             echo "No supplemental changes"
           else
-            git commit -m "Update simulation stability chip and captaincy reviews"
+            git commit -m "Update simulation stability chip captaincy and backtest reviews"
             git pull --rebase origin main
             git push origin main
           fi
