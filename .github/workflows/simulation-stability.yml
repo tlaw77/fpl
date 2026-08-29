@@ -1,0 +1,61 @@
+name: Simulation Stability
+
+on:
+  workflow_run:
+    workflows: ["FPL ETL"]
+    types: [completed]
+  workflow_dispatch:
+  push:
+    paths:
+      - "simulation_stability.py"
+      - ".github/workflows/simulation-stability.yml"
+
+concurrency:
+  group: fpl-simulation-stability
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  summarize:
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout latest main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build stability history
+        run: python simulation_stability.py
+      - name: Validate stability output
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          data = json.loads(Path('data/simulation_stability.json').read_text())
+          assert data['status'] == 'SUCCESS'
+          assert data.get('version') == 1
+          assert data.get('snapshot_count', 0) >= 1
+          assert data.get('snapshot_count', 0) <= 192
+          summary = data.get('summary') or {}
+          assert summary.get('window_runs', 0) >= 1
+          assert 0 <= float(summary.get('action_persistence_pct', 0)) <= 100
+          print('Simulation stability validation passed')
+          PY
+      - name: Commit stability snapshot
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/simulation_stability.json
+          if git diff --cached --quiet; then
+            echo "No stability changes"
+          else
+            git commit -m "Update simulation stability"
+            git pull --rebase origin main
+            git push origin main
+          fi
