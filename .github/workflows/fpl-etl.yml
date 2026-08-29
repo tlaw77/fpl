@@ -27,6 +27,7 @@ on:
       - "adaptive_rival_simulation.py"
       - "adaptive_rival_simulation_v2.py"
       - "chip_path_simulation.py"
+      - "chip_path_simulation_v2.py"
       - "exposure_semantics.py"
       - "archive_week.py"
       - ".github/workflows/fpl-etl.yml"
@@ -101,8 +102,8 @@ jobs:
       - name: Run probabilistic adaptive-rival challenger simulation
         run: python adaptive_rival_simulation_v2.py
 
-      - name: Run exact TC and BB chip-path simulation
-        run: python chip_path_simulation.py
+      - name: Run calibrated TC and BB chip-path simulation
+        run: python chip_path_simulation_v2.py
 
       - name: Refresh history index
         run: |
@@ -188,6 +189,8 @@ jobs:
           assert adaptive_sim.get('recommendation') is not None
           assert len(adaptive_sim.get('rival_behaviour', [])) == len(data.get('rivals', []))
           assert chip_path_sim['status'] == 'SUCCESS'
+          assert chip_path_sim.get('engine_version', 0) >= 2
+          assert chip_path_sim.get('projection_model') == 'season-maturity calibrated'
           assert chip_path_sim['iterations'] >= 1000
           assert chip_path_sim.get('best_no_chip_path') is not None
           assert history.get('version') == 4
