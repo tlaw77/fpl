@@ -5,6 +5,7 @@ from copy import deepcopy
 from datetime import datetime, timezone
 from pathlib import Path
 
+import captaincy_model as cm
 from simulation_engine import (
     load_json, player_maps, enrich, scout_lookup, market_lookup, expected_gw,
     best_xi, valid_club_limit, sample_points, percentile, rival_squads, n
@@ -44,12 +45,7 @@ def expected_table(players, gws, model_lo, model_hi, scout_maps, market_maps):
 
 
 def lineup_expected(squad, gw, exp):
-    means = {k: v[0] for k, v in exp.get(gw, {}).items()}
-    xi, cap = best_xi(squad, means)
-    ids = [pid(p) for p in xi]
-    cap_id = pid(cap) if cap else 0
-    score = sum(means.get(x, 0) for x in ids) + means.get(cap_id, 0)
-    return score, ids, cap_id
+    return cm.lineup_expected(__import__(__name__), squad, gw, exp)
 
 
 def horizon_value(squad, remaining_gws, exp):
@@ -312,8 +308,8 @@ def run():
     output = {
         'status': 'SUCCESS',
         'generated_at_utc': datetime.now(timezone.utc).isoformat(),
-        'engine_version': 2,
-        'planner': 'bounded beam search + GW-specific shared-outcome Monte Carlo',
+        'engine_version': 3,
+        'planner': 'bounded beam search + GW-specific shared-outcome Monte Carlo + shared captaincy model',
         'depth_gameweeks': gws[:DEPTH],
         'beam_width': BEAM_WIDTH,
         'iterations': ITERATIONS,
@@ -324,7 +320,7 @@ def run():
         'rivals': rival_meta,
         'recommendation': results[0] if results else None,
         'paths': results,
-        'method_note': 'Each path is scored with the actual squad owned in each Gameweek after that deadline action. Final-squad leakage into earlier Gameweeks is prevented. Rivals remain static in v2; bounded adaptive rival transfer policies are the next expansion.',
+        'method_note': 'Each path is scored with the actual squad owned in each Gameweek after that deadline action. Legal XI selection is followed by the shared captaincy model used by Pick Team. Final-squad leakage into earlier Gameweeks is prevented.',
     }
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(output, indent=2, ensure_ascii=False) + '\n')
