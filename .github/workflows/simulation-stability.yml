@@ -39,13 +39,15 @@ jobs:
           from pathlib import Path
           data = json.loads(Path('data/simulation_stability.json').read_text())
           assert data['status'] == 'SUCCESS'
-          assert data.get('version') == 1
+          assert data.get('version', 0) >= 2
           assert data.get('snapshot_count', 0) >= 1
           assert data.get('snapshot_count', 0) <= 192
           summary = data.get('summary') or {}
           assert summary.get('window_runs', 0) >= 1
+          assert float(summary.get('effective_evidence_runs', 0)) > 0
           assert 0 <= float(summary.get('action_persistence_pct', 0)) <= 100
-          print('Simulation stability validation passed')
+          assert 0 <= float(summary.get('leader_persistence_pct', 0)) <= 100
+          print('Weighted simulation stability validation passed')
           PY
       - name: Commit stability snapshot
         run: |
