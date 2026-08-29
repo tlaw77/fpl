@@ -1,6 +1,7 @@
 import json
 from datetime import datetime, timezone
 
+import captaincy_model as cm
 import path_simulation as p
 from projection_calibration import expected_gw as calibrated_expected_gw, season_maturity
 
@@ -27,12 +28,14 @@ def run():
     model_vals = [p.n(x.get('six_gw_score')) for x in pool_rows]
     lo, hi = p.percentile(model_vals, .10), p.percentile(model_vals, .90)
 
-    # path_simulation.expected_table resolves its module-level expected_gw at runtime.
-    # Override it here so beam search and Monte Carlo share the same calibrated means.
     p.expected_gw = lambda player, gw, model_lo, model_hi, sm, mm: calibrated_expected_gw(
         player, gw, model_lo, model_hi, sm, mm, current_gw=current_gw
     )
     exp = p.expected_table(pool_rows, gws, lo, hi, scout_maps, market_maps)
+
+    # Install one captaincy decision rule for beam search, Monte Carlo and every
+    # downstream module that consumes path_simulation in this process.
+    p.lineup_expected = lambda squad, gw, table: cm.lineup_expected(p, squad, gw, table)
 
     raw_ft = latest.get('free_transfers_remaining_next_gw')
     if raw_ft is None:
@@ -50,9 +53,9 @@ def run():
     output = {
         'status': 'SUCCESS',
         'generated_at_utc': datetime.now(timezone.utc).isoformat(),
-        'engine_version': 4,
-        'planner': 'bounded beam search + GW-specific shared-outcome Monte Carlo + live FT state + season calibration',
-        'projection_model': 'season-maturity calibrated',
+        'engine_version': 5,
+        'planner': 'bounded beam search + GW-specific shared-outcome Monte Carlo + live FT state + season calibration + shared captaincy',
+        'projection_model': 'season-maturity calibrated + shared captaincy model',
         'season_maturity_weight': round(maturity, 3),
         'depth_gameweeks': gws[:p.DEPTH],
         'beam_width': p.BEAM_WIDTH,
@@ -65,11 +68,11 @@ def run():
         'rivals': rival_meta,
         'recommendation': results[0] if results else None,
         'paths': results,
-        'method_note': 'Each path is scored with the actual squad owned in each Gameweek. Current-deadline hits use live FT state. Early-season form and model extremes are shrunk toward positional and fixture priors, with the evidence weight increasing automatically as the season matures.',
+        'method_note': 'Each path is scored with the actual squad owned in each Gameweek. Current-deadline hits use live FT state. Early-season extremes are shrunk toward priors. Legal XI selection is followed by the same captaincy model used by Pick Team, keeping forward simulation captaincy aligned with the visible recommendation.',
     }
     p.OUT.parent.mkdir(parents=True, exist_ok=True)
     p.OUT.write_text(json.dumps(output, indent=2, ensure_ascii=False) + '\n')
-    print(json.dumps({'status': 'SUCCESS', 'best': output['recommendation'], 'paths': len(results), 'starting_ft': start_ft, 'maturity': round(maturity, 3)}))
+    print(json.dumps({'status': 'SUCCESS', 'best': output['recommendation'], 'paths': len(results), 'starting_ft': start_ft, 'maturity': round(maturity, 3), 'engine_version': 5}))
 
 
 if __name__ == '__main__':
