@@ -19,6 +19,17 @@ def tx_key(t):
     return (int(t.get('event') or 0), int(t.get('element_out') or 0), int(t.get('element_in') or 0))
 
 
+def set_transfer_state(data, transfers, starting_ft=1):
+    used = len([t for t in transfers if int(t.get('event') or 0) == int(data.get('next_gw') or 0)])
+    remaining = max(0, int(starting_ft) - used)
+    excess = max(0, used - int(starting_ft))
+    data['free_transfers_available_before_moves'] = int(starting_ft)
+    data['free_transfers_used_next_gw'] = min(used, int(starting_ft))
+    data['free_transfers_remaining_next_gw'] = remaining
+    data['transfer_hits_already_incurred_next_gw'] = excess * 4
+    data['next_transfer_hit_cost'] = 0 if remaining > 0 else 4
+
+
 def main():
     data = load(LATEST, {})
     declared = load(DECLARED, {'transfers': []})
@@ -32,10 +43,12 @@ def main():
     pending = [t for t in (declared.get('transfers') or []) if int(t.get('event') or 0) == next_gw and tx_key(t) not in official_keys]
 
     if not pending:
+        all_current = [t for t in official if int(t.get('event') or 0) == next_gw]
+        set_transfer_state(data, all_current, starting_ft=1)
         data['declared_transfer_overlay_status'] = 'resolved_official' if any(int(t.get('event') or 0) == next_gw for t in (declared.get('transfers') or [])) else 'none'
         data['declared_transfer_overlay_generated_at_utc'] = datetime.now(timezone.utc).isoformat()
         LATEST.write_text(json.dumps(data, indent=2, ensure_ascii=False) + '\n')
-        print(json.dumps({'status': 'SUCCESS', 'pending_applied': 0, 'overlay_status': data['declared_transfer_overlay_status']}))
+        print(json.dumps({'status': 'SUCCESS', 'pending_applied': 0, 'overlay_status': data['declared_transfer_overlay_status'], 'remaining_ft': data['free_transfers_remaining_next_gw']}))
         return
 
     bootstrap = cs.get_json(f'{cs.BASE}/bootstrap-static/')
@@ -85,16 +98,18 @@ def main():
         raise RuntimeError(f'declared transfer overlay produced {len(current)} players, expected 15')
 
     decisions = cs.current_moves(data, current, raw_players, teams, positions, fixture_map, expo, target_own, target_cap, target_n, bank)
+    all_current = official + applied
     data['current_squad_source'] = 'declared_transfer_overlay'
-    data['current_squad_transfers'] = official + applied
+    data['current_squad_transfers'] = all_current
     data['current_squad_next5'] = current
     data['current_bank'] = round(bank, 1)
     data['current_next_gw_decisions'] = decisions
+    set_transfer_state(data, all_current, starting_ft=1)
     data['declared_transfer_overlay_status'] = 'pending_official_api'
     data['declared_transfer_overlay_applied'] = applied
     data['declared_transfer_overlay_generated_at_utc'] = datetime.now(timezone.utc).isoformat()
     LATEST.write_text(json.dumps(data, indent=2, ensure_ascii=False) + '\n')
-    print(json.dumps({'status': 'SUCCESS', 'pending_applied': len(applied), 'current_bank': round(bank, 1), 'squad_source': data['current_squad_source']}))
+    print(json.dumps({'status': 'SUCCESS', 'pending_applied': len(applied), 'current_bank': round(bank, 1), 'remaining_ft': data['free_transfers_remaining_next_gw'], 'next_hit_cost': data['next_transfer_hit_cost'], 'squad_source': data['current_squad_source']}))
 
 
 if __name__ == '__main__':
