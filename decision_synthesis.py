@@ -81,22 +81,25 @@ def run():
     pa = first_action(path_top)
     aa = first_action(adaptive_top)
 
-    routes = [str(sim_top.get('route') or 'ROLL'), route_of(pa), route_of(aa)]
+    sim_route = str(sim_top.get('route') or 'ROLL')
+    routes = [sim_route, route_of(pa), route_of(aa)]
     exact_counts = {r: routes.count(r) for r in set(routes)}
     exact_consensus = max(exact_counts.values(), default=0)
+    measured_leader_support = routes.count(sim_route)
+
     incoming = [incoming_of(pa), incoming_of(aa)]
     if sim_top.get('route'):
-        sr = str(sim_top.get('route'))
-        incoming.append(sr.split('→', 1)[1].strip() if '→' in sr else sr)
+        incoming.append(sim_route.split('→', 1)[1].strip() if '→' in sim_route else sim_route)
     incoming_counts = {r: incoming.count(r) for r in set(incoming)}
     target_consensus = max(incoming_counts.values(), default=0)
+    measured_target = sim_route.split('→', 1)[1].strip() if '→' in sim_route else sim_route
+    measured_target_support = incoming.count(measured_target)
 
     maturity = n(sim.get('season_maturity_weight'), n(paths.get('season_maturity_weight'), .25))
     hit_cost = int(latest.get('next_transfer_hit_cost') or sim.get('next_transfer_hit_cost') or 0)
     remaining_ft = int(latest.get('free_transfers_remaining_next_gw') or 0)
     completed = completed_current_transfer(latest)
 
-    # A second current-deadline move needs materially stronger evidence than an ordinary FT.
     if hit_cost:
         edge_hurdle = 8.0 if maturity < .35 else 6.0 if maturity < .55 else 4.5
         consensus_required = 2
@@ -107,46 +110,45 @@ def run():
     transfer_clears = (
         sim_top.get('action') == 'TRANSFER'
         and sim_edge >= edge_hurdle
-        and exact_consensus >= consensus_required
+        and measured_leader_support >= consensus_required
     )
 
     if transfer_clears:
         action = 'TRANSFER'
-        headline = str(sim_top.get('route') or route_of(pa))
-        confidence = min(91, int(62 + min(16, sim_edge * 1.8) + exact_consensus * 4 + maturity * 8))
+        headline = sim_route
+        confidence = min(91, int(62 + min(16, sim_edge * 1.8) + measured_leader_support * 4 + maturity * 8))
         reason = (
             f'The leading move clears the {edge_hurdle:.1f}-point robustness hurdle after hit cost and '
-            f'is supported by {exact_consensus}/3 decision models.'
+            f'the same measured route is supported by {measured_leader_support}/3 decision models.'
         )
     else:
         action = 'HOLD'
         headline = 'Transfer complete · hold' if completed else 'Hold / roll'
-        confidence = min(88, int(66 + (1 - maturity) * 10 + (3 - exact_consensus) * 3))
+        confidence = min(88, int(66 + (1 - maturity) * 10 + (3 - measured_leader_support) * 3))
         if hit_cost and completed:
             reason = (
                 f'{completed.get("route") or "This week’s transfer"} is already applied. A further move costs -{hit_cost}. '
                 f'The best six-GW alternative is only {sim_edge:.1f} projected points ahead of holding, below the '
-                f'{edge_hurdle:.1f}-point early-season hurdle, and the models disagree on the best second move.'
+                f'{edge_hurdle:.1f}-point early-season hurdle, and the measured leader is supported by only {measured_leader_support}/3 models.'
             )
         elif hit_cost:
             reason = (
                 f'A further move costs -{hit_cost}. The best simulated edge is {sim_edge:.1f} over holding and does not '
-                f'clear the {edge_hurdle:.1f}-point robustness hurdle.'
+                f'clear the full magnitude-and-consensus robustness gate.'
             )
         else:
             reason = (
                 f'The leading transfer edge is {sim_edge:.1f} projected points over holding and does not yet clear the '
-                f'{edge_hurdle:.1f}-point evidence hurdle with sufficient cross-model agreement.'
+                f'full evidence hurdle with sufficient agreement on that exact route.'
             )
 
     best_tc = chips.get('best_triple_captain_window') or {}
     best_bb = chips.get('best_bench_boost_window') or {}
     tc_gain = n(best_tc.get('chip_incremental_expected_points'))
     bb_gain = n(best_bb.get('chip_incremental_expected_points'))
-    portfolio = (paths.get('chip_portfolio_context') or {})
+    portfolio = paths.get('chip_portfolio_context') or {}
     pressure = str(portfolio.get('pressure') or 'comfortable').lower()
 
-    # Visible 4-GW chip gains are not enough to consume option value while the half-season has ample slack.
     chip_play = None
     if pressure in ('urgent', 'critical'):
         candidates = [
@@ -168,7 +170,7 @@ def run():
     output = {
         'status': 'SUCCESS',
         'generated_at_utc': datetime.now(timezone.utc).isoformat(),
-        'version': 1,
+        'version': 2,
         'current_gw': latest.get('current_gw'),
         'next_gw': latest.get('next_gw'),
         'current_action': {
@@ -187,7 +189,9 @@ def run():
             'multi_gw_first_action': route_of(pa),
             'adaptive_rival_first_action': route_of(aa),
             'exact_route_consensus_models': exact_consensus,
+            'measured_leader_support_models': measured_leader_support,
             'same_incoming_target_consensus_models': target_consensus,
+            'measured_target_support_models': measured_target_support,
             'required_edge': edge_hurdle,
             'required_consensus_models': consensus_required,
             'transfer_clears_gate': transfer_clears,
@@ -205,13 +209,13 @@ def run():
             'portfolio_pressure': pressure,
             'latest_safe_start_gw': portfolio.get('latest_safe_start_gw'),
         },
-        'method_note': 'Authoritative decision gate. It synthesises single-step Monte Carlo, multi-GW beam search, probabilistic rival response, live transfer-hit state, season maturity and chip option value. A high-scoring route is not promoted unless it clears both magnitude and cross-model robustness thresholds.',
+        'method_note': 'Authoritative decision gate. It synthesises single-step Monte Carlo, multi-GW beam search, probabilistic rival response, live transfer-hit state, season maturity and chip option value. A high-scoring route is promoted only when that same measured route clears both magnitude and cross-model support thresholds.',
     }
 
     latest['decision_synthesis'] = output
     LATEST.write_text(json.dumps(latest, indent=2, ensure_ascii=False) + '\n')
     OUT.write_text(json.dumps(output, indent=2, ensure_ascii=False) + '\n')
-    print(json.dumps({'status': 'SUCCESS', 'action': action, 'headline': headline, 'sim_edge': round(sim_edge, 2), 'consensus': exact_consensus, 'chip_action': chip_action}))
+    print(json.dumps({'status': 'SUCCESS', 'action': action, 'headline': headline, 'sim_edge': round(sim_edge, 2), 'measured_support': measured_leader_support, 'chip_action': chip_action}))
 
 
 if __name__ == '__main__':
