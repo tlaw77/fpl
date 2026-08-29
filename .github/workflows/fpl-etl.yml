@@ -10,6 +10,8 @@ on:
       - "current_squad.py"
       - "declared_transfer_overlay.py"
       - "data/declared_transfers.json"
+      - "budget_state.py"
+      - "full_squad_chip_optimizer.py"
       - "recommendation_history.py"
       - "decision_journal.py"
       - "strategy_watch.py"
@@ -67,6 +69,9 @@ jobs:
       - name: Apply declared pending transfers
         run: python declared_transfer_overlay.py
 
+      - name: Build current squad budget state
+        run: python budget_state.py
+
       - name: Build durable decision journal
         run: python decision_journal.py
 
@@ -106,6 +111,9 @@ jobs:
       - name: Run calibrated TC and BB chip-path simulation
         run: python chip_path_simulation_v2.py
 
+      - name: Run legal Wildcard and Free Hit squad optimiser
+        run: python full_squad_chip_optimizer.py
+
       - name: Synthesize authoritative decision
         run: python decision_synthesis.py
 
@@ -136,18 +144,20 @@ jobs:
           path_sim = json.loads(Path('data/path_simulation.json').read_text())
           adaptive_sim = json.loads(Path('data/adaptive_rival_simulation.json').read_text())
           chip_path_sim = json.loads(Path('data/chip_path_simulation.json').read_text())
+          budget_state = json.loads(Path('data/budget_state.json').read_text())
+          full_chip = json.loads(Path('data/full_squad_chip_optimizer.json').read_text())
           synthesis = json.loads(Path('data/decision_synthesis.json').read_text())
           history = json.loads(Path('data/decision_history.json').read_text())
           rec_history = json.loads(Path('data/recommendation_history.json').read_text())
           history_index = json.loads(Path('data/history/index.json').read_text())
           declared = json.loads(Path('data/declared_transfers.json').read_text()) if Path('data/declared_transfers.json').exists() else {'transfers': []}
+
           assert data['status'] == 'SUCCESS'
           assert data['squad_valid'] is True
           assert data['squad_count'] == 15
           assert len(data.get('current_squad_next5', data['squad_next5'])) == 15
           assert data['league']['manager_count'] >= 1
-          assert 'next_gw_decisions' in data
-          assert 'current_next_gw_decisions' in data
+          assert 'next_gw_decisions' in data and 'current_next_gw_decisions' in data
           pending_declared = [t for t in declared.get('transfers', []) if int(t.get('event') or 0) == int(data.get('next_gw') or 0)]
           if pending_declared and data.get('declared_transfer_overlay_status') == 'pending_official_api':
               squad_ids = {int(p.get('player_id') or 0) for p in data.get('current_squad_next5', [])}
@@ -156,55 +166,59 @@ jobs:
           assert int(data.get('next_transfer_hit_cost', 0)) in (0, 4)
           assert data.get('exposure_semantics', {}).get('version') == 2
           assert all(x.get('classification') != 'leverage' or (x.get('my_multiplier') or 0) > 0 for x in data.get('player_exposure', []) if x.get('in_my_team'))
-          assert strategy['status'] == 'SUCCESS'
-          assert len(strategy['managers']) == data['league']['manager_count']
+
+          assert strategy['status'] == 'SUCCESS' and len(strategy['managers']) == data['league']['manager_count']
           assert market['status'] == 'SUCCESS'
-          assert squad_intel['status'] == 'SUCCESS'
-          assert len(squad_intel['managers']) == data['league']['manager_count']
-          assert chip_window['status'] == 'SUCCESS'
-          assert len(chip_window['evaluations']) == 4
+          assert squad_intel['status'] == 'SUCCESS' and len(squad_intel['managers']) == data['league']['manager_count']
+          assert chip_window['status'] == 'SUCCESS' and len(chip_window['evaluations']) == 4
           assert schedule_load['status'] == 'SUCCESS'
           assert 'clubs' in schedule_load and 'players' in schedule_load
           assert len(schedule_load.get('failures', [])) < len(schedule_load.get('coverage', [])), 'All schedule-load sources failed'
-          assert player_pool['status'] == 'SUCCESS'
-          assert player_pool['horizon'] == 6
-          assert len(player_pool['players']) > 50
+          assert player_pool['status'] == 'SUCCESS' and player_pool['horizon'] == 6 and len(player_pool['players']) > 50
           assert all('adjusted_availability' in p and 'schedule_risk' in p and 'midweek_minutes' in p and 'player_workload_observed' in p for p in player_pool['players'][:20])
-          assert scout_consensus['status'] == 'SUCCESS'
-          assert 'players' in scout_consensus
-          assert simulation['status'] == 'SUCCESS'
-          assert simulation.get('engine_version', 0) >= 3
+          assert scout_consensus['status'] == 'SUCCESS' and 'players' in scout_consensus
+
+          assert simulation['status'] == 'SUCCESS' and simulation.get('engine_version', 0) >= 3
           assert simulation.get('projection_model') == 'season-maturity calibrated'
-          assert simulation['iterations'] >= 1000
-          assert simulation['candidate_count'] >= 1
-          assert simulation.get('recommendation') is not None
+          assert simulation['iterations'] >= 1000 and simulation['candidate_count'] >= 1 and simulation.get('recommendation') is not None
           assert simulation.get('next_transfer_hit_cost') == data.get('next_transfer_hit_cost')
-          assert path_sim['status'] == 'SUCCESS'
-          assert path_sim.get('engine_version', 0) >= 4
+
+          assert path_sim['status'] == 'SUCCESS' and path_sim.get('engine_version', 0) >= 4
           assert path_sim.get('projection_model') == 'season-maturity calibrated'
-          assert path_sim['iterations'] >= 1000
-          assert len(path_sim.get('paths', [])) >= 1
-          assert path_sim.get('recommendation') is not None
+          assert path_sim['iterations'] >= 1000 and len(path_sim.get('paths', [])) >= 1 and path_sim.get('recommendation') is not None
           assert path_sim.get('starting_free_transfers') == data.get('free_transfers_remaining_next_gw')
-          assert adaptive_sim['status'] == 'SUCCESS'
-          assert adaptive_sim.get('engine_version', 0) >= 2
+
+          assert adaptive_sim['status'] == 'SUCCESS' and adaptive_sim.get('engine_version', 0) >= 2
           assert adaptive_sim.get('projection_model') == 'season-maturity calibrated'
-          assert adaptive_sim['iterations'] >= 1000
-          assert len(adaptive_sim.get('paths', [])) >= 1
-          assert adaptive_sim.get('recommendation') is not None
+          assert adaptive_sim['iterations'] >= 1000 and len(adaptive_sim.get('paths', [])) >= 1 and adaptive_sim.get('recommendation') is not None
           assert len(adaptive_sim.get('rival_behaviour', [])) == len(data.get('rivals', []))
-          assert chip_path_sim['status'] == 'SUCCESS'
-          assert chip_path_sim.get('engine_version', 0) >= 2
+
+          assert chip_path_sim['status'] == 'SUCCESS' and chip_path_sim.get('engine_version', 0) >= 2
           assert chip_path_sim.get('projection_model') == 'season-maturity calibrated'
-          assert chip_path_sim['iterations'] >= 1000
-          assert chip_path_sim.get('best_no_chip_path') is not None
-          assert synthesis['status'] == 'SUCCESS'
+          assert chip_path_sim['iterations'] >= 1000 and chip_path_sim.get('best_no_chip_path') is not None
+
+          assert budget_state['status'] == 'SUCCESS' and budget_state.get('spendable_budget', 0) > 0
+          assert full_chip['status'] == 'SUCCESS' and full_chip.get('version', 0) >= 1
+          assert full_chip.get('projection_model') == 'season-maturity calibrated'
+          assert full_chip.get('best_wildcard') is not None
+          assert full_chip.get('best_free_hit') is not None
+          for candidate in [full_chip['best_wildcard'], full_chip['best_free_hit']]:
+              squad = candidate.get('squad', [])
+              assert len(squad) == 15
+              pos = {k: sum(1 for x in squad if x.get('position') == k) for k in ('GKP','DEF','MID','FWD')}
+              assert pos == {'GKP':2,'DEF':5,'MID':5,'FWD':3}
+              clubs = {}
+              for x in squad:
+                  clubs[x.get('club')] = clubs.get(x.get('club'), 0) + 1
+              assert max(clubs.values()) <= 3
+              assert candidate.get('cost', 999) <= full_chip.get('budget', 0) + 1e-6
+
+          assert synthesis['status'] == 'SUCCESS' and synthesis.get('version', 0) >= 2
           assert synthesis.get('current_action', {}).get('action') in ('HOLD', 'TRANSFER')
           assert data.get('decision_synthesis', {}).get('version') == synthesis.get('version')
           assert synthesis.get('chips', {}).get('action') in ('HOLD', 'CONSIDER')
-          assert history.get('version') == 4
-          assert 'weeks' in history
-          assert 'decisions' in history
+
+          assert history.get('version') == 4 and 'weeks' in history and 'decisions' in history
           assert 'snapshots' in rec_history
           assert history_index.get('version') == 1
           current_gw = int(data.get('current_gw') or 0)
@@ -215,8 +229,7 @@ jobs:
               manifest = json.loads(prev_manifest.read_text())
               archived = {x['name'] for x in manifest.get('files', [])}
               required = {'league_snapshot.json','dashboard_snapshot.json','strategy.json','market.json','squad_intelligence.json','chip_window.json','player_pool.json','scout_consensus.json','decision_history.json','recommendation_history.json'}
-              if prev_gw >= 2:
-                  required.add('schedule_load.json')
+              if prev_gw >= 2: required.add('schedule_load.json')
               assert required.issubset(archived), f'GW{prev_gw} archive incomplete: {sorted(required-archived)}'
           print('Validation passed')
           PY
