@@ -2,6 +2,7 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
+import captaincy_model as cm
 import simulation_engine as s
 from projection_calibration import expected_gw as calibrated_expected_gw, season_maturity
 
@@ -21,43 +22,6 @@ def load(path, default):
 
 def pid(x):
     return int(x.get('player_id') or x.get('id') or 0)
-
-
-def first_fixture(p, gw):
-    for f in p.get('fixtures') or []:
-        if int(f.get('gw') or 0) == int(gw):
-            return f
-    return (p.get('fixtures') or [None])[0]
-
-
-def position_ceiling(pos):
-    return {'GKP': .76, 'DEF': .88, 'MID': 1.08, 'FWD': 1.12}.get(pos, 1.0)
-
-
-def premium_bonus(p):
-    price = s.n(p.get('price'))
-    pos = p.get('position')
-    threshold = {'GKP': 5.0, 'DEF': 6.0, 'MID': 8.5, 'FWD': 9.0}.get(pos, 99)
-    return .65 if price >= threshold else 0
-
-
-def captain_score(p, mean, cv, fixture):
-    venue = str((fixture or {}).get('venue') or '').upper()
-    fdr = s.n((fixture or {}).get('difficulty'), 3)
-    form = s.n(p.get('form'))
-    ppg = s.n(p.get('points_per_game'))
-    avail = s.n(p.get('availability'), 1)
-    price = s.n(p.get('price'))
-    score = mean * position_ceiling(p.get('position'))
-    score += max(0, 4 - fdr) * .42
-    score += .35 if venue == 'H' else 0
-    score += min(1.2, form * .08)
-    score += min(1.0, ppg * .07)
-    score += premium_bonus(p)
-    score += min(.45, max(0, price - 10) * .04)
-    score += avail * .5
-    score -= max(0, cv - .8) * 1.4
-    return score
 
 
 def reasons(p, mean, cv, fixture, edge=None):
@@ -102,13 +66,23 @@ def run():
     vals = [s.n(x.get('six_gw_score')) for x in pool_rows]
     lo, hi = s.percentile(vals, .10), s.percentile(vals, .90)
 
-    candidates = []
+    exp_for_gw = {}
     for p in squad:
-        mean, cv = calibrated_expected_gw(p, gw, lo, hi, sm, mm, current_gw=current_gw)
-        f = first_fixture(p, gw)
-        score = captain_score(p, mean, cv, f)
+        exp_for_gw[pid(p)] = calibrated_expected_gw(p, gw, lo, hi, sm, mm, current_gw=current_gw)
+
+    # Captain candidates must be in the legal recommended XI. This avoids ever naming a
+    # bench player captain merely because their standalone captain score is attractive.
+    means = {player_id: vals[0] for player_id, vals in exp_for_gw.items()}
+    xi, _ = s.best_xi(squad, means)
+    xi_ids = [pid(p) for p in xi]
+    ranked = cm.ranked_candidates(squad, xi_ids, gw, exp_for_gw)
+
+    candidates = []
+    for row in ranked:
+        p = row['player']
+        f = row['fixture']
         candidates.append({
-            'player_id': pid(p),
+            'player_id': row['player_id'],
             'player': p.get('player'),
             'club': p.get('club'),
             'position': p.get('position'),
@@ -116,15 +90,14 @@ def run():
             'opponent': (f or {}).get('opponent'),
             'venue': (f or {}).get('venue'),
             'fixture_difficulty': s.n((f or {}).get('difficulty'), 3),
-            'expected_points': round(mean, 2),
-            'projection_cv': round(cv, 3),
+            'expected_points': round(row['mean'], 2),
+            'projection_cv': round(row['cv'], 3),
             'form': s.n(p.get('form')),
             'points_per_game': s.n(p.get('points_per_game')),
             'availability': s.n(p.get('availability'), 1),
-            'captaincy_score': round(score, 3),
+            'captaincy_score': round(row['captaincy_score'], 3),
         })
 
-    candidates.sort(key=lambda x: x['captaincy_score'], reverse=True)
     top = candidates[:5]
     if not top:
         raise RuntimeError('No captaincy candidates')
@@ -144,19 +117,20 @@ def run():
     output = {
         'status': 'SUCCESS',
         'generated_at_utc': datetime.now(timezone.utc).isoformat(),
-        'version': 1,
+        'version': 2,
         'next_gw': gw,
         'season_maturity_weight': round(maturity, 3),
+        'recommended_xi_ids': xi_ids,
         'captain': leader,
         'vice_captain': vice,
         'shortlist': top,
         'confidence': confidence,
         'score_edge_to_second': round(edge, 3),
-        'method_note': 'Captaincy is modelled separately from XI selection. It combines calibrated expected points with fixture ceiling, premium/position ceiling, availability, recent output and projection uncertainty. This avoids automatically captaining the highest XI-selection score.',
+        'method_note': 'Captaincy uses the shared captaincy model also used by simulations. Candidates are restricted to the legal recommended XI, then ranked by calibrated expected points, fixture ceiling, premium/position ceiling, availability, recent output and uncertainty.',
     }
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(output, indent=2, ensure_ascii=False) + '\n')
-    print(json.dumps({'status': 'SUCCESS', 'captain': leader['player'], 'vice': (vice or {}).get('player'), 'confidence': confidence}))
+    print(json.dumps({'status': 'SUCCESS', 'captain': leader['player'], 'vice': (vice or {}).get('player'), 'confidence': confidence, 'version': 2}))
 
 
 if __name__ == '__main__':
