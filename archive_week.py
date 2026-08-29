@@ -22,6 +22,15 @@ ARCHIVE_FILES = {
     "scout_consensus.json": "scout_consensus.json",
     "decision_history.json": "decision_history.json",
     "recommendation_history.json": "recommendation_history.json",
+    "budget_state.json": "budget_state.json",
+    "simulation.json": "simulation.json",
+    "path_simulation.json": "path_simulation.json",
+    "adaptive_rival_simulation.json": "adaptive_rival_simulation.json",
+    "chip_path_simulation.json": "chip_path_simulation.json",
+    "full_squad_chip_optimizer.json": "full_squad_chip_optimizer.json",
+    "decision_synthesis.json": "decision_synthesis.json",
+    "simulation_stability.json": "simulation_stability.json",
+    "chip_activation_gate.json": "chip_activation_gate.json",
 }
 
 # One-time recovery refs for gameweeks that had already rolled before durable
@@ -32,13 +41,13 @@ BACKFILL_REFS = {
 
 
 def get_json(url):
-    req = urllib.request.Request(url, headers={"User-Agent": "fpl-history-archive/1.1"})
+    req = urllib.request.Request(url, headers={"User-Agent": "fpl-history-archive/1.2"})
     with urllib.request.urlopen(req, timeout=30) as response:
         return json.load(response)
 
 
 def get_bytes(url):
-    req = urllib.request.Request(url, headers={"User-Agent": "fpl-history-archive/1.1"})
+    req = urllib.request.Request(url, headers={"User-Agent": "fpl-history-archive/1.2"})
     with urllib.request.urlopen(req, timeout=30) as response:
         return response.read()
 
@@ -122,19 +131,23 @@ def archive_from_ref(gw, ref, force=False):
     target.mkdir(parents=True, exist_ok=True)
     copied = []
     sources = {"league_snapshot.json": f"gw{gw}.json", **ARCHIVE_FILES}
+    optional_historical = {
+        "schedule_load.json", "budget_state.json", "simulation.json", "path_simulation.json",
+        "adaptive_rival_simulation.json", "chip_path_simulation.json", "full_squad_chip_optimizer.json",
+        "decision_synthesis.json", "simulation_stability.json", "chip_activation_gate.json",
+    }
     for dest_name, source_name in sources.items():
         try:
             body = get_bytes(f"{RAW_REPO}/{ref}/data/{source_name}")
         except Exception as exc:
-            # Historical refs before schedule-load existed remain valid archives.
-            if dest_name == "schedule_load.json":
+            # Older historical refs legitimately pre-date later decision-support layers.
+            if dest_name in optional_historical:
                 continue
             raise RuntimeError(f"Cannot backfill GW{gw}: {source_name} unavailable at {ref}: {exc}") from exc
         dest = target / dest_name
         dest.write_bytes(body)
         copied.append(dest)
 
-    # Guard against accidentally freezing the wrong gameweek from a historical ref.
     league = json.loads((target / "league_snapshot.json").read_text(encoding="utf-8"))
     dashboard = json.loads((target / "dashboard_snapshot.json").read_text(encoding="utf-8"))
     if int(league.get("current_gw") or 0) != gw or int(dashboard.get("current_gw") or 0) != gw:
