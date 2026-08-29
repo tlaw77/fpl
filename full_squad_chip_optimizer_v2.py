@@ -6,12 +6,12 @@ import full_squad_chip_optimizer as opt
 
 CACHE_HOURS = 4
 
-# Production search budget: retain strong candidates plus cheap enablers, but keep
-# the 30-minute ETL comfortably bounded. Exact legality and finalist rescoring stay intact.
-opt.SHORTLIST_TOP = {'GKP': 12, 'DEF': 18, 'MID': 20, 'FWD': 16}
-opt.CHEAP_EXTRA = 6
-opt.BEAM_WIDTH = 1600
-opt.FINALISTS = 60
+# Production search profile. Exact legality and final XI/captain rescoring remain
+# unchanged; this only limits how many partial squad states are carried forward.
+opt.SHORTLIST_TOP = {'GKP': 10, 'DEF': 16, 'MID': 18, 'FWD': 14}
+opt.CHEAP_EXTRA = 5
+opt.BEAM_WIDTH = 600
+opt.FINALISTS = 30
 
 
 def load(path, default):
@@ -31,6 +31,7 @@ def signature():
         'bank': latest.get('current_bank', (latest.get('me') or {}).get('bank')),
         'budget': budget.get('spendable_budget'),
         'budget_method': budget.get('budget_method'),
+        'profile': {'beam': opt.BEAM_WIDTH, 'shortlist': opt.SHORTLIST_TOP, 'cheap': opt.CHEAP_EXTRA},
     }
     raw = json.dumps(payload, sort_keys=True, separators=(',', ':')).encode()
     return hashlib.sha256(raw).hexdigest()[:20]
