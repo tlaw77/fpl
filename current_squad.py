@@ -2,6 +2,7 @@ import json
 import urllib.request
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
+from itertools import combinations
 from pathlib import Path
 
 BASE = "https://fantasy.premierleague.com/api"
@@ -90,6 +91,79 @@ def enriched_player(pid, raw_players, teams, positions, fixture_map, expo, targe
     }
 
 
+def best_xi(rows):
+    """Return the highest decision-score legal XI and its score.
+
+    This intentionally uses the same core decision_score carried by the squad rows.
+    Transfer ranking must care about who actually starts, not only whether the incoming
+    player is individually stronger than the outgoing squad member.
+    """
+    available = [p for p in rows if float(p.get("availability", 1) or 0) > 0]
+    by_pos = defaultdict(list)
+    for p in available:
+        by_pos[p.get("position")].append(p)
+    for pos in by_pos:
+        by_pos[pos].sort(key=lambda p: float(p.get("decision_score") or 0), reverse=True)
+
+    keepers = by_pos.get("GKP", [])
+    if not keepers:
+        return [], 0.0
+    keeper = keepers[0]
+    best_rows, best_score = [], float("-inf")
+
+    # Legal FPL outfield formations: 3-5 DEF, 2-5 MID, 1-3 FWD, ten outfield players.
+    for nd in range(3, 6):
+        for nm in range(2, 6):
+            nf = 10 - nd - nm
+            if nf < 1 or nf > 3:
+                continue
+            if len(by_pos.get("DEF", [])) < nd or len(by_pos.get("MID", [])) < nm or len(by_pos.get("FWD", [])) < nf:
+                continue
+            picked = [keeper] + by_pos["DEF"][:nd] + by_pos["MID"][:nm] + by_pos["FWD"][:nf]
+            score = sum(float(p.get("decision_score") or 0) for p in picked)
+            if score > best_score:
+                best_rows, best_score = picked, score
+    return best_rows, round(best_score if best_rows else 0.0, 3)
+
+
+def transfer_xi_effect(squad_rows, outp, incoming):
+    baseline_xi, baseline_score = best_xi(squad_rows)
+    projected = [p for p in squad_rows if p.get("player_id") != outp.get("player_id")] + [incoming]
+    projected_xi, projected_score = best_xi(projected)
+    base_ids = {p.get("player_id") for p in baseline_xi}
+    projected_ids = {p.get("player_id") for p in projected_xi}
+    incoming_starts = incoming.get("player_id") in projected_ids
+    outgoing_started = outp.get("player_id") in base_ids
+    return {
+        "baseline_xi_score": baseline_score,
+        "projected_xi_score": projected_score,
+        "xi_gain": round(projected_score - baseline_score, 3),
+        "incoming_starts": incoming_starts,
+        "outgoing_started": outgoing_started,
+    }
+
+
+def legal_candidate(squad_rows, outp, candidate):
+    # Enforce the FPL maximum of three players from one club after the transfer.
+    club_counts = Counter(p.get("team_id") for p in squad_rows if p.get("player_id") != outp.get("player_id"))
+    return club_counts[candidate.get("team_id")] < 3
+
+
+def action_gain(raw_gain, xi_effect):
+    """Convert an individual squad upgrade into an actionable transfer score.
+
+    Starting-XI gain dominates. A bench-only upgrade retains a small amount of
+    structural value, but pays an explicit free-transfer opportunity-cost penalty.
+    This prevents a goalkeeper/bench upgrade from becoming the primary GW move merely
+    because the incoming player's individual score or rival leverage is attractive.
+    """
+    xi_gain = float(xi_effect.get("xi_gain") or 0)
+    structural = max(0.0, float(raw_gain or 0))
+    if xi_effect.get("incoming_starts"):
+        return round(xi_gain * 1.5 + structural * 0.25, 3)
+    return round(xi_gain * 1.5 + structural * 0.12 - 1.5, 3)
+
+
 def current_moves(data, squad_rows, raw_players, teams, positions, fixture_map, expo, target_own, target_cap, target_n, bank):
     ids = {p["player_id"] for p in squad_rows}
     candidate_pool = []
@@ -101,20 +175,48 @@ def current_moves(data, squad_rows, raw_players, teams, positions, fixture_map, 
     moves = []
     for outp in squad_rows:
         max_price = outp["price"] + bank
-        same_pos = [c for c in candidate_pool if c["position_id"] == outp["position_id"] and c["price"] <= max_price and c["availability"] >= 0.75]
+        same_pos = [
+            c for c in candidate_pool
+            if c["position_id"] == outp["position_id"]
+            and c["price"] <= max_price
+            and c["availability"] >= 0.75
+            and legal_candidate(squad_rows, outp, c)
+        ]
         if not same_pos:
             continue
-        safe = max(same_pos, key=lambda c: c["protective_score"])
-        chase = max(same_pos, key=lambda c: c["chase_score"])
+
+        # Evaluate every legal candidate against the post-transfer best XI, then choose
+        # the highest ACTION score rather than the highest isolated player score.
+        evaluated = []
+        for c in same_pos:
+            effect = transfer_xi_effect(squad_rows, outp, c)
+            raw_safe = round(c["protective_score"] - outp["decision_score"], 3)
+            raw_chase = round(c["chase_score"] - outp["decision_score"], 3)
+            evaluated.append((c, effect, raw_safe, raw_chase, action_gain(raw_safe, effect), action_gain(raw_chase, effect)))
+
+        safe_c, safe_effect, safe_raw, _, safe_action, _ = max(evaluated, key=lambda x: x[4])
+        chase_c, chase_effect, _, chase_raw, _, chase_action = max(evaluated, key=lambda x: x[5])
+
         moves.append({
             "out": {"player_id": outp["player_id"], "player": outp["player"], "price": outp["price"], "decision_score": outp["decision_score"], "position": outp["position"]},
-            "safe_in": safe,
-            "aggressive_in": chase,
-            "safe_gain": round(safe["protective_score"] - outp["decision_score"], 3),
-            "aggressive_gain": round(chase["chase_score"] - outp["decision_score"], 3),
+            "safe_in": safe_c,
+            "aggressive_in": chase_c,
+            # Existing UI sorts/compares these fields, so they now represent ACTION gain.
+            "safe_gain": safe_action,
+            "aggressive_gain": chase_action,
+            # Preserve the old isolated-player deltas for explainability/audit.
+            "safe_raw_player_gain": safe_raw,
+            "aggressive_raw_player_gain": chase_raw,
+            "safe_xi_gain": safe_effect["xi_gain"],
+            "aggressive_xi_gain": chase_effect["xi_gain"],
+            "safe_incoming_starts": safe_effect["incoming_starts"],
+            "aggressive_incoming_starts": chase_effect["incoming_starts"],
+            "outgoing_started": safe_effect["outgoing_started"],
+            "safe_baseline_xi_score": safe_effect["baseline_xi_score"],
+            "safe_projected_xi_score": safe_effect["projected_xi_score"],
         })
     return {
-        "model_note": "Recomputed from the post-transfer current squad using transfer history plus the same ownership/fixture heuristics as the main ETL.",
+        "model_note": "Transfers are ranked by post-transfer legal Best XI impact first, with smaller structural/ownership value. Bench-only upgrades pay a free-transfer opportunity-cost penalty.",
         "safe_moves": sorted(moves, key=lambda m: m["safe_gain"], reverse=True)[:5],
         "aggressive_moves": sorted(moves, key=lambda m: m["aggressive_gain"], reverse=True)[:5],
     }
