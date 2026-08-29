@@ -1,8 +1,8 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-08-29T20:21:57.438686+00:00",
-  "engine_version": 2,
-  "planner": "bounded beam search + GW-specific shared-outcome Monte Carlo",
+  "generated_at_utc": "2026-08-29T20:23:12.382586+00:00",
+  "engine_version": 3,
+  "planner": "bounded beam search + GW-specific shared-outcome Monte Carlo + live FT state",
   "depth_gameweeks": [
     3,
     4,
@@ -11,9 +11,10 @@
   ],
   "beam_width": 14,
   "iterations": 1800,
-  "starting_free_transfers": 1,
+  "starting_free_transfers": 0,
   "max_free_transfers": 5,
   "transfer_hit_cost": 4,
+  "next_transfer_hit_cost": 4,
   "chip_portfolio_context": {
     "half": 1,
     "window": "GW1-GW19",
@@ -124,17 +125,17 @@
       {
         "gw": 3,
         "action": "TRANSFER",
-        "route": "B.Fernandes → Stach",
-        "hit": 0,
-        "out_id": 426,
-        "in_id": 335
+        "route": "Hughes → M.Sangaré",
+        "hit": 4,
+        "out_id": 212,
+        "in_id": 565
       },
       {
         "gw": 4,
         "action": "TRANSFER",
-        "route": "Hughes → Palmer",
+        "route": "B.Fernandes → Palmer",
         "hit": 0,
-        "out_id": 212,
+        "out_id": 426,
         "in_id": 154
       },
       {
@@ -148,30 +149,30 @@
       {
         "gw": 6,
         "action": "TRANSFER",
-        "route": "Maguire → White",
+        "route": "Greaves → White",
         "hit": 0,
-        "out_id": 418,
+        "out_id": 306,
         "in_id": 10
       }
     ],
-    "expected_points": 307.48,
-    "p10_points": 254.78,
-    "p90_points": 362.08,
-    "expected_rank_after_path": 2.98,
-    "prob_gain_league_place": 0.994,
+    "expected_points": 302.58,
+    "p10_points": 251.53,
+    "p90_points": 356.22,
+    "expected_rank_after_path": 3.19,
+    "prob_gain_league_place": 0.993,
     "prob_finish_ahead_each_rival": [
-      0.464,
-      0.446,
-      0.808,
-      0.747,
-      0.676,
-      0.893,
-      0.983
+      0.417,
+      0.379,
+      0.786,
+      0.711,
+      0.639,
+      0.888,
+      0.987
     ],
-    "ending_bank": 0.3,
+    "ending_bank": 0.1,
     "ending_free_transfers": 1,
     "first_transfer_incoming_starts": true,
-    "utility_score": 326.599
+    "utility_score": 320.841
   },
   "paths": [
     {
@@ -179,71 +180,17 @@
         {
           "gw": 3,
           "action": "TRANSFER",
-          "route": "B.Fernandes → Stach",
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 335
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Hughes → Palmer",
-          "hit": 0,
+          "route": "Hughes → M.Sangaré",
+          "hit": 4,
           "out_id": 212,
-          "in_id": 154
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Groß → Ødegaard",
-          "hit": 0,
-          "out_id": 124,
-          "in_id": 15
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Maguire → White",
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 10
-        }
-      ],
-      "expected_points": 307.48,
-      "p10_points": 254.78,
-      "p90_points": 362.08,
-      "expected_rank_after_path": 2.98,
-      "prob_gain_league_place": 0.994,
-      "prob_finish_ahead_each_rival": [
-        0.464,
-        0.446,
-        0.808,
-        0.747,
-        0.676,
-        0.893,
-        0.983
-      ],
-      "ending_bank": 0.3,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "utility_score": 326.599
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → M.Sangaré",
-          "hit": 0,
-          "out_id": 426,
           "in_id": 565
         },
         {
           "gw": 4,
           "action": "TRANSFER",
-          "route": "Hughes → Palmer",
+          "route": "B.Fernandes → Palmer",
           "hit": 0,
-          "out_id": 212,
+          "out_id": 426,
           "in_id": 154
         },
         {
@@ -257,101 +204,101 @@
         {
           "gw": 6,
           "action": "TRANSFER",
-          "route": "Maguire → White",
+          "route": "Greaves → White",
           "hit": 0,
-          "out_id": 418,
+          "out_id": 306,
           "in_id": 10
         }
       ],
-      "expected_points": 307.02,
-      "p10_points": 254.42,
-      "p90_points": 360.18,
-      "expected_rank_after_path": 2.99,
-      "prob_gain_league_place": 0.992,
+      "expected_points": 302.58,
+      "p10_points": 251.53,
+      "p90_points": 356.22,
+      "expected_rank_after_path": 3.19,
+      "prob_gain_league_place": 0.993,
       "prob_finish_ahead_each_rival": [
-        0.464,
-        0.428,
-        0.811,
-        0.742,
-        0.671,
-        0.912,
-        0.981
-      ],
-      "ending_bank": 0.7,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "utility_score": 326.102
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Stach",
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 335
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Hughes → Palmer",
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 154
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Schade → Ødegaard",
-          "hit": 0,
-          "out_id": 94,
-          "in_id": 15
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Maguire → White",
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 10
-        }
-      ],
-      "expected_points": 307.07,
-      "p10_points": 253.84,
-      "p90_points": 361.42,
-      "expected_rank_after_path": 3.01,
-      "prob_gain_league_place": 0.994,
-      "prob_finish_ahead_each_rival": [
-        0.466,
-        0.437,
-        0.806,
-        0.741,
-        0.672,
+        0.417,
+        0.379,
+        0.786,
+        0.711,
+        0.639,
         0.888,
-        0.985
+        0.987
       ],
-      "ending_bank": 0.8,
+      "ending_bank": 0.1,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
-      "utility_score": 326.0
+      "utility_score": 320.841
     },
     {
       "actions": [
         {
           "gw": 3,
           "action": "TRANSFER",
-          "route": "B.Fernandes → M.Sangaré",
-          "hit": 0,
-          "out_id": 426,
+          "route": "Hughes → M.Sangaré",
+          "hit": 4,
+          "out_id": 212,
           "in_id": 565
         },
         {
           "gw": 4,
           "action": "TRANSFER",
-          "route": "Hughes → Palmer",
+          "route": "B.Fernandes → Palmer",
           "hit": 0,
+          "out_id": 426,
+          "in_id": 154
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Groß → Ødegaard",
+          "hit": 0,
+          "out_id": 124,
+          "in_id": 15
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Maguire → White",
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 10
+        }
+      ],
+      "expected_points": 302.58,
+      "p10_points": 251.53,
+      "p90_points": 356.22,
+      "expected_rank_after_path": 3.19,
+      "prob_gain_league_place": 0.993,
+      "prob_finish_ahead_each_rival": [
+        0.417,
+        0.379,
+        0.786,
+        0.711,
+        0.639,
+        0.888,
+        0.987
+      ],
+      "ending_bank": 1.1,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "utility_score": 320.841
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Hughes → M.Sangaré",
+          "hit": 4,
           "out_id": 212,
+          "in_id": 565
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Palmer",
+          "hit": 0,
+          "out_id": 426,
           "in_id": 154
         },
         {
@@ -371,41 +318,41 @@
           "in_id": 15
         }
       ],
-      "expected_points": 306.56,
-      "p10_points": 255.27,
-      "p90_points": 360.31,
-      "expected_rank_after_path": 3.01,
+      "expected_points": 302.33,
+      "p10_points": 251.02,
+      "p90_points": 354.37,
+      "expected_rank_after_path": 3.19,
       "prob_gain_league_place": 0.994,
       "prob_finish_ahead_each_rival": [
-        0.457,
-        0.428,
-        0.808,
-        0.739,
-        0.668,
-        0.907,
-        0.983
+        0.419,
+        0.377,
+        0.791,
+        0.713,
+        0.638,
+        0.889,
+        0.986
       ],
-      "ending_bank": 0.2,
+      "ending_bank": 0.6,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
-      "utility_score": 325.714
+      "utility_score": 320.588
     },
     {
       "actions": [
         {
           "gw": 3,
           "action": "TRANSFER",
-          "route": "B.Fernandes → M.Sangaré",
-          "hit": 0,
-          "out_id": 426,
+          "route": "Hughes → M.Sangaré",
+          "hit": 4,
+          "out_id": 212,
           "in_id": 565
         },
         {
           "gw": 4,
           "action": "TRANSFER",
-          "route": "Hughes → Palmer",
+          "route": "B.Fernandes → Palmer",
           "hit": 0,
-          "out_id": 212,
+          "out_id": 426,
           "in_id": 154
         },
         {
@@ -425,41 +372,149 @@
           "in_id": 15
         }
       ],
-      "expected_points": 306.56,
-      "p10_points": 255.27,
-      "p90_points": 360.31,
-      "expected_rank_after_path": 3.01,
+      "expected_points": 302.33,
+      "p10_points": 251.02,
+      "p90_points": 354.37,
+      "expected_rank_after_path": 3.19,
       "prob_gain_league_place": 0.994,
       "prob_finish_ahead_each_rival": [
-        0.457,
-        0.428,
-        0.808,
-        0.739,
-        0.668,
-        0.907,
-        0.983
+        0.419,
+        0.377,
+        0.791,
+        0.713,
+        0.638,
+        0.889,
+        0.986
       ],
-      "ending_bank": 1.2,
+      "ending_bank": 1.6,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
-      "utility_score": 325.714
+      "utility_score": 320.588
     },
     {
       "actions": [
         {
           "gw": 3,
           "action": "TRANSFER",
-          "route": "B.Fernandes → M.Sangaré",
-          "hit": 0,
-          "out_id": 426,
+          "route": "Hughes → M.Sangaré",
+          "hit": 4,
+          "out_id": 212,
           "in_id": 565
         },
         {
           "gw": 4,
           "action": "TRANSFER",
-          "route": "Hughes → Palmer",
+          "route": "B.Fernandes → Palmer",
           "hit": 0,
+          "out_id": 426,
+          "in_id": 154
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Groß → Ødegaard",
+          "hit": 0,
+          "out_id": 124,
+          "in_id": 15
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "hit": 0,
+          "out_id": 496,
+          "in_id": 572
+        }
+      ],
+      "expected_points": 302.11,
+      "p10_points": 252.31,
+      "p90_points": 353.55,
+      "expected_rank_after_path": 3.2,
+      "prob_gain_league_place": 0.992,
+      "prob_finish_ahead_each_rival": [
+        0.417,
+        0.383,
+        0.783,
+        0.71,
+        0.632,
+        0.887,
+        0.985
+      ],
+      "ending_bank": 1.6,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "utility_score": 320.463
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Hughes → M.Sangaré",
+          "hit": 4,
           "out_id": 212,
+          "in_id": 565
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Palmer",
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 154
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Groß → Ødegaard",
+          "hit": 0,
+          "out_id": 124,
+          "in_id": 15
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Dubravka → Tzolakis",
+          "hit": 0,
+          "out_id": 497,
+          "in_id": 572
+        }
+      ],
+      "expected_points": 302.11,
+      "p10_points": 252.31,
+      "p90_points": 353.55,
+      "expected_rank_after_path": 3.2,
+      "prob_gain_league_place": 0.992,
+      "prob_finish_ahead_each_rival": [
+        0.417,
+        0.383,
+        0.783,
+        0.71,
+        0.632,
+        0.887,
+        0.985
+      ],
+      "ending_bank": 1.1,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "utility_score": 320.463
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Hughes → M.Sangaré",
+          "hit": 4,
+          "out_id": 212,
+          "in_id": 565
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Palmer",
+          "hit": 0,
+          "out_id": 426,
           "in_id": 154
         },
         {
@@ -479,41 +534,41 @@
           "in_id": 316
         }
       ],
-      "expected_points": 306.48,
-      "p10_points": 254.65,
-      "p90_points": 359.43,
-      "expected_rank_after_path": 3.02,
-      "prob_gain_league_place": 0.994,
+      "expected_points": 302.07,
+      "p10_points": 251.47,
+      "p90_points": 353.97,
+      "expected_rank_after_path": 3.21,
+      "prob_gain_league_place": 0.992,
       "prob_finish_ahead_each_rival": [
-        0.463,
-        0.418,
-        0.802,
-        0.744,
-        0.671,
-        0.902,
-        0.98
+        0.42,
+        0.372,
+        0.786,
+        0.708,
+        0.63,
+        0.889,
+        0.984
       ],
-      "ending_bank": 1.7,
+      "ending_bank": 2.1,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
-      "utility_score": 325.514
+      "utility_score": 320.29
     },
     {
       "actions": [
         {
           "gw": 3,
           "action": "TRANSFER",
-          "route": "B.Fernandes → M.Sangaré",
-          "hit": 0,
-          "out_id": 426,
+          "route": "Hughes → M.Sangaré",
+          "hit": 4,
+          "out_id": 212,
           "in_id": 565
         },
         {
           "gw": 4,
           "action": "TRANSFER",
-          "route": "Schade → Palmer",
+          "route": "B.Fernandes → Palmer",
           "hit": 0,
-          "out_id": 94,
+          "out_id": 426,
           "in_id": 154
         },
         {
@@ -527,85 +582,31 @@
         {
           "gw": 6,
           "action": "TRANSFER",
-          "route": "Greaves → White",
-          "hit": 0,
-          "out_id": 306,
-          "in_id": 10
-        }
-      ],
-      "expected_points": 306.4,
-      "p10_points": 254.02,
-      "p90_points": 359.84,
-      "expected_rank_after_path": 3.02,
-      "prob_gain_league_place": 0.993,
-      "prob_finish_ahead_each_rival": [
-        0.463,
-        0.419,
-        0.81,
-        0.739,
-        0.667,
-        0.902,
-        0.982
-      ],
-      "ending_bank": 1.2,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "utility_score": 325.375
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → M.Sangaré",
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 565
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Schade → Palmer",
+          "route": "Schade → Xhaka",
           "hit": 0,
           "out_id": 94,
-          "in_id": 154
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Groß → Ødegaard",
-          "hit": 0,
-          "out_id": 124,
-          "in_id": 15
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Maguire → White",
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 10
+          "in_id": 544
         }
       ],
-      "expected_points": 306.4,
-      "p10_points": 254.02,
-      "p90_points": 359.84,
-      "expected_rank_after_path": 3.02,
-      "prob_gain_league_place": 0.993,
+      "expected_points": 301.86,
+      "p10_points": 251.32,
+      "p90_points": 354.07,
+      "expected_rank_after_path": 3.23,
+      "prob_gain_league_place": 0.992,
       "prob_finish_ahead_each_rival": [
-        0.463,
-        0.419,
-        0.81,
-        0.739,
-        0.667,
-        0.902,
-        0.982
+        0.409,
+        0.369,
+        0.781,
+        0.704,
+        0.632,
+        0.889,
+        0.985
       ],
-      "ending_bank": 2.2,
+      "ending_bank": 2.1,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
-      "utility_score": 325.375
+      "utility_score": 319.997
     }
   ],
-  "method_note": "Each path is scored with the actual squad owned in each Gameweek after that deadline action. Final-squad leakage into earlier Gameweeks is prevented. Rivals remain static in v2; bounded adaptive rival transfer policies are the next expansion."
+  "method_note": "Each path is scored with the actual squad owned in each Gameweek. The planner now accepts zero free transfers at the current deadline, so an additional move after the declared/official GW move is charged a -4 hit. Bank is taken from the reconstructed current squad state."
 }
