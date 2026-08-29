@@ -4,6 +4,7 @@ import statistics
 from datetime import datetime, timezone
 
 import simulation_engine as s
+from projection_calibration import expected_gw as calibrated_expected_gw, season_maturity
 
 
 def run():
@@ -20,6 +21,8 @@ def run():
     rivals = s.rival_squads(latest, by_id, by_name)
     candidates = s.candidate_routes(latest, base_squad, by_id, by_name)
     next_gw = int(latest.get('next_gw') or 1)
+    current_gw = int(latest.get('current_gw') or max(0, next_gw - 1))
+    maturity = season_maturity(current_gw)
     gws = list(range(next_gw, min(39, next_gw + s.HORIZON)))
 
     raw_ft = latest.get('free_transfers_remaining_next_gw')
@@ -46,7 +49,7 @@ def run():
     for gw in gws:
         exp[gw] = {}
         for pid, player in universe.items():
-            exp[gw][pid] = s.expected_gw(player, gw, model_lo, model_hi, scout_maps, market_maps)
+            exp[gw][pid] = calibrated_expected_gw(player, gw, model_lo, model_hi, scout_maps, market_maps, current_gw=current_gw)
 
     cand_lineups = {}
     for c in candidates:
@@ -71,7 +74,7 @@ def run():
             )
         rival_lineups.append(bygw)
 
-    rng = random.Random(str(latest.get('generated_at_utc') or '') + '|simulation-v2')
+    rng = random.Random(str(latest.get('generated_at_utc') or '') + '|simulation-v3-calibrated')
     me_start = s.n((latest.get('me') or {}).get('total_points'))
     current_rank = int((latest.get('me') or {}).get('rank') or (len(rivals) + 1))
     route_totals = {c['key']: [] for c in candidates}
@@ -146,7 +149,9 @@ def run():
     output = {
         'status': 'SUCCESS',
         'generated_at_utc': datetime.now(timezone.utc).isoformat(),
-        'engine_version': 2,
+        'engine_version': 3,
+        'projection_model': 'season-maturity calibrated',
+        'season_maturity_weight': round(maturity, 3),
         'iterations': s.ITERATIONS,
         'horizon_gws': gws,
         'shared_outcome_simulation': True,
@@ -156,11 +161,11 @@ def run():
         'rivals': rival_meta,
         'recommendation': winner,
         'routes': results,
-        'method_note': 'Monte Carlo decision support from the reconstructed current squad. A further transfer at the current deadline is charged the live hit cost when the free transfer has already been used. Shared player outcomes are used across your team and rivals, with legal XI/captain optimisation each GW.',
+        'method_note': 'Monte Carlo decision support from the reconstructed current squad. Early-season form and six-GW model extremes are shrunk toward position/fixture priors according to season maturity. A further transfer at the current deadline is charged the live hit cost.',
     }
     s.OUT.parent.mkdir(parents=True, exist_ok=True)
     s.OUT.write_text(json.dumps(output, indent=2, ensure_ascii=False) + '\n')
-    print(json.dumps({'status': 'SUCCESS', 'winner': winner, 'iterations': s.ITERATIONS, 'remaining_ft': remaining_ft, 'next_hit_cost': next_hit_cost}))
+    print(json.dumps({'status': 'SUCCESS', 'winner': winner, 'iterations': s.ITERATIONS, 'maturity': round(maturity, 3), 'remaining_ft': remaining_ft, 'next_hit_cost': next_hit_cost}))
 
 
 if __name__ == '__main__':
