@@ -17,6 +17,7 @@ on:
       - "schedule_load.py"
       - "player_pool.py"
       - "scout_consensus.py"
+      - "simulation_engine.py"
       - "exposure_semantics.py"
       - "archive_week.py"
       - ".github/workflows/fpl-etl.yml"
@@ -79,6 +80,9 @@ jobs:
       - name: Run scout consensus
         run: python scout_consensus.py
 
+      - name: Run rival-aware Monte Carlo simulation
+        run: python simulation_engine.py
+
       - name: Refresh history index
         run: |
           python - <<'PY'
@@ -102,6 +106,7 @@ jobs:
           schedule_load = json.loads(Path('data/schedule_load.json').read_text())
           player_pool = json.loads(Path('data/player_pool.json').read_text())
           scout_consensus = json.loads(Path('data/scout_consensus.json').read_text())
+          simulation = json.loads(Path('data/simulation.json').read_text())
           history = json.loads(Path('data/decision_history.json').read_text())
           rec_history = json.loads(Path('data/recommendation_history.json').read_text())
           history_index = json.loads(Path('data/history/index.json').read_text())
@@ -130,6 +135,10 @@ jobs:
           assert all('adjusted_availability' in p and 'schedule_risk' in p and 'midweek_minutes' in p and 'player_workload_observed' in p for p in player_pool['players'][:20])
           assert scout_consensus['status'] == 'SUCCESS'
           assert 'players' in scout_consensus
+          assert simulation['status'] == 'SUCCESS'
+          assert simulation['iterations'] >= 1000
+          assert simulation['candidate_count'] >= 1
+          assert simulation.get('recommendation') is not None
           assert history.get('version') == 4
           assert 'weeks' in history
           assert 'decisions' in history
