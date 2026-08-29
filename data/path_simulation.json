@@ -1,0 +1,602 @@
+{
+  "status": "SUCCESS",
+  "generated_at_utc": "2026-08-29T19:58:11.352164+00:00",
+  "engine_version": 1,
+  "planner": "bounded beam search + shared-outcome Monte Carlo",
+  "depth_gameweeks": [
+    3,
+    4,
+    5,
+    6
+  ],
+  "beam_width": 14,
+  "iterations": 1800,
+  "starting_free_transfers": 1,
+  "max_free_transfers": 5,
+  "transfer_hit_cost": 4,
+  "chip_portfolio_context": {
+    "half": 1,
+    "window": "GW1-GW19",
+    "expires_after_gw": 19,
+    "remaining_chips": [
+      "Bench Boost",
+      "Free Hit",
+      "Triple Captain",
+      "Wildcard"
+    ],
+    "remaining_count": 4,
+    "gameweeks_left": 17,
+    "slack_gameweeks": 13,
+    "latest_safe_start_gw": 16,
+    "pressure": "comfortable",
+    "hard_inflection_explanation": "With 4 unused chip(s), GW16 is the latest point at which all can still be deployed in separate Gameweeks before GW19.",
+    "provisional_visible_plan": [
+      {
+        "chip": "Triple Captain",
+        "preferred_gw": 3,
+        "provisional_gw": 3,
+        "status": "hold",
+        "visible_score": 53.15
+      },
+      {
+        "chip": "Bench Boost",
+        "preferred_gw": 4,
+        "provisional_gw": 4,
+        "status": "hold",
+        "visible_score": 42.77
+      },
+      {
+        "chip": "Free Hit",
+        "preferred_gw": 3,
+        "provisional_gw": 5,
+        "status": "hold",
+        "visible_score": 1.4
+      },
+      {
+        "chip": "Wildcard",
+        "preferred_gw": 3,
+        "provisional_gw": 6,
+        "status": "hold",
+        "visible_score": 0.0
+      }
+    ],
+    "rules": [
+      "One chip per Gameweek.",
+      "Unused first-half chips expire after GW19 and do not carry into the second half.",
+      "A fresh set of all four chips is available in the second half.",
+      "If the first Free Hit is used in GW19, the second-half Free Hit cannot be used in GW20 because Free Hits cannot be consecutive."
+    ],
+    "optimisation_principle": "Maximise total incremental chip value across the half-season, not the isolated score of the next Gameweek. Preserve a chip only while its expected future option value exceeds the current window and there is enough calendar slack to use every remaining chip."
+  },
+  "rivals": [
+    {
+      "entry_id": 5129943,
+      "team_name": "YesWeCanice FC",
+      "manager": "Canice Cheevers",
+      "rank": 1,
+      "total_points": 102.0
+    },
+    {
+      "entry_id": 6324266,
+      "team_name": "Ballon Dorgu",
+      "manager": "Darren Nestor",
+      "rank": 2,
+      "total_points": 98.0
+    },
+    {
+      "entry_id": 5202441,
+      "team_name": "Rayan Kirk-i",
+      "manager": "John Cheevers",
+      "rank": 3,
+      "total_points": 91.0
+    },
+    {
+      "entry_id": 5227829,
+      "team_name": "De-Mainoo Event",
+      "manager": "Dan Nestor",
+      "rank": 4,
+      "total_points": 90.0
+    },
+    {
+      "entry_id": 7711703,
+      "team_name": "Shamrock Sheilas",
+      "manager": "Jack Cheevers",
+      "rank": 5,
+      "total_points": 87.0
+    },
+    {
+      "entry_id": 8179701,
+      "team_name": "Wirtz to best",
+      "manager": "Cian Quigley",
+      "rank": 6,
+      "total_points": 83.0
+    },
+    {
+      "entry_id": 2166366,
+      "team_name": "Johnians 2026Taepotz",
+      "manager": "Johneen Cheevers Snr",
+      "rank": 7,
+      "total_points": 74.0
+    }
+  ],
+  "recommendation": {
+    "actions": [
+      {
+        "gw": 3,
+        "action": "TRANSFER",
+        "route": "Mbeumo → M.Sangaré",
+        "hit": 0,
+        "out_id": 427,
+        "in_id": 565
+      },
+      {
+        "gw": 4,
+        "action": "TRANSFER",
+        "route": "B.Fernandes → Palmer",
+        "hit": 0,
+        "out_id": 426,
+        "in_id": 154
+      },
+      {
+        "gw": 5,
+        "action": "TRANSFER",
+        "route": "Hughes → Ødegaard",
+        "hit": 0,
+        "out_id": 212,
+        "in_id": 15
+      },
+      {
+        "gw": 6,
+        "action": "TRANSFER",
+        "route": "Greaves → White",
+        "hit": 0,
+        "out_id": 306,
+        "in_id": 10
+      }
+    ],
+    "expected_points": 311.69,
+    "p10_points": 262.77,
+    "p90_points": 362.63,
+    "expected_rank_after_path": 2.77,
+    "prob_gain_league_place": 0.998,
+    "prob_finish_ahead_each_rival": [
+      0.511,
+      0.458,
+      0.834,
+      0.763,
+      0.718,
+      0.954,
+      0.991
+    ],
+    "ending_bank": 2.2,
+    "ending_free_transfers": 1,
+    "utility_score": 332.321
+  },
+  "paths": [
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Mbeumo → M.Sangaré",
+          "hit": 0,
+          "out_id": 427,
+          "in_id": 565
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Palmer",
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 154
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Hughes → Ødegaard",
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 15
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Greaves → White",
+          "hit": 0,
+          "out_id": 306,
+          "in_id": 10
+        }
+      ],
+      "expected_points": 311.69,
+      "p10_points": 262.77,
+      "p90_points": 362.63,
+      "expected_rank_after_path": 2.77,
+      "prob_gain_league_place": 0.998,
+      "prob_finish_ahead_each_rival": [
+        0.511,
+        0.458,
+        0.834,
+        0.763,
+        0.718,
+        0.954,
+        0.991
+      ],
+      "ending_bank": 2.2,
+      "ending_free_transfers": 1,
+      "utility_score": 332.321
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Mbeumo → M.Sangaré",
+          "hit": 0,
+          "out_id": 427,
+          "in_id": 565
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Palmer",
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 154
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Hughes → Ødegaard",
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 15
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Maguire → White",
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 10
+        }
+      ],
+      "expected_points": 311.69,
+      "p10_points": 262.77,
+      "p90_points": 362.63,
+      "expected_rank_after_path": 2.77,
+      "prob_gain_league_place": 0.998,
+      "prob_finish_ahead_each_rival": [
+        0.511,
+        0.458,
+        0.834,
+        0.763,
+        0.718,
+        0.954,
+        0.991
+      ],
+      "ending_bank": 3.2,
+      "ending_free_transfers": 1,
+      "utility_score": 332.321
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Stach",
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 335
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Hughes → Palmer",
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 154
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Groß → Ødegaard",
+          "hit": 0,
+          "out_id": 124,
+          "in_id": 15
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Maguire → White",
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 10
+        }
+      ],
+      "expected_points": 311.66,
+      "p10_points": 260.35,
+      "p90_points": 363.45,
+      "expected_rank_after_path": 2.78,
+      "prob_gain_league_place": 0.997,
+      "prob_finish_ahead_each_rival": [
+        0.526,
+        0.464,
+        0.832,
+        0.766,
+        0.707,
+        0.937,
+        0.99
+      ],
+      "ending_bank": 0.3,
+      "ending_free_transfers": 1,
+      "utility_score": 331.96
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Stach",
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 335
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Hughes → Palmer",
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 154
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Schade → Ødegaard",
+          "hit": 0,
+          "out_id": 94,
+          "in_id": 15
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Maguire → White",
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 10
+        }
+      ],
+      "expected_points": 311.22,
+      "p10_points": 261.11,
+      "p90_points": 362.54,
+      "expected_rank_after_path": 2.8,
+      "prob_gain_league_place": 0.996,
+      "prob_finish_ahead_each_rival": [
+        0.519,
+        0.45,
+        0.831,
+        0.763,
+        0.707,
+        0.936,
+        0.988
+      ],
+      "ending_bank": 0.8,
+      "ending_free_transfers": 1,
+      "utility_score": 331.533
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Mbeumo → Stach",
+          "hit": 0,
+          "out_id": 427,
+          "in_id": 335
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Palmer",
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 154
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Hughes → Ødegaard",
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 15
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Greaves → White",
+          "hit": 0,
+          "out_id": 306,
+          "in_id": 10
+        }
+      ],
+      "expected_points": 311.3,
+      "p10_points": 260.24,
+      "p90_points": 363.43,
+      "expected_rank_after_path": 2.81,
+      "prob_gain_league_place": 0.996,
+      "prob_finish_ahead_each_rival": [
+        0.512,
+        0.459,
+        0.833,
+        0.759,
+        0.706,
+        0.932,
+        0.989
+      ],
+      "ending_bank": 1.8,
+      "ending_free_transfers": 1,
+      "utility_score": 331.473
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Mbeumo → Stach",
+          "hit": 0,
+          "out_id": 427,
+          "in_id": 335
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Palmer",
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 154
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Hughes → Ødegaard",
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 15
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Maguire → White",
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 10
+        }
+      ],
+      "expected_points": 311.3,
+      "p10_points": 260.24,
+      "p90_points": 363.43,
+      "expected_rank_after_path": 2.81,
+      "prob_gain_league_place": 0.996,
+      "prob_finish_ahead_each_rival": [
+        0.512,
+        0.459,
+        0.833,
+        0.759,
+        0.706,
+        0.932,
+        0.989
+      ],
+      "ending_bank": 2.8,
+      "ending_free_transfers": 1,
+      "utility_score": 331.473
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Mbeumo → Stach",
+          "hit": 0,
+          "out_id": 427,
+          "in_id": 335
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Palmer",
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 154
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Groß → Ødegaard",
+          "hit": 0,
+          "out_id": 124,
+          "in_id": 15
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Maguire → White",
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 10
+        }
+      ],
+      "expected_points": 311.24,
+      "p10_points": 260.01,
+      "p90_points": 362.8,
+      "expected_rank_after_path": 2.81,
+      "prob_gain_league_place": 0.994,
+      "prob_finish_ahead_each_rival": [
+        0.516,
+        0.458,
+        0.831,
+        0.758,
+        0.702,
+        0.933,
+        0.987
+      ],
+      "ending_bank": 3.8,
+      "ending_free_transfers": 1,
+      "utility_score": 331.367
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Mbeumo → Stach",
+          "hit": 0,
+          "out_id": 427,
+          "in_id": 335
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Palmer",
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 154
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Groß → Ødegaard",
+          "hit": 0,
+          "out_id": 124,
+          "in_id": 15
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Greaves → White",
+          "hit": 0,
+          "out_id": 306,
+          "in_id": 10
+        }
+      ],
+      "expected_points": 311.31,
+      "p10_points": 259.17,
+      "p90_points": 362.27,
+      "expected_rank_after_path": 2.81,
+      "prob_gain_league_place": 0.994,
+      "prob_finish_ahead_each_rival": [
+        0.515,
+        0.462,
+        0.833,
+        0.759,
+        0.698,
+        0.932,
+        0.987
+      ],
+      "ending_bank": 2.8,
+      "ending_free_transfers": 1,
+      "utility_score": 331.334
+    }
+  ],
+  "method_note": "Explores roll/one-transfer branches across multiple deadlines, carries budget and free-transfer state forward, re-optimises XI and captain, then compares finalist paths against rivals in shared simulated player-outcome worlds. Chip portfolio context is included; explicit chip branches and rival-transfer policies are the next expansion."
+}
