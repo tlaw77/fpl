@@ -10,6 +10,7 @@ on:
       - "simulation_stability.py"
       - "chip_activation_gate.py"
       - "triple_captain_review.py"
+      - "captaincy_review.py"
       - ".github/workflows/simulation-stability.yml"
 
 concurrency:
@@ -38,6 +39,8 @@ jobs:
         run: python chip_activation_gate.py
       - name: Build owned-squad Triple Captain review
         run: python triple_captain_review.py
+      - name: Build dedicated captaincy review
+        run: python captaincy_review.py
       - name: Validate supplemental outputs
         run: |
           python - <<'PY'
@@ -46,6 +49,7 @@ jobs:
           data = json.loads(Path('data/simulation_stability.json').read_text())
           gate = json.loads(Path('data/chip_activation_gate.json').read_text())
           tc = json.loads(Path('data/triple_captain_review.json').read_text())
+          cap = json.loads(Path('data/captaincy_review.json').read_text())
           assert data['status'] == 'SUCCESS'
           assert data.get('version', 0) >= 2
           assert data.get('snapshot_count', 0) >= 1
@@ -62,17 +66,22 @@ jobs:
           assert tc.get('version', 0) >= 1
           assert tc.get('decision', {}).get('status') in ('HOLD','WATCH','CONSIDER')
           assert len(tc.get('current_gw_shortlist', [])) >= 1
-          print('Simulation stability, chip gate and Triple Captain review validation passed')
+          assert cap['status'] == 'SUCCESS'
+          assert cap.get('version', 0) >= 1
+          assert cap.get('captain') is not None
+          assert len(cap.get('shortlist', [])) >= 2
+          assert 0 <= int(cap.get('confidence', 0)) <= 100
+          print('Simulation stability, chip gate, TC review and captaincy review validation passed')
           PY
       - name: Commit supplemental snapshots
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/simulation_stability.json data/chip_activation_gate.json data/triple_captain_review.json
+          git add data/simulation_stability.json data/chip_activation_gate.json data/triple_captain_review.json data/captaincy_review.json
           if git diff --cached --quiet; then
             echo "No supplemental changes"
           else
-            git commit -m "Update simulation stability chip gate and TC review"
+            git commit -m "Update simulation stability chip and captaincy reviews"
             git pull --rebase origin main
             git push origin main
           fi
