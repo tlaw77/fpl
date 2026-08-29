@@ -1,0 +1,21 @@
+html:not([data-fresh-ready="true"]) #view-transfer,
+html:not([data-fresh-ready="true"]) #view-team,
+html:not([data-fresh-ready="true"]) #view-shape,
+html:not([data-fresh-ready="true"]) #view-pool,
+html:not([data-fresh-ready="true"]) #view-intel {
+  visibility: hidden !important;
+}
+
+#freshness-gate-status {
+  display: none;
+  margin: 14px 0 18px;
+  padding: 16px 18px;
+  border: 1px solid #253654;
+  border-radius: 16px;
+  background: #101a2d;
+  color: #9fb0c8;
+  font-size: 13px;
+  line-height: 1.45;
+}
+html:not([data-fresh-ready="true"]) #freshness-gate-status { display: block; }
+#freshness-gate-status strong { color: #dbe4f0; }
