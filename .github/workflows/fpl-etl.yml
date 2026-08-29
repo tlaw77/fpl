@@ -28,6 +28,7 @@ on:
       - "adaptive_rival_simulation_v2.py"
       - "chip_path_simulation.py"
       - "chip_path_simulation_v2.py"
+      - "decision_synthesis.py"
       - "exposure_semantics.py"
       - "archive_week.py"
       - ".github/workflows/fpl-etl.yml"
@@ -105,6 +106,9 @@ jobs:
       - name: Run calibrated TC and BB chip-path simulation
         run: python chip_path_simulation_v2.py
 
+      - name: Synthesize authoritative decision
+        run: python decision_synthesis.py
+
       - name: Refresh history index
         run: |
           python - <<'PY'
@@ -132,6 +136,7 @@ jobs:
           path_sim = json.loads(Path('data/path_simulation.json').read_text())
           adaptive_sim = json.loads(Path('data/adaptive_rival_simulation.json').read_text())
           chip_path_sim = json.loads(Path('data/chip_path_simulation.json').read_text())
+          synthesis = json.loads(Path('data/decision_synthesis.json').read_text())
           history = json.loads(Path('data/decision_history.json').read_text())
           rec_history = json.loads(Path('data/recommendation_history.json').read_text())
           history_index = json.loads(Path('data/history/index.json').read_text())
@@ -193,6 +198,10 @@ jobs:
           assert chip_path_sim.get('projection_model') == 'season-maturity calibrated'
           assert chip_path_sim['iterations'] >= 1000
           assert chip_path_sim.get('best_no_chip_path') is not None
+          assert synthesis['status'] == 'SUCCESS'
+          assert synthesis.get('current_action', {}).get('action') in ('HOLD', 'TRANSFER')
+          assert data.get('decision_synthesis', {}).get('version') == synthesis.get('version')
+          assert synthesis.get('chips', {}).get('action') in ('HOLD', 'CONSIDER')
           assert history.get('version') == 4
           assert 'weeks' in history
           assert 'decisions' in history
