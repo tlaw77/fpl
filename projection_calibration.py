@@ -29,7 +29,8 @@ def expected_gw(player, gw, model_lo, model_hi, scout_maps, market_maps, current
     if not f:
         return 0.0, 0.0
 
-    pos_base = {'GKP': 3.1, 'DEF': 3.3, 'MID': 3.7, 'FWD': 3.9}.get(player.get('position'), 3.5)
+    pos = player.get('position')
+    pos_base = {'GKP': 3.1, 'DEF': 3.3, 'MID': 3.7, 'FWD': 3.9}.get(pos, 3.5)
     maturity = season_maturity(current_gw)
     source_rel = max(.08, min(.70, n(player.get('sample_reliability'), .30)))
 
@@ -50,6 +51,22 @@ def expected_gw(player, gw, model_lo, model_hi, scout_maps, market_maps, current
     avail = max(0.0, min(1.0, n(player.get('adjusted_availability', player.get('availability')), 1)))
     sched = max(.78, min(1.04, n(player.get('schedule_modifier'), 1)))
 
+    # Free official FPL starts/minutes are converted upstream to a conservative xMins estimate.
+    # This is deliberately capped so it refines rather than overwhelms the projection.
+    xmins = max(8.0, min(90.0, n(player.get('expected_minutes'), 68.0)))
+    minutes_factor = max(.58, min(1.08, xmins / 72.0))
+    minutes_evidence = max(.20, min(.78, source_rel * (.70 + .30 * maturity)))
+    minutes_factor = 1.0 + (minutes_factor - 1.0) * minutes_evidence
+
+    # Underlying expected goal involvement is preferable to chasing raw goals/assists.
+    # Keep it small in early GWs and use position-specific priors.
+    xgi90 = max(0.0, min(1.8, n(player.get('expected_goal_involvements_per_90'), 0.0)))
+    xgi_prior = {'GKP': .01, 'DEF': .10, 'MID': .30, 'FWD': .42}.get(pos, .25)
+    xgi_delta = max(-.25, min(.50, xgi90 - xgi_prior))
+    underlying_raw = 1.0 + xgi_delta * .20
+    underlying_evidence = max(.10, min(.70, maturity * (.45 + .55 * source_rel)))
+    underlying_factor = 1.0 + (underlying_raw - 1.0) * underlying_evidence
+
     sid, sname = scout_maps
     scout = sid.get(int(player.get('player_id') or 0)) or sname.get(norm(player.get('player'))) or {}
     merit = norm(scout.get('merit'))
@@ -61,10 +78,17 @@ def expected_gw(player, gw, model_lo, model_hi, scout_maps, market_maps, current
     if any(x in merit for x in ('avoid', 'concern', 'sell')):
         scout_factor -= .045
 
-    mean = base * model_factor * fixture_factor * avail * sched * scout_factor
+    mean = base * model_factor * fixture_factor * avail * sched * minutes_factor * underlying_factor * scout_factor
 
     # Opening-week uncertainty remains wide even though the mean is shrunk.
     cv = .86 - maturity * .13 - source_rel * .10
+    # Explicit minutes uncertainty widens the distribution for rotation candidates.
+    if xmins < 55:
+        cv += .10
+    elif xmins < 68:
+        cv += .045
+    elif xmins >= 80:
+        cv -= .02
     risk = norm(player.get('schedule_risk'))
     if risk == 'high':
         cv += .12
