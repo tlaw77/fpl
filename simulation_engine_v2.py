@@ -62,6 +62,9 @@ def run():
                 int(cap.get('player_id') or 0) if cap else 0,
             )
 
+    baseline_key = next((c['key'] for c in candidates if c.get('move') is None), 'ROLL')
+    baseline_first_xi, baseline_first_cap = cand_lineups.get(baseline_key, {}).get(next_gw, ([], 0))
+
     rival_lineups = []
     for r in rivals:
         bygw = {}
@@ -121,15 +124,21 @@ def run():
         utility = mean + (current_rank - exp_rank) * 5.0 - max(0, mean - p10) * .12
         hit = 0 if c['move'] is None else next_hit_cost
         incoming_starts = None
+        out_id = None
+        in_id = None
+        post_xi, post_cap = cand_lineups.get(c['key'], {}).get(next_gw, ([], 0))
         if c['move'] is not None and gws:
+            out = c['move'].get('out') or {}
             inc = c['move'].get('safe_in') or c['move'].get('in') or {}
-            inc_id = int(inc.get('player_id') or 0)
-            xi, _ = cand_lineups[c['key']][gws[0]]
-            incoming_starts = inc_id in set(xi)
+            out_id = int(out.get('player_id') or 0) or None
+            in_id = int(inc.get('player_id') or 0) or None
+            incoming_starts = bool(in_id and in_id in set(post_xi))
         results.append({
             'route': c['label'],
             'action': 'ROLL' if c['move'] is None else 'TRANSFER',
             'hit_cost': hit,
+            'out_player_id': out_id,
+            'in_player_id': in_id,
             'expected_points_6gw': round(mean, 2),
             'p10_points_6gw': round(p10, 2),
             'p90_points_6gw': round(p90, 2),
@@ -138,6 +147,11 @@ def run():
             'prob_finish_ahead_each_rival': [round(route_beat[c['key']][i] / s.ITERATIONS, 3) for i in range(len(rivals))],
             'utility_score': round(utility, 3),
             'incoming_starts_gw3': incoming_starts,
+            'decision_lineup_gw': next_gw,
+            'baseline_xi_ids': list(baseline_first_xi),
+            'baseline_captain_id': baseline_first_cap,
+            'post_transfer_xi_ids': list(post_xi),
+            'post_transfer_captain_id': post_cap,
         })
     results.sort(key=lambda x: x['utility_score'], reverse=True)
 
@@ -149,7 +163,7 @@ def run():
     output = {
         'status': 'SUCCESS',
         'generated_at_utc': datetime.now(timezone.utc).isoformat(),
-        'engine_version': 3,
+        'engine_version': 4,
         'projection_model': 'season-maturity calibrated',
         'season_maturity_weight': round(maturity, 3),
         'iterations': s.ITERATIONS,
@@ -161,11 +175,17 @@ def run():
         'rivals': rival_meta,
         'recommendation': winner,
         'routes': results,
+        'backtest_contract': {
+            'target_gw': next_gw,
+            'baseline_xi_ids': list(baseline_first_xi),
+            'baseline_captain_id': baseline_first_cap,
+            'note': 'Each route stores exact out/in IDs plus the pre-decision and post-transfer XI/captain selected by the model at decision time. These frozen lineups can be scored against archived all-player outcomes without hindsight lineup optimisation.'
+        },
         'method_note': 'Monte Carlo decision support from the reconstructed current squad. Early-season form and six-GW model extremes are shrunk toward position/fixture priors according to season maturity. A further transfer at the current deadline is charged the live hit cost.',
     }
     s.OUT.parent.mkdir(parents=True, exist_ok=True)
     s.OUT.write_text(json.dumps(output, indent=2, ensure_ascii=False) + '\n')
-    print(json.dumps({'status': 'SUCCESS', 'winner': winner, 'iterations': s.ITERATIONS, 'maturity': round(maturity, 3), 'remaining_ft': remaining_ft, 'next_hit_cost': next_hit_cost}))
+    print(json.dumps({'status': 'SUCCESS', 'winner': winner, 'iterations': s.ITERATIONS, 'maturity': round(maturity, 3), 'remaining_ft': remaining_ft, 'next_hit_cost': next_hit_cost, 'engine_version': 4}))
 
 
 if __name__ == '__main__':
