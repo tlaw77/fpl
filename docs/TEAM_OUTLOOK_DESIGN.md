@@ -1,48 +1,71 @@
 # Team & Outlook — simulation presentation design
 
-Updated: 2026-08-29
+Updated: 2026-08-30
 
 ## Product intent
 
 Simulation is decision-support machinery, not a competing recommendation surface. The primary navigation remains focused on FPL decisions. `Pick Team` contains two modes:
 
-- **This GW** — operational starting XI, bench order, captain/vice and selection rationale.
-- **Outlook** — periodically inspected forward simulation, robustness, intervention paths and chip opportunity scouts.
+- **This GW** — operational starting XI, bench order, captain/vice, Triple Captain prompt and selection rationale.
+- **Outlook** — periodically inspected forward simulation, future branches, stability, chip opportunities and Wildcard/Free Hit squad construction.
 
 The authoritative weekly action remains the decision synthesis used in Transfer/GW Decision. Outlook explains where the squad may be heading and what could change the decision.
+
+The presentation rule across the app is: **What should I do? → Why? → How sure are we? → Technical detail if useful.** Internal terms such as action gates, measured leaders and persistence should not be the primary user-facing language.
 
 ## Presentation hierarchy
 
 Outlook presents, in order:
 
 1. **Squad Outlook** — current synthesized action, confidence, FT/hit state, deep-model freshness and season-evidence maturity.
-2. **Forward Path** — the leading provisional multi-GW sequence. Future moves are explicitly branches, not commitments.
-3. **Model Robustness** — cross-model support and the magnitude hurdle required before an additional transfer is promoted.
-4. **Plan Stability** — weighted action persistence, current leader persistence, recurring future route and recurring chip window across recent completed model runs.
-5. **Chip Radar** — WC/FH/BB/TC as opportunity scouts, with first-half portfolio pressure and hard deployment inflection.
-6. **Chip Activation Gate** — translates raw chip opportunities into HOLD / WATCH / CONSIDER using structure, maturity, stability, blank/double context, budget confidence and calendar pressure.
+2. **What could happen next?** — the leading provisional multi-GW sequence. Future moves are branches, not commitments.
+3. **How strong is the advice?** — cross-model support and the magnitude hurdle required before an additional transfer is promoted.
+4. **Has the advice changed?** — weighted action stability, recurring alternative transfer and recurring chip windows across recent completed model runs.
+5. **Chip Outlook** — WC/FH/BB/TC opportunity scouts, with first-half portfolio pressure and hard deployment inflection.
+6. **Chip decision gate** — translates opportunity signals into HOLD / WATCH / CONSIDER using structure, maturity, stability, schedule context, budget confidence and dedicated chip reviews.
 7. **Wildcard Lab** — when a generated WC candidate exists, show it through the same football-pitch template as Pick Team. The user can tap through each projected Gameweek XI/bench under the same WC squad.
 
-## Wildcard safety
+## Wildcard and Free Hit budget safety
 
-The Wildcard optimiser currently has exact position and max-three-per-club legality, but public FPL picks do not expose exact selling prices. Until exact spendable budget can be reconstructed, the budget is labelled `estimated` and Wildcard/Free Hit outputs remain provisional.
+Public FPL picks do not currently expose selling prices, so budget confidence has three explicit tiers:
 
-A large raw simulated uplift is not an activation recommendation. The implemented chip gate considers:
+- **exact** — direct FPL selling prices are available;
+- **reconstructed** — purchase prices are rebuilt from the archived GW1 squad plus public transfer transaction costs, then FPL's half-profit selling-price rule is applied;
+- **estimated** — current market value is used only as a fallback planning proxy.
 
-- exact/credible spendable budget;
+`budget_state.py` now reconstructs all 15 current selling prices when possible. A newly declared transfer that has not yet appeared in the public transaction endpoint is temporarily assigned its current acquisition price and listed explicitly as pending-history basis. This keeps the calculation auditable.
+
+The GW1 archive is the earliest available ownership-price baseline, not a guaranteed pre-season purchase ledger. Therefore reconstructed budget is deliberately **not** labelled exact. A large remaining-bank buffer can make a proposed WC/FH robust to small baseline errors, but does not upgrade the confidence label.
+
+Roster structure, position quotas and max-three-per-club legality remain exact. The full-squad optimiser records budget method and confidence alongside every result.
+
+A large modelled uplift is not an activation recommendation. The chip gate considers:
+
+- spendable-budget confidence and remaining buffer;
 - season maturity;
 - squad turnover required;
 - stability evidence;
 - current squad structural weakness;
 - visible blank/double disruption;
 - half-season chip expiry pressure;
-- raw simulated uplift only as one input rather than the verdict.
+- modelled uplift only as one input rather than the verdict.
 
-Current example: the raw WC optimiser shows a large six-GW uplift, but the gate remains HOLD because the budget is estimated, only 25% season-maturity weight is available, the current structural check has no broken assets, the rebuild changes 11/15 players, stability evidence is still thin, and first-half calendar pressure is comfortable.
+Current early-season guardrail: a healthy squad with comfortable chip slack should not be Wildcarded merely because a noisy early-season optimiser can invent a very different squad.
+
+## Triple Captain relationship to captaincy
+
+Captaincy and Triple Captain are adjacent but distinct decisions:
+
+- **Captaincy** asks: who is the best player to captain this Gameweek?
+- **Triple Captain** asks: is this captain opportunity exceptional enough to spend a scarce chip now rather than preserve it?
+
+`captaincy_review.py` owns the C/V recommendation used by the pitch and rationale. `triple_captain_review.py` performs an owned-squad-first opportunity scan across the visible horizon. The unified chip gate consumes the dedicated TC review rather than relying only on a generic transfer-path captain.
+
+This prevents contradictory states such as a detailed TC review saying **CONSIDER Haaland v Coventry** while the compact Chip Outlook says TC HOLD.
 
 ## Compute strategy
 
-Use three speeds rather than recomputing every expensive permutation on every page visit:
+Use three speeds rather than recomputing every expensive permutation on every page visit.
 
 ### 1. Light refresh
 Runs with normal ETL. Rebuild squad/FT state, availability, market/scout signals and the immediate decision.
@@ -50,18 +73,18 @@ Runs with normal ETL. Rebuild squad/FT state, availability, market/scout signals
 ### 2. Deep simulation snapshot
 Multi-GW paths, adaptive rivals, TC/BB paths and bounded WC/FH squad construction. Persist results to JSON. Full-squad chip search uses input-aware caching.
 
-The deep-cache signature now includes:
+The deep-cache signature includes:
 
 - Gameweek;
 - current squad and prices;
-- bank/spendable-budget state;
+- bank/spendable-budget state and budget method;
 - production search profile;
 - a quantized player-model fingerprint using six-GW model strength, adjusted availability, price and schedule-risk class.
 
-Quantization is intentional: tiny numerical noise should not force an expensive rebuild, while a meaningful football-input change should. The first run under this richer signature correctly invalidated the old cache and rebuilt the deep model.
+Quantization is intentional: tiny numerical noise should not force an expensive rebuild, while a meaningful football-input change should.
 
 ### 3. Deadline intensity
-Future enhancement: increase simulation depth/frequency near the deadline and after material events (injury/news, declared/completed transfer, major price/budget change, schedule change).
+Future enhancement: increase simulation depth/frequency near the deadline and after material events such as injury/news, declared/completed transfers, important budget changes or schedule changes.
 
 The web UI reads the latest completed snapshot and never waits for deep simulation to finish.
 
@@ -91,13 +114,13 @@ Implemented via `simulation_stability.py` and a small independent post-ETL workf
 
 Current derived signals include:
 
-- action persistence over recent runs;
-- current transfer-leader persistence;
+- current-action stability over recent runs;
+- recurring best alternative transfer;
 - recurring first route from the multi-GW planner;
-- transfer-gate clear frequency;
+- frequency with which an alternative was strong enough to act on;
 - recurring Free Hit window;
 - average confidence and edge over hold;
-- current Wildcard raw opportunity level;
+- current Wildcard opportunity level;
 - latest deep-simulation timestamp/signature.
 
 Materially identical snapshots inside 20 minutes are deduplicated. Stability is also **input weighted**:
@@ -105,52 +128,31 @@ Materially identical snapshots inside 20 minutes are deduplicated. Stability is 
 - changed deep-input signature or changed decision state = **1.0 evidence**;
 - unchanged-input/cached refresh = **0.25 evidence**.
 
-This reduces false confidence from seeing the same cached model answer repeatedly. Persistence remains model stability, not independent statistical proof.
+This reduces false confidence from seeing the same cached model answer repeatedly. Stability remains model consistency, not independent statistical proof.
 
 ## Chip activation gate
 
-Implemented via `chip_activation_gate.py` and run after stability history in the lightweight supplemental workflow.
+Implemented via `chip_activation_gate.py` in the lightweight supplemental workflow.
+
+Execution order is deliberately:
+
+1. update simulation stability;
+2. build the dedicated owned-squad Triple Captain review;
+3. build the unified chip activation gate;
+4. build captaincy review;
+5. evaluate archived performance.
 
 Statuses:
 
 - **HOLD** — no activation case.
 - **WATCH** — a potentially valuable future window exists, but an activation condition is missing.
-- **CONSIDER** — enough of the activation conditions have cleared to warrant an explicit decision review.
+- **CONSIDER** — enough conditions have cleared to warrant an explicit decision now. It is not automatic activation.
 
-The gate is intentionally stricter than raw simulation. For example, a Free Hit can show a positive modelled uplift but remain WATCH while there is no confirmed blank/double disruption.
-
-## Current implementation
-
-Frontend assets:
-
-- `docs/team-outlook-stage61.js`
-- `docs/team-outlook-stage61.css`
-- `docs/team-outlook-chip-gate-stage62.js`
-- `docs/team-outlook-freshness-stage63.js`
-
-Backend/history assets:
-
-- `simulation_stability.py`
-- `chip_activation_gate.py`
-- `.github/workflows/simulation-stability.yml`
-- `data/simulation_stability.json`
-- `data/chip_activation_gate.json`
-
-Data consumed by Outlook:
-
-- `data/decision_synthesis.json`
-- `data/path_simulation.json`
-- `data/full_squad_chip_optimizer.json`
-- `data/simulation_stability.json`
-- `data/chip_activation_gate.json`
-
-The browser reads these from the repository raw-data endpoint with cache-busting rather than assuming `/data` is deployed beside `/docs` on GitHub Pages.
-
-The Stage61 view is additive: it wraps the existing Pick Team rendering rather than replacing the proven pitch renderer. A MutationObserver re-attaches the Team/Outlook shell after any later Pick Team redraw, preserving the selected Team/Outlook mode.
+The gate is intentionally stricter than raw simulation. For example, a Free Hit can show a positive modelled uplift but remain WATCH while there is no confirmed blank/double disruption. Wildcard can remain HOLD despite a large modelled uplift when season evidence is immature and the current squad is healthy. Triple Captain uses the dedicated owned-player review so a genuine premium home-fixture spike can reach CONSIDER even when general portfolio pressure is comfortable.
 
 ## Durable learning archive
 
-`archive_week.py` now preserves the simulation decision artifacts at Gameweek rollover in addition to the original dashboard/history files:
+`archive_week.py` preserves the simulation decision artifacts at Gameweek rollover in addition to the original dashboard/history files:
 
 - single-step Monte Carlo simulation;
 - multi-GW path simulation;
@@ -160,51 +162,108 @@ The Stage61 view is additive: it wraps the existing Pick Team rendering rather t
 - budget state;
 - authoritative decision synthesis;
 - simulation stability history;
-- chip activation gate.
+- chip activation gate;
+- dedicated Triple Captain review;
+- dedicated captaincy review.
 
-This archive is intended to support future backtesting: what the engine recommended, what alternatives it believed were credible, how confident/stable those beliefs were, and what subsequently happened.
+This archive records what the engine believed **at the time**, rather than reconstructing the recommendation after the result is known.
+
+## Backtesting contract
+
+`backtest_engine.py` now provides the first evaluation scaffold and writes `data/backtest_summary.json`.
+
+Version 1 pairs a pre-Gameweek archived captaincy/TC review with the following finalized Gameweek outcome and calculates:
+
+- recommended captain actual return;
+- forecast error;
+- best actual return among the model's shortlisted captain alternatives;
+- captain regret versus that shortlist;
+- whether the recommended captain was actually the best shortlisted choice;
+- TC candidate actual return and the hypothetical extra points that Triple Captain would have added over normal captaincy.
+
+The evaluator is deliberately sparse-data safe. Until a pre-GW review and its following finalized Gameweek both exist, it reports **not enough completed evidence yet** rather than manufacturing a success rate.
+
+No backtest UI should be promoted yet. A compact **Engine track record** view should only be considered after several evaluable Gameweeks exist; early percentages must be labelled descriptive, not statistically calibrated.
+
+Future backtesting layers:
+
+- transfer route versus hold and shortlisted alternatives;
+- mini-league rank/gap outcome;
+- calibration of Monte Carlo rank/gain probabilities;
+- chip counterfactuals;
+- forecast calibration by position and horizon;
+- captain confidence calibration.
+
+## Current implementation
+
+Frontend assets include:
+
+- `docs/team-outlook-stage61.js`
+- `docs/team-outlook-stage61.css`
+- `docs/team-outlook-chip-gate-stage62.js`
+- `docs/team-outlook-freshness-stage63.js`
+- `docs/team-outlook-tc-stage64.js`
+- `docs/captaincy-review-stage65.js`
+
+Backend/history assets include:
+
+- `budget_state.py`
+- `simulation_stability.py`
+- `chip_activation_gate.py`
+- `triple_captain_review.py`
+- `captaincy_review.py`
+- `backtest_engine.py`
+- `.github/workflows/simulation-stability.yml`
+- `data/budget_state.json`
+- `data/simulation_stability.json`
+- `data/chip_activation_gate.json`
+- `data/triple_captain_review.json`
+- `data/captaincy_review.json`
+- `data/backtest_summary.json`
+
+The browser reads simulation data from the repository raw-data endpoint with cache-busting rather than assuming `/data` is deployed beside `/docs` on GitHub Pages.
 
 ## Progress log
 
-### 2026-08-29 — Stage61 initial
+### 2026-08-29 — Outlook foundation
 
 - Added `This GW | Outlook` inside Pick Team.
-- Added Squad Outlook, Forward Path, Model Robustness, Chip Radar and Wildcard Lab.
+- Added current decision, forward path, robustness, stability, chip outlook and Wildcard Lab.
 - Reused the existing Pick Team pitch language for the potential Wildcard XI and bench.
-- Kept WC/FH provisional while spendable budget remains estimated.
+- Added six-GW tap-through Wildcard XI/bench previews.
+- Hardened Outlook against Pick Team re-renders and Safari caching.
 
-### 2026-08-29 — Stage61 stability iteration
-
-- Added post-ETL simulation stability history without lengthening the main FPL ETL.
-- First stability snapshot completed successfully.
-- Added Plan Stability presentation to Outlook.
-- Forward Path now reads the leading multi-GW action sequence rather than only the first future action.
-- Hardened Stage61 against Pick Team re-renders.
-- Corrected Outlook data sources to the same raw-GitHub pattern used by the core dashboard.
-- Cache-busted Stage61 for iPhone Safari.
-
-### 2026-08-29 — Stage61/62 decision-safety iteration
+### 2026-08-29 — simulation safety
 
 - Weighted stability by material input change.
-- Added six-GW tap-through Wildcard XI/bench previews using the Pick Team pitch template.
+- Added WC/FH bounded full-squad optimisation and input-aware deep caching.
 - Added current-squad overlap and WC turnover display.
-- Added a separate chip activation gate with HOLD / WATCH / CONSIDER semantics.
-- Current gate: WC HOLD, FH WATCH (GW6 scout), BB HOLD, TC HOLD.
-- Added Stage62 to present the gated chip result beside the raw opportunity signals.
-- Extended Gameweek archival to preserve the simulation stack for later backtesting.
+- Added chip HOLD / WATCH / CONSIDER semantics.
+- Extended Gameweek archival to preserve the simulation stack.
+- Added material player-model fingerprint and CURRENT / CACHED / REBUILD NEEDED deep-model presentation.
 
-### 2026-08-29 — Stage63 freshness iteration
+### 2026-08-29 — captaincy and chip integration
 
-- Added a material player-model fingerprint to the expensive WC/FH cache signature.
-- Added cache-state and last-validation metadata to the deep output.
-- Added CURRENT / CACHED / REBUILD NEEDED presentation to Outlook.
-- Removed an undefined `sr-only` CSS dependency from the Wildcard GW selector and kept accessible labels via native ARIA attributes.
-- Deep-cache/fingerprint ETL completed successfully and the first richer-signature run correctly rebuilt the deep model (`MISS`).
+- Separated captaincy from XI selection.
+- Made the pitch C/V markers use the same captaincy result as the rationale.
+- Added dedicated owned-squad Triple Captain review.
+- Integrated the immediate TC question beside captaincy while retaining the full future comparison in Outlook.
+
+### 2026-08-30 — budget reconstruction and learning scaffold
+
+- Reconstructed 15-player selling budget from archived ownership/purchase history plus public transfer costs and FPL sell-price rules.
+- Added explicit `exact / reconstructed / estimated` budget confidence tiers.
+- Kept declared/pending purchases auditable until the public transfer endpoint catches up.
+- Updated WC/FH optimiser legality wording to distinguish reconstructed budget from market-value proxy.
+- Unified the chip gate with the dedicated Triple Captain review.
+- Added captaincy/TC reviews to durable Gameweek archival.
+- Added `backtest_engine.py`; current output correctly reports zero evaluable Gameweeks until enough finalized evidence exists.
 
 ## Next planned iterations
 
-1. Backtest archived simulation probabilities and route rankings as completed Gameweeks accumulate.
-2. Feed a mature WC/FH gate into the authoritative synthesis only when safety criteria are sufficiently validated.
-3. Add compact rival-consequence details without duplicating League Intel.
-4. Validate mobile Safari rendering after the current Pages deployment and tune the compact layout from screenshots.
+1. Validate the unified chip gate after the latest supplemental workflow and keep TC/WC/FH wording consistent in This GW and Outlook.
+2. Extend the backtester to transfer-versus-hold outcomes once adjacent archived decision snapshots exist.
+3. Add probability calibration only after enough completed observations exist; do not tune to one or two Gameweeks.
+4. Add compact rival-consequence details without duplicating League Intel.
 5. Add deadline-aware simulation intensity once normal background refresh costs are measured over several cycles.
+6. Continue mobile Safari refinement from real screenshots rather than hypothetical desktop layouts.
