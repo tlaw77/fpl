@@ -1,31 +1,41 @@
 (()=>{
-const BUILD='transfer-leader-calibration-20260829-1222';
+const BUILD='transfer-leader-calibration-20260829-1228';
 function q(s,r=document){return r.querySelector(s)}
+function qa(s,r=document){return [...r.querySelectorAll(s)]}
 function txt(el){return String(el?.textContent||'').trim()}
+function pctFrom(card){const note=card&&q('[data-relative-strength]',card);const m=txt(note).match(/(\d+)% of best/i);return m?Number(m[1]):null}
+function metricCard(sec,re){return qa(':scope > div',sec).find(c=>re.test(txt(c)))||null}
 function apply(){
  const view=q('#view-transfer');if(!view)return;
- const hero=q('.transfer-hero',view);if(!hero)return;
+ const hero=q('.transfer-hero',view),metrics=q('.transfer-metrics',view);if(!hero||!metrics)return;
  const evidence=q('.transfer-evidence,[data-stage9-evidence]',hero)||q('.transfer-evidence,[data-stage9-evidence]',view);
- const heading=evidence?.querySelector('h3');
- const ev=txt(heading).toLowerCase();
- const level=ev.includes('strong')?'strong':ev.includes('moderate')?'moderate':ev.includes('cautious')?'cautious':ev.includes('limited')?'limited':'unknown';
- const tag=q('.transfer-hero-tag',hero);
- const tone=level==='strong'?'#34d399':level==='moderate'?'#60a5fa':level==='cautious'||level==='limited'?'#fbbf24':'#94a3b8';
- if(tag){
-   tag.textContent=level==='unknown'?'MODEL LEADER':`MODEL LEADER · ${level.toUpperCase()} EVIDENCE`;
-   tag.style.setProperty('color',tone,'important');
-   tag.style.setProperty('border-color',tone+'66','important');
-   tag.style.setProperty('background',tone+'12','important');
+ const ev=txt(evidence&&q('h3',evidence)).toLowerCase();
+ const evLevel=ev.includes('strong')?'Strong':ev.includes('moderate')?'Moderate':ev.includes('cautious')||ev.includes('limited')?'Cautious':'Unrated';
+ const modelCard=metricCard(metrics,/projected model gain|model score uplift|lower-variance uplift/i);
+ const levCard=metricCard(metrics,/projected leverage gain|leverage uplift/i);
+ const bankCard=metricCard(metrics,/bank after this transfer|bank now/i);
+ const ownCard=metricCard(metrics,/incoming player rival ownership|nearest-rival ownership/i);
+ const modelPct=pctFrom(modelCard),levPct=pctFrom(levCard);
+ const modelStrong=modelPct!=null&&modelPct>=90,modelGood=modelPct!=null&&modelPct>=75;
+ let label='MODEL LEADER',colour='#60a5fa',note='Top-ranked route, but the size of the model edge and external evidence should determine how strongly to act.';
+ if(modelStrong&&evLevel==='Strong'){label='STRONG LEADING CASE';colour='#34d399';note='Large relative model edge with strong independent corroboration.'}
+ else if(modelGood&&(evLevel==='Strong'||evLevel==='Moderate')){label='SUPPORTED LEADER';colour='#fbbf24';note='The model lead is meaningful and external evidence is supportive, but this is not a must-do move.'}
+ else if(evLevel==='Cautious'||(modelPct!=null&&modelPct<75)){label='TENTATIVE LEADER';colour='#94a3b8';note='It ranks first, but either the model edge is modest or corroborating evidence is weak.'}
+ const tag=q('.transfer-hero-tag',hero);if(tag){tag.textContent=label;tag.style.setProperty('color',colour,'important');tag.style.setProperty('border-color',colour+'66','important');tag.style.setProperty('background',colour+'12','important')}
+ let box=q('[data-leader-calibration]',hero);if(!box){box=document.createElement('div');box.dataset.leaderCalibration='1';box.style.cssText='margin-top:10px;padding:10px 11px;border-radius:12px;background:#101a2d;border:1px solid #2b3d58';const evNode=q('.transfer-evidence,[data-stage9-evidence]',hero);if(evNode)evNode.insertAdjacentElement('beforebegin',box);else hero.appendChild(box)}
+ const bits=[];if(modelPct!=null)bits.push(`Model uplift ${Math.round(modelPct)}% of best`);if(levPct!=null)bits.push(`Leverage ${Math.round(levPct)}% of best`);if(evLevel!=='Unrated')bits.push(`${evLevel.toLowerCase()} evidence`);const bank=txt(bankCard).match(/£\s?[0-9.]+m/i)?.[0];if(bank)bits.push(`${bank.replace(/\s/g,'')} bank`);const own=txt(ownCard).match(/[0-9.]+%/)?.[0];if(own)bits.push(`${own} rival own`);
+ box.innerHTML=`<div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><strong style="font-size:10px;color:${colour}">WHY THIS ROUTE LEADS</strong><span style="font-size:9px;color:${colour};font-weight:850">${label}</span></div><div class="subtle" style="margin-top:5px;font-size:9px">${bits.join(' · ')}</div><div class="subtle" style="margin-top:4px;font-size:9px">${note}</div>`;
+ if(!hero.contains(metrics)){
+   metrics.classList.remove('dc-card');
+   metrics.style.cssText='margin:12px 0 0;padding:10px 0 0;border:0;border-top:1px solid #285547;background:transparent;border-radius:0;box-shadow:none;display:grid;grid-template-columns:1fr 1fr;gap:8px';
+   const eye=q('.eyebrow',metrics);if(eye)eye.textContent='LEADER IMPACT';
+   const expl=q('[data-relative-explainer]',metrics);if(expl)expl.style.display='none';
+   qa('p.subtle',metrics).forEach(p=>{if(/green gain figures|projected improvements|ownership describes/i.test(txt(p)))p.style.display='none'});
+   const evNode=q('.transfer-evidence,[data-stage9-evidence]',hero);if(evNode)evNode.insertAdjacentElement('beforebegin',metrics);else hero.appendChild(metrics);
  }
- let note=q('[data-leader-calibration]',hero);
- if(!note){note=document.createElement('div');note.dataset.leaderCalibration='1';note.className='subtle';note.style.cssText='margin-top:8px;font-size:9px;line-height:1.4';hero.appendChild(note)}
- if(level==='strong')note.innerHTML='<b style="color:#34d399">Model + evidence align:</b> this is the strongest current case, though the shortlist and roll option remain valid comparisons.';
- else if(level==='moderate')note.innerHTML='<b style="color:#60a5fa">Top-ranked by the model, not a strong recommendation:</b> evidence is only moderate, so compare the shortlist and the value of rolling before acting.';
- else if(level==='cautious'||level==='limited')note.innerHTML='<b style="color:#fbbf24">Model leader with weak corroboration:</b> treat this as a candidate, not a transfer signal. Rolling or another route may be preferable.';
- else note.textContent='This is the top-ranked model route. Evidence strength is shown separately and should determine how strongly you act on it.';
  document.documentElement.dataset.transferLeaderCalibrationBuild=BUILD;
 }
-function run(){[250,800,1500,2400].forEach(ms=>setTimeout(apply,ms))}
+function run(){[350,900,1700,2600].forEach(ms=>setTimeout(apply,ms))}
 function bind(){run();q('#decision-nav button[data-view="transfer"]')?.addEventListener('click',run,{passive:true});window.addEventListener('fplCoreDataReady',run,{passive:true});window.addEventListener('fplSafePlanUpdated',run,{passive:true})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind,{once:true});else bind();
 })();
