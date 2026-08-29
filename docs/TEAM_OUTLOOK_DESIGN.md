@@ -16,10 +16,11 @@ The authoritative weekly action remains the decision synthesis used in Transfer/
 Outlook presents, in order:
 
 1. **Squad Outlook** — current synthesized action, confidence, FT/hit state, model age and season-evidence maturity.
-2. **Forward Path** — the next provisional intervention from multi-GW planning. Future moves are explicitly branches, not commitments.
+2. **Forward Path** — the leading provisional multi-GW sequence. Future moves are explicitly branches, not commitments.
 3. **Model Robustness** — cross-model support and the magnitude hurdle required before an additional transfer is promoted.
-4. **Chip Radar** — WC/FH/BB/TC as opportunity scouts, with first-half portfolio pressure and hard deployment inflection.
-5. **Wildcard Lab** — only when a generated WC candidate exists. It uses the same football-pitch visual template as Pick Team so a potential WC can be assessed as an actual XI plus bench, not as a list of names.
+4. **Plan Stability** — action persistence, current leader persistence, recurring future route and recurring chip window across recent completed model runs.
+5. **Chip Radar** — WC/FH/BB/TC as opportunity scouts, with first-half portfolio pressure and hard deployment inflection.
+6. **Wildcard Lab** — only when a generated WC candidate exists. It uses the same football-pitch visual template as Pick Team so a potential WC can be assessed as an actual XI plus bench, not as a list of names.
 
 ## Wildcard safety
 
@@ -43,24 +44,31 @@ Use three speeds rather than recomputing every expensive permutation on every pa
 Runs with normal ETL. Rebuild squad/FT state, availability, market/scout signals and the immediate decision.
 
 ### 2. Deep simulation snapshot
-Multi-GW paths, adaptive rivals, TC/BB paths and bounded WC/FH squad construction. Persist results to JSON. Full-squad chip search uses input-aware caching and should be invalidated when GW, squad or budget changes.
+Multi-GW paths, adaptive rivals, TC/BB paths and bounded WC/FH squad construction. Persist results to JSON. Full-squad chip search uses input-aware caching and is invalidated when GW, squad or budget changes.
 
 ### 3. Deadline intensity
 Future enhancement: increase simulation depth/frequency near the deadline and after material events (injury/news, declared/completed transfer, major price/budget change, schedule change).
 
-The web UI reads the latest completed snapshot and should never block waiting for deep simulation.
+The web UI reads the latest completed snapshot and never waits for deep simulation to finish.
 
 ## Stability over time
 
-Next enhancement: archive simulation summaries instead of only overwriting them. Derive:
+Implemented via `simulation_stability.py` and a small independent post-ETL workflow. It keeps a bounded rolling history of simulation summaries instead of making the heavy ETL itself longer.
+
+Current derived signals include:
 
 - action persistence over recent runs;
-- player/path appearance frequency;
-- chip-window persistence;
-- model-flip frequency;
-- age of the last deep snapshot and material changes since it ran.
+- current transfer-leader persistence;
+- recurring first route from the multi-GW planner;
+- transfer-gate clear frequency;
+- recurring Free Hit window;
+- average confidence and edge over hold;
+- current Wildcard raw opportunity level;
+- latest deep-simulation timestamp/signature.
 
-This allows Outlook to distinguish a persistent signal from a transient model spike.
+Materially identical snapshots inside 20 minutes are deduplicated. Persistence is explicitly labelled as repeated-model stability, not independent evidence.
+
+Future refinement: weight runs with genuinely changed inputs more strongly than cached/unchanged-input runs.
 
 ## Current implementation
 
@@ -69,18 +77,47 @@ Frontend assets:
 - `docs/team-outlook-stage61.js`
 - `docs/team-outlook-stage61.css`
 
-Data consumed:
+Backend/history assets:
+
+- `simulation_stability.py`
+- `.github/workflows/simulation-stability.yml`
+- `data/simulation_stability.json`
+
+Data consumed by Outlook:
 
 - `data/decision_synthesis.json`
+- `data/path_simulation.json`
 - `data/full_squad_chip_optimizer.json`
+- `data/simulation_stability.json`
 
-The Stage61 view is additive: it wraps the existing Pick Team rendering rather than replacing the proven pitch renderer.
+The browser reads these from the repository raw-data endpoint with cache-busting rather than assuming `/data` is deployed beside `/docs` on GitHub Pages.
+
+The Stage61 view is additive: it wraps the existing Pick Team rendering rather than replacing the proven pitch renderer. A MutationObserver now re-attaches the Team/Outlook shell after any later Pick Team redraw, preserving the user's selected Team/Outlook mode.
+
+## Progress log
+
+### 2026-08-29 — Stage61 initial
+
+- Added `This GW | Outlook` inside Pick Team.
+- Added Squad Outlook, Forward Path, Model Robustness, Chip Radar and Wildcard Lab.
+- Reused the existing Pick Team pitch language for the potential Wildcard XI and bench.
+- Kept WC/FH provisional while spendable budget remains estimated.
+
+### 2026-08-29 — Stage61 stability iteration
+
+- Added post-ETL simulation stability history without lengthening the main FPL ETL.
+- First stability snapshot completed successfully.
+- Added Plan Stability presentation to Outlook.
+- Forward Path now reads the leading multi-GW action sequence rather than only the first future action.
+- Hardened Stage61 against Pick Team re-renders.
+- Corrected Outlook data sources to the same raw-GitHub pattern used by the core dashboard.
+- Cache-busted Stage61 for iPhone Safari.
 
 ## Next planned iterations
 
-1. Persist simulation history/stability snapshots.
-2. Add material-change invalidation metadata and deep-simulation freshness state.
+1. Weight simulation-history observations by material input change rather than treating all retained runs equally.
+2. Add material-change invalidation metadata and a visible deep-simulation freshness state.
 3. Feed WC/FH opportunity scouts into authoritative chip synthesis only after safety gates are met.
-4. Add selectable future GW Wildcard XI previews when multiple WC windows become credible.
+4. Add selectable future-GW Wildcard XI previews when multiple WC windows become credible.
 5. Add compact rival-consequence details without duplicating League Intel.
-6. Validate mobile Safari rendering and keep all Stage61 assets cache-busted.
+6. Validate mobile Safari rendering after the current Pages deployment and tune the compact layout from screenshots.
