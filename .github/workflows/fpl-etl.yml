@@ -20,7 +20,9 @@ on:
       - "player_pool.py"
       - "scout_consensus.py"
       - "simulation_engine.py"
+      - "simulation_engine_v2.py"
       - "path_simulation.py"
+      - "path_simulation_v3.py"
       - "adaptive_rival_simulation.py"
       - "chip_path_simulation.py"
       - "exposure_semantics.py"
@@ -89,10 +91,10 @@ jobs:
         run: python scout_consensus.py
 
       - name: Run rival-aware Monte Carlo simulation
-        run: python simulation_engine.py
+        run: python simulation_engine_v2.py
 
       - name: Run multi-gameweek path simulation
-        run: python path_simulation.py
+        run: python path_simulation_v3.py
 
       - name: Run adaptive-rival challenger simulation
         run: python adaptive_rival_simulation.py
@@ -142,6 +144,8 @@ jobs:
           if pending_declared and data.get('declared_transfer_overlay_status') == 'pending_official_api':
               squad_ids = {int(p.get('player_id') or 0) for p in data.get('current_squad_next5', [])}
               assert all(int(t['element_in']) in squad_ids and int(t['element_out']) not in squad_ids for t in pending_declared)
+          assert int(data.get('free_transfers_remaining_next_gw', 0)) >= 0
+          assert int(data.get('next_transfer_hit_cost', 0)) in (0, 4)
           assert data.get('exposure_semantics', {}).get('version') == 2
           assert all(x.get('classification') != 'leverage' or (x.get('my_multiplier') or 0) > 0 for x in data.get('player_exposure', []) if x.get('in_my_team'))
           assert strategy['status'] == 'SUCCESS'
@@ -161,14 +165,17 @@ jobs:
           assert scout_consensus['status'] == 'SUCCESS'
           assert 'players' in scout_consensus
           assert simulation['status'] == 'SUCCESS'
+          assert simulation.get('engine_version', 0) >= 2
           assert simulation['iterations'] >= 1000
           assert simulation['candidate_count'] >= 1
           assert simulation.get('recommendation') is not None
+          assert simulation.get('next_transfer_hit_cost') == data.get('next_transfer_hit_cost')
           assert path_sim['status'] == 'SUCCESS'
-          assert path_sim.get('engine_version', 0) >= 2
+          assert path_sim.get('engine_version', 0) >= 3
           assert path_sim['iterations'] >= 1000
           assert len(path_sim.get('paths', [])) >= 1
           assert path_sim.get('recommendation') is not None
+          assert path_sim.get('starting_free_transfers') == data.get('free_transfers_remaining_next_gw')
           assert adaptive_sim['status'] == 'SUCCESS'
           assert adaptive_sim['iterations'] >= 1000
           assert len(adaptive_sim.get('paths', [])) >= 1
