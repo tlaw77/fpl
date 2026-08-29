@@ -1,5 +1,6 @@
 import json
 from copy import deepcopy
+from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -45,23 +46,21 @@ def shortlist(pool_rows, pos, heuristic):
     for x in ranked + cheap:
         if pid(x) and pid(x) not in seen:
             seen.add(pid(x)); out.append(x)
-    # Deterministic order is important because combination construction uses increasing indices.
     out.sort(key=lambda x: (-heuristic.get(pid(x), 0), n(x.get('price'), 99), pid(x)))
     return out
 
 
 def min_remaining_cost(shortlists, slot_sequence, start_slot, last_idx):
+    """Optimistic lower cost bound; never reject a feasible combination because of shortlist order."""
+    needs = Counter(slot_sequence[start_slot:])
     total = 0.0
-    local_last = dict(last_idx)
-    for pos in slot_sequence[start_slot:]:
+    for pos, need in needs.items():
         rows = shortlists[pos]
-        start = local_last.get(pos, -1) + 1
-        remaining = rows[start:]
-        if not remaining:
+        start = last_idx.get(pos, -1) + 1
+        prices = sorted(n(x.get('price'), 99) for x in rows[start:])
+        if len(prices) < need:
             return 1e9
-        cheapest_idx, cheapest = min(enumerate(remaining, start=start), key=lambda kv: n(kv[1].get('price'), 99))
-        total += n(cheapest.get('price'), 99)
-        local_last[pos] = cheapest_idx
+        total += sum(prices[:need])
     return total
 
 
@@ -90,7 +89,6 @@ def construct_squads(pool_rows, budget, heuristic, final_score):
                 if cost > budget + 1e-9:
                     continue
                 last_idx = dict(state['last_idx']); last_idx[pos] = idx
-                # Cheap feasibility guard for the unfilled roster slots.
                 if cost + min_remaining_cost(shortlists, slots, si + 1, last_idx) > budget + 1e-9:
                     continue
                 clubs = dict(state['clubs']); clubs[ck] = clubs.get(ck, 0) + 1
@@ -102,7 +100,6 @@ def construct_squads(pool_rows, budget, heuristic, final_score):
                     'heuristic': state['heuristic'] + heuristic.get(xpid, 0),
                     'last_idx': last_idx,
                 })
-        # A small budget-efficiency bonus keeps structurally useful cheaper states alive.
         expanded.sort(key=lambda z: z['heuristic'] + max(0, budget - z['cost']) * .035, reverse=True)
         beam = expanded[:BEAM_WIDTH]
         if not beam:
@@ -192,7 +189,6 @@ def run():
         row['search_meta'] = fh_meta
         free_hits.append(row)
 
-    # Compare chip squads to the current legal squad, using the same calibrated expected points.
     current_raw = latest.get('current_squad_next5') or latest.get('squad_next5') or []
     by_id, by_name = s.player_maps(pool)
     current = [s.enrich(x, by_id, by_name) for x in current_raw]
