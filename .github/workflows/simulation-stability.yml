@@ -10,6 +10,7 @@ on:
       - "simulation_stability.py"
       - "chip_activation_gate.py"
       - "triple_captain_review.py"
+      - "captaincy_model.py"
       - "captaincy_review.py"
       - "backtest_engine.py"
       - ".github/workflows/simulation-stability.yml"
@@ -53,6 +54,7 @@ jobs:
           gate = json.loads(Path('data/chip_activation_gate.json').read_text())
           tc = json.loads(Path('data/triple_captain_review.json').read_text())
           cap = json.loads(Path('data/captaincy_review.json').read_text())
+          sim = json.loads(Path('data/simulation.json').read_text())
           backtest = json.loads(Path('data/backtest_summary.json').read_text())
           assert data['status'] == 'SUCCESS'
           assert data.get('version', 0) >= 2
@@ -73,14 +75,22 @@ jobs:
           assert len(tc.get('current_gw_shortlist', [])) >= 1
           assert gate['triple_captain']['status'] == tc['decision']['status']
           assert cap['status'] == 'SUCCESS'
-          assert cap.get('version', 0) >= 1
+          assert cap.get('version', 0) >= 2
           assert cap.get('captain') is not None
           assert len(cap.get('shortlist', [])) >= 2
           assert 0 <= int(cap.get('confidence', 0)) <= 100
+          cap_id = int(cap['captain'].get('player_id') or 0)
+          cap_xi = {int(x) for x in cap.get('recommended_xi_ids', [])}
+          sim_contract = sim.get('backtest_contract') or {}
+          sim_cap = int(sim_contract.get('baseline_captain_id') or 0)
+          sim_xi = {int(x) for x in sim_contract.get('baseline_xi_ids', [])}
+          assert cap_id and cap_id in cap_xi
+          assert sim_cap and sim_cap in sim_xi
+          assert cap_id == sim_cap, f"Captain mismatch: review={cap_id}, simulation={sim_cap}"
           assert backtest['status'] == 'SUCCESS'
-          assert backtest.get('version', 0) >= 1
+          assert backtest.get('version', 0) >= 2
           assert backtest.get('evaluable_gameweeks', 0) >= 0
-          print('Simulation stability, unified chip gate, captaincy reviews and backtest validation passed')
+          print('Simulation stability, unified chip gate, captain consistency and backtest validation passed')
           PY
       - name: Commit supplemental snapshots
         run: |
