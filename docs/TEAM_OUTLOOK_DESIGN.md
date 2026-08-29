@@ -15,7 +15,7 @@ The authoritative weekly action remains the decision synthesis used in Transfer/
 
 Outlook presents, in order:
 
-1. **Squad Outlook** — current synthesized action, confidence, FT/hit state, model age and season-evidence maturity.
+1. **Squad Outlook** — current synthesized action, confidence, FT/hit state, deep-model freshness and season-evidence maturity.
 2. **Forward Path** — the leading provisional multi-GW sequence. Future moves are explicitly branches, not commitments.
 3. **Model Robustness** — cross-model support and the magnitude hurdle required before an additional transfer is promoted.
 4. **Plan Stability** — weighted action persistence, current leader persistence, recurring future route and recurring chip window across recent completed model runs.
@@ -48,12 +48,42 @@ Use three speeds rather than recomputing every expensive permutation on every pa
 Runs with normal ETL. Rebuild squad/FT state, availability, market/scout signals and the immediate decision.
 
 ### 2. Deep simulation snapshot
-Multi-GW paths, adaptive rivals, TC/BB paths and bounded WC/FH squad construction. Persist results to JSON. Full-squad chip search uses input-aware caching and is invalidated when GW, squad or budget changes.
+Multi-GW paths, adaptive rivals, TC/BB paths and bounded WC/FH squad construction. Persist results to JSON. Full-squad chip search uses input-aware caching.
+
+The deep-cache signature now includes:
+
+- Gameweek;
+- current squad and prices;
+- bank/spendable-budget state;
+- production search profile;
+- a quantized player-model fingerprint using six-GW model strength, adjusted availability, price and schedule-risk class.
+
+Quantization is intentional: tiny numerical noise should not force an expensive rebuild, while a meaningful football-input change should. The first run under this richer signature correctly invalidated the old cache and rebuilt the deep model.
 
 ### 3. Deadline intensity
 Future enhancement: increase simulation depth/frequency near the deadline and after material events (injury/news, declared/completed transfer, major price/budget change, schedule change).
 
 The web UI reads the latest completed snapshot and never waits for deep simulation to finish.
+
+## Deep simulation freshness
+
+Implemented in the full-squad optimiser metadata and `docs/team-outlook-freshness-stage63.js`.
+
+The deep output records:
+
+- `input_signature`;
+- `model_fingerprint`;
+- `cache_state` (`HIT` or `MISS`);
+- `cache_last_checked_at_utc`;
+- original deep-build timestamp.
+
+Outlook translates this into:
+
+- **CURRENT · rebuilt** — the deep search was run for the current signature;
+- **CURRENT · cached** — the signature was rechecked and the existing deep result remains valid;
+- **REBUILD NEEDED** — the deep result has not been successfully revalidated recently.
+
+When a rebuild is needed, the live/light weekly decision can still be shown, but long-horizon paths and chip squads are visibly treated as stale.
 
 ## Stability over time
 
@@ -96,6 +126,7 @@ Frontend assets:
 - `docs/team-outlook-stage61.js`
 - `docs/team-outlook-stage61.css`
 - `docs/team-outlook-chip-gate-stage62.js`
+- `docs/team-outlook-freshness-stage63.js`
 
 Backend/history assets:
 
@@ -162,11 +193,18 @@ This archive is intended to support future backtesting: what the engine recommen
 - Added Stage62 to present the gated chip result beside the raw opportunity signals.
 - Extended Gameweek archival to preserve the simulation stack for later backtesting.
 
+### 2026-08-29 — Stage63 freshness iteration
+
+- Added a material player-model fingerprint to the expensive WC/FH cache signature.
+- Added cache-state and last-validation metadata to the deep output.
+- Added CURRENT / CACHED / REBUILD NEEDED presentation to Outlook.
+- Removed an undefined `sr-only` CSS dependency from the Wildcard GW selector and kept accessible labels via native ARIA attributes.
+- Deep-cache/fingerprint ETL completed successfully and the first richer-signature run correctly rebuilt the deep model (`MISS`).
+
 ## Next planned iterations
 
-1. Add visible deep-simulation freshness/material-change state beyond simple age.
-2. Backtest archived simulation probabilities and route rankings as completed Gameweeks accumulate.
-3. Feed a mature WC/FH gate into the authoritative synthesis only when safety criteria are sufficiently validated.
-4. Add compact rival-consequence details without duplicating League Intel.
-5. Validate mobile Safari rendering after the current Pages deployment and tune the compact layout from screenshots.
-6. Add deadline-aware simulation intensity once normal background refresh costs are measured over several cycles.
+1. Backtest archived simulation probabilities and route rankings as completed Gameweeks accumulate.
+2. Feed a mature WC/FH gate into the authoritative synthesis only when safety criteria are sufficiently validated.
+3. Add compact rival-consequence details without duplicating League Intel.
+4. Validate mobile Safari rendering after the current Pages deployment and tune the compact layout from screenshots.
+5. Add deadline-aware simulation intensity once normal background refresh costs are measured over several cycles.
