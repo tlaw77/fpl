@@ -21,20 +21,59 @@ def load(path, default):
         return default
 
 
-def signature():
+def q(v, step=.25):
+    try:
+        x = float(v)
+        return round(x / step) * step
+    except Exception:
+        return None
+
+
+def model_fingerprint():
+    """Quantized fingerprint of football inputs used by the full-squad search.
+
+    This intentionally ignores tiny refresh-to-refresh numerical noise while
+    invalidating the deep cache when a relevant player's model strength,
+    availability, price or schedule-risk class moves materially.
+    """
+    pool = load(opt.POOL, {})
+    rows = pool.get('players') or []
+    packed = []
+    for x in rows:
+        pid = int(x.get('player_id') or 0)
+        if not pid:
+            continue
+        packed.append((
+            pid,
+            q(x.get('six_gw_score'), .5),
+            q(x.get('adjusted_availability', x.get('availability')), .05),
+            q(x.get('price'), .1),
+            str(x.get('schedule_risk') or ''),
+        ))
+    packed.sort()
+    raw = json.dumps(packed, separators=(',', ':'), ensure_ascii=False).encode()
+    return hashlib.sha256(raw).hexdigest()[:16]
+
+
+def signature_payload():
     latest = load(opt.LATEST, {})
     budget = load(opt.BUDGET, {})
     squad = latest.get('current_squad_next5') or latest.get('squad_next5') or []
-    payload = {
+    return {
         'next_gw': latest.get('next_gw'),
         'squad': sorted((int(x.get('player_id') or 0), float(x.get('price') or 0)) for x in squad),
         'bank': latest.get('current_bank', (latest.get('me') or {}).get('bank')),
         'budget': budget.get('spendable_budget'),
         'budget_method': budget.get('budget_method'),
+        'model_fingerprint': model_fingerprint(),
         'profile': {'beam': opt.BEAM_WIDTH, 'shortlist': opt.SHORTLIST_TOP, 'cheap': opt.CHEAP_EXTRA},
     }
+
+
+def signature():
+    payload = signature_payload()
     raw = json.dumps(payload, sort_keys=True, separators=(',', ':')).encode()
-    return hashlib.sha256(raw).hexdigest()[:20]
+    return hashlib.sha256(raw).hexdigest()[:20], payload
 
 
 def fresh_cached(sig):
@@ -49,19 +88,12 @@ def fresh_cached(sig):
     return old if age_h < CACHE_HOURS else None
 
 
-def main():
-    sig = signature()
-    cached = fresh_cached(sig)
-    if cached:
-        print(json.dumps({'status': 'SUCCESS', 'cache': 'HIT', 'input_signature': sig, 'generated_at_utc': cached.get('generated_at_utc')}))
-        return
-
-    opt.run()
-    out = load(opt.OUT, {})
-    if out.get('status') != 'SUCCESS':
-        raise RuntimeError('Full-squad chip optimiser did not produce SUCCESS')
+def stamp_cache_state(out, state, sig, payload):
     out['input_signature'] = sig
+    out['model_fingerprint'] = payload.get('model_fingerprint')
     out['cache_ttl_hours'] = CACHE_HOURS
+    out['cache_state'] = state
+    out['cache_last_checked_at_utc'] = datetime.now(timezone.utc).isoformat()
     out['search_profile'] = {
         'beam_width': opt.BEAM_WIDTH,
         'finalists': opt.FINALISTS,
@@ -69,7 +101,22 @@ def main():
         'cheap_extra': opt.CHEAP_EXTRA,
     }
     opt.OUT.write_text(json.dumps(out, indent=2, ensure_ascii=False) + '\n')
-    print(json.dumps({'status': 'SUCCESS', 'cache': 'MISS', 'input_signature': sig, 'wc_gain': (out.get('best_wildcard') or {}).get('incremental_expected_points_vs_current_squad'), 'best_fh_gw': (out.get('best_free_hit') or {}).get('gw')}))
+
+
+def main():
+    sig, payload = signature()
+    cached = fresh_cached(sig)
+    if cached:
+        stamp_cache_state(cached, 'HIT', sig, payload)
+        print(json.dumps({'status': 'SUCCESS', 'cache': 'HIT', 'input_signature': sig, 'model_fingerprint': payload.get('model_fingerprint'), 'generated_at_utc': cached.get('generated_at_utc')}))
+        return
+
+    opt.run()
+    out = load(opt.OUT, {})
+    if out.get('status') != 'SUCCESS':
+        raise RuntimeError('Full-squad chip optimiser did not produce SUCCESS')
+    stamp_cache_state(out, 'MISS', sig, payload)
+    print(json.dumps({'status': 'SUCCESS', 'cache': 'MISS', 'input_signature': sig, 'model_fingerprint': payload.get('model_fingerprint'), 'wc_gain': (out.get('best_wildcard') or {}).get('incremental_expected_points_vs_current_squad'), 'best_fh_gw': (out.get('best_free_hit') or {}).get('gw')}))
 
 
 if __name__ == '__main__':
