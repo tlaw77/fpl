@@ -36,15 +36,14 @@ jobs:
           python-version: "3.12"
       - name: Build stability history
         run: python simulation_stability.py
-      - name: Build chip activation gate
-        run: python chip_activation_gate.py
       - name: Build owned-squad Triple Captain review
         run: python triple_captain_review.py
+      - name: Build unified chip activation gate
+        run: python chip_activation_gate.py
       - name: Build dedicated captaincy review
         run: python captaincy_review.py
       - name: Evaluate archived decision performance
-        run: |
-          if [ -f backtest_engine.py ]; then python backtest_engine.py; else echo '{"status":"SUCCESS","version":1,"evaluable_gameweeks":0,"rows":[]}' > data/backtest_summary.json; fi
+        run: python backtest_engine.py
       - name: Validate supplemental outputs
         run: |
           python - <<'PY'
@@ -65,12 +64,14 @@ jobs:
           assert 0 <= float(summary.get('action_persistence_pct', 0)) <= 100
           assert 0 <= float(summary.get('leader_persistence_pct', 0)) <= 100
           assert gate['status'] == 'SUCCESS'
+          assert gate.get('version', 0) >= 2
           for key in ('wildcard','free_hit','bench_boost','triple_captain'):
               assert gate[key]['status'] in ('HOLD','WATCH','CONSIDER')
           assert tc['status'] == 'SUCCESS'
           assert tc.get('version', 0) >= 1
           assert tc.get('decision', {}).get('status') in ('HOLD','WATCH','CONSIDER')
           assert len(tc.get('current_gw_shortlist', [])) >= 1
+          assert gate['triple_captain']['status'] == tc['decision']['status']
           assert cap['status'] == 'SUCCESS'
           assert cap.get('version', 0) >= 1
           assert cap.get('captain') is not None
@@ -79,7 +80,7 @@ jobs:
           assert backtest['status'] == 'SUCCESS'
           assert backtest.get('version', 0) >= 1
           assert backtest.get('evaluable_gameweeks', 0) >= 0
-          print('Simulation stability, chip gate, captaincy reviews and backtest validation passed')
+          print('Simulation stability, unified chip gate, captaincy reviews and backtest validation passed')
           PY
       - name: Commit supplemental snapshots
         run: |
