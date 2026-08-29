@@ -31,6 +31,8 @@ ARCHIVE_FILES = {
     "decision_synthesis.json": "decision_synthesis.json",
     "simulation_stability.json": "simulation_stability.json",
     "chip_activation_gate.json": "chip_activation_gate.json",
+    "triple_captain_review.json": "triple_captain_review.json",
+    "captaincy_review.json": "captaincy_review.json",
 }
 
 # One-time recovery refs for gameweeks that had already rolled before durable
@@ -41,13 +43,13 @@ BACKFILL_REFS = {
 
 
 def get_json(url):
-    req = urllib.request.Request(url, headers={"User-Agent": "fpl-history-archive/1.2"})
+    req = urllib.request.Request(url, headers={"User-Agent": "fpl-history-archive/1.3"})
     with urllib.request.urlopen(req, timeout=30) as response:
         return json.load(response)
 
 
 def get_bytes(url):
-    req = urllib.request.Request(url, headers={"User-Agent": "fpl-history-archive/1.2"})
+    req = urllib.request.Request(url, headers={"User-Agent": "fpl-history-archive/1.3"})
     with urllib.request.urlopen(req, timeout=30) as response:
         return response.read()
 
@@ -135,6 +137,7 @@ def archive_from_ref(gw, ref, force=False):
         "schedule_load.json", "budget_state.json", "simulation.json", "path_simulation.json",
         "adaptive_rival_simulation.json", "chip_path_simulation.json", "full_squad_chip_optimizer.json",
         "decision_synthesis.json", "simulation_stability.json", "chip_activation_gate.json",
+        "triple_captain_review.json", "captaincy_review.json",
     }
     for dest_name, source_name in sources.items():
         try:
