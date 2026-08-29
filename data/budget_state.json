@@ -1,14 +1,14 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-08-29T21:44:22.098245+00:00",
+  "generated_at_utc": "2026-08-29T23:32:02.250735+00:00",
   "entry_id": 5332809,
   "next_gw": 3,
   "bank": 1.4,
   "current_squad_market_value": 98.8,
-  "estimated_squad_liquidation_value": 98.8,
-  "spendable_budget": 100.2,
-  "budget_method": "current_market_value_proxy",
-  "budget_confidence": "estimated",
+  "estimated_squad_liquidation_value": 98.7,
+  "spendable_budget": 100.1,
+  "budget_method": "purchase_ledger_fpl_sell_rule",
+  "budget_confidence": "reconstructed",
   "public_pick_keys": [
     "element",
     "element_type",
@@ -18,5 +18,133 @@
     "position"
   ],
   "exact_selling_prices_found": 0,
-  "method_note": "Wildcard and Free Hit squad searches require a spendable-budget constraint. Exact public selling values are used when exposed; otherwise current market value plus bank is retained only as a planning proxy and the chip gate must treat the result as provisional."
+  "reconstructed_selling_prices_found": 15,
+  "purchase_ledger_coverage": 15,
+  "pending_history_player_ids": [
+    399
+  ],
+  "public_transfer_count": 1,
+  "players": [
+    {
+      "player_id": 496,
+      "player": "Kinsky",
+      "current_price": 4.5,
+      "purchase_price": 4.5,
+      "selling_price": 4.5,
+      "purchase_basis": "gw1_archive"
+    },
+    {
+      "player_id": 4,
+      "player": "Gabriel",
+      "current_price": 8.0,
+      "purchase_price": 8.0,
+      "selling_price": 8.0,
+      "purchase_basis": "gw1_archive"
+    },
+    {
+      "player_id": 306,
+      "player": "Greaves",
+      "current_price": 4.0,
+      "purchase_price": 4.0,
+      "selling_price": 4.0,
+      "purchase_basis": "gw1_archive"
+    },
+    {
+      "player_id": 115,
+      "player": "De Cuyper",
+      "current_price": 4.6,
+      "purchase_price": 4.5,
+      "selling_price": 4.5,
+      "purchase_basis": "transfer_history"
+    },
+    {
+      "player_id": 173,
+      "player": "Thomas",
+      "current_price": 4.0,
+      "purchase_price": 4.0,
+      "selling_price": 4.0,
+      "purchase_basis": "gw1_archive"
+    },
+    {
+      "player_id": 426,
+      "player": "B.Fernandes",
+      "current_price": 12.0,
+      "purchase_price": 12.0,
+      "selling_price": 12.0,
+      "purchase_basis": "gw1_archive"
+    },
+    {
+      "player_id": 399,
+      "player": "Cherki",
+      "current_price": 7.6,
+      "purchase_price": 7.6,
+      "selling_price": 7.6,
+      "purchase_basis": "current_price_pending_history"
+    },
+    {
+      "player_id": 124,
+      "player": "Groß",
+      "current_price": 5.5,
+      "purchase_price": 5.5,
+      "selling_price": 5.5,
+      "purchase_basis": "gw1_archive"
+    },
+    {
+      "player_id": 94,
+      "player": "Schade",
+      "current_price": 6.0,
+      "purchase_price": 6.0,
+      "selling_price": 6.0,
+      "purchase_basis": "gw1_archive"
+    },
+    {
+      "player_id": 411,
+      "player": "Haaland",
+      "current_price": 15.5,
+      "purchase_price": 15.5,
+      "selling_price": 15.5,
+      "purchase_basis": "gw1_archive"
+    },
+    {
+      "player_id": 165,
+      "player": "João Pedro",
+      "current_price": 7.6,
+      "purchase_price": 7.6,
+      "selling_price": 7.6,
+      "purchase_basis": "gw1_archive"
+    },
+    {
+      "player_id": 497,
+      "player": "Dubravka",
+      "current_price": 4.0,
+      "purchase_price": 4.0,
+      "selling_price": 4.0,
+      "purchase_basis": "gw1_archive"
+    },
+    {
+      "player_id": 418,
+      "player": "Maguire",
+      "current_price": 5.0,
+      "purchase_price": 5.0,
+      "selling_price": 5.0,
+      "purchase_basis": "gw1_archive"
+    },
+    {
+      "player_id": 212,
+      "player": "Hughes",
+      "current_price": 4.5,
+      "purchase_price": 4.5,
+      "selling_price": 4.5,
+      "purchase_basis": "gw1_archive"
+    },
+    {
+      "player_id": 346,
+      "player": "Calvert-Lewin",
+      "current_price": 6.0,
+      "purchase_price": 6.0,
+      "selling_price": 6.0,
+      "purchase_basis": "gw1_archive"
+    }
+  ],
+  "method_note": "Wildcard and Free Hit searches use the best available spendable budget. Exact public selling values are preferred. Otherwise purchase prices are reconstructed from the archived GW1 squad plus public transfer costs and the FPL half-profit selling rule. Any newly declared transfer not yet visible in public history uses current price as its temporary acquisition basis and is listed explicitly. Only if reconstruction is unavailable does the engine fall back to current market value."
 }
