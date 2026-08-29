@@ -31,7 +31,6 @@ def premium_bonus(player):
 
 
 def captain_score(player, mean, cv, fixture=None):
-    fixture = fixture if fixture is not None else first_fixture(player, 0)
     venue = str((fixture or {}).get('venue') or '').upper()
     fdr = n((fixture or {}).get('difficulty'), 3)
     form = n((player or {}).get('form'))
@@ -74,3 +73,13 @@ def ranked_candidates(squad, xi_ids, gw, exp_for_gw):
 def choose_captain(squad, xi_ids, gw, exp_for_gw):
     ranked = ranked_candidates(squad, xi_ids, gw, exp_for_gw)
     return ranked[0]['player_id'] if ranked else 0
+
+
+def lineup_expected(path_module, squad, gw, exp):
+    """Legal XI from the existing lineup optimiser + captain from this shared model."""
+    means = {k: v[0] for k, v in exp.get(gw, {}).items()}
+    xi, _ = path_module.best_xi(squad, means)
+    ids = [path_module.pid(p) for p in xi]
+    cap_id = choose_captain(squad, ids, gw, exp.get(gw, {}))
+    score = sum(means.get(x, 0) for x in ids) + means.get(cap_id, 0)
+    return score, ids, cap_id
