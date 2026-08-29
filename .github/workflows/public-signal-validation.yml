@@ -1,0 +1,57 @@
+name: Public Signal Validation
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - feature/public-signal-layer
+    paths:
+      - "market_strength.py"
+      - "player_pool.py"
+      - "projection_calibration.py"
+      - "docs/PUBLIC_SIGNAL_INTEGRATION.md"
+      - ".github/workflows/public-signal-validation.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate-public-signals:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Compile changed model files
+        run: |
+          python -m py_compile market_strength.py player_pool.py projection_calibration.py
+
+      - name: Build independent market-strength snapshot
+        run: python market_strength.py
+
+      - name: Validate market-strength output
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path('data/market_strength.json')
+          assert path.exists(), 'market_strength.py did not create an output file'
+          data = json.loads(path.read_text())
+          assert data.get('status') in ('SUCCESS', 'NO_CURRENT_EPL_ODDS')
+          fixtures = data.get('fixtures') or []
+          for row in fixtures:
+              probs = [row['home_win_prob'], row['draw_prob'], row['away_win_prob']]
+              assert abs(sum(probs) - 1.0) < 0.002, probs
+              assert 0.90 <= row['home_market_strength_modifier'] <= 1.10
+              assert 0.90 <= row['away_market_strength_modifier'] <= 1.10
+              assert row['team_match_confidence'] >= 0.64
+          if data.get('status') == 'SUCCESS':
+              assert fixtures, 'SUCCESS requires at least one matched EPL fixture'
+          print({'status': data.get('status'), 'fixtures': len(fixtures), 'unmatched': data.get('unmatched_count')})
+          PY
