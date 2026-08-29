@@ -18,6 +18,7 @@ on:
       - "player_pool.py"
       - "scout_consensus.py"
       - "simulation_engine.py"
+      - "path_simulation.py"
       - "exposure_semantics.py"
       - "archive_week.py"
       - ".github/workflows/fpl-etl.yml"
@@ -83,6 +84,9 @@ jobs:
       - name: Run rival-aware Monte Carlo simulation
         run: python simulation_engine.py
 
+      - name: Run multi-gameweek path simulation
+        run: python path_simulation.py
+
       - name: Refresh history index
         run: |
           python - <<'PY'
@@ -107,6 +111,7 @@ jobs:
           player_pool = json.loads(Path('data/player_pool.json').read_text())
           scout_consensus = json.loads(Path('data/scout_consensus.json').read_text())
           simulation = json.loads(Path('data/simulation.json').read_text())
+          path_sim = json.loads(Path('data/path_simulation.json').read_text())
           history = json.loads(Path('data/decision_history.json').read_text())
           rec_history = json.loads(Path('data/recommendation_history.json').read_text())
           history_index = json.loads(Path('data/history/index.json').read_text())
@@ -139,6 +144,10 @@ jobs:
           assert simulation['iterations'] >= 1000
           assert simulation['candidate_count'] >= 1
           assert simulation.get('recommendation') is not None
+          assert path_sim['status'] == 'SUCCESS'
+          assert path_sim['iterations'] >= 1000
+          assert len(path_sim.get('paths', [])) >= 1
+          assert path_sim.get('recommendation') is not None
           assert history.get('version') == 4
           assert 'weeks' in history
           assert 'decisions' in history
