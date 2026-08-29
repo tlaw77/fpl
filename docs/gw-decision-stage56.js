@@ -1,9 +1,9 @@
 (()=>{
-const BUILD='gw-decision-20260829-1950';
+const BUILD='gw-decision-20260829-2015';
 const q=(s,r=document)=>r.querySelector(s);
 const qa=(s,r=document)=>[...r.querySelectorAll(s)];
 const text=el=>String(el?.textContent||'').replace(/\s+/g,' ').trim();
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#039;'}[c]));
 
 function transferState(){
  const view=q('#view-transfer');
@@ -73,10 +73,16 @@ function triggerText(t){
 }
 
 function render(){
- const shell=q('main.shell'); const nav=q('#decision-nav');
- if(!shell||!nav)return;
- let host=q('#gw-decision-brief');
- if(!host){host=document.createElement('section');host.id='gw-decision-brief';host.className='gw-decision-brief';nav.insertAdjacentElement('beforebegin',host);}
+ const view=q('#view-transfer');
+ const transferHost=q('#dc-transfer-view',view);
+ if(!view||!transferHost)return;
+ let host=q('#gw-decision-brief',view);
+ if(!host){
+  host=document.createElement('section');
+  host.id='gw-decision-brief';
+  host.className='gw-decision-brief';
+  transferHost.insertAdjacentElement('beforebegin',host);
+ }
  const t=transferState(),tm=teamState(),r=rivalState(),s=shapeState();
  const gw=text(q('#gw-pill'))||'GW';
  const action=t.action==='TRANSFER'?(t.route||'TRANSFER'):t.action;
@@ -101,7 +107,7 @@ function run(){[250,700,1400,2400].forEach(ms=>setTimeout(render,ms));}
 function bind(){
  run();
  ['fplCoreDataReady','fplSafePlanUpdated'].forEach(ev=>window.addEventListener(ev,run,{passive:true}));
- qa('#decision-nav button').forEach(b=>b.addEventListener('click',()=>setTimeout(render,450),{passive:true}));
+ q('#decision-nav button[data-view="transfer"]')?.addEventListener('click',()=>setTimeout(render,250),{passive:true});
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind,{once:true});else bind();
 })();
