@@ -1,12 +1,11 @@
 import json
-from copy import deepcopy
-from collections import Counter
+import math
 from datetime import datetime, timezone
 from pathlib import Path
 
 import path_simulation as p
 import simulation_engine as s
-from projection_calibration import expected_gw as calibrated_expected_gw, season_maturity
+from projection_calibration import maturity_weight
 
 LATEST = Path('data/latest.json')
 POOL = Path('data/player_pool.json')
@@ -16,15 +15,17 @@ BUDGET = Path('data/budget_state.json')
 OUT = Path('data/full_squad_chip_optimizer.json')
 
 POS_COUNTS = {'GKP': 2, 'DEF': 5, 'MID': 5, 'FWD': 3}
-POS_ORDER = ['GKP', 'DEF', 'MID', 'FWD']
-SHORTLIST_TOP = {'GKP': 16, 'DEF': 24, 'MID': 26, 'FWD': 20}
+SHORTLIST_TOP = {'GKP': 16, 'DEF': 28, 'MID': 32, 'FWD': 24}
 CHEAP_EXTRA = 8
-BEAM_WIDTH = 4200
-FINALISTS = 120
+BEAM_WIDTH = 6000
+FINALISTS = 80
 
 
-def pid(x):
-    return int(x.get('player_id') or 0)
+def load(path, default):
+    try:
+        return json.loads(path.read_text())
+    except Exception:
+        return default
 
 
 def n(v, d=0.0):
@@ -34,146 +35,165 @@ def n(v, d=0.0):
         return d
 
 
-def club(x):
-    return x.get('team_id') or x.get('club')
+def pid(x):
+    return int(x.get('player_id') or 0)
 
 
-def shortlist(pool_rows, pos, heuristic):
-    rows = [x for x in pool_rows if x.get('position') == pos and n(x.get('adjusted_availability', x.get('availability')), 1) >= .55]
-    ranked = sorted(rows, key=lambda x: heuristic.get(pid(x), 0), reverse=True)[:SHORTLIST_TOP[pos]]
-    cheap = sorted(rows, key=lambda x: (n(x.get('price'), 99), -heuristic.get(pid(x), 0)))[:CHEAP_EXTRA]
-    out, seen = [], set()
-    for x in ranked + cheap:
-        if pid(x) and pid(x) not in seen:
-            seen.add(pid(x)); out.append(x)
-    out.sort(key=lambda x: (-heuristic.get(pid(x), 0), n(x.get('price'), 99), pid(x)))
+def cost_tenths(x):
+    return int(round(n(x.get('price')) * 10))
+
+
+def shortlist(pool_rows, heur):
+    out = []
+    for pos, count in SHORTLIST_TOP.items():
+        rows = [x for x in pool_rows if x.get('position') == pos and n(x.get('adjusted_availability', x.get('availability')), 1) >= .45]
+        rows.sort(key=lambda x: heur.get(pid(x), -999), reverse=True)
+        chosen = rows[:count]
+        cheap = sorted(rows, key=lambda x: (n(x.get('price'), 99), -heur.get(pid(x), -999)))[:CHEAP_EXTRA]
+        seen = set()
+        merged = []
+        for x in chosen + cheap:
+            if pid(x) and pid(x) not in seen:
+                seen.add(pid(x))
+                merged.append(x)
+        out.extend(merged)
     return out
 
 
-def min_remaining_cost(shortlists, slot_sequence, start_slot, last_idx):
-    """Optimistic lower cost bound; never reject a feasible combination because of shortlist order."""
-    needs = Counter(slot_sequence[start_slot:])
-    total = 0.0
-    for pos, need in needs.items():
-        rows = shortlists[pos]
-        start = last_idx.get(pos, -1) + 1
-        prices = sorted(n(x.get('price'), 99) for x in rows[start:])
-        if len(prices) < need:
-            return 1e9
-        total += sum(prices[:need])
+def legal_partial(state, row):
+    club = row.get('club')
+    if club and state['clubs'].get(club, 0) >= 3:
+        return False
+    pos = row.get('position')
+    if state['pos'].get(pos, 0) >= POS_COUNTS.get(pos, 0):
+        return False
+    return True
+
+
+def min_remaining_cost(cands, picked_ids, pos_counts):
+    need = {k: POS_COUNTS[k] - pos_counts.get(k, 0) for k in POS_COUNTS}
+    total = 0
+    for pos, cnt in need.items():
+        if cnt <= 0:
+            continue
+        eligible = sorted(cost_tenths(x) for x in cands if x.get('position') == pos and pid(x) not in picked_ids)
+        if len(eligible) < cnt:
+            return 10**9
+        total += sum(eligible[:cnt])
     return total
 
 
-def construct_squads(pool_rows, budget, heuristic, final_score):
-    shortlists = {pos: shortlist(pool_rows, pos, heuristic) for pos in POS_ORDER}
-    slots = [pos for pos in POS_ORDER for _ in range(POS_COUNTS[pos])]
-    beam = [{
-        'players': [], 'ids': set(), 'clubs': {}, 'cost': 0.0, 'heuristic': 0.0,
-        'last_idx': {pos: -1 for pos in POS_ORDER},
-    }]
-
-    for si, pos in enumerate(slots):
-        expanded = []
-        rows = shortlists[pos]
-        for state in beam:
-            start = state['last_idx'][pos] + 1
-            for idx in range(start, len(rows)):
-                x = rows[idx]
-                xpid = pid(x)
-                if not xpid or xpid in state['ids']:
+def construct_squads(pool_rows, budget, heur, final_score):
+    cands = shortlist(pool_rows, heur)
+    budget_t = int(round(budget * 10))
+    cands.sort(key=lambda x: (x.get('position'), -heur.get(pid(x), -999), n(x.get('price'))))
+    states = [{'squad': [], 'ids': set(), 'clubs': {}, 'pos': {}, 'cost': 0, 'heur': 0.0}]
+    for pos in ('GKP', 'DEF', 'MID', 'FWD'):
+        need = POS_COUNTS[pos]
+        rows = [x for x in cands if x.get('position') == pos]
+        for _ in range(need):
+            expanded = []
+            for st in states:
+                for x in rows:
+                    i = pid(x)
+                    if not i or i in st['ids'] or not legal_partial(st, x):
+                        continue
+                    ct = cost_tenths(x)
+                    ns = {
+                        'squad': st['squad'] + [x],
+                        'ids': set(st['ids']) | {i},
+                        'clubs': dict(st['clubs']),
+                        'pos': dict(st['pos']),
+                        'cost': st['cost'] + ct,
+                        'heur': st['heur'] + heur.get(i, 0),
+                    }
+                    ns['clubs'][x.get('club')] = ns['clubs'].get(x.get('club'), 0) + 1
+                    ns['pos'][pos] = ns['pos'].get(pos, 0) + 1
+                    if ns['cost'] > budget_t:
+                        continue
+                    if ns['cost'] + min_remaining_cost(cands, ns['ids'], ns['pos']) > budget_t:
+                        continue
+                    expanded.append(ns)
+            expanded.sort(key=lambda z: z['heur'], reverse=True)
+            dedup = []
+            seen = set()
+            for x in expanded:
+                key = tuple(sorted(x['ids']))
+                if key in seen:
                     continue
-                ck = club(x)
-                if state['clubs'].get(ck, 0) >= 3:
-                    continue
-                cost = state['cost'] + n(x.get('price'))
-                if cost > budget + 1e-9:
-                    continue
-                last_idx = dict(state['last_idx']); last_idx[pos] = idx
-                if cost + min_remaining_cost(shortlists, slots, si + 1, last_idx) > budget + 1e-9:
-                    continue
-                clubs = dict(state['clubs']); clubs[ck] = clubs.get(ck, 0) + 1
-                expanded.append({
-                    'players': state['players'] + [x],
-                    'ids': state['ids'] | {xpid},
-                    'clubs': clubs,
-                    'cost': cost,
-                    'heuristic': state['heuristic'] + heuristic.get(xpid, 0),
-                    'last_idx': last_idx,
-                })
-        expanded.sort(key=lambda z: z['heuristic'] + max(0, budget - z['cost']) * .035, reverse=True)
-        beam = expanded[:BEAM_WIDTH]
-        if not beam:
-            return [], {'error': f'No feasible state after slot {si+1} ({pos})', 'shortlist_sizes': {k: len(v) for k,v in shortlists.items()}}
-
-    finalists = sorted(beam, key=lambda z: final_score(z['players']), reverse=True)[:FINALISTS]
-    return finalists, {'shortlist_sizes': {k: len(v) for k,v in shortlists.items()}, 'beam_width': BEAM_WIDTH}
+                seen.add(key)
+                dedup.append(x)
+                if len(dedup) >= BEAM_WIDTH:
+                    break
+            states = dedup
+            if not states:
+                return [], {'candidate_count': len(cands), 'beam_width': BEAM_WIDTH, 'failure': f'no states at {pos}'}
+    finals = []
+    for st in states[:max(FINALISTS * 6, FINALISTS)]:
+        if len(st['squad']) != 15:
+            continue
+        score = final_score(st['squad'])
+        finals.append((score, st))
+    finals.sort(key=lambda z: z[0], reverse=True)
+    return [x[1] for x in finals[:FINALISTS]], {'candidate_count': len(cands), 'beam_width': BEAM_WIDTH, 'finalists_scored': len(finals)}
 
 
 def squad_summary(state, exp, gws, objective):
-    squad = state['players']
-    per_gw = []
+    rows = []
     total = 0.0
     for gw in gws:
-        score, xi, cap = p.lineup_expected(squad, gw, exp)
-        total += score
-        per_gw.append({
-            'gw': gw,
-            'expected_points_with_captain': round(score, 2),
-            'xi_ids': xi,
-            'captain_id': cap,
-        })
-    byid = {pid(x): x for x in squad}
+        pts, xi, cap = p.lineup_expected(state['squad'], gw, exp)
+        total += pts
+        rows.append({'gw': gw, 'expected_points': round(pts, 2), 'xi_ids': xi, 'captain_id': cap})
     return {
         'objective': objective,
         'expected_objective_points': round(total, 2),
-        'cost': round(state['cost'], 2),
-        'bank_left': None,
+        'cost': round(state['cost'] / 10, 1),
         'squad': [
-            {'player_id': pid(x), 'player': x.get('player'), 'club': x.get('club'), 'position': x.get('position'), 'price': x.get('price')}
-            for x in squad
-        ],
-        'gameweeks': [
             {
-                **row,
-                'xi': [byid[i].get('player') for i in row['xi_ids'] if i in byid],
-                'captain': byid.get(row['captain_id'], {}).get('player'),
-            }
-            for row in per_gw
+                'player_id': pid(x),
+                'player': x.get('player'),
+                'club': x.get('club'),
+                'position': x.get('position'),
+                'price': n(x.get('price')),
+            } for x in state['squad']
         ],
+        'gameweeks': rows,
     }
 
 
 def run():
-    latest = s.load_json(LATEST, {})
-    pool = s.load_json(POOL, {})
-    scout = s.load_json(SCOUT, {})
-    market = s.load_json(MARKET, {})
-    budget_state = s.load_json(BUDGET, {})
-    if budget_state.get('status') != 'SUCCESS':
-        raise RuntimeError('Budget state unavailable')
-
-    scout_maps, market_maps = s.scout_lookup(scout), s.market_lookup(market)
-    pool_rows = [x for x in (pool.get('players') or []) if pid(x) and n(x.get('price')) > 0]
-    next_gw = int(latest.get('next_gw') or 1)
-    current_gw = int(latest.get('current_gw') or max(0, next_gw - 1))
-    maturity = season_maturity(current_gw)
+    latest = load(LATEST, {})
+    pool = load(POOL, {})
+    scout = load(SCOUT, {})
+    market = load(MARKET, {})
+    budget_state = load(BUDGET, {})
+    next_gw = int(latest.get('next_gw') or 0)
     gws = list(range(next_gw, min(39, next_gw + 6)))
-    budget = n(budget_state.get('spendable_budget'))
-
-    model_vals = [n(x.get('six_gw_score')) for x in pool_rows]
-    lo, hi = s.percentile(model_vals, .10), s.percentile(model_vals, .90)
+    if not gws:
+        raise RuntimeError('No future gameweeks')
+    budget = n(budget_state.get('spendable_budget'), 100.0)
+    maturity = maturity_weight(next_gw)
+    scout_map = s.scout_lookup(scout)
+    market_map = s.market_lookup(market)
+    pool_rows = pool.get('players') or []
+    pool_scores = [n(x.get('six_gw_score')) for x in pool_rows]
     exp = {gw: {} for gw in gws}
-    for gw in gws:
-        for x in pool_rows:
-            exp[gw][pid(x)] = calibrated_expected_gw(x, gw, lo, hi, scout_maps, market_maps, current_gw=current_gw)
+    for x in pool_rows:
+        i = pid(x)
+        if not i:
+            continue
+        for gw in gws:
+            exp[gw][i] = s.expected_gw(x, gw, scout_map, market_map, pool_scores)
 
-    wildcard_heur = {pid(x): sum(exp[g][pid(x)][0] for g in gws) for x in pool_rows}
+    wc_heur = {pid(x): sum(exp[gw][pid(x)][0] for gw in gws) for x in pool_rows}
     def wc_final(squad):
         return sum(p.lineup_expected(squad, gw, exp)[0] for gw in gws)
-    wc_states, wc_meta = construct_squads(pool_rows, budget, wildcard_heur, wc_final)
+    wc_states, wc_meta = construct_squads(pool_rows, budget, wc_heur, wc_final)
     best_wc = squad_summary(wc_states[0], exp, gws, 'Wildcard six-GW horizon') if wc_states else None
     if best_wc:
         best_wc['bank_left'] = round(budget - best_wc['cost'], 2)
+        best_wc['search_meta'] = wc_meta
 
     free_hits = []
     for gw in gws:
@@ -201,7 +221,14 @@ def run():
         fh['incremental_expected_points_vs_current_squad'] = round(fh['expected_objective_points'] - baseline.get(fh['gw'], 0), 2)
 
     best_fh = max(free_hits, key=lambda x: x['incremental_expected_points_vs_current_squad'], default=None)
-    budget_exact = budget_state.get('budget_confidence') == 'exact'
+    budget_conf = budget_state.get('budget_confidence') or 'unknown'
+    budget_exact = budget_conf == 'exact'
+    if budget_conf == 'exact':
+        budget_note = 'Budget legality uses public FPL selling prices.'
+    elif budget_conf == 'reconstructed':
+        budget_note = 'Budget uses reconstructed selling prices from the purchase ledger and FPL sell-price rule. This is stronger than a market-value proxy but is not labelled exact because the public picks endpoint omits selling prices.'
+    else:
+        budget_note = 'Budget uses current market value as a planning proxy because a stronger selling-price reconstruction is unavailable.'
     output = {
         'status': 'SUCCESS',
         'generated_at_utc': datetime.now(timezone.utc).isoformat(),
@@ -210,13 +237,13 @@ def run():
         'season_maturity_weight': round(maturity, 3),
         'budget': budget,
         'budget_method': budget_state.get('budget_method'),
-        'budget_confidence': budget_state.get('budget_confidence'),
+        'budget_confidence': budget_conf,
         'legality': {
             'positions': POS_COUNTS,
             'max_players_per_club': 3,
             'budget_constraint_enforced': True,
             'budget_exact': budget_exact,
-            'note': 'Roster structure and club limits are exact. Budget legality is exact only when public selling-price data is available; otherwise the market-value budget is a planning proxy and chip activation remains gated.',
+            'note': 'Roster structure and club limits are exact. ' + budget_note,
         },
         'best_wildcard': best_wc,
         'best_free_hit': best_fh,
