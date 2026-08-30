@@ -16,6 +16,47 @@ def model_lineup(squad, gw, exp):
     return ids, cap_id
 
 
+def league_objective_state(current_gw, current_rank, me_points, rivals):
+    """Describe how much mini-league outcome should influence utility.
+
+    Early season remains EV-led because short-term league position is noisy.
+    As the season matures, probability of taking/holding the league lead and
+    expected gap to the strongest rival become increasingly decision-relevant.
+    """
+    stage = max(0.0, min(1.0, float(current_gw or 0) / 38.0))
+    rival_points = [s.n(r.get('total_points')) for r in rivals]
+    leader_points = max([me_points, *rival_points], default=me_points)
+    gap_to_leader = max(0.0, leader_points - me_points)
+    remaining = max(1, 38 - int(current_gw or 0))
+    chase_rate = gap_to_leader / remaining
+
+    # League-outcome weights are intentionally small early and become material
+    # only when there is less time left to recover a points deficit.
+    lead_prob_weight = 2.0 + 24.0 * (stage ** 1.7)
+    gap_weight = .025 + .16 * (stage ** 1.5)
+    if current_rank == 1:
+        posture = 'PROTECT_EDGE'
+    elif chase_rate >= 2.0:
+        posture = 'CHASE'
+        lead_prob_weight *= 1.18
+    elif chase_rate >= .8:
+        posture = 'CONTROLLED_CHASE'
+        lead_prob_weight *= 1.08
+    else:
+        posture = 'BALANCED'
+
+    return {
+        'season_stage': round(stage, 3),
+        'current_rank': int(current_rank),
+        'current_gap_to_leader': round(gap_to_leader, 2),
+        'gameweeks_remaining': remaining,
+        'required_gain_per_remaining_gw': round(chase_rate, 3),
+        'posture': posture,
+        'lead_probability_weight': round(lead_prob_weight, 3),
+        'leader_gap_weight': round(gap_weight, 4),
+    }
+
+
 def run():
     latest = s.load_json(s.LATEST, {})
     pool = s.load_json(s.POOL, {})
@@ -76,13 +117,17 @@ def run():
             bygw[gw] = model_lineup(r['squad'], gw, exp)
         rival_lineups.append(bygw)
 
-    rng = random.Random(str(latest.get('generated_at_utc') or '') + '|simulation-v5-shared-captaincy')
+    rng = random.Random(str(latest.get('generated_at_utc') or '') + '|simulation-v6-league-objective')
     me_start = s.n((latest.get('me') or {}).get('total_points'))
     current_rank = int((latest.get('me') or {}).get('rank') or (len(rivals) + 1))
+    objective = league_objective_state(current_gw, current_rank, me_start, rivals)
+
     route_totals = {c['key']: [] for c in candidates}
     route_ranks = {c['key']: [] for c in candidates}
     route_gain_places = {c['key']: 0 for c in candidates}
     route_beat = {c['key']: [0] * len(rivals) for c in candidates}
+    route_lead = {c['key']: 0 for c in candidates}
+    route_gap_to_best_rival = {c['key']: [] for c in candidates}
 
     for _ in range(s.ITERATIONS):
         outcomes = {}
@@ -96,6 +141,7 @@ def run():
                 xi, cap = rival_lineups[idx][gw]
                 total += sum(outcomes[gw].get(pid, 0) for pid in xi) + outcomes[gw].get(cap, 0)
             rival_scores.append(total)
+        best_rival = max(rival_scores, default=me_start)
 
         for c in candidates:
             total = me_start
@@ -107,6 +153,9 @@ def run():
             route_totals[c['key']].append(total - me_start)
             rank = 1 + sum(1 for x in rival_scores if x > total)
             route_ranks[c['key']].append(rank)
+            route_gap_to_best_rival[c['key']].append(total - best_rival)
+            if rank == 1:
+                route_lead[c['key']] += 1
             if rank < current_rank:
                 route_gain_places[c['key']] += 1
             for i, rv in enumerate(rival_scores):
@@ -117,10 +166,20 @@ def run():
     for c in candidates:
         vals = route_totals[c['key']]
         ranks = route_ranks[c['key']]
+        gaps = route_gap_to_best_rival[c['key']]
         p10, p90 = s.percentile(vals, .10), s.percentile(vals, .90)
         mean = statistics.fmean(vals) if vals else 0
         exp_rank = statistics.fmean(ranks) if ranks else current_rank
-        utility = mean + (current_rank - exp_rank) * 5.0 - max(0, mean - p10) * .12
+        lead_prob = route_lead[c['key']] / s.ITERATIONS
+        expected_gap = statistics.fmean(gaps) if gaps else 0.0
+
+        # Expected FPL points remains the foundation. League-specific utility is
+        # an explicit, inspectable overlay whose influence grows with season stage.
+        rank_value = (current_rank - exp_rank) * 5.0
+        downside_penalty = max(0, mean - p10) * .12
+        league_value = lead_prob * objective['lead_probability_weight'] + expected_gap * objective['leader_gap_weight']
+        utility = mean + rank_value - downside_penalty + league_value
+
         hit = 0 if c['move'] is None else next_hit_cost
         incoming_starts = None
         out_id = None
@@ -143,7 +202,10 @@ def run():
             'p90_points_6gw': round(p90, 2),
             'expected_rank_after_horizon': round(exp_rank, 2),
             'prob_gain_league_place': round(route_gain_places[c['key']] / s.ITERATIONS, 3),
+            'prob_league_lead_after_horizon': round(lead_prob, 3),
+            'expected_gap_to_best_rival_after_horizon': round(expected_gap, 2),
             'prob_finish_ahead_each_rival': [round(route_beat[c['key']][i] / s.ITERATIONS, 3) for i in range(len(rivals))],
+            'league_objective_value': round(league_value, 3),
             'utility_score': round(utility, 3),
             'incoming_starts_gw3': incoming_starts,
             'decision_lineup_gw': next_gw,
@@ -162,8 +224,8 @@ def run():
     output = {
         'status': 'SUCCESS',
         'generated_at_utc': datetime.now(timezone.utc).isoformat(),
-        'engine_version': 5,
-        'projection_model': 'season-maturity calibrated + shared captaincy model',
+        'engine_version': 6,
+        'projection_model': 'season-maturity calibrated + shared captaincy + mini-league objective',
         'season_maturity_weight': round(maturity, 3),
         'iterations': s.ITERATIONS,
         'horizon_gws': gws,
@@ -171,6 +233,7 @@ def run():
         'remaining_free_transfers_current_deadline': remaining_ft,
         'next_transfer_hit_cost': next_hit_cost,
         'candidate_count': len(results),
+        'league_objective': objective,
         'rivals': rival_meta,
         'recommendation': winner,
         'routes': results,
@@ -180,11 +243,11 @@ def run():
             'baseline_captain_id': baseline_first_cap,
             'note': 'Each route stores exact out/in IDs plus the pre-decision and post-transfer XI/captain selected by the model at decision time. Captaincy uses the same shared model as Pick Team. Frozen lineups can be scored against archived outcomes without hindsight optimisation.'
         },
-        'method_note': 'Monte Carlo decision support from the reconstructed current squad. Early-season form and six-GW model extremes are shrunk toward position/fixture priors. Legal XI selection is followed by the same dedicated captaincy model used in Pick Team, so simulation totals and visible C/V advice stay aligned.',
+        'method_note': 'Monte Carlo decision support from the reconstructed current squad. Expected FPL points remain primary. A transparent mini-league objective adds probability of taking/holding the league lead and expected gap to the strongest rival; its weight grows with season stage and chase pressure so early-season noise cannot force reckless differential play.',
     }
     s.OUT.parent.mkdir(parents=True, exist_ok=True)
     s.OUT.write_text(json.dumps(output, indent=2, ensure_ascii=False) + '\n')
-    print(json.dumps({'status': 'SUCCESS', 'winner': winner, 'iterations': s.ITERATIONS, 'maturity': round(maturity, 3), 'remaining_ft': remaining_ft, 'next_hit_cost': next_hit_cost, 'engine_version': 5, 'captain': baseline_first_cap}))
+    print(json.dumps({'status': 'SUCCESS', 'winner': winner, 'iterations': s.ITERATIONS, 'maturity': round(maturity, 3), 'remaining_ft': remaining_ft, 'next_hit_cost': next_hit_cost, 'engine_version': 6, 'league_posture': objective['posture'], 'captain': baseline_first_cap}))
 
 
 if __name__ == '__main__':
