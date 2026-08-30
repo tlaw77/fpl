@@ -38,7 +38,7 @@ on:
       - ".github/workflows/fpl-etl.yml"
 
 concurrency:
-  group: fpl-etl-main
+  group: fpl-etl-${{ github.ref }}
   cancel-in-progress: true
 
 permissions:
