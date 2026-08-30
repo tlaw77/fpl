@@ -9,11 +9,11 @@ import simulation_engine as s
 from projection_calibration import expected_gw as calibrated_expected_gw, season_maturity
 
 
-def model_lineup(squad, gw, exp):
+def model_lineup(squad, gw, exp, league_context=None):
     means = {pid: v[0] for pid, v in exp.get(gw, {}).items()}
     xi, _ = s.best_xi(squad, means)
     ids = [int(p.get('player_id') or 0) for p in xi]
-    cap_id = cm.choose_captain(squad, ids, gw, exp.get(gw, {}))
+    cap_id = cm.choose_captain(squad, ids, gw, exp.get(gw, {}), league_context=league_context)
     return ids, cap_id
 
 
@@ -60,6 +60,22 @@ def league_objective_state(current_gw, current_rank, me_points, rivals):
     }
 
 
+def compact_captain_mode(row):
+    if not row:
+        return None
+    return {
+        'player_id': int(row.get('player_id') or 0),
+        'player': (row.get('player') or {}).get('player'),
+        'expected_points': round(s.n(row.get('mean')), 2),
+        'captaincy_score': round(s.n(row.get('captaincy_score')), 3),
+        'safe_score': round(s.n(row.get('safe_score')), 3),
+        'chase_score': round(s.n(row.get('chase_score')), 3),
+        'mini_league_ownership_pct': row.get('mini_league_ownership_pct'),
+        'ev_gap_to_best': row.get('ev_gap_to_best'),
+        'chase_eligible': row.get('chase_eligible'),
+    }
+
+
 def run():
     latest = s.load_json(s.LATEST, {})
     pool = s.load_json(s.POOL, {})
@@ -77,6 +93,7 @@ def run():
     current_gw = int(latest.get('current_gw') or max(0, next_gw - 1))
     maturity = season_maturity(current_gw)
     gws = list(range(next_gw, min(39, next_gw + s.HORIZON)))
+    captain_context = cm.build_league_context(latest, current_gw)
 
     raw_ft = latest.get('free_transfers_remaining_next_gw')
     if raw_ft is None:
@@ -110,13 +127,19 @@ def run():
         cand_lineups[c['key']] = {}
         weekly = []
         for gw in gws:
-            lineup = model_lineup(c['squad'], gw, exp)
+            # Only the immediate deadline receives league-state captaincy. Future
+            # gameweeks revert to Best-EV because strategy should be re-optimised
+            # after each deadline rather than pre-committed weeks in advance.
+            context = captain_context if gw == next_gw else None
+            lineup = model_lineup(c['squad'], gw, exp, league_context=context)
             cand_lineups[c['key']][gw] = lineup
             weekly.append(expected_lineup_score(*lineup, gw, exp))
         cand_weekly_means[c['key']] = statistics.fmean(weekly) if weekly else 0.0
 
     baseline_key = next((c['key'] for c in candidates if c.get('move') is None), 'ROLL')
     baseline_first_xi, baseline_first_cap = cand_lineups.get(baseline_key, {}).get(next_gw, ([], 0))
+    baseline_ranked = cm.ranked_candidates(base_squad, baseline_first_xi, next_gw, exp.get(next_gw, {}), league_context=captain_context)
+    baseline_modes = cm.captain_modes(baseline_ranked, captain_context)
 
     rival_lineups = []
     rival_weekly_means = []
@@ -124,13 +147,15 @@ def run():
         bygw = {}
         weekly = []
         for gw in gws:
+            # Rival behaviour uses the football-EV captain model. We do not assume
+            # rivals share our own protect/chase posture.
             lineup = model_lineup(r['squad'], gw, exp)
             bygw[gw] = lineup
             weekly.append(expected_lineup_score(*lineup, gw, exp))
         rival_lineups.append(bygw)
         rival_weekly_means.append(statistics.fmean(weekly) if weekly else 0.0)
 
-    rng = random.Random(str(latest.get('generated_at_utc') or '') + '|simulation-v7-season-win')
+    rng = random.Random(str(latest.get('generated_at_utc') or '') + '|simulation-v8-captain-strategy')
     me_start = s.n((latest.get('me') or {}).get('total_points'))
     current_rank = int((latest.get('me') or {}).get('rank') or (len(rivals) + 1))
     objective = league_objective_state(current_gw, current_rank, me_start, rivals)
@@ -162,9 +187,6 @@ def run():
             rival_scores.append(total)
         best_rival = max(rival_scores, default=me_start)
 
-        # Shared residual-season draws preserve fair route comparisons. The route
-        # changes the horizon score and weakly persistent projected edge; it does
-        # not get a fresh lucky future for each candidate.
         me_residual_draw = rng.gauss(0.0, 1.0)
         rival_residual_draws = [rng.gauss(0.0, 1.0) for _ in rivals]
         terminal_rivals = [
@@ -277,8 +299,8 @@ def run():
     output = {
         'status': 'SUCCESS',
         'generated_at_utc': datetime.now(timezone.utc).isoformat(),
-        'engine_version': 7,
-        'projection_model': 'season-maturity calibrated + shared captaincy + mini-league season-win objective',
+        'engine_version': 8,
+        'projection_model': 'season-maturity calibrated + immediate league-aware captaincy + mini-league season-win objective',
         'season_maturity_weight': round(maturity, 3),
         'iterations': s.ITERATIONS,
         'horizon_gws': gws,
@@ -288,6 +310,16 @@ def run():
         'candidate_count': len(results),
         'league_objective': objective,
         'residual_season_model': residual,
+        'captaincy_strategy': {
+            'posture': captain_context.get('posture'),
+            'season_stage': captain_context.get('season_stage'),
+            'recommended_mode': baseline_modes.get('recommended_mode'),
+            'best_ev': compact_captain_mode(baseline_modes.get('BEST_EV')),
+            'safe': compact_captain_mode(baseline_modes.get('SAFE')),
+            'chase': compact_captain_mode(baseline_modes.get('CHASE')),
+            'applies_to_gw': next_gw,
+            'future_gws_revert_to_best_ev': True,
+        },
         'rivals': rival_meta,
         'recommendation': winner,
         'routes': results,
@@ -295,13 +327,13 @@ def run():
             'target_gw': next_gw,
             'baseline_xi_ids': list(baseline_first_xi),
             'baseline_captain_id': baseline_first_cap,
-            'note': 'Each route stores exact out/in IDs plus the pre-decision and post-transfer XI/captain selected by the model at decision time. Captaincy uses the same shared model as Pick Team. Frozen lineups can be scored against archived outcomes without hindsight optimisation.'
+            'note': 'Each route stores exact out/in IDs plus the pre-decision and post-transfer XI/captain selected by the model at decision time. Immediate captaincy may use the explicit league-state mode; future gameweeks revert to Best-EV and are re-optimised at their own deadlines.'
         },
-        'method_note': 'Expected FPL points remain primary. The explicit player-level Monte Carlo covers the planning horizon. Beyond it, a high-variance mean-reverting residual-season continuation estimates mini-league win probability without assuming current squads persist unchanged. Its influence is confidence-discounted and grows only as season stage makes league state strategically relevant.',
+        'method_note': 'Expected FPL points remain primary. Immediate captaincy uses Safe/Best-EV/Chase logic with an EV-gap guardrail; future captaincy remains Best-EV because league state will be re-evaluated each deadline. The explicit player-level Monte Carlo covers the planning horizon, followed by a high-variance mean-reverting residual-season continuation for mini-league win probability.',
     }
     s.OUT.parent.mkdir(parents=True, exist_ok=True)
     s.OUT.write_text(json.dumps(output, indent=2, ensure_ascii=False) + '\n')
-    print(json.dumps({'status': 'SUCCESS', 'winner': winner, 'iterations': s.ITERATIONS, 'maturity': round(maturity, 3), 'remaining_ft': remaining_ft, 'next_hit_cost': next_hit_cost, 'engine_version': 7, 'league_posture': objective['posture'], 'season_win_confidence': residual.get('confidence'), 'captain': baseline_first_cap}))
+    print(json.dumps({'status': 'SUCCESS', 'winner': winner, 'iterations': s.ITERATIONS, 'maturity': round(maturity, 3), 'remaining_ft': remaining_ft, 'next_hit_cost': next_hit_cost, 'engine_version': 8, 'league_posture': objective['posture'], 'captain_mode': baseline_modes.get('recommended_mode'), 'season_win_confidence': residual.get('confidence'), 'captain': baseline_first_cap}))
 
 
 if __name__ == '__main__':
