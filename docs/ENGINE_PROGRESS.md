@@ -4,11 +4,11 @@ This is the durable progress gauge for the zero-extra-cost, mini-league-winning 
 
 Progress is capability-weighted, not commit-count weighted. A milestone advances only after production-equivalent validation succeeds.
 
-## Current validated progress: 98%
+## Current validated progress: 99%
 
-Last validated milestone: **continuous model-health monitoring with explicit safety contracts and a dedicated CI validation gate**.
+Last validated milestone: **production reconciliation of the feature branch with current `main`, including a freshly regenerated league-aware simulation contract and enforced captain consistency across review, simulation and backtesting**.
 
-Current validation gate: **production integration of the learning/health stack after branch reconciliation, plus longitudinal persistence checks across finalized Gameweeks**.
+Current validation gate: **longitudinal model-health persistence across finalized Gameweeks before production-complete status**.
 
 ## Capability roadmap
 
@@ -24,7 +24,8 @@ Current validation gate: **production integration of the learning/health stack a
 | 86–91% | League-state-aware captaincy: Safe / Best-EV / Chase modes | COMPLETE |
 | 91–96% | Historical calibration and backtesting feedback | COMPLETE |
 | 96–98% | Decision-quality self-evaluation, calibration drift and continuous model-health monitoring | COMPLETE |
-| 98–100% | Production reconciliation and longitudinal health persistence validation | IN PROGRESS |
+| 98–99% | Production reconciliation and cross-layer decision-contract validation | COMPLETE |
+| 99–100% | Longitudinal health persistence across finalized Gameweeks | IN PROGRESS |
 
 ## Validation rules
 
@@ -41,7 +42,8 @@ A capability is not counted complete merely because code exists. It should satis
 9. Model-health monitoring must distinguish insufficient evidence from genuine drift or source degradation.
 10. Model-health CI must assert all health domains, tuning-state contracts and the permanent no-auto-mutation safeguard.
 11. A branch is not considered production-complete while it is materially diverged from `main`; reconciliation must be validated before merge.
-12. No new paid dependency is allowed.
+12. Captaincy presented to the user, used in simulation, and frozen for backtesting must resolve from the same freshly generated decision contract.
+13. No new paid dependency is allowed.
 
 ## Current public/free signal stack
 
@@ -58,6 +60,7 @@ A capability is not counted complete merely because code exists. It should satis
 - Sample-gated calibration audit for points, uncertainty and minutes probabilities.
 - Continuous model-health synthesis across source coverage, disagreement, simulation stability, calibration and realized regret.
 - Dedicated model-health CI contract that keeps early-season LEARNING separate from genuine DEGRADED states and forbids automatic coefficient mutation.
+- Reconciled stability CI that regenerates the league-aware simulation contract before asserting captain consistency with the dedicated review and backtest contract.
 
 ## Strategic objective
 
