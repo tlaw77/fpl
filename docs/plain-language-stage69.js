@@ -1,5 +1,5 @@
 (()=>{
-const BUILD='plain-language-stage69-20260830-1045';
+const BUILD='plain-language-stage69-20260830-1718';
 const RULES=[
  [/activation-adjusted uplift/gi,'realistic current estimate'],
  [/activation-adjusted/gi,'realistic current'],
@@ -22,7 +22,8 @@ const RULES=[
  [/Wildcard squad persistence/gi,'how often the same Wildcard squad stays best'],
  [/squad persistence/gi,'how often the same Wildcard squad stays best'],
  [/simulation points/gi,'modelled points'],
- [/sim pts/gi,'modelled pts'],
+ [/sim pts/gi,'modelled points'],
+ [/modelled pts/gi,'modelled points'],
  [/gain-place chance/gi,'chance of moving up'],
  [/expected league position/gi,'average projected league position'],
  [/reassess chip window/gi,'check again for the best chip week']
