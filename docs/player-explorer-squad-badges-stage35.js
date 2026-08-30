@@ -1,5 +1,5 @@
 (()=>{
-const BUILD='player-explorer-squad-badges-20260830-1851';
+const BUILD='player-explorer-squad-badges-20260830-2015';
 const KEY='fplWorkingPlanV2';
 const norm=s=>String(s||'').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
 function plan(){try{return JSON.parse(localStorage.getItem(KEY)||'null')}catch{return null}}
@@ -7,7 +7,7 @@ function badge(text,title,colour,bg,border,extra=''){const s=document.createElem
 function currentRows(d){return d?.current_squad_next5||d?.current_squad||d?.squad_next5||d?.squad||[]}
 function confirmedIncomingNames(d){const names=new Set();const current=currentRows(d),base=d?.squad_next5||d?.squad||[],baseIds=new Set(base.map(p=>Number(p.player_id)).filter(Boolean));current.forEach(p=>{if(!baseIds.has(Number(p.player_id)))names.add(norm(p.player||p.web_name))});const tx=d?.current_squad_transfers||[];tx.forEach(t=>{const incoming=t.in||t.player_in||t.element_in||t.incoming||null;if(typeof incoming==='object')names.add(norm(incoming.player||incoming.web_name||incoming.name));});return names}
 function apply(){const host=document.getElementById('gp26-rows'),d=window.FPLCoreData;if(!host||!d)return;const actualNames=new Set(currentRows(d).map(p=>norm(p.player||p.web_name)).filter(Boolean)),confirmedIn=confirmedIncomingNames(d),m=plan()?.moves?.[0],workingIn=norm(m?.in?.player),workingOut=norm(m?.out?.player);
- [...host.children].forEach(row=>{const strong=row.querySelector('strong');if(!strong)return;row.querySelectorAll('[data-squad-badge]').forEach(x=>x.remove());let raw=strong.textContent||'';const hadSquad=/\s·\sSQUAD/i.test(raw),hadIn=/\s·\sYOUR IN/i.test(raw),hadOut=/\s·\sYOUR OUT/i.test(raw);raw=raw.replace(/\s·\sSQUAD/gi,'').replace(/\s·\sYOUR IN/gi,'').replace(/\s·\sYOUR OUT/gi,'');const name=norm(raw.replace(/^\d+\.\s*/,'').trim());const isCurrent=actualNames.has(name);strong.textContent=`${raw}${isCurrent?' · SQUAD':''}`;const add=(el)=>{el.dataset.squadBadge='1';strong.appendChild(el)};
+ [...host.children].forEach(row=>{const strong=row.querySelector('strong');if(!strong)return;row.querySelectorAll('[data-squad-badge]').forEach(x=>x.remove());let raw=strong.textContent||'';const hadSquad=/\s·\sSQUAD/i.test(raw),hadIn=/\s·\sYOUR IN/i.test(raw),hadOut=/\s·\sYOUR OUT/i.test(raw);raw=raw.replace(/\s·\sSQUAD/gi,'').replace(/\s·\sYOUR IN/gi,'').replace(/\s·\sYOUR OUT/gi,'');const name=norm(raw.replace(/^\d+\.\s*/,'').trim());const isCurrent=actualNames.has(name);strong.textContent=raw;row.dataset.squadOwned=isCurrent?'1':'0';row.style.boxShadow=isCurrent?'inset 0 0 0 1px rgba(96,165,250,.30)':'';const add=(el)=>{el.dataset.squadBadge='1';strong.appendChild(el)};
  if(confirmedIn.has(name)){add(badge('↗','Committed transfer in · current squad','#86efac','#123326','#34d399'));}
  else if(workingIn&&name===workingIn&&!isCurrent){add(badge('↗','Working transfer in','#fcd34d','#33280f','#fbbf24','','dashed'));}
  else if(isCurrent||hadSquad){add(badge('✓','Current squad','#93c5fd','#142a44','#60a5fa'));}
