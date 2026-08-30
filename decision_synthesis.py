@@ -7,6 +7,7 @@ SIM = Path('data/simulation.json')
 PATH_SIM = Path('data/path_simulation.json')
 ADAPTIVE = Path('data/adaptive_rival_simulation.json')
 CHIPS = Path('data/chip_path_simulation.json')
+CALIBRATION = Path('data/calibration_audit.json')
 OUT = Path('data/decision_synthesis.json')
 
 
@@ -62,6 +63,21 @@ def completed_current_transfer(latest):
         'route': f'{out_name} → {in_name}' if out_name and in_name else None,
         'source': tx.get('source') or tx.get('transfer_source') or latest.get('current_squad_source'),
     }
+
+
+def refresh_calibration_evidence():
+    """Freeze the current next-GW model belief, then audit completed beliefs.
+
+    The projection-history file for target GW N is refreshed only while N is
+    future. Once FPL advances, the next run writes GW N+1 and GW N remains the
+    final pre-GW belief. Calibration never changes current coefficients here.
+    """
+    from projection_snapshot import main as build_projection_snapshot
+    from calibration_audit import main as build_calibration_audit
+
+    build_projection_snapshot()
+    build_calibration_audit()
+    return load(CALIBRATION, {})
 
 
 def run():
@@ -165,12 +181,18 @@ def run():
         chip_action = 'CONSIDER'
         chip_reason = f'{chip_play[0]} in GW{chip_play[2]} has the strongest current visible window, but should still be checked against the remaining half-season portfolio before activation.'
 
+    # Calibration is observational and sample-gated. It records model accuracy but
+    # cannot alter this recommendation automatically.
+    calibration = refresh_calibration_evidence()
+    calibration_rec = calibration.get('recommendation') or {}
+    calibration_metrics = calibration.get('metrics') or {}
+
     next_plan = first_action(path_top) or {}
     adaptive_plan = first_action(adaptive_top) or {}
     output = {
         'status': 'SUCCESS',
         'generated_at_utc': datetime.now(timezone.utc).isoformat(),
-        'version': 2,
+        'version': 3,
         'current_gw': latest.get('current_gw'),
         'next_gw': latest.get('next_gw'),
         'current_action': {
@@ -209,13 +231,22 @@ def run():
             'portfolio_pressure': pressure,
             'latest_safe_start_gw': portfolio.get('latest_safe_start_gw'),
         },
-        'method_note': 'Authoritative decision gate. It synthesises single-step Monte Carlo, multi-GW beam search, probabilistic rival response, live transfer-hit state, season maturity and chip option value. A high-scoring route is promoted only when that same measured route clears both magnitude and cross-model support thresholds.',
+        'calibration': {
+            'status': calibration.get('calibration_status'),
+            'evaluable_gameweeks': calibration_metrics.get('evaluable_gameweeks', 0),
+            'player_observations': calibration_metrics.get('player_observations', 0),
+            'alerts': calibration.get('alerts') or [],
+            'auto_tuning_enabled': bool(calibration_rec.get('auto_tuning_enabled', False)),
+            'instruction': calibration_rec.get('instruction'),
+            'note': 'Calibration evidence is diagnostic only until minimum completed-GW thresholds are met; this layer does not mutate current coefficients automatically.',
+        },
+        'method_note': 'Authoritative decision gate. It synthesises single-step Monte Carlo, multi-GW beam search, probabilistic rival response, live transfer-hit state, season maturity and chip option value. A high-scoring route is promoted only when that same measured route clears both magnitude and cross-model support thresholds. Projection calibration is tracked separately and sample-gated to prevent tiny-sample self-tuning.',
     }
 
     latest['decision_synthesis'] = output
     LATEST.write_text(json.dumps(latest, indent=2, ensure_ascii=False) + '\n')
     OUT.write_text(json.dumps(output, indent=2, ensure_ascii=False) + '\n')
-    print(json.dumps({'status': 'SUCCESS', 'action': action, 'headline': headline, 'sim_edge': round(sim_edge, 2), 'measured_support': measured_leader_support, 'chip_action': chip_action}))
+    print(json.dumps({'status': 'SUCCESS', 'action': action, 'headline': headline, 'sim_edge': round(sim_edge, 2), 'measured_support': measured_leader_support, 'chip_action': chip_action, 'calibration_status': calibration.get('calibration_status')}))
 
 
 if __name__ == '__main__':
