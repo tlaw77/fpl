@@ -8,6 +8,8 @@ on:
   push:
     paths:
       - "simulation_engine_v2.py"
+      - "simulation_engine_v2_deadline.py"
+      - "simulation_budget.py"
       - "simulation_stability.py"
       - "chip_activation_gate.py"
       - "triple_captain_review.py"
@@ -36,8 +38,8 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Refresh league-aware simulation contract
-        run: python simulation_engine_v2.py
+      - name: Refresh deadline-aware league simulation contract
+        run: python simulation_engine_v2_deadline.py
       - name: Build stability history
         run: python simulation_stability.py
       - name: Build owned-squad Triple Captain review
@@ -59,6 +61,8 @@ jobs:
           cap = json.loads(Path('data/captaincy_review.json').read_text())
           sim = json.loads(Path('data/simulation.json').read_text())
           backtest = json.loads(Path('data/backtest_summary.json').read_text())
+          latest = json.loads(Path('data/latest.json').read_text())
+
           assert data['status'] == 'SUCCESS'
           assert data.get('version', 0) >= 2
           assert data.get('snapshot_count', 0) >= 1
@@ -68,6 +72,15 @@ jobs:
           assert float(summary.get('effective_evidence_runs', 0)) > 0
           assert 0 <= float(summary.get('action_persistence_pct', 0)) <= 100
           assert 0 <= float(summary.get('leader_persistence_pct', 0)) <= 100
+
+          assert sim['status'] == 'SUCCESS'
+          assert sim.get('engine_version', 0) >= 9
+          assert sim.get('deadline_aware_iterations') is True
+          policy = sim.get('iteration_policy') or {}
+          assert policy.get('deadline_phase') == (latest.get('deadline_context') or {}).get('phase')
+          assert int(policy.get('iterations') or 0) == int(sim.get('iterations') or 0)
+          assert (sim.get('league_objective') or {}).get('posture') in ('PROTECT_EDGE','BALANCED','CONTROLLED_CHASE','CHASE')
+
           assert gate['status'] == 'SUCCESS'
           assert gate.get('version', 0) >= 2
           for key in ('wildcard','free_hit','bench_boost','triple_captain'):
@@ -77,6 +90,7 @@ jobs:
           assert tc.get('decision', {}).get('status') in ('HOLD','WATCH','CONSIDER')
           assert len(tc.get('current_gw_shortlist', [])) >= 1
           assert gate['triple_captain']['status'] == tc['decision']['status']
+
           assert cap['status'] == 'SUCCESS'
           assert cap.get('version', 0) >= 3
           assert cap.get('captain') is not None
@@ -89,7 +103,6 @@ jobs:
           if float(league.get('season_stage') or 0) < .35:
               assert league.get('recommended_mode') == 'BEST_EV', 'Early-season captaincy must remain EV-led'
 
-          # Keep the user-facing review and simulation contract on the same captain.
           cap_id = int(cap['captain'].get('player_id') or 0)
           cap_xi = {int(x) for x in cap.get('recommended_xi_ids', [])}
           sim_contract = sim.get('backtest_contract') or {}
@@ -102,7 +115,7 @@ jobs:
           assert backtest['status'] == 'SUCCESS'
           assert backtest.get('version', 0) >= 2
           assert backtest.get('evaluable_gameweeks', 0) >= 0
-          print('Simulation stability, chip gate, league-aware captaincy, captain consistency and backtest validation passed')
+          print('Reconciled stability, deadline budget, league captaincy and backtest validation passed')
           PY
       - name: Commit supplemental snapshots
         if: github.event_name != 'push' || github.ref_name == 'main'
