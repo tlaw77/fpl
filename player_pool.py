@@ -3,11 +3,13 @@ from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 
+from minutes_model import expected_minutes_profile
+
 BASE='https://fantasy.premierleague.com/api'
 LATEST=Path('data/latest.json'); OUT=Path('data/player_pool.json'); SCHEDULE=Path('data/schedule_load.json')
 
 def get(url):
-    req=urllib.request.Request(url,headers={'User-Agent':'fpl-player-pool/1.4'})
+    req=urllib.request.Request(url,headers={'User-Agent':'fpl-player-pool/1.5'})
     with urllib.request.urlopen(req,timeout=30) as r:return json.load(r)
 
 def dt(s):
@@ -29,7 +31,6 @@ def workload_modifier(base_mod,minutes,away=False):
     if minutes is None:return base_mod
     mins=max(0,min(120,float(minutes)))
     participation=min(1.0,mins/90.0)
-    # Rested/unused players should not inherit the full club congestion penalty.
     mod=1.0-(1.0-base_mod)*participation
     if away and mins>=60:mod-=.015
     return max(.78,min(1.0,mod))
@@ -40,28 +41,6 @@ def workload_band(minutes):
     if minutes>=55:return 'Moderate'
     if minutes>=25:return 'Light'
     return 'Rested / cameo'
-
-def expected_minutes_signal(p,current_gw,reliability,position):
-    """Conservative free xMins estimate from official FPL starts/minutes.
-
-    It is intentionally shrunk hard in opening GWs. The aim is not to claim
-    lineup certainty; it provides a separate rotation/minutes signal that the
-    projection model can combine with availability, Scout and schedule load.
-    """
-    priors={'GKP':82.0,'DEF':70.0,'MID':68.0,'FWD':67.0}
-    prior=priors.get(position,68.0)
-    games=max(1,int(current_gw or 1))
-    starts=max(0.0,f(p.get('starts')))
-    minutes=max(0.0,f(p.get('minutes')))
-    mpg=min(90.0,minutes/games)
-    start_rate=min(1.0,starts/games)
-    # Current-season evidence is useful but deliberately cannot dominate early.
-    evidence=min(.78,max(.12,reliability*.72))
-    observed=mpg
-    if starts>0:
-        observed=max(observed,min(86.0,(minutes/max(starts,1))*start_rate))
-    xmins=prior*(1-evidence)+observed*evidence
-    return round(max(8.0,min(88.0,xmins)),1),round(start_rate,3)
 
 def main():
     b=get(f'{BASE}/bootstrap-static/'); fixtures=get(f'{BASE}/fixtures/')
@@ -90,6 +69,7 @@ def main():
     mine={x.get('player_id') for x in (latest.get('current_squad_next5') or latest.get('squad_next5') or [])}
     player_load=(schedule.get('players') or {})
     rows=[]
+    relevant_workload_players=0
     for p in b['elements']:
         if p.get('status')=='u':continue
         fs=fx.get(p['team'],[])[:6]
@@ -125,6 +105,7 @@ def main():
         midweek_away=(closest_app[1].get('home_away')=='away') if closest_app else False
         player_sched_mod=workload_modifier(club_sched_mod,midweek_minutes,midweek_away) if closest else 1.0
         adjusted_avail=max(0,min(1,avail*player_sched_mod))
+        if midweek_minutes is not None: relevant_workload_players+=1
 
         horizon_extra=[]
         horizon_start=dt(fs[0].get('kickoff_time')) if fs else None
@@ -133,12 +114,12 @@ def main():
             horizon_extra=[e for e in extras if dt(e.get('date')) and horizon_start-datetime.resolution<=dt(e.get('date'))<=horizon_end+datetime.resolution]
         congestion_penalty=min(1.2,len(horizon_extra)*.10+(1-player_sched_mod)*2.2)
 
-        xmins,start_rate=expected_minutes_signal(p,current_gw,reliability,position)
+        minutes_profile=expected_minutes_profile(p,current_gw,reliability,position,adjusted_avail)
+        xmins=minutes_profile['expected_minutes']
         xg=f(p.get('expected_goals')); xa=f(p.get('expected_assists')); xgi=f(p.get('expected_goal_involvements'),xg+xa)
         xg90=f(p.get('expected_goals_per_90')); xa90=f(p.get('expected_assists_per_90'))
         xgi90=f(p.get('expected_goal_involvements_per_90'),xg90+xa90)
         ep_next=f(p.get('ep_next'))
-        # Underlying contribution is intentionally small and maturity-weighted.
         pos_xgi_prior={'GKP':.01,'DEF':.10,'MID':.30,'FWD':.42}.get(position,.25)
         underlying_edge=max(-.20,min(.35,xgi90-pos_xgi_prior))
         underlying_bonus=underlying_edge*2.4*reliability
@@ -168,7 +149,13 @@ def main():
                      'midweek_started':midweek_started,'midweek_away':midweek_away if closest_app else None,
                      'midweek_workload':workload_band(midweek_minutes),'recent_non_pl_minutes':round(recent_minutes,1),
                      'player_workload_observed':midweek_minutes is not None,
-                     'expected_minutes':xmins,'observed_start_rate':start_rate,'season_starts':int(f(p.get('starts'))),'season_minutes':int(f(p.get('minutes'))),
+                     'expected_minutes':xmins,'observed_start_rate':minutes_profile['observed_start_rate'],
+                     'prob_appearance':minutes_profile['prob_appearance'],'prob_start':minutes_profile['prob_start'],
+                     'prob_cameo':minutes_profile['prob_cameo'],'prob_60_plus':minutes_profile['prob_60_plus'],
+                     'prob_80_plus':minutes_profile['prob_80_plus'],'minutes_band':minutes_profile['minutes_band'],
+                     'minutes_confidence':minutes_profile['confidence'],'minutes_confidence_score':minutes_profile['confidence_score'],
+                     'minutes_evidence_weight':minutes_profile['evidence_weight'],
+                     'season_starts':int(f(p.get('starts'))),'season_minutes':int(f(p.get('minutes'))),
                      'expected_goals':round(xg,3),'expected_assists':round(xa,3),'expected_goal_involvements':round(xgi,3),
                      'expected_goals_per_90':round(xg90,3),'expected_assists_per_90':round(xa90,3),'expected_goal_involvements_per_90':round(xgi90,3),
                      'official_ep_next':round(ep_next,2),'team_strength':team_signals.get(p['team'],{}),
@@ -178,9 +165,11 @@ def main():
     rows.sort(key=lambda x:x['six_gw_score'],reverse=True)
     OUT.write_text(json.dumps({'status':'SUCCESS','generated_at_utc':datetime.now(timezone.utc).isoformat(),'current_gw':current_gw,'next_gw':next_gw,
                                'horizon':6,'sample_reliability':round(reliability,2),'schedule_load_source':schedule.get('source'),
-                               'schedule_load_coverage':schedule.get('coverage',[]),'player_workload_source':'ESPN match summaries where available',
+                               'schedule_load_coverage':schedule.get('coverage',[]),'player_workload_source':'FotMob public match lineups where available',
+                               'schedule_player_observation_count':schedule.get('player_minute_observations',0),
+                               'workload_observations_relevant_to_next_pl':relevant_workload_players,
+                               'minutes_model':'probabilistic_v2','minutes_model_outputs':['expected_minutes','prob_appearance','prob_start','prob_cameo','prob_60_plus','prob_80_plus'],
                                'public_signal_sources':['Official FPL bootstrap expected stats','Official FPL starts/minutes','Official FPL team strength'],
                                'players':rows},indent=2,ensure_ascii=False)+'\n')
-    observed=sum(1 for x in rows if x.get('player_workload_observed'))
-    print(f'Wrote {OUT} with {len(rows)} players, reliability={reliability:.2f}, observed workloads={observed}')
+    print(f'Wrote {OUT} with {len(rows)} players, reliability={reliability:.2f}, schedule observations={schedule.get("player_minute_observations",0)}, relevant workloads={relevant_workload_players}')
 if __name__=='__main__':main()
