@@ -7,6 +7,7 @@ on:
       - feature/public-signal-layer
     paths:
       - "market_strength.py"
+      - "minutes_model.py"
       - "player_pool.py"
       - "projection_calibration.py"
       - "docs/PUBLIC_SIGNAL_INTEGRATION.md"
@@ -29,7 +30,31 @@ jobs:
 
       - name: Compile changed model files
         run: |
-          python -m py_compile market_strength.py player_pool.py projection_calibration.py
+          python -m py_compile market_strength.py minutes_model.py player_pool.py projection_calibration.py
+
+      - name: Validate probabilistic minutes model
+        run: |
+          python - <<'PY'
+          from minutes_model import expected_minutes_profile
+
+          cases = [
+              ({'starts': 2, 'minutes': 180}, 'MID', 1.0),
+              ({'starts': 0, 'minutes': 55}, 'MID', 1.0),
+              ({'starts': 1, 'minutes': 80}, 'FWD', .75),
+              ({'starts': 2, 'minutes': 180}, 'GKP', .25),
+          ]
+          profiles = []
+          for player, position, availability in cases:
+              p = expected_minutes_profile(player, current_gw=2, reliability=.4, position=position, availability=availability)
+              assert 0 <= p['prob_80_plus'] <= p['prob_60_plus'] <= p['prob_start'] <= p['prob_appearance'] <= 1, p
+              assert 0 <= p['prob_cameo'] <= 1, p
+              assert abs((p['prob_start'] + p['prob_cameo']) - p['prob_appearance']) < .002, p
+              assert 2 <= p['expected_minutes'] <= 89, p
+              profiles.append(p)
+          assert profiles[0]['prob_start'] > profiles[1]['prob_start'], profiles
+          assert profiles[3]['prob_start'] < profiles[0]['prob_start'], profiles
+          print({'status': 'SUCCESS', 'profiles': profiles})
+          PY
 
       - name: Build independent market-strength snapshot
         run: python market_strength.py
