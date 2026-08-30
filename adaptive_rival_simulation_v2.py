@@ -7,6 +7,7 @@ from datetime import datetime, timezone
 
 import current_squad as cs
 import path_simulation as p
+import simulation_budget as sb
 import simulation_engine as s
 from projection_calibration import expected_gw as calibrated_expected_gw, season_maturity
 
@@ -15,7 +16,6 @@ if OUT is None:
     from pathlib import Path
     OUT = Path('data/adaptive_rival_simulation.json')
 
-ITERATIONS = 1800
 MAX_PATHS = 8
 POLICY_VARIANTS = 14
 MOVE_THRESHOLD = 0.45
@@ -64,14 +64,11 @@ def rival_behaviour(rival, current_gw):
     rows = [x for x in transfer_history(rival.get('entry_id')) if int(x.get('event') or 0) <= current_gw]
     events = sorted({int(x.get('event') or 0) for x in rows if int(x.get('event') or 0) > 0})
     active_events = len(events)
-    hits = 0
     counts = {}
     for x in rows:
         ev = int(x.get('event') or 0)
         counts[ev] = counts.get(ev, 0) + 1
     hits = sum(max(0, c - 1) for c in counts.values())
-
-    # Beta prior: typical manager acts in roughly half of deadlines; tiny samples remain close to prior.
     alpha, beta = 2.2, 2.2
     action_prob = (alpha + active_events) / (alpha + beta + max(1, current_gw))
     action_prob = max(.32, min(.78, action_prob))
@@ -88,7 +85,6 @@ def choose_move(rng, moves):
     plausible = [m for m in moves[:4] if float(m.get('uplift') or 0) >= MOVE_THRESHOLD]
     if not plausible:
         return None
-    # Mostly rational, but not omniscient: weighted random selection among plausible moves.
     weights = [math.exp(min(2.2, max(0.0, float(m.get('uplift') or 0)) * .18)) for m in plausible]
     total = sum(weights)
     r = rng.random() * total
@@ -129,6 +125,8 @@ def run():
     path_data = s.load_json(p.OUT, {})
     if path_data.get('status') != 'SUCCESS':
         raise RuntimeError('Path simulation is not ready')
+    iterations = sb.iterations(latest, 'adaptive')
+    iteration_policy = sb.metadata(latest, 'adaptive')
 
     by_id, by_name = s.player_maps(pool)
     scout_maps, market_maps = s.scout_lookup(scout), s.market_lookup(market)
@@ -160,13 +158,8 @@ def run():
     base_seed = str(latest.get('generated_at_utc') or '')
     for r in rivals:
         behaviour = rival_behaviour(r, current_gw)
-        behaviour_rows.append({
-            'entry_id': r.get('entry_id'), 'team_name': r.get('team_name'), 'rank': r.get('rank'), **behaviour
-        })
-        variants = [
-            make_policy_variant(r, behaviour, gws, pool_rows, exp, f'{base_seed}|{r.get("entry_id")}|{k}')
-            for k in range(POLICY_VARIANTS)
-        ]
+        behaviour_rows.append({'entry_id': r.get('entry_id'), 'team_name': r.get('team_name'), 'rank': r.get('rank'), **behaviour})
+        variants = [make_policy_variant(r, behaviour, gws, pool_rows, exp, f'{base_seed}|{r.get("entry_id")}|{k}') for k in range(POLICY_VARIANTS)]
         rival_variants.append(variants)
 
     universe = set()
@@ -179,7 +172,7 @@ def run():
                 universe.update(p.pid(x) for x in sq)
     universe.discard(0)
 
-    rng = random.Random(base_seed + '|adaptive-rivals-v2')
+    rng = random.Random(base_seed + '|adaptive-rivals-v3-deadline-budget')
     me_start = s.n((latest.get('me') or {}).get('total_points'))
     current_rank = int((latest.get('me') or {}).get('rank') or len(rivals) + 1)
     totals = [[] for _ in my_paths]
@@ -187,11 +180,8 @@ def run():
     gain = [0 for _ in my_paths]
     beat = [[0 for _ in rivals] for _ in my_paths]
 
-    for _ in range(ITERATIONS):
-        outcomes = {
-            gw: {pid: s.sample_points(rng, *exp[gw].get(pid, (0, .85))) for pid in universe}
-            for gw in gws
-        }
+    for _ in range(iterations):
+        outcomes = {gw: {pid: s.sample_points(rng, *exp[gw].get(pid, (0, .85))) for pid in universe} for gw in gws}
         rival_scores = []
         for i, r in enumerate(rivals):
             variant = rival_variants[i][rng.randrange(len(rival_variants[i]))]
@@ -230,8 +220,8 @@ def run():
             'p10_points': round(p10, 2),
             'p90_points': round(p90, 2),
             'expected_rank_after_path': round(exp_rank, 2),
-            'prob_gain_league_place': round(gain[j] / ITERATIONS, 3),
-            'prob_finish_ahead_each_rival': [round(x / ITERATIONS, 3) for x in beat[j]],
+            'prob_gain_league_place': round(gain[j] / iterations, 3),
+            'prob_finish_ahead_each_rival': [round(x / iterations, 3) for x in beat[j]],
             'static_rival_expected_rank': static.get('expected_rank_after_path'),
             'probabilistic_rival_rank_penalty': round(exp_rank - s.n(static.get('expected_rank_after_path'), exp_rank), 2),
             'utility_score': round(utility, 3),
@@ -241,20 +231,21 @@ def run():
     output = {
         'status': 'SUCCESS',
         'generated_at_utc': datetime.now(timezone.utc).isoformat(),
-        'engine_version': 2,
-        'iterations': ITERATIONS,
+        'engine_version': 3,
+        'iterations': iterations,
+        'iteration_policy': iteration_policy,
         'horizon_gws': gws,
-        'projection_model': 'season-maturity calibrated',
+        'projection_model': 'season-maturity calibrated + shared captaincy model',
         'season_maturity_weight': round(maturity, 3),
         'rival_policy': 'probabilistic bounded transfer behaviour learned from observed FPL transfer history; no hidden bank; no assumed hits',
         'policy_variants_per_rival': POLICY_VARIANTS,
         'rival_behaviour': behaviour_rows,
         'recommendation': results[0] if results else None,
         'paths': results,
-        'method_note': 'Challenger model. Rivals are not assumed to optimise perfectly every deadline. Each rival receives multiple plausible roll/transfer paths, with action probability shrunk toward a population prior using observed transfer history. Candidate moves remain rational but noisy, and projections use the same season-maturity calibration as the primary engine.',
+        'method_note': 'Challenger model. Rivals are not assumed to optimise perfectly every deadline. Each rival receives multiple plausible roll/transfer paths, with action probability shrunk toward a population prior using observed transfer history. Candidate moves remain rational but noisy. Sampling precision increases as the official FPL deadline approaches.',
     }
     OUT.write_text(json.dumps(output, indent=2, ensure_ascii=False) + '\n')
-    print(json.dumps({'status': 'SUCCESS', 'best': output['recommendation'], 'paths': len(results), 'maturity': round(maturity, 3)}))
+    print(json.dumps({'status': 'SUCCESS', 'best': output['recommendation'], 'paths': len(results), 'maturity': round(maturity, 3), 'iterations': iterations, 'deadline_phase': iteration_policy['deadline_phase']}))
 
 
 if __name__ == '__main__':
