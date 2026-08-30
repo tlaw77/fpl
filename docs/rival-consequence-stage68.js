@@ -1,9 +1,9 @@
 (()=>{
-const BUILD='rival-consequence-stage68-20260830-1025';
+const BUILD='rival-consequence-stage68-20260830-1046';
 const RAW='https://raw.githubusercontent.com/tlaw77/fpl/main/data/';
 const ADAPT=RAW+'adaptive_rival_simulation.json', SYN=RAW+'decision_synthesis.json';
 const n=(v,d=0)=>Number.isFinite(Number(v))?Number(v):d;
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#039;'}[c]));
 let adaptive=null,synth=null,timer=null,observer=null;
 async function get(url){const r=await fetch(`${url}?r68=${Date.now()}`,{cache:'no-store'});if(!r.ok)throw new Error(String(r.status));return r.json()}
 function rivalRows(){const rows=window.FPLCoreData?.rivals||[];return rows.slice().sort((a,b)=>n(a.rank,999)-n(b.rank,999))}
@@ -22,9 +22,9 @@ function build(){
  const currentRank=n(window.FPLCoreData?.me?.rank,0);
  const gap=n(target.gap_to_me,0);
  const penalty=n(rec.probabilistic_rival_rank_penalty,0);
- const action=synth?.current_action?.headline||synth?.current_action?.action||'Current Decision';
+ const action=synth?.current_action?.headline||synth?.current_action?.action||'Current decision';
  const targetLabel=target.team_name||catchable.behaviour?.team_name||'nearest rival';
- return `<section class="outlook-card rival-consequence-card" data-rival-consequence-stage="68"><div class="outlook-refresh"><div><p class="eyebrow">MINI-LEAGUE CONSEQUENCE · 4GW ADAPTIVE SCENARIO</p><h3>${currentRank?`From #${currentRank} toward #${expectedRank.toFixed(1)}`:`Expected rank ${expectedRank.toFixed(1)}`}</h3></div><span class="outlook-chip ${gainPct>=60?'good':'warn'}">${gainPct}% gain-place chance</span></div><div class="rival-consequence-grid"><div class="rival-consequence-metric"><b>#${expectedRank.toFixed(1)}</b><span>expected league position</span></div><div class="rival-consequence-metric"><b>${gainPct}%</b><span>chance to gain ≥1 place</span></div><div class="rival-consequence-metric"><b>${penalty>=0?'+':''}${penalty.toFixed(2)}</b><span>rank drag from rival reactions</span></div></div><div class="rival-consequence-target"><div><strong>Most catchable · ${esc(targetLabel)}</strong><small>${gap>0?`${gap.toFixed(0)} pts ahead now · `:''}adaptive model includes plausible rival transfers rather than assuming they stand still.</small></div><div class="rival-consequence-prob">${catchPct}%</div></div><p class="rival-consequence-note">Context only: this does not override <b>${esc(action)}</b>. League leverage can strengthen or weaken a sound FPL decision, but it is not allowed to manufacture a bad transfer.</p></section>`;
+ return `<section class="outlook-card rival-consequence-card" data-rival-consequence-stage="68"><div class="outlook-refresh"><div><p class="eyebrow">MINI-LEAGUE OUTLOOK · NEXT 4 GWS</p><h3>${currentRank?`Currently #${currentRank} · average projected position #${expectedRank.toFixed(1)}`:`Average projected position #${expectedRank.toFixed(1)}`}</h3></div><span class="outlook-chip ${gainPct>=60?'good':'warn'}">${gainPct}% chance of moving up</span></div><div class="rival-consequence-grid"><div class="rival-consequence-metric"><b>#${expectedRank.toFixed(1)}</b><span>average projected position</span></div><div class="rival-consequence-metric"><b>${gainPct}%</b><span>chance of gaining at least 1 place</span></div><div class="rival-consequence-metric"><b>${penalty>=0?'+':''}${penalty.toFixed(2)}</b><span>effect if rivals make good moves</span></div></div><div class="rival-consequence-target"><div><strong>Best chance to catch · ${esc(targetLabel)}</strong><small>${gap>0?`${gap.toFixed(0)} pts ahead now · `:''}the forecast allows for rivals making plausible transfers instead of assuming their teams stay unchanged.</small></div><div class="rival-consequence-prob">${catchPct}%</div></div><p class="rival-consequence-note">This is supporting context only and does not replace <b>${esc(action)}</b>. Mini-league information can strengthen or weaken a good FPL move, but it cannot turn a weak transfer into a recommendation.</p></section>`;
 }
 function attach(){
  const out=document.querySelector('#dc-team-view .team-outlook');
