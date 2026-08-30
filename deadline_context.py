@@ -64,13 +64,36 @@ def run():
     data['hours_to_deadline'] = hours
     data['deadline_context'] = context
 
+    current_gw = int(data.get('current_gw') or 0)
+    current_fixtures = []
+    if current_gw:
+        fixtures = get_json(f'{BASE}/fixtures/?event={current_gw}')
+        for f in fixtures if isinstance(fixtures, list) else []:
+            current_fixtures.append({
+                'id': f.get('id'),
+                'event': f.get('event'),
+                'team_h': f.get('team_h'),
+                'team_a': f.get('team_a'),
+                'kickoff_time': f.get('kickoff_time'),
+                'started': bool(f.get('started')),
+                'finished': bool(f.get('finished')),
+                'finished_provisional': bool(f.get('finished_provisional')),
+                'minutes': f.get('minutes'),
+            })
+    data['current_gw_fixtures'] = current_fixtures
+    data['current_gw_fixture_status'] = {
+        'gw': current_gw,
+        'source': 'official_fpl_fixtures',
+        'captured_at_utc': now.isoformat(),
+        'fixture_count': len(current_fixtures),
+    }
+
     payload = json.dumps(data, indent=2, ensure_ascii=False) + '\n'
     LATEST.write_text(payload, encoding='utf-8')
-    current_gw = int(data.get('current_gw') or 0)
     if current_gw:
         Path(f'data/gw{current_gw}.json').write_text(payload, encoding='utf-8')
 
-    print(json.dumps({'status': 'SUCCESS', **context}))
+    print(json.dumps({'status': 'SUCCESS', **context, 'current_gw_fixture_count': len(current_fixtures)}))
 
 
 if __name__ == '__main__':
