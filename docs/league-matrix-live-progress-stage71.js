@@ -1,0 +1,21 @@
+(()=>{
+const BUILD='league-matrix-live-progress-stage71-20260830-1603';
+const API='https://fantasy.premierleague.com/api';
+let fixtureCache={gw:null,at:0,fixtures:[]},timer=null,observer=null,poll=null;
+const n=(v,d=0)=>Number.isFinite(Number(v))?Number(v):d;
+function section(){return [...document.querySelectorAll('#view-intel .dc-card')].find(s=>/MANAGER MATRIX/i.test(s.querySelector('.eyebrow')?.textContent||''))}
+function managers(d){return [{...(d.me||{}),picks:d.squad||[],isMe:true},...(d.rivals||[]).map(x=>({...x,isMe:false}))].sort((a,b)=>n(a.rank,999)-n(b.rank,999))}
+function activeXI(m){return (m.picks||[]).filter(p=>n(p.multiplier)>0||p.starter===true).slice(0,11)}
+async function fixturesFor(gw){const now=Date.now();if(fixtureCache.gw===gw&&now-fixtureCache.at<60000&&fixtureCache.fixtures.length)return fixtureCache.fixtures;try{const r=await fetch(`${API}/fixtures/?event=${gw}&progress71=${now}`,{cache:'no-store'});if(!r.ok)throw new Error(`HTTP ${r.status}`);const fs=await r.json();fixtureCache={gw,at:now,fixtures:Array.isArray(fs)?fs:[]};return fixtureCache.fixtures}catch{return fixtureCache.fixtures||[]}}
+function teamStates(fixtures){const by=new Map();for(const f of fixtures||[]){for(const tid of [Number(f.team_h),Number(f.team_a)]){if(!tid)continue;if(!by.has(tid))by.set(tid,[]);by.get(tid).push(f)}}return by}
+function playerState(p,by){const fs=by.get(Number(p.team_id))||[];if(!fs.length)return 'done';if(fs.some(f=>f.started&&!f.finished&&!f.finished_provisional))return 'live';if(fs.some(f=>!f.started&&!f.finished&&!f.finished_provisional))return 'left';return 'done'}
+function progress(m,by){const xi=activeXI(m);let done=0,live=0,left=0;for(const p of xi){const s=playerState(p,by);if(s==='live')live++;else if(s==='left')left++;else done++}const total=xi.length||11;return {done,live,left,total}}
+function label(x){if(x.left===0&&x.live===0)return `${x.done}/${x.total} done · complete`;const bits=[`${x.done} done`];if(x.live)bits.push(`${x.live} live`);if(x.left)bits.push(`${x.left} left`);return bits.join(' · ')}
+function findManagerCell(sec,name){const target=String(name||'').trim();if(!target)return null;const strong=[...sec.querySelectorAll('strong')].find(x=>(x.textContent||'').trim()===target);if(!strong)return null;const cell=strong.parentElement;return cell&&cell.querySelector('span')?cell:null}
+async function decorate(){const d=window.FPLCoreData,sec=section();if(!d||!sec)return;const gw=n(d.current_gw);if(!gw)return;const fixtures=await fixturesFor(gw),by=teamStates(fixtures);for(const m of managers(d)){const cell=findManagerCell(sec,m.team_name);if(!cell)continue;const p=progress(m,by);let el=cell.querySelector('[data-live-xi-progress]');if(!el){el=document.createElement('span');el.dataset.liveXiProgress='1';el.style.cssText='font-size:6.2px;color:#8fa2bd;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block;margin-top:2px';cell.appendChild(el)}el.textContent=label(p);el.title=`Starting XI progress: ${p.done} finished, ${p.live} playing now, ${p.left} still to play`;const row=cell.parentElement;if(row){const score=[...row.children].find(x=>/Live GW score/i.test(x.getAttribute?.('title')||''));if(score)score.title=`${score.title.split(' · ')[0]} · ${label(p)}`}}
+document.documentElement.dataset.leagueMatrixLiveProgressBuild=BUILD}
+function schedule(){clearTimeout(timer);timer=setTimeout(decorate,120)}
+function watch(){const host=document.getElementById('dc-intel-view');if(!host||observer)return;observer=new MutationObserver(schedule);observer.observe(host,{childList:true,subtree:true})}
+function bind(){watch();[250,700,1500,2600].forEach(ms=>setTimeout(decorate,ms));document.querySelector('#decision-nav button[data-view="intel"]')?.addEventListener('click',()=>[120,500,1100].forEach(ms=>setTimeout(decorate,ms)),{passive:true});window.addEventListener('fplCoreDataReady',()=>[160,650].forEach(ms=>setTimeout(decorate,ms)),{passive:true});poll=setInterval(()=>{const view=document.getElementById('view-intel');if(view?.classList.contains('active'))decorate()},60000)}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind,{once:true});else bind();
+})();
