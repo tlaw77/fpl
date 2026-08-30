@@ -7,6 +7,7 @@ on:
   workflow_dispatch:
   push:
     paths:
+      - "simulation_engine_v2.py"
       - "simulation_stability.py"
       - "chip_activation_gate.py"
       - "triple_captain_review.py"
@@ -35,6 +36,8 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Refresh league-aware simulation contract
+        run: python simulation_engine_v2.py
       - name: Build stability history
         run: python simulation_stability.py
       - name: Build owned-squad Triple Captain review
