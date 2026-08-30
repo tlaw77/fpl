@@ -36,6 +36,11 @@ def first_route(obj):
     return rec.get('route') or rec.get('label')
 
 
+def wc_signature(wc):
+    ids = sorted(int(x.get('player_id') or 0) for x in (wc or {}).get('squad', []) if int(x.get('player_id') or 0))
+    return '-'.join(str(x) for x in ids) if len(ids) == 15 else None
+
+
 def snapshot():
     latest = load(LATEST, {})
     synth = load(SYNTH, {})
@@ -71,6 +76,7 @@ def snapshot():
         'best_fh_gw': fh.get('gw'),
         'best_fh_gain': fh.get('incremental_expected_points_vs_current_squad'),
         'wc_gain': wc.get('incremental_expected_points_vs_current_squad'),
+        'wc_squad_signature': wc_signature(wc),
         'wc_budget_confidence': full.get('budget_confidence'),
         'season_maturity_weight': robust.get('season_maturity_weight', full.get('season_maturity_weight')),
         'deep_sim_generated_at_utc': full.get('generated_at_utc'),
@@ -84,7 +90,7 @@ def materially_duplicate(a, b):
     keys = [
         'next_gw','action','confidence','single_step_leader','transfer_clears_gate',
         'multi_gw_first_route','adaptive_first_route','best_tc_gw','best_bb_gw',
-        'best_fh_gw','deep_sim_input_signature','completed_transfer'
+        'best_fh_gw','deep_sim_input_signature','completed_transfer','wc_squad_signature'
     ]
     if not all(a.get(k) == b.get(k) for k in keys):
         return False
@@ -101,7 +107,7 @@ def evidence_weight(prev, cur):
         return 1.0, 'initial'
     material_keys = [
         'next_gw','completed_transfer','action','single_step_leader','transfer_clears_gate',
-        'multi_gw_first_route','adaptive_first_route','best_tc_gw','best_bb_gw','best_fh_gw'
+        'multi_gw_first_route','adaptive_first_route','best_tc_gw','best_bb_gw','best_fh_gw','wc_squad_signature'
     ]
     if prev.get('deep_sim_input_signature') != cur.get('deep_sim_input_signature'):
         return 1.0, 'deep-input-change'
@@ -147,6 +153,8 @@ def summarize(snaps):
     route, route_runs, route_weight = weighted_mode(recent, 'multi_gw_first_route')
     fh_gw, fh_runs, fh_weight = weighted_mode(recent, 'best_fh_gw')
     leader_mode, _, _ = weighted_mode(recent, 'single_step_leader')
+    wc_mode, wc_mode_runs, wc_mode_weight = weighted_mode(recent, 'wc_squad_signature')
+    wc_latest = latest.get('wc_squad_signature')
     return {
         'window_runs': total,
         'effective_evidence_runs': total_weight,
@@ -165,19 +173,26 @@ def summarize(snaps):
         'best_fh_gw_mode_runs': fh_runs,
         'best_fh_gw_mode_weight': fh_weight,
         'average_wc_raw_gain': weighted_avg(recent, 'wc_gain'),
+        'wc_latest_squad_signature': wc_latest,
+        'wc_modal_squad_signature': wc_mode,
+        'wc_modal_squad_runs': wc_mode_runs,
+        'wc_modal_squad_weight': wc_mode_weight,
+        'wc_latest_squad_persistence_pct': weighted_pct(recent, lambda x: wc_latest is not None and x.get('wc_squad_signature') == wc_latest),
+        'wc_modal_squad_persistence_pct': weighted_pct(recent, lambda x: wc_mode is not None and x.get('wc_squad_signature') == wc_mode),
         'latest_deep_sim_generated_at_utc': latest.get('deep_sim_generated_at_utc'),
         'latest_deep_sim_input_signature': latest.get('deep_sim_input_signature'),
         'latest_evidence_reason': latest.get('evidence_reason'),
-        'note': 'Persistence is weighted. A changed deep-input signature or changed decision state counts as 1.0 evidence; an unchanged-input refresh counts as 0.25. This reduces false confidence from repeated cached runs.'
+        'note': 'Persistence is weighted. A changed deep-input signature, Wildcard squad structure or decision state counts as 1.0 evidence; an unchanged-input refresh counts as 0.25. This reduces false confidence from repeated cached runs.'
     }
 
 
 def main():
-    old = load(OUT, {'version': 2, 'snapshots': []})
+    old = load(OUT, {'version': 3, 'snapshots': []})
     snaps = old.get('snapshots') or []
     for x in snaps:
         x.setdefault('evidence_weight', 1.0)
         x.setdefault('evidence_reason', 'legacy')
+        x.setdefault('wc_squad_signature', None)
     cur = snapshot()
     if not snaps or not materially_duplicate(snaps[-1], cur):
         weight, reason = evidence_weight(snaps[-1] if snaps else None, cur)
@@ -188,12 +203,12 @@ def main():
     out = {
         'status': 'SUCCESS',
         'generated_at_utc': datetime.now(timezone.utc).isoformat(),
-        'version': 2,
+        'version': 3,
         'window_size': WINDOW,
         'snapshot_count': len(snaps),
         'summary': summarize(snaps),
         'snapshots': snaps,
-        'method_note': 'Bounded rolling history of simulation summaries with input-aware evidence weighting and 20-minute deduplication.'
+        'method_note': 'Bounded rolling history of simulation summaries with input-aware evidence weighting, Wildcard squad persistence and 20-minute deduplication.'
     }
     OUT.write_text(json.dumps(out, indent=2, ensure_ascii=False) + '\n')
     print(json.dumps({'status': 'SUCCESS', 'snapshots': len(snaps), 'summary': out['summary']}))

@@ -6,6 +6,7 @@ from pathlib import Path
 
 import adaptive_rival_simulation_v2 as ar
 import path_simulation as p
+import simulation_budget as sb
 import simulation_engine as s
 from projection_calibration import expected_gw as calibrated_expected_gw, season_maturity
 
@@ -17,7 +18,6 @@ PATHS = Path('data/path_simulation.json')
 CHIPS = Path('data/chip_window.json')
 OUT = Path('data/chip_path_simulation.json')
 
-ITERATIONS = 1600
 MAX_PATHS = 5
 POLICY_VARIANTS = 14
 
@@ -52,6 +52,8 @@ def run():
     chip_data = s.load_json(CHIPS, {})
     if path_data.get('status') != 'SUCCESS':
         raise RuntimeError('Path simulation is not ready')
+    iterations = sb.iterations(latest, 'chip')
+    iteration_policy = sb.metadata(latest, 'chip')
 
     by_id, by_name = s.player_maps(pool)
     scout_maps, market_maps = s.scout_lookup(scout), s.market_lookup(market)
@@ -86,10 +88,7 @@ def run():
     for r in rivals:
         behaviour = ar.rival_behaviour(r, current_gw)
         behaviour_rows.append({'entry_id': r.get('entry_id'), 'team_name': r.get('team_name'), **behaviour})
-        variants = [
-            ar.make_policy_variant(r, behaviour, gws, pool_rows, exp, f'{base_seed}|chip|{r.get("entry_id")}|{k}')
-            for k in range(POLICY_VARIANTS)
-        ]
+        variants = [ar.make_policy_variant(r, behaviour, gws, pool_rows, exp, f'{base_seed}|chip|{r.get("entry_id")}|{k}') for k in range(POLICY_VARIANTS)]
         rival_variants.append(variants)
 
     universe = set()
@@ -103,18 +102,15 @@ def run():
     universe.discard(0)
 
     scenarios = build_scenarios(my_paths, gws, chip_inventory(chip_data))
-    rng = random.Random(base_seed + '|chip-path-v2')
+    rng = random.Random(base_seed + '|chip-path-v3-deadline-budget')
     me_start = s.n((latest.get('me') or {}).get('total_points'))
     current_rank = int((latest.get('me') or {}).get('rank') or len(rivals) + 1)
     totals = [[] for _ in scenarios]
     ranks = [[] for _ in scenarios]
     beat = [[0 for _ in rivals] for _ in scenarios]
 
-    for _ in range(ITERATIONS):
-        outcomes = {
-            gw: {pid: s.sample_points(rng, *exp[gw].get(pid, (0, .85))) for pid in universe}
-            for gw in gws
-        }
+    for _ in range(iterations):
+        outcomes = {gw: {pid: s.sample_points(rng, *exp[gw].get(pid, (0, .85))) for pid in universe} for gw in gws}
         rival_scores = []
         for i, r in enumerate(rivals):
             variant = rival_variants[i][rng.randrange(len(rival_variants[i]))]
@@ -165,7 +161,7 @@ def run():
             'p10_points': round(p10, 2),
             'p90_points': round(p90, 2),
             'expected_rank_after_path': round(exp_rank, 2),
-            'prob_finish_ahead_each_rival': [round(x / ITERATIONS, 3) for x in beat[i]],
+            'prob_finish_ahead_each_rival': [round(x / iterations, 3) for x in beat[i]],
             'utility_score': round(utility, 3),
         })
     results.sort(key=lambda x: x['utility_score'], reverse=True)
@@ -177,24 +173,25 @@ def run():
     output = {
         'status': 'SUCCESS',
         'generated_at_utc': datetime.now(timezone.utc).isoformat(),
-        'engine_version': 2,
-        'iterations': ITERATIONS,
+        'engine_version': 3,
+        'iterations': iterations,
+        'iteration_policy': iteration_policy,
         'horizon_gws': gws,
-        'projection_model': 'season-maturity calibrated',
+        'projection_model': 'season-maturity calibrated + shared captaincy model',
         'season_maturity_weight': round(maturity, 3),
         'rival_policy': 'probabilistic observed-behaviour challenger',
         'exact_chip_branches': ['Triple Captain', 'Bench Boost'],
-        'full_squad_chip_branches_pending': ['Wildcard', 'Free Hit'],
+        'full_squad_chip_branches': ['Wildcard', 'Free Hit'],
         'recommendation': results[0] if results else None,
         'best_no_chip_path': best_none,
         'best_triple_captain_window': best_tc,
         'best_bench_boost_window': best_bb,
         'rival_behaviour': behaviour_rows,
         'scenarios': results[:30],
-        'method_note': 'Triple Captain and Bench Boost are scored exactly on the calibrated transfer paths against probabilistic rival behaviour. The values are opportunity windows, not automatic play recommendations: half-season chip option value and future blank/double information must still be considered. Wildcard and Free Hit remain excluded until a legal full-squad optimiser is available.',
+        'method_note': 'Triple Captain and Bench Boost are scored exactly on calibrated transfer paths against probabilistic rival behaviour. Values are opportunity windows, not automatic play recommendations. Sampling precision increases as the official FPL deadline approaches. Wildcard and Free Hit are handled by the separate legal full-squad optimiser and activation gate.',
     }
     OUT.write_text(json.dumps(output, indent=2, ensure_ascii=False) + '\n')
-    print(json.dumps({'status': 'SUCCESS', 'best': output['recommendation'], 'tc': best_tc, 'bb': best_bb, 'maturity': round(maturity, 3)}))
+    print(json.dumps({'status': 'SUCCESS', 'best': output['recommendation'], 'tc': best_tc, 'bb': best_bb, 'maturity': round(maturity, 3), 'iterations': iterations, 'deadline_phase': iteration_policy['deadline_phase']}))
 
 
 if __name__ == '__main__':

@@ -1,22 +1,29 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-08-29T23:43:42.944245+00:00",
-  "engine_version": 2,
-  "iterations": 1800,
+  "generated_at_utc": "2026-08-30T18:45:57.226720+00:00",
+  "engine_version": 3,
+  "iterations": 1200,
+  "iteration_policy": {
+    "layer": "adaptive",
+    "deadline_phase": "normal",
+    "hours_to_deadline": 118.75,
+    "iterations": 1200,
+    "policy": "lighter normal-week sampling; higher precision inside 72h/24h/6h of official FPL deadline"
+  },
   "horizon_gws": [
     3,
     4,
     5,
     6
   ],
-  "projection_model": "season-maturity calibrated",
+  "projection_model": "season-maturity calibrated + shared captaincy model",
   "season_maturity_weight": 0.25,
   "rival_policy": "probabilistic bounded transfer behaviour learned from observed FPL transfer history; no hidden bank; no assumed hits",
   "policy_variants_per_rival": 14,
   "rival_behaviour": [
     {
-      "entry_id": 5129943,
-      "team_name": "YesWeCanice FC",
+      "entry_id": 6324266,
+      "team_name": "Ballon Dorgu",
       "rank": 1,
       "observed_transfer_events": 1,
       "observed_transfers": 1,
@@ -24,8 +31,8 @@
       "hit_probability": 0.06
     },
     {
-      "entry_id": 6324266,
-      "team_name": "Ballon Dorgu",
+      "entry_id": 5129943,
+      "team_name": "YesWeCanice FC",
       "rank": 2,
       "observed_transfer_events": 1,
       "observed_transfers": 1,
@@ -33,26 +40,17 @@
       "hit_probability": 0.06
     },
     {
-      "entry_id": 5202441,
-      "team_name": "Rayan Kirk-i",
+      "entry_id": 7711703,
+      "team_name": "Shamrock Sheilas",
       "rank": 3,
-      "observed_transfer_events": 1,
-      "observed_transfers": 1,
-      "action_probability": 0.5,
-      "hit_probability": 0.06
-    },
-    {
-      "entry_id": 5227829,
-      "team_name": "De-Mainoo Event",
-      "rank": 4,
       "observed_transfer_events": 0,
       "observed_transfers": 0,
       "action_probability": 0.344,
       "hit_probability": 0.06
     },
     {
-      "entry_id": 7711703,
-      "team_name": "Shamrock Sheilas",
+      "entry_id": 5227829,
+      "team_name": "De-Mainoo Event",
       "rank": 5,
       "observed_transfer_events": 0,
       "observed_transfers": 0,
@@ -60,9 +58,18 @@
       "hit_probability": 0.06
     },
     {
+      "entry_id": 5202441,
+      "team_name": "Rayan Kirk-i",
+      "rank": 6,
+      "observed_transfer_events": 1,
+      "observed_transfers": 1,
+      "action_probability": 0.5,
+      "hit_probability": 0.06
+    },
+    {
       "entry_id": 8179701,
       "team_name": "Wirtz to best",
-      "rank": 6,
+      "rank": 7,
       "observed_transfer_events": 0,
       "observed_transfers": 0,
       "action_probability": 0.344,
@@ -71,7 +78,7 @@
     {
       "entry_id": 2166366,
       "team_name": "Johnians 2026Taepotz",
-      "rank": 7,
+      "rank": 8,
       "observed_transfer_events": 0,
       "observed_transfers": 0,
       "action_probability": 0.344,
@@ -91,10 +98,10 @@
       {
         "gw": 4,
         "action": "TRANSFER",
-        "route": "B.Fernandes → Ødegaard",
+        "route": "Gabriel → White",
         "hit": 0,
-        "out_id": 426,
-        "in_id": 15
+        "out_id": 4,
+        "in_id": 10
       },
       {
         "gw": 5,
@@ -107,29 +114,29 @@
       {
         "gw": 6,
         "action": "TRANSFER",
-        "route": "Calvert-Lewin → Emersonn",
+        "route": "Schade → Ødegaard",
         "hit": 0,
-        "out_id": 346,
-        "in_id": 316
+        "out_id": 94,
+        "in_id": 15
       }
     ],
-    "expected_points": 218.28,
-    "p10_points": 179.17,
-    "p90_points": 260.4,
-    "expected_rank_after_path": 6.04,
-    "prob_gain_league_place": 0.725,
+    "expected_points": 229.97,
+    "p10_points": 190.39,
+    "p90_points": 273.23,
+    "expected_rank_after_path": 3.1,
+    "prob_gain_league_place": 0.623,
     "prob_finish_ahead_each_rival": [
-      0.083,
-      0.097,
-      0.249,
-      0.268,
-      0.233,
-      0.455,
-      0.576
+      0.276,
+      0.504,
+      0.568,
+      0.782,
+      0.853,
+      0.943,
+      0.975
     ],
-    "static_rival_expected_rank": 5.57,
-    "probabilistic_rival_rank_penalty": 0.47,
-    "utility_score": 223.392
+    "static_rival_expected_rank": 2.72,
+    "probabilistic_rival_rank_penalty": 0.38,
+    "utility_score": 229.734
   },
   "paths": [
     {
@@ -145,10 +152,10 @@
         {
           "gw": 4,
           "action": "TRANSFER",
-          "route": "B.Fernandes → Ødegaard",
+          "route": "Gabriel → White",
           "hit": 0,
-          "out_id": 426,
-          "in_id": 15
+          "out_id": 4,
+          "in_id": 10
         },
         {
           "gw": 5,
@@ -161,29 +168,29 @@
         {
           "gw": 6,
           "action": "TRANSFER",
-          "route": "Calvert-Lewin → Emersonn",
+          "route": "Schade → Ødegaard",
           "hit": 0,
-          "out_id": 346,
-          "in_id": 316
+          "out_id": 94,
+          "in_id": 15
         }
       ],
-      "expected_points": 218.28,
-      "p10_points": 179.17,
-      "p90_points": 260.4,
-      "expected_rank_after_path": 6.04,
-      "prob_gain_league_place": 0.725,
+      "expected_points": 229.97,
+      "p10_points": 190.39,
+      "p90_points": 273.23,
+      "expected_rank_after_path": 3.1,
+      "prob_gain_league_place": 0.623,
       "prob_finish_ahead_each_rival": [
-        0.083,
-        0.097,
-        0.249,
-        0.268,
-        0.233,
-        0.455,
-        0.576
+        0.276,
+        0.504,
+        0.568,
+        0.782,
+        0.853,
+        0.943,
+        0.975
       ],
-      "static_rival_expected_rank": 5.57,
-      "probabilistic_rival_rank_penalty": 0.47,
-      "utility_score": 223.392
+      "static_rival_expected_rank": 2.72,
+      "probabilistic_rival_rank_penalty": 0.38,
+      "utility_score": 229.734
     },
     {
       "actions": [
@@ -198,10 +205,10 @@
         {
           "gw": 4,
           "action": "TRANSFER",
-          "route": "B.Fernandes → Ødegaard",
+          "route": "Gabriel → White",
           "hit": 0,
-          "out_id": 426,
-          "in_id": 15
+          "out_id": 4,
+          "in_id": 10
         },
         {
           "gw": 5,
@@ -214,29 +221,29 @@
         {
           "gw": 6,
           "action": "TRANSFER",
-          "route": "Calvert-Lewin → Emersonn",
+          "route": "Schade → Ødegaard",
           "hit": 0,
-          "out_id": 346,
-          "in_id": 316
+          "out_id": 94,
+          "in_id": 15
         }
       ],
-      "expected_points": 218.28,
-      "p10_points": 179.17,
-      "p90_points": 260.4,
-      "expected_rank_after_path": 6.04,
-      "prob_gain_league_place": 0.725,
+      "expected_points": 229.97,
+      "p10_points": 190.39,
+      "p90_points": 273.23,
+      "expected_rank_after_path": 3.1,
+      "prob_gain_league_place": 0.623,
       "prob_finish_ahead_each_rival": [
-        0.083,
-        0.097,
-        0.249,
-        0.268,
-        0.233,
-        0.455,
-        0.576
+        0.276,
+        0.504,
+        0.568,
+        0.782,
+        0.853,
+        0.943,
+        0.975
       ],
-      "static_rival_expected_rank": 5.57,
-      "probabilistic_rival_rank_penalty": 0.47,
-      "utility_score": 223.392
+      "static_rival_expected_rank": 2.72,
+      "probabilistic_rival_rank_penalty": 0.38,
+      "utility_score": 229.734
     },
     {
       "actions": [
@@ -250,6 +257,120 @@
         },
         {
           "gw": 4,
+          "action": "TRANSFER",
+          "route": "Maguire → White",
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 10
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Gabriel → Tarkowski",
+          "hit": 0,
+          "out_id": 4,
+          "in_id": 229
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Schade → Ødegaard",
+          "hit": 0,
+          "out_id": 94,
+          "in_id": 15
+        }
+      ],
+      "expected_points": 229.65,
+      "p10_points": 190.01,
+      "p90_points": 273.68,
+      "expected_rank_after_path": 3.17,
+      "prob_gain_league_place": 0.593,
+      "prob_finish_ahead_each_rival": [
+        0.257,
+        0.492,
+        0.547,
+        0.786,
+        0.833,
+        0.941,
+        0.979
+      ],
+      "static_rival_expected_rank": 2.75,
+      "probabilistic_rival_rank_penalty": 0.42,
+      "utility_score": 229.069
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Maguire → White",
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 10
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Gabriel → Tarkowski",
+          "hit": 0,
+          "out_id": 4,
+          "in_id": 229
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Hughes → Ødegaard",
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 15
+        }
+      ],
+      "expected_points": 229.65,
+      "p10_points": 190.01,
+      "p90_points": 273.68,
+      "expected_rank_after_path": 3.17,
+      "prob_gain_league_place": 0.593,
+      "prob_finish_ahead_each_rival": [
+        0.257,
+        0.492,
+        0.547,
+        0.786,
+        0.833,
+        0.941,
+        0.979
+      ],
+      "static_rival_expected_rank": 2.75,
+      "probabilistic_rival_rank_penalty": 0.42,
+      "utility_score": 229.069
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Maguire → White",
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 10
+        },
+        {
+          "gw": 5,
           "action": "TRANSFER",
           "route": "Schade → Ødegaard",
           "hit": 0,
@@ -257,305 +378,191 @@
           "in_id": 15
         },
         {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Groß → Elanga",
-          "hit": 0,
-          "out_id": 124,
-          "in_id": 454
-        },
-        {
           "gw": 6,
           "action": "TRANSFER",
-          "route": "Calvert-Lewin → Emersonn",
+          "route": "Gabriel → Mukiele",
           "hit": 0,
-          "out_id": 346,
-          "in_id": 316
+          "out_id": 4,
+          "in_id": 533
         }
       ],
-      "expected_points": 218.19,
-      "p10_points": 179.59,
-      "p90_points": 261.14,
-      "expected_rank_after_path": 6.07,
-      "prob_gain_league_place": 0.718,
+      "expected_points": 229.38,
+      "p10_points": 188.29,
+      "p90_points": 273.6,
+      "expected_rank_after_path": 3.16,
+      "prob_gain_league_place": 0.604,
       "prob_finish_ahead_each_rival": [
-        0.081,
-        0.099,
-        0.248,
-        0.253,
-        0.228,
-        0.447,
-        0.569
+        0.262,
+        0.496,
+        0.559,
+        0.776,
+        0.833,
+        0.937,
+        0.977
       ],
-      "static_rival_expected_rank": 5.57,
-      "probabilistic_rival_rank_penalty": 0.5,
-      "utility_score": 223.187
+      "static_rival_expected_rank": 2.74,
+      "probabilistic_rival_rank_penalty": 0.42,
+      "utility_score": 228.642
     },
     {
       "actions": [
         {
           "gw": 3,
           "action": "TRANSFER",
-          "route": "B.Fernandes → Ødegaard",
-          "hit": 4,
-          "out_id": 426,
-          "in_id": 15
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Hughes → Palmer",
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 154
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
           "route": "Kinsky → Tzolakis",
-          "hit": 0,
+          "hit": 4,
           "out_id": 496,
           "in_id": 572
         },
         {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Gabriel → White",
+          "hit": 0,
+          "out_id": 4,
+          "in_id": 10
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Hughes → Ødegaard",
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 15
+        },
+        {
           "gw": 6,
           "action": "TRANSFER",
-          "route": "Calvert-Lewin → Emersonn",
+          "route": "Greaves → Mukiele",
           "hit": 0,
-          "out_id": 346,
-          "in_id": 316
+          "out_id": 306,
+          "in_id": 533
         }
       ],
-      "expected_points": 218.15,
-      "p10_points": 178.13,
-      "p90_points": 259.1,
-      "expected_rank_after_path": 6.07,
-      "prob_gain_league_place": 0.729,
+      "expected_points": 229.38,
+      "p10_points": 188.29,
+      "p90_points": 273.6,
+      "expected_rank_after_path": 3.16,
+      "prob_gain_league_place": 0.604,
       "prob_finish_ahead_each_rival": [
-        0.073,
-        0.088,
         0.262,
-        0.273,
-        0.224,
-        0.449,
-        0.56
+        0.496,
+        0.559,
+        0.776,
+        0.833,
+        0.937,
+        0.977
       ],
-      "static_rival_expected_rank": 5.51,
-      "probabilistic_rival_rank_penalty": 0.56,
-      "utility_score": 222.99
+      "static_rival_expected_rank": 2.74,
+      "probabilistic_rival_rank_penalty": 0.42,
+      "utility_score": 228.642
     },
     {
       "actions": [
         {
           "gw": 3,
           "action": "TRANSFER",
-          "route": "B.Fernandes → Ødegaard",
+          "route": "Kinsky → Tzolakis",
           "hit": 4,
-          "out_id": 426,
-          "in_id": 15
+          "out_id": 496,
+          "in_id": 572
         },
         {
           "gw": 4,
           "action": "TRANSFER",
-          "route": "Hughes → Palmer",
+          "route": "Gabriel → White",
           "hit": 0,
-          "out_id": 212,
-          "in_id": 154
+          "out_id": 4,
+          "in_id": 10
         },
         {
           "gw": 5,
           "action": "TRANSFER",
-          "route": "Dubravka → Tzolakis",
+          "route": "Hughes → Ødegaard",
           "hit": 0,
+          "out_id": 212,
+          "in_id": 15
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Maguire → Mukiele",
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 533
+        }
+      ],
+      "expected_points": 229.38,
+      "p10_points": 188.29,
+      "p90_points": 273.6,
+      "expected_rank_after_path": 3.16,
+      "prob_gain_league_place": 0.604,
+      "prob_finish_ahead_each_rival": [
+        0.262,
+        0.496,
+        0.559,
+        0.776,
+        0.833,
+        0.937,
+        0.977
+      ],
+      "static_rival_expected_rank": 2.74,
+      "probabilistic_rival_rank_penalty": 0.42,
+      "utility_score": 228.642
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Dubravka → Tzolakis",
+          "hit": 4,
           "out_id": 497,
           "in_id": 572
         },
         {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Gabriel → White",
+          "hit": 0,
+          "out_id": 4,
+          "in_id": 10
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Hughes → Ødegaard",
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 15
+        },
+        {
           "gw": 6,
           "action": "TRANSFER",
-          "route": "Calvert-Lewin → Emersonn",
+          "route": "Maguire → Mukiele",
           "hit": 0,
-          "out_id": 346,
-          "in_id": 316
+          "out_id": 418,
+          "in_id": 533
         }
       ],
-      "expected_points": 218.15,
-      "p10_points": 178.13,
-      "p90_points": 259.1,
-      "expected_rank_after_path": 6.07,
-      "prob_gain_league_place": 0.729,
+      "expected_points": 229.38,
+      "p10_points": 188.29,
+      "p90_points": 273.6,
+      "expected_rank_after_path": 3.16,
+      "prob_gain_league_place": 0.604,
       "prob_finish_ahead_each_rival": [
-        0.073,
-        0.088,
         0.262,
-        0.273,
-        0.224,
-        0.449,
-        0.56
+        0.496,
+        0.559,
+        0.776,
+        0.833,
+        0.937,
+        0.977
       ],
-      "static_rival_expected_rank": 5.51,
-      "probabilistic_rival_rank_penalty": 0.56,
-      "utility_score": 222.99
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Ødegaard",
-          "hit": 4,
-          "out_id": 426,
-          "in_id": 15
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Hughes → Palmer",
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 154
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Groß → Elanga",
-          "hit": 0,
-          "out_id": 124,
-          "in_id": 454
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Calvert-Lewin → Emersonn",
-          "hit": 0,
-          "out_id": 346,
-          "in_id": 316
-        }
-      ],
-      "expected_points": 218.06,
-      "p10_points": 178.12,
-      "p90_points": 258.74,
-      "expected_rank_after_path": 6.06,
-      "prob_gain_league_place": 0.726,
-      "prob_finish_ahead_each_rival": [
-        0.071,
-        0.098,
-        0.251,
-        0.267,
-        0.229,
-        0.453,
-        0.572
-      ],
-      "static_rival_expected_rank": 5.53,
-      "probabilistic_rival_rank_penalty": 0.53,
-      "utility_score": 222.978
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Ødegaard",
-          "hit": 4,
-          "out_id": 426,
-          "in_id": 15
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Hughes → Palmer",
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 154
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Schade → Elanga",
-          "hit": 0,
-          "out_id": 94,
-          "in_id": 454
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Calvert-Lewin → Emersonn",
-          "hit": 0,
-          "out_id": 346,
-          "in_id": 316
-        }
-      ],
-      "expected_points": 218.06,
-      "p10_points": 178.12,
-      "p90_points": 258.74,
-      "expected_rank_after_path": 6.06,
-      "prob_gain_league_place": 0.726,
-      "prob_finish_ahead_each_rival": [
-        0.071,
-        0.098,
-        0.251,
-        0.267,
-        0.229,
-        0.453,
-        0.572
-      ],
-      "static_rival_expected_rank": 5.53,
-      "probabilistic_rival_rank_penalty": 0.53,
-      "utility_score": 222.978
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Ødegaard",
-          "hit": 4,
-          "out_id": 426,
-          "in_id": 15
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Schade → Palmer",
-          "hit": 0,
-          "out_id": 94,
-          "in_id": 154
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Groß → Elanga",
-          "hit": 0,
-          "out_id": 124,
-          "in_id": 454
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Calvert-Lewin → Emersonn",
-          "hit": 0,
-          "out_id": 346,
-          "in_id": 316
-        }
-      ],
-      "expected_points": 218.06,
-      "p10_points": 178.12,
-      "p90_points": 258.74,
-      "expected_rank_after_path": 6.06,
-      "prob_gain_league_place": 0.726,
-      "prob_finish_ahead_each_rival": [
-        0.071,
-        0.098,
-        0.251,
-        0.267,
-        0.229,
-        0.453,
-        0.572
-      ],
-      "static_rival_expected_rank": 5.53,
-      "probabilistic_rival_rank_penalty": 0.53,
-      "utility_score": 222.978
+      "static_rival_expected_rank": 2.74,
+      "probabilistic_rival_rank_penalty": 0.42,
+      "utility_score": 228.642
     }
   ],
-  "method_note": "Challenger model. Rivals are not assumed to optimise perfectly every deadline. Each rival receives multiple plausible roll/transfer paths, with action probability shrunk toward a population prior using observed transfer history. Candidate moves remain rational but noisy, and projections use the same season-maturity calibration as the primary engine."
+  "method_note": "Challenger model. Rivals are not assumed to optimise perfectly every deadline. Each rival receives multiple plausible roll/transfer paths, with action probability shrunk toward a population prior using observed transfer history. Candidate moves remain rational but noisy. Sampling precision increases as the official FPL deadline approaches."
 }

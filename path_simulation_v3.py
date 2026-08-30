@@ -3,6 +3,7 @@ from datetime import datetime, timezone
 
 import captaincy_model as cm
 import path_simulation as p
+import simulation_budget as sb
 from projection_calibration import expected_gw as calibrated_expected_gw, season_maturity
 
 
@@ -12,6 +13,9 @@ def run():
     scout = p.load_json(p.SCOUT, {})
     market = p.load_json(p.MARKET, {})
     chip = p.load_json(p.CHIPS, {})
+    iterations = sb.iterations(latest, 'path')
+    iteration_policy = sb.metadata(latest, 'path')
+    p.ITERATIONS = iterations
     by_id, by_name = p.player_maps(pool)
     scout_maps, market_maps = p.scout_lookup(scout), p.market_lookup(market)
 
@@ -53,13 +57,14 @@ def run():
     output = {
         'status': 'SUCCESS',
         'generated_at_utc': datetime.now(timezone.utc).isoformat(),
-        'engine_version': 5,
-        'planner': 'bounded beam search + GW-specific shared-outcome Monte Carlo + live FT state + season calibration + shared captaincy',
+        'engine_version': 6,
+        'planner': 'bounded beam search + GW-specific shared-outcome Monte Carlo + live FT state + season calibration + shared captaincy + deadline-aware sampling',
         'projection_model': 'season-maturity calibrated + shared captaincy model',
         'season_maturity_weight': round(maturity, 3),
         'depth_gameweeks': gws[:p.DEPTH],
         'beam_width': p.BEAM_WIDTH,
-        'iterations': p.ITERATIONS,
+        'iterations': iterations,
+        'iteration_policy': iteration_policy,
         'starting_free_transfers': start_ft,
         'max_free_transfers': p.MAX_FT,
         'transfer_hit_cost': 4,
@@ -68,11 +73,11 @@ def run():
         'rivals': rival_meta,
         'recommendation': results[0] if results else None,
         'paths': results,
-        'method_note': 'Each path is scored with the actual squad owned in each Gameweek. Current-deadline hits use live FT state. Early-season extremes are shrunk toward priors. Legal XI selection is followed by the same captaincy model used by Pick Team, keeping forward simulation captaincy aligned with the visible recommendation.',
+        'method_note': 'Each path is scored with the actual squad owned in each Gameweek. Current-deadline hits use live FT state. Early-season extremes are shrunk toward priors. Legal XI selection uses the shared captaincy model. Monte Carlo sampling is lighter midweek and increases close to the official FPL deadline without changing decision thresholds.',
     }
     p.OUT.parent.mkdir(parents=True, exist_ok=True)
     p.OUT.write_text(json.dumps(output, indent=2, ensure_ascii=False) + '\n')
-    print(json.dumps({'status': 'SUCCESS', 'best': output['recommendation'], 'paths': len(results), 'starting_ft': start_ft, 'maturity': round(maturity, 3), 'engine_version': 5}))
+    print(json.dumps({'status': 'SUCCESS', 'best': output['recommendation'], 'paths': len(results), 'starting_ft': start_ft, 'maturity': round(maturity, 3), 'iterations': iterations, 'deadline_phase': iteration_policy['deadline_phase'], 'engine_version': 6}))
 
 
 if __name__ == '__main__':

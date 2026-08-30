@@ -4,7 +4,10 @@ from datetime import datetime, timezone
 
 import full_squad_chip_optimizer as opt
 
-CACHE_HOURS = 4
+# Base cache life is deliberately long midweek. It contracts automatically as
+# the official FPL deadline approaches so expensive full-squad searches become
+# more responsive when late news and price changes matter most.
+DEFAULT_CACHE_HOURS = 6
 
 # Production search profile. Exact legality and final XI/captain rescoring remain
 # unchanged; this only limits how many partial squad states are carried forward.
@@ -27,6 +30,26 @@ def q(v, step=.25):
         return round(x / step) * step
     except Exception:
         return None
+
+
+def cache_policy(latest):
+    hours = latest.get('hours_to_deadline')
+    try:
+        hours = float(hours)
+    except Exception:
+        hours = None
+    phase = str((latest.get('deadline_context') or {}).get('phase') or 'unknown')
+    if hours is None:
+        ttl = DEFAULT_CACHE_HOURS
+    elif hours <= 6:
+        ttl = .5
+    elif hours <= 24:
+        ttl = 1
+    elif hours <= 72:
+        ttl = 2
+    else:
+        ttl = DEFAULT_CACHE_HOURS
+    return {'ttl_hours': ttl, 'phase': phase, 'hours_to_deadline': hours}
 
 
 def model_fingerprint():
@@ -76,7 +99,7 @@ def signature():
     return hashlib.sha256(raw).hexdigest()[:20], payload
 
 
-def fresh_cached(sig):
+def fresh_cached(sig, policy):
     old = load(opt.OUT, {})
     if old.get('status') != 'SUCCESS' or old.get('input_signature') != sig:
         return None
@@ -85,15 +108,21 @@ def fresh_cached(sig):
         age_h = (datetime.now(timezone.utc) - generated).total_seconds() / 3600
     except Exception:
         return None
-    return old if age_h < CACHE_HOURS else None
+    return old if age_h < float(policy['ttl_hours']) else None
 
 
-def stamp_cache_state(out, state, sig, payload):
+def stamp_cache_state(out, state, sig, payload, policy):
     out['input_signature'] = sig
     out['model_fingerprint'] = payload.get('model_fingerprint')
-    out['cache_ttl_hours'] = CACHE_HOURS
+    out['cache_ttl_hours'] = policy['ttl_hours']
     out['cache_state'] = state
     out['cache_last_checked_at_utc'] = datetime.now(timezone.utc).isoformat()
+    out['deadline_refresh_policy'] = {
+        'phase': policy['phase'],
+        'hours_to_deadline': policy['hours_to_deadline'],
+        'ttl_hours': policy['ttl_hours'],
+        'rule': '6h normal; 2h inside 72h; 1h inside 24h; 30m inside 6h',
+    }
     out['search_profile'] = {
         'beam_width': opt.BEAM_WIDTH,
         'finalists': opt.FINALISTS,
@@ -104,19 +133,21 @@ def stamp_cache_state(out, state, sig, payload):
 
 
 def main():
+    latest = load(opt.LATEST, {})
+    policy = cache_policy(latest)
     sig, payload = signature()
-    cached = fresh_cached(sig)
+    cached = fresh_cached(sig, policy)
     if cached:
-        stamp_cache_state(cached, 'HIT', sig, payload)
-        print(json.dumps({'status': 'SUCCESS', 'cache': 'HIT', 'input_signature': sig, 'model_fingerprint': payload.get('model_fingerprint'), 'generated_at_utc': cached.get('generated_at_utc')}))
+        stamp_cache_state(cached, 'HIT', sig, payload, policy)
+        print(json.dumps({'status': 'SUCCESS', 'cache': 'HIT', 'cache_ttl_hours': policy['ttl_hours'], 'deadline_phase': policy['phase'], 'input_signature': sig, 'model_fingerprint': payload.get('model_fingerprint'), 'generated_at_utc': cached.get('generated_at_utc')}))
         return
 
     opt.run()
     out = load(opt.OUT, {})
     if out.get('status') != 'SUCCESS':
         raise RuntimeError('Full-squad chip optimiser did not produce SUCCESS')
-    stamp_cache_state(out, 'MISS', sig, payload)
-    print(json.dumps({'status': 'SUCCESS', 'cache': 'MISS', 'input_signature': sig, 'model_fingerprint': payload.get('model_fingerprint'), 'wc_gain': (out.get('best_wildcard') or {}).get('incremental_expected_points_vs_current_squad'), 'best_fh_gw': (out.get('best_free_hit') or {}).get('gw')}))
+    stamp_cache_state(out, 'MISS', sig, payload, policy)
+    print(json.dumps({'status': 'SUCCESS', 'cache': 'MISS', 'cache_ttl_hours': policy['ttl_hours'], 'deadline_phase': policy['phase'], 'input_signature': sig, 'model_fingerprint': payload.get('model_fingerprint'), 'wc_gain': (out.get('best_wildcard') or {}).get('incremental_expected_points_vs_current_squad'), 'best_fh_gw': (out.get('best_free_hit') or {}).get('gw')}))
 
 
 if __name__ == '__main__':
