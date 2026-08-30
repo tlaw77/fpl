@@ -1447,9 +1447,9 @@
   "method_note": "Bounded full-squad search. Candidate shortlists retain high calibrated-value players plus cheap enablers. Beam construction enforces exact position quotas, no duplicate players, max three per club and the available budget. Finalists are re-scored using legal best XI and captain for the relevant horizon.",
   "input_signature": "627656081c7071cc6606",
   "model_fingerprint": "6e9d81528d990b59",
-  "cache_ttl_hours": 4,
-  "cache_state": "MISS",
-  "cache_last_checked_at_utc": "2026-08-30T09:23:15.777645+00:00",
+  "cache_ttl_hours": 6,
+  "cache_state": "HIT",
+  "cache_last_checked_at_utc": "2026-08-30T09:25:16.536210+00:00",
   "search_profile": {
     "beam_width": 600,
     "finalists": 30,
@@ -1460,5 +1460,11 @@
       "FWD": 14
     },
     "cheap_extra": 5
+  },
+  "deadline_refresh_policy": {
+    "phase": "normal",
+    "hours_to_deadline": 128.09,
+    "ttl_hours": 6,
+    "rule": "6h normal; 2h inside 72h; 1h inside 24h; 30m inside 6h"
   }
 }
