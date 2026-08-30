@@ -7,6 +7,7 @@ on:
   push:
     paths:
       - "fpl_etl.py"
+      - "deadline_context.py"
       - "current_squad.py"
       - "declared_transfer_overlay.py"
       - "data/declared_transfers.json"
@@ -58,6 +59,8 @@ jobs:
         run: python archive_week.py
       - name: Run FPL ETL
         run: python fpl_etl.py
+      - name: Normalize official deadline context
+        run: python deadline_context.py
       - name: Preserve recommendation snapshot
         run: python recommendation_history.py
       - name: Reconstruct current squad
@@ -134,6 +137,11 @@ jobs:
           assert len(data.get('current_squad_next5', data['squad_next5'])) == 15
           assert data['league']['manager_count'] >= 1
           assert 'next_gw_decisions' in data and 'current_next_gw_decisions' in data
+          deadline = data.get('deadline_context') or {}
+          assert deadline.get('source') == 'official_fpl_bootstrap'
+          assert int(deadline.get('gw') or 0) == int(data.get('next_gw') or 0)
+          assert data.get('next_deadline_utc') == deadline.get('deadline_utc') and data.get('next_deadline_utc')
+          assert deadline.get('phase') in ('normal','approaching','deadline_day','final','locked')
           pending_declared = [t for t in declared.get('transfers', []) if int(t.get('event') or 0) == int(data.get('next_gw') or 0)]
           if pending_declared and data.get('declared_transfer_overlay_status') == 'pending_official_api':
               squad_ids = {int(p.get('player_id') or 0) for p in data.get('current_squad_next5', [])}
