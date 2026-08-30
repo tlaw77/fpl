@@ -4,11 +4,11 @@ This is the durable progress gauge for the zero-extra-cost, mini-league-winning 
 
 Progress is capability-weighted, not commit-count weighted. A milestone advances only after production-equivalent validation succeeds.
 
-## Current validated progress: 91%
+## Current validated progress: 96%
 
-Last validated milestone: **league-state-aware captaincy with Safe / Best-EV / Chase modes and an early-season EV guardrail**.
+Last validated milestone: **hindsight-safe historical calibration and backtest feedback with minimum-evidence safeguards**.
 
-Current validation gate: **historical calibration and backtest feedback with minimum-evidence safeguards**.
+Current validation gate: **decision-quality self-evaluation, calibration drift and continuous model-health monitoring**.
 
 ## Capability roadmap
 
@@ -22,8 +22,8 @@ Current validation gate: **historical calibration and backtest feedback with min
 | 78–82% | Route-level probability of taking/holding mini-league lead over explicit horizon | COMPLETE |
 | 82–86% | Estimated season-end mini-league win probability with uncertainty-aware continuation | COMPLETE |
 | 86–91% | League-state-aware captaincy: Safe / Best-EV / Chase modes | COMPLETE |
-| 91–96% | Historical calibration and backtesting feedback | IN PROGRESS |
-| 96–100% | Decision-quality self-evaluation, calibration drift and continuous tuning | PLANNED |
+| 91–96% | Historical calibration and backtesting feedback | COMPLETE |
+| 96–100% | Decision-quality self-evaluation, calibration drift and continuous model-health monitoring | IN PROGRESS |
 
 ## Validation rules
 
@@ -37,7 +37,8 @@ A capability is not counted complete merely because code exists. It should satis
 6. League-game-theory overlays must remain secondary to expected-value evidence early in the season and grow only as season state warrants.
 7. Long-horizon or season-end probabilities must expose confidence/assumptions rather than imply false precision.
 8. Calibration feedback may recommend investigation before it has enough evidence; it must not mutate model coefficients automatically from a tiny sample.
-9. No new paid dependency is allowed.
+9. Model-health monitoring must distinguish insufficient evidence from genuine drift or source degradation.
+10. No new paid dependency is allowed.
 
 ## Current public/free signal stack
 
@@ -50,6 +51,8 @@ A capability is not counted complete merely because code exists. It should satis
 - Shared Monte Carlo, multi-GW, adaptive-rival and chip simulations.
 - Explicit horizon league-lead probability and confidence-discounted season-win estimate.
 - League-state-aware immediate captaincy with future Gameweeks re-optimised rather than pre-committed.
+- Hindsight-safe `projection_history/gwN.json` snapshots paired with finalized all-player FPL outcomes.
+- Sample-gated calibration audit for points, uncertainty and minutes probabilities.
 
 ## Strategic objective
 
