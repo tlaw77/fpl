@@ -17,6 +17,8 @@ on:
       - "decision_journal.py"
       - "strategy_watch.py"
       - "market_watch.py"
+      - "market_strength.py"
+      - "minutes_model.py"
       - "squad_intelligence.py"
       - "chip_window.py"
       - "schedule_load.py"
@@ -38,7 +40,7 @@ on:
       - ".github/workflows/fpl-etl.yml"
 
 concurrency:
-  group: fpl-etl-main
+  group: fpl-etl-${{ github.ref_name }}
   cancel-in-progress: true
 
 permissions:
@@ -74,6 +76,8 @@ jobs:
         run: python strategy_watch.py
       - name: Run market watch
         run: python market_watch.py
+      - name: Build independent market-strength signal
+        run: python market_strength.py
       - name: Run squad intelligence
         run: python squad_intelligence.py
       - name: Run chip window evaluation
@@ -113,6 +117,7 @@ jobs:
           data = json.loads(Path('data/latest.json').read_text())
           strategy = json.loads(Path('data/strategy.json').read_text())
           market = json.loads(Path('data/market.json').read_text())
+          market_strength = json.loads(Path('data/market_strength.json').read_text())
           squad_intel = json.loads(Path('data/squad_intelligence.json').read_text())
           chip_window = json.loads(Path('data/chip_window.json').read_text())
           schedule_load = json.loads(Path('data/schedule_load.json').read_text())
@@ -144,11 +149,16 @@ jobs:
 
           assert strategy['status'] == 'SUCCESS' and len(strategy['managers']) == data['league']['manager_count']
           assert market['status'] == 'SUCCESS'
+          assert market_strength.get('status') in ('SUCCESS', 'NO_CURRENT_EPL_ODDS')
           assert squad_intel['status'] == 'SUCCESS' and len(squad_intel['managers']) == data['league']['manager_count']
           assert chip_window['status'] == 'SUCCESS' and len(chip_window['evaluations']) == 4
           assert schedule_load['status'] == 'SUCCESS' and 'clubs' in schedule_load and 'players' in schedule_load
           assert len(schedule_load.get('failures', [])) < len(schedule_load.get('coverage', [])), 'All schedule-load sources failed'
           assert player_pool['status'] == 'SUCCESS' and player_pool['horizon'] == 6 and len(player_pool['players']) > 50
+          assert player_pool.get('minutes_model') == 'probabilistic_v2'
+          for p in player_pool['players']:
+              assert 0 <= p['prob_80_plus'] <= p['prob_60_plus'] <= p['prob_start'] <= p['prob_appearance'] <= 1
+              assert abs((p['prob_start'] + p['prob_cameo']) - p['prob_appearance']) < .003
           assert scout_consensus['status'] == 'SUCCESS' and 'players' in scout_consensus
 
           assert simulation['status'] == 'SUCCESS' and simulation.get('engine_version', 0) >= 5
@@ -212,6 +222,7 @@ jobs:
           print('Validation passed')
           PY
       - name: Commit snapshots
+        if: github.ref_name == 'main'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
