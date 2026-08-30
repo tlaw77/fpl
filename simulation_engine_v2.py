@@ -4,6 +4,7 @@ import statistics
 from datetime import datetime, timezone
 
 import captaincy_model as cm
+import simulation_budget as sb
 import simulation_engine as s
 from projection_calibration import expected_gw as calibrated_expected_gw, season_maturity
 
@@ -21,6 +22,8 @@ def run():
     pool = s.load_json(s.POOL, {})
     scout = s.load_json(s.SCOUT, {})
     market = s.load_json(s.MARKET, {})
+    iterations = sb.iterations(latest, 'single')
+    iteration_policy = sb.metadata(latest, 'single')
     by_id, by_name = s.player_maps(pool)
     scout_maps, market_maps = s.scout_lookup(scout), s.market_lookup(market)
 
@@ -76,7 +79,7 @@ def run():
             bygw[gw] = model_lineup(r['squad'], gw, exp)
         rival_lineups.append(bygw)
 
-    rng = random.Random(str(latest.get('generated_at_utc') or '') + '|simulation-v5-shared-captaincy')
+    rng = random.Random(str(latest.get('generated_at_utc') or '') + '|simulation-v6-deadline-budget')
     me_start = s.n((latest.get('me') or {}).get('total_points'))
     current_rank = int((latest.get('me') or {}).get('rank') or (len(rivals) + 1))
     route_totals = {c['key']: [] for c in candidates}
@@ -84,7 +87,7 @@ def run():
     route_gain_places = {c['key']: 0 for c in candidates}
     route_beat = {c['key']: [0] * len(rivals) for c in candidates}
 
-    for _ in range(s.ITERATIONS):
+    for _ in range(iterations):
         outcomes = {}
         for gw in gws:
             outcomes[gw] = {pid: s.sample_points(rng, *params) for pid, params in exp[gw].items()}
@@ -142,8 +145,8 @@ def run():
             'p10_points_6gw': round(p10, 2),
             'p90_points_6gw': round(p90, 2),
             'expected_rank_after_horizon': round(exp_rank, 2),
-            'prob_gain_league_place': round(route_gain_places[c['key']] / s.ITERATIONS, 3),
-            'prob_finish_ahead_each_rival': [round(route_beat[c['key']][i] / s.ITERATIONS, 3) for i in range(len(rivals))],
+            'prob_gain_league_place': round(route_gain_places[c['key']] / iterations, 3),
+            'prob_finish_ahead_each_rival': [round(route_beat[c['key']][i] / iterations, 3) for i in range(len(rivals))],
             'utility_score': round(utility, 3),
             'incoming_starts_gw3': incoming_starts,
             'decision_lineup_gw': next_gw,
@@ -162,10 +165,11 @@ def run():
     output = {
         'status': 'SUCCESS',
         'generated_at_utc': datetime.now(timezone.utc).isoformat(),
-        'engine_version': 5,
+        'engine_version': 6,
         'projection_model': 'season-maturity calibrated + shared captaincy model',
         'season_maturity_weight': round(maturity, 3),
-        'iterations': s.ITERATIONS,
+        'iterations': iterations,
+        'iteration_policy': iteration_policy,
         'horizon_gws': gws,
         'shared_outcome_simulation': True,
         'remaining_free_transfers_current_deadline': remaining_ft,
@@ -180,11 +184,11 @@ def run():
             'baseline_captain_id': baseline_first_cap,
             'note': 'Each route stores exact out/in IDs plus the pre-decision and post-transfer XI/captain selected by the model at decision time. Captaincy uses the same shared model as Pick Team. Frozen lineups can be scored against archived outcomes without hindsight optimisation.'
         },
-        'method_note': 'Monte Carlo decision support from the reconstructed current squad. Early-season form and six-GW model extremes are shrunk toward position/fixture priors. Legal XI selection is followed by the same dedicated captaincy model used in Pick Team, so simulation totals and visible C/V advice stay aligned.',
+        'method_note': 'Monte Carlo decision support from the reconstructed current squad. Early-season form and six-GW model extremes are shrunk toward position/fixture priors. Legal XI selection is followed by the shared captaincy model. Monte Carlo iteration count is deadline-aware: lighter midweek, higher precision close to the official FPL deadline; decision thresholds are unchanged.',
     }
     s.OUT.parent.mkdir(parents=True, exist_ok=True)
     s.OUT.write_text(json.dumps(output, indent=2, ensure_ascii=False) + '\n')
-    print(json.dumps({'status': 'SUCCESS', 'winner': winner, 'iterations': s.ITERATIONS, 'maturity': round(maturity, 3), 'remaining_ft': remaining_ft, 'next_hit_cost': next_hit_cost, 'engine_version': 5, 'captain': baseline_first_cap}))
+    print(json.dumps({'status': 'SUCCESS', 'winner': winner, 'iterations': iterations, 'deadline_phase': iteration_policy['deadline_phase'], 'maturity': round(maturity, 3), 'remaining_ft': remaining_ft, 'next_hit_cost': next_hit_cost, 'engine_version': 6, 'captain': baseline_first_cap}))
 
 
 if __name__ == '__main__':
