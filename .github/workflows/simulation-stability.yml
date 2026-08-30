@@ -11,11 +11,12 @@ on:
       - "chip_activation_gate.py"
       - "triple_captain_review.py"
       - "captaincy_review.py"
+      - "captaincy_model.py"
       - "backtest_engine.py"
       - ".github/workflows/simulation-stability.yml"
 
 concurrency:
-  group: fpl-simulation-stability
+  group: fpl-simulation-stability-${{ github.ref_name || 'main' }}
   cancel-in-progress: true
 
 permissions:
@@ -26,10 +27,10 @@ jobs:
     if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout latest main
+      - name: Checkout validation ref
         uses: actions/checkout@v4
         with:
-          ref: main
+          ref: ${{ github.event_name == 'push' && github.ref_name || 'main' }}
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -73,16 +74,23 @@ jobs:
           assert len(tc.get('current_gw_shortlist', [])) >= 1
           assert gate['triple_captain']['status'] == tc['decision']['status']
           assert cap['status'] == 'SUCCESS'
-          assert cap.get('version', 0) >= 1
+          assert cap.get('version', 0) >= 3
           assert cap.get('captain') is not None
           assert len(cap.get('shortlist', [])) >= 2
           assert 0 <= int(cap.get('confidence', 0)) <= 100
+          league = cap.get('league_strategy') or {}
+          assert league.get('recommended_mode') in ('BEST_EV','SAFE','CHASE')
+          assert league.get('best_ev') and league.get('safe') and league.get('chase')
+          assert league.get('posture') in ('PROTECT_EDGE','BALANCED','CONTROLLED_CHASE','CHASE')
+          if float(league.get('season_stage') or 0) < .35:
+              assert league.get('recommended_mode') == 'BEST_EV', 'Early-season captaincy must remain EV-led'
           assert backtest['status'] == 'SUCCESS'
           assert backtest.get('version', 0) >= 1
           assert backtest.get('evaluable_gameweeks', 0) >= 0
-          print('Simulation stability, unified chip gate, captaincy reviews and backtest validation passed')
+          print('Simulation stability, chip gate, league-aware captaincy and backtest validation passed')
           PY
       - name: Commit supplemental snapshots
+        if: github.event_name != 'push' || github.ref_name == 'main'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
