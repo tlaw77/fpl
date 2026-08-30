@@ -11,6 +11,7 @@ SCOUT = Path('data/scout_consensus.json')
 MARKET = Path('data/market.json')
 CONSENSUS = Path('data/signal_consensus.json')
 OUT = Path('data/projection_snapshot.json')
+HISTORY = Path('data/projection_history')
 
 
 def load(path, default=None):
@@ -82,7 +83,7 @@ def main():
     projections.sort(key=lambda x: x['expected_points'], reverse=True)
     output = {
         'status': 'SUCCESS',
-        'version': 1,
+        'version': 2,
         'generated_at_utc': datetime.now(timezone.utc).isoformat(),
         'decision_gw': current_gw,
         'target_gw': target_gw,
@@ -90,18 +91,22 @@ def main():
         'player_count': len(projections),
         'projection_model': 'season-maturity calibrated + probabilistic xMins + signal disagreement + independent market where available',
         'calibration_contract': {
-            'frozen_before_target_gw': True,
+            'hindsight_safe_target_history': True,
             'expected_points_field': 'expected_points',
             'uncertainty_fields': ['projection_cv', 'projection_sd'],
             'minutes_probability_fields': ['prob_appearance', 'prob_start', 'prob_60_plus', 'prob_80_plus'],
             'outcome_source': 'archived FPL all-player event outcomes',
-            'note': 'This snapshot is frozen at the decision deadline and later paired with finalized target-GW outcomes. It exists specifically to prevent hindsight calibration.',
+            'freeze_rule': 'projection_history/gwN.json is refreshed only while N is the next future GW. Once current_gw advances to N, subsequent ETL writes target N+1, leaving the final pre-GW N forecast untouched.',
+            'note': 'This supports forecast-vs-outcome calibration without hindsight reconstruction.',
         },
         'players': projections,
     }
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(output, indent=2, ensure_ascii=False) + '\n')
-    print(json.dumps({'status': 'SUCCESS', 'target_gw': target_gw, 'players': len(projections)}))
+    HISTORY.mkdir(parents=True, exist_ok=True)
+    frozen = HISTORY / f'gw{target_gw}.json'
+    frozen.write_text(json.dumps(output, indent=2, ensure_ascii=False) + '\n')
+    print(json.dumps({'status': 'SUCCESS', 'target_gw': target_gw, 'players': len(projections), 'history_path': str(frozen)}))
 
 
 if __name__ == '__main__':
