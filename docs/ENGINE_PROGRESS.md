@@ -4,11 +4,11 @@ This is the durable progress gauge for the zero-extra-cost, mini-league-winning 
 
 Progress is capability-weighted, not commit-count weighted. A milestone advances only after production-equivalent validation succeeds.
 
-## Current validated progress: 99%
+## Current validated progress: 99.5%
 
-Last validated milestone: **production reconciliation of the feature branch with current `main`, including a freshly regenerated league-aware simulation contract and enforced captain consistency across review, simulation and backtesting**.
+Last validated milestone: **longitudinal model-health persistence is now implemented and CI-validated with an activation marker, current-GW health history, finalized-archive reconciliation and a hard failure for any post-activation finalized Gameweek that loses its health snapshot**.
 
-Current validation gate: **longitudinal model-health persistence across finalized Gameweeks before production-complete status**.
+Current validation gate: **observe the first post-activation Gameweek rollover and prove that its pre-rollover health snapshot is persisted into the immutable finalized archive before declaring production-complete status**.
 
 ## Capability roadmap
 
@@ -25,7 +25,8 @@ Current validation gate: **longitudinal model-health persistence across finalize
 | 91–96% | Historical calibration and backtesting feedback | COMPLETE |
 | 96–98% | Decision-quality self-evaluation, calibration drift and continuous model-health monitoring | COMPLETE |
 | 98–99% | Production reconciliation and cross-layer decision-contract validation | COMPLETE |
-| 99–100% | Longitudinal health persistence across finalized Gameweeks | IN PROGRESS |
+| 99–99.5% | Durable model-health persistence mechanism and no-hindsight activation boundary | COMPLETE |
+| 99.5–100% | First finalized post-activation Gameweek persisted and verified end-to-end | IN PROGRESS |
 
 ## Validation rules
 
@@ -43,7 +44,8 @@ A capability is not counted complete merely because code exists. It should satis
 10. Model-health CI must assert all health domains, tuning-state contracts and the permanent no-auto-mutation safeguard.
 11. A branch is not considered production-complete while it is materially diverged from `main`; reconciliation must be validated before merge.
 12. Captaincy presented to the user, used in simulation, and frozen for backtesting must resolve from the same freshly generated decision contract.
-13. No new paid dependency is allowed.
+13. Longitudinal health persistence must never reconstruct pre-activation health with hindsight; historical archives before the activation marker are legacy, while every finalized Gameweek at or after activation must have a matching persisted health snapshot or CI fails.
+14. No new paid dependency is allowed.
 
 ## Current public/free signal stack
 
@@ -61,6 +63,7 @@ A capability is not counted complete merely because code exists. It should satis
 - Continuous model-health synthesis across source coverage, disagreement, simulation stability, calibration and realized regret.
 - Dedicated model-health CI contract that keeps early-season LEARNING separate from genuine DEGRADED states and forbids automatic coefficient mutation.
 - Reconciled stability CI that regenerates the league-aware simulation contract before asserting captain consistency with the dedicated review and backtest contract.
+- Durable `model_health_history/gwN.json` persistence with an explicit activation boundary, immutable finalized-archive copy, manifest hashing and post-activation missing-snapshot failure.
 
 ## Strategic objective
 
