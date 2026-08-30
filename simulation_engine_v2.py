@@ -4,6 +4,7 @@ import statistics
 from datetime import datetime, timezone
 
 import captaincy_model as cm
+import league_win_model as lwm
 import simulation_engine as s
 from projection_calibration import expected_gw as calibrated_expected_gw, season_maturity
 
@@ -16,13 +17,13 @@ def model_lineup(squad, gw, exp):
     return ids, cap_id
 
 
-def league_objective_state(current_gw, current_rank, me_points, rivals):
-    """Describe how much mini-league outcome should influence utility.
+def expected_lineup_score(xi, cap, gw, exp):
+    values = exp.get(gw, {})
+    return sum(values.get(pid, (0.0, 0.0))[0] for pid in xi) + values.get(cap, (0.0, 0.0))[0]
 
-    Early season remains EV-led because short-term league position is noisy.
-    As the season matures, probability of taking/holding the league lead and
-    expected gap to the strongest rival become increasingly decision-relevant.
-    """
+
+def league_objective_state(current_gw, current_rank, me_points, rivals):
+    """Describe how much mini-league outcome should influence utility."""
     stage = max(0.0, min(1.0, float(current_gw or 0) / 38.0))
     rival_points = [s.n(r.get('total_points')) for r in rivals]
     leader_points = max([me_points, *rival_points], default=me_points)
@@ -30,18 +31,19 @@ def league_objective_state(current_gw, current_rank, me_points, rivals):
     remaining = max(1, 38 - int(current_gw or 0))
     chase_rate = gap_to_leader / remaining
 
-    # League-outcome weights are intentionally small early and become material
-    # only when there is less time left to recover a points deficit.
     lead_prob_weight = 2.0 + 24.0 * (stage ** 1.7)
     gap_weight = .025 + .16 * (stage ** 1.5)
+    season_win_weight = 1.5 + 28.0 * (stage ** 1.9)
     if current_rank == 1:
         posture = 'PROTECT_EDGE'
     elif chase_rate >= 2.0:
         posture = 'CHASE'
         lead_prob_weight *= 1.18
+        season_win_weight *= 1.20
     elif chase_rate >= .8:
         posture = 'CONTROLLED_CHASE'
         lead_prob_weight *= 1.08
+        season_win_weight *= 1.10
     else:
         posture = 'BALANCED'
 
@@ -53,6 +55,7 @@ def league_objective_state(current_gw, current_rank, me_points, rivals):
         'required_gain_per_remaining_gw': round(chase_rate, 3),
         'posture': posture,
         'lead_probability_weight': round(lead_prob_weight, 3),
+        'season_win_probability_weight': round(season_win_weight, 3),
         'leader_gap_weight': round(gap_weight, 4),
     }
 
@@ -102,25 +105,39 @@ def run():
             exp[gw][pid] = calibrated_expected_gw(player, gw, model_lo, model_hi, scout_maps, market_maps, current_gw=current_gw)
 
     cand_lineups = {}
+    cand_weekly_means = {}
     for c in candidates:
         cand_lineups[c['key']] = {}
+        weekly = []
         for gw in gws:
-            cand_lineups[c['key']][gw] = model_lineup(c['squad'], gw, exp)
+            lineup = model_lineup(c['squad'], gw, exp)
+            cand_lineups[c['key']][gw] = lineup
+            weekly.append(expected_lineup_score(*lineup, gw, exp))
+        cand_weekly_means[c['key']] = statistics.fmean(weekly) if weekly else 0.0
 
     baseline_key = next((c['key'] for c in candidates if c.get('move') is None), 'ROLL')
     baseline_first_xi, baseline_first_cap = cand_lineups.get(baseline_key, {}).get(next_gw, ([], 0))
 
     rival_lineups = []
+    rival_weekly_means = []
     for r in rivals:
         bygw = {}
+        weekly = []
         for gw in gws:
-            bygw[gw] = model_lineup(r['squad'], gw, exp)
+            lineup = model_lineup(r['squad'], gw, exp)
+            bygw[gw] = lineup
+            weekly.append(expected_lineup_score(*lineup, gw, exp))
         rival_lineups.append(bygw)
+        rival_weekly_means.append(statistics.fmean(weekly) if weekly else 0.0)
 
-    rng = random.Random(str(latest.get('generated_at_utc') or '') + '|simulation-v6-league-objective')
+    rng = random.Random(str(latest.get('generated_at_utc') or '') + '|simulation-v7-season-win')
     me_start = s.n((latest.get('me') or {}).get('total_points'))
     current_rank = int((latest.get('me') or {}).get('rank') or (len(rivals) + 1))
     objective = league_objective_state(current_gw, current_rank, me_start, rivals)
+    horizon_end = max(gws) if gws else current_gw
+    residual = lwm.residual_season_parameters(current_gw, horizon_end, league_size=len(rivals) + 1)
+    league_weekly_reference = statistics.fmean([cand_weekly_means.get(baseline_key, 0.0), *rival_weekly_means]) if rivals else cand_weekly_means.get(baseline_key, 0.0)
+    residual_conf_factor = {'LOW': .35, 'MEDIUM': .65, 'HIGH': .90}.get(residual.get('confidence'), .35)
 
     route_totals = {c['key']: [] for c in candidates}
     route_ranks = {c['key']: [] for c in candidates}
@@ -128,6 +145,8 @@ def run():
     route_beat = {c['key']: [0] * len(rivals) for c in candidates}
     route_lead = {c['key']: 0 for c in candidates}
     route_gap_to_best_rival = {c['key']: [] for c in candidates}
+    route_season_win = {c['key']: 0 for c in candidates}
+    route_terminal_gap = {c['key']: [] for c in candidates}
 
     for _ in range(s.ITERATIONS):
         outcomes = {}
@@ -142,6 +161,22 @@ def run():
                 total += sum(outcomes[gw].get(pid, 0) for pid in xi) + outcomes[gw].get(cap, 0)
             rival_scores.append(total)
         best_rival = max(rival_scores, default=me_start)
+
+        # Shared residual-season draws preserve fair route comparisons. The route
+        # changes the horizon score and weakly persistent projected edge; it does
+        # not get a fresh lucky future for each candidate.
+        me_residual_draw = rng.gauss(0.0, 1.0)
+        rival_residual_draws = [rng.gauss(0.0, 1.0) for _ in rivals]
+        terminal_rivals = [
+            lwm.terminal_score(
+                rival_scores[i],
+                rival_weekly_means[i] - league_weekly_reference,
+                rival_residual_draws[i],
+                residual,
+            )
+            for i in range(len(rivals))
+        ]
+        best_terminal_rival = max(terminal_rivals, default=me_start)
 
         for c in candidates:
             total = me_start
@@ -162,22 +197,37 @@ def run():
                 if total > rv:
                     route_beat[c['key']][i] += 1
 
+            terminal_me = lwm.terminal_score(
+                total,
+                cand_weekly_means[c['key']] - league_weekly_reference,
+                me_residual_draw,
+                residual,
+            )
+            route_terminal_gap[c['key']].append(terminal_me - best_terminal_rival)
+            if all(terminal_me >= rv for rv in terminal_rivals):
+                route_season_win[c['key']] += 1
+
     results = []
     for c in candidates:
         vals = route_totals[c['key']]
         ranks = route_ranks[c['key']]
         gaps = route_gap_to_best_rival[c['key']]
+        terminal_gaps = route_terminal_gap[c['key']]
         p10, p90 = s.percentile(vals, .10), s.percentile(vals, .90)
         mean = statistics.fmean(vals) if vals else 0
         exp_rank = statistics.fmean(ranks) if ranks else current_rank
         lead_prob = route_lead[c['key']] / s.ITERATIONS
+        season_win_prob = route_season_win[c['key']] / s.ITERATIONS
         expected_gap = statistics.fmean(gaps) if gaps else 0.0
+        expected_terminal_gap = statistics.fmean(terminal_gaps) if terminal_gaps else 0.0
 
-        # Expected FPL points remains the foundation. League-specific utility is
-        # an explicit, inspectable overlay whose influence grows with season stage.
         rank_value = (current_rank - exp_rank) * 5.0
         downside_penalty = max(0, mean - p10) * .12
-        league_value = lead_prob * objective['lead_probability_weight'] + expected_gap * objective['leader_gap_weight']
+        league_value = (
+            lead_prob * objective['lead_probability_weight']
+            + expected_gap * objective['leader_gap_weight']
+            + season_win_prob * objective['season_win_probability_weight'] * residual_conf_factor
+        )
         utility = mean + rank_value - downside_penalty + league_value
 
         hit = 0 if c['move'] is None else next_hit_cost
@@ -204,6 +254,9 @@ def run():
             'prob_gain_league_place': round(route_gain_places[c['key']] / s.ITERATIONS, 3),
             'prob_league_lead_after_horizon': round(lead_prob, 3),
             'expected_gap_to_best_rival_after_horizon': round(expected_gap, 2),
+            'estimated_prob_win_mini_league': round(season_win_prob, 3),
+            'estimated_final_gap_to_best_rival': round(expected_terminal_gap, 2),
+            'season_win_estimate_confidence': residual.get('confidence'),
             'prob_finish_ahead_each_rival': [round(route_beat[c['key']][i] / s.ITERATIONS, 3) for i in range(len(rivals))],
             'league_objective_value': round(league_value, 3),
             'utility_score': round(utility, 3),
@@ -224,8 +277,8 @@ def run():
     output = {
         'status': 'SUCCESS',
         'generated_at_utc': datetime.now(timezone.utc).isoformat(),
-        'engine_version': 6,
-        'projection_model': 'season-maturity calibrated + shared captaincy + mini-league objective',
+        'engine_version': 7,
+        'projection_model': 'season-maturity calibrated + shared captaincy + mini-league season-win objective',
         'season_maturity_weight': round(maturity, 3),
         'iterations': s.ITERATIONS,
         'horizon_gws': gws,
@@ -234,6 +287,7 @@ def run():
         'next_transfer_hit_cost': next_hit_cost,
         'candidate_count': len(results),
         'league_objective': objective,
+        'residual_season_model': residual,
         'rivals': rival_meta,
         'recommendation': winner,
         'routes': results,
@@ -243,11 +297,11 @@ def run():
             'baseline_captain_id': baseline_first_cap,
             'note': 'Each route stores exact out/in IDs plus the pre-decision and post-transfer XI/captain selected by the model at decision time. Captaincy uses the same shared model as Pick Team. Frozen lineups can be scored against archived outcomes without hindsight optimisation.'
         },
-        'method_note': 'Monte Carlo decision support from the reconstructed current squad. Expected FPL points remain primary. A transparent mini-league objective adds probability of taking/holding the league lead and expected gap to the strongest rival; its weight grows with season stage and chase pressure so early-season noise cannot force reckless differential play.',
+        'method_note': 'Expected FPL points remain primary. The explicit player-level Monte Carlo covers the planning horizon. Beyond it, a high-variance mean-reverting residual-season continuation estimates mini-league win probability without assuming current squads persist unchanged. Its influence is confidence-discounted and grows only as season stage makes league state strategically relevant.',
     }
     s.OUT.parent.mkdir(parents=True, exist_ok=True)
     s.OUT.write_text(json.dumps(output, indent=2, ensure_ascii=False) + '\n')
-    print(json.dumps({'status': 'SUCCESS', 'winner': winner, 'iterations': s.ITERATIONS, 'maturity': round(maturity, 3), 'remaining_ft': remaining_ft, 'next_hit_cost': next_hit_cost, 'engine_version': 6, 'league_posture': objective['posture'], 'captain': baseline_first_cap}))
+    print(json.dumps({'status': 'SUCCESS', 'winner': winner, 'iterations': s.ITERATIONS, 'maturity': round(maturity, 3), 'remaining_ft': remaining_ft, 'next_hit_cost': next_hit_cost, 'engine_version': 7, 'league_posture': objective['posture'], 'season_win_confidence': residual.get('confidence'), 'captain': baseline_first_cap}))
 
 
 if __name__ == '__main__':
