@@ -8,6 +8,7 @@ on:
     paths:
       - "fpl_etl.py"
       - "deadline_context.py"
+      - "simulation_budget.py"
       - "current_squad.py"
       - "declared_transfer_overlay.py"
       - "data/declared_transfers.json"
@@ -159,7 +160,14 @@ jobs:
           assert player_pool['status'] == 'SUCCESS' and player_pool['horizon'] == 6 and len(player_pool['players']) > 50
           assert scout_consensus['status'] == 'SUCCESS' and 'players' in scout_consensus
 
-          assert simulation['status'] == 'SUCCESS' and simulation.get('engine_version', 0) >= 5
+          expected_phase = deadline.get('phase')
+          stochastic_layers = [simulation, path_sim, adaptive_sim, chip_path_sim]
+          for layer in stochastic_layers:
+              policy = layer.get('iteration_policy') or {}
+              assert policy.get('deadline_phase') == expected_phase
+              assert int(policy.get('iterations') or 0) == int(layer.get('iterations') or 0)
+
+          assert simulation['status'] == 'SUCCESS' and simulation.get('engine_version', 0) >= 6
           assert str(simulation.get('projection_model', '')).startswith('season-maturity calibrated')
           assert simulation['iterations'] >= 1000 and simulation['candidate_count'] >= 1 and simulation.get('recommendation') is not None
           assert simulation.get('next_transfer_hit_cost') == data.get('next_transfer_hit_cost')
@@ -172,17 +180,17 @@ jobs:
               cap = int(route.get('post_transfer_captain_id') or 0)
               assert len(xi) == 11 and cap in xi
 
-          assert path_sim['status'] == 'SUCCESS' and path_sim.get('engine_version', 0) >= 5
+          assert path_sim['status'] == 'SUCCESS' and path_sim.get('engine_version', 0) >= 6
           assert str(path_sim.get('projection_model', '')).startswith('season-maturity calibrated')
           assert path_sim['iterations'] >= 1000 and len(path_sim.get('paths', [])) >= 1 and path_sim.get('recommendation') is not None
           assert path_sim.get('starting_free_transfers') == data.get('free_transfers_remaining_next_gw')
 
-          assert adaptive_sim['status'] == 'SUCCESS' and adaptive_sim.get('engine_version', 0) >= 2
+          assert adaptive_sim['status'] == 'SUCCESS' and adaptive_sim.get('engine_version', 0) >= 3
           assert str(adaptive_sim.get('projection_model', '')).startswith('season-maturity calibrated')
           assert adaptive_sim['iterations'] >= 1000 and len(adaptive_sim.get('paths', [])) >= 1 and adaptive_sim.get('recommendation') is not None
           assert len(adaptive_sim.get('rival_behaviour', [])) == len(data.get('rivals', []))
 
-          assert chip_path_sim['status'] == 'SUCCESS' and chip_path_sim.get('engine_version', 0) >= 2
+          assert chip_path_sim['status'] == 'SUCCESS' and chip_path_sim.get('engine_version', 0) >= 3
           assert str(chip_path_sim.get('projection_model', '')).startswith('season-maturity calibrated')
           assert chip_path_sim['iterations'] >= 1000 and chip_path_sim.get('best_no_chip_path') is not None
 
