@@ -4,11 +4,11 @@ This is the durable progress gauge for the zero-extra-cost, mini-league-winning 
 
 Progress is capability-weighted, not commit-count weighted. A milestone advances only after production-equivalent validation succeeds.
 
-## Current validated progress: 96%
+## Current validated progress: 98%
 
-Last validated milestone: **hindsight-safe historical calibration and backtest feedback with minimum-evidence safeguards**.
+Last validated milestone: **continuous model-health monitoring with explicit safety contracts and a dedicated CI validation gate**.
 
-Current validation gate: **decision-quality self-evaluation, calibration drift and continuous model-health monitoring**.
+Current validation gate: **production integration of the learning/health stack after branch reconciliation, plus longitudinal persistence checks across finalized Gameweeks**.
 
 ## Capability roadmap
 
@@ -23,7 +23,8 @@ Current validation gate: **decision-quality self-evaluation, calibration drift a
 | 82–86% | Estimated season-end mini-league win probability with uncertainty-aware continuation | COMPLETE |
 | 86–91% | League-state-aware captaincy: Safe / Best-EV / Chase modes | COMPLETE |
 | 91–96% | Historical calibration and backtesting feedback | COMPLETE |
-| 96–100% | Decision-quality self-evaluation, calibration drift and continuous model-health monitoring | IN PROGRESS |
+| 96–98% | Decision-quality self-evaluation, calibration drift and continuous model-health monitoring | COMPLETE |
+| 98–100% | Production reconciliation and longitudinal health persistence validation | IN PROGRESS |
 
 ## Validation rules
 
@@ -38,7 +39,9 @@ A capability is not counted complete merely because code exists. It should satis
 7. Long-horizon or season-end probabilities must expose confidence/assumptions rather than imply false precision.
 8. Calibration feedback may recommend investigation before it has enough evidence; it must not mutate model coefficients automatically from a tiny sample.
 9. Model-health monitoring must distinguish insufficient evidence from genuine drift or source degradation.
-10. No new paid dependency is allowed.
+10. Model-health CI must assert all health domains, tuning-state contracts and the permanent no-auto-mutation safeguard.
+11. A branch is not considered production-complete while it is materially diverged from `main`; reconciliation must be validated before merge.
+12. No new paid dependency is allowed.
 
 ## Current public/free signal stack
 
@@ -53,6 +56,8 @@ A capability is not counted complete merely because code exists. It should satis
 - League-state-aware immediate captaincy with future Gameweeks re-optimised rather than pre-committed.
 - Hindsight-safe `projection_history/gwN.json` snapshots paired with finalized all-player FPL outcomes.
 - Sample-gated calibration audit for points, uncertainty and minutes probabilities.
+- Continuous model-health synthesis across source coverage, disagreement, simulation stability, calibration and realized regret.
+- Dedicated model-health CI contract that keeps early-season LEARNING separate from genuine DEGRADED states and forbids automatic coefficient mutation.
 
 ## Strategic objective
 
