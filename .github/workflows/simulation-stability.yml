@@ -54,6 +54,7 @@ jobs:
           gate = json.loads(Path('data/chip_activation_gate.json').read_text())
           tc = json.loads(Path('data/triple_captain_review.json').read_text())
           cap = json.loads(Path('data/captaincy_review.json').read_text())
+          sim = json.loads(Path('data/simulation.json').read_text())
           backtest = json.loads(Path('data/backtest_summary.json').read_text())
           assert data['status'] == 'SUCCESS'
           assert data.get('version', 0) >= 2
@@ -84,10 +85,21 @@ jobs:
           assert league.get('posture') in ('PROTECT_EDGE','BALANCED','CONTROLLED_CHASE','CHASE')
           if float(league.get('season_stage') or 0) < .35:
               assert league.get('recommended_mode') == 'BEST_EV', 'Early-season captaincy must remain EV-led'
+
+          # Keep the user-facing review and simulation contract on the same captain.
+          cap_id = int(cap['captain'].get('player_id') or 0)
+          cap_xi = {int(x) for x in cap.get('recommended_xi_ids', [])}
+          sim_contract = sim.get('backtest_contract') or {}
+          sim_cap = int(sim_contract.get('baseline_captain_id') or 0)
+          sim_xi = {int(x) for x in sim_contract.get('baseline_xi_ids', [])}
+          assert cap_id and cap_id in cap_xi
+          assert sim_cap and sim_cap in sim_xi
+          assert cap_id == sim_cap, f"Captain mismatch: review={cap_id}, simulation={sim_cap}"
+
           assert backtest['status'] == 'SUCCESS'
-          assert backtest.get('version', 0) >= 1
+          assert backtest.get('version', 0) >= 2
           assert backtest.get('evaluable_gameweeks', 0) >= 0
-          print('Simulation stability, chip gate, league-aware captaincy and backtest validation passed')
+          print('Simulation stability, chip gate, league-aware captaincy, captain consistency and backtest validation passed')
           PY
       - name: Commit supplemental snapshots
         if: github.event_name != 'push' || github.ref_name == 'main'
