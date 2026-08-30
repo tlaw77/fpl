@@ -3,6 +3,9 @@ import math
 from pathlib import Path
 
 MARKET_STRENGTH = Path('data/market_strength.json')
+SIGNAL_CONSENSUS = Path('data/signal_consensus.json')
+POOL = Path('data/player_pool.json')
+SCOUT = Path('data/scout_consensus.json')
 
 
 def n(v, d=0.0):
@@ -28,10 +31,6 @@ def season_maturity(current_gw):
 
 
 def market_strength_map():
-    """Optional independent fixture-strength signal.
-
-    Missing/stale/unmatched market data must never break the projection stack.
-    """
     try:
         data = json.loads(MARKET_STRENGTH.read_text())
     except Exception:
@@ -52,7 +51,34 @@ def market_strength_map():
     return out
 
 
+def ensure_signal_consensus():
+    """Build agreement evidence after Pool + Scout are fresh in the ETL workspace.
+
+    This keeps existing simulation call signatures untouched. Failure is always
+    non-fatal: the established projection stack remains the fallback.
+    """
+    try:
+        required = [p for p in (POOL, SCOUT) if p.exists()]
+        newest_source = max((p.stat().st_mtime for p in required), default=0)
+        stale = not SIGNAL_CONSENSUS.exists() or SIGNAL_CONSENSUS.stat().st_mtime < newest_source
+        if stale:
+            from signal_consensus import main as build_signal_consensus
+            build_signal_consensus()
+    except Exception:
+        return
+
+
+def signal_consensus_map():
+    ensure_signal_consensus()
+    try:
+        data = json.loads(SIGNAL_CONSENSUS.read_text())
+    except Exception:
+        return {}
+    return {int(row.get('player_id') or 0): row for row in data.get('players') or [] if row.get('player_id')}
+
+
 _MARKET_STRENGTH_MAP = market_strength_map()
+_SIGNAL_CONSENSUS_MAP = signal_consensus_map()
 
 
 def fixture_market_signal(player, f, maturity):
@@ -96,8 +122,6 @@ def expected_gw(player, gw, model_lo, model_hi, scout_maps, market_maps, current
     avail = max(0.0, min(1.0, n(player.get('adjusted_availability', player.get('availability')), 1)))
     sched = max(.78, min(1.04, n(player.get('schedule_modifier'), 1)))
 
-    # Probabilistic xMins v2: mean minutes and the 60-minute threshold both matter
-    # in FPL, while start/cameo probabilities primarily alter uncertainty.
     xmins = max(2.0, min(90.0, n(player.get('expected_minutes'), 68.0)))
     p_start = max(0.0, min(1.0, n(player.get('prob_start'), xmins / 90.0)))
     p_cameo = max(0.0, min(1.0 - p_start, n(player.get('prob_cameo'), .08)))
@@ -151,8 +175,6 @@ def expected_gw(player, gw, model_lo, model_hi, scout_maps, market_maps, current
         cv += .12
     elif risk == 'medium':
         cv += .05
-    # Lack of a relevant midweek observation should be a small uncertainty only;
-    # during long gaps there may simply be no workload close enough to matter.
     if not player.get('player_workload_observed', False) and risk != 'low':
         cv += .025
 
@@ -166,5 +188,18 @@ def expected_gw(player, gw, model_lo, model_hi, scout_maps, market_maps, current
         market_direction = independent_factor - 1.0
         if (fpl_direction > .35 and market_direction < -.012) or (fpl_direction < -.35 and market_direction > .012):
             cv += .035
+
+    # Explicit cross-source disagreement is treated primarily as uncertainty.
+    # Strong agreement earns only a tiny confidence dividend; it never creates
+    # a large hidden mean boost.
+    consensus = _SIGNAL_CONSENSUS_MAP.get(int(player.get('player_id') or 0)) or {}
+    disagreement = max(0.0, min(1.0, n(consensus.get('disagreement_score'), 0.0)))
+    consensus_conf = max(0.0, min(1.0, n(consensus.get('confidence_score'), 0.0)))
+    if disagreement >= .55:
+        cv += .065 * consensus_conf
+    elif disagreement >= .30:
+        cv += .032 * consensus_conf
+    elif norm(consensus.get('agreement')) == 'strong_agreement' and consensus_conf >= .55:
+        cv -= .018 * consensus_conf
 
     return max(0.0, mean), max(.42, min(1.15, cv))
