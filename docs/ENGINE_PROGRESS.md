@@ -4,11 +4,11 @@ This is the durable progress gauge for the zero-extra-cost, mini-league-winning 
 
 Progress is capability-weighted, not commit-count weighted. A milestone advances only after production-equivalent validation succeeds.
 
-## Current validated progress: 86%
+## Current validated progress: 91%
 
-Last validated milestone: **estimated season-end mini-league win probability using a mean-reverting residual-season continuation**.
+Last validated milestone: **league-state-aware captaincy with Safe / Best-EV / Chase modes and an early-season EV guardrail**.
 
-Current validation gate: **league-state-aware captaincy with safe / best-EV / chase modes**.
+Current validation gate: **historical calibration and backtest feedback with minimum-evidence safeguards**.
 
 ## Capability roadmap
 
@@ -21,8 +21,8 @@ Current validation gate: **league-state-aware captaincy with safe / best-EV / ch
 | 72–78% | Explainable cross-source agreement/disagreement intelligence | COMPLETE |
 | 78–82% | Route-level probability of taking/holding mini-league lead over explicit horizon | COMPLETE |
 | 82–86% | Estimated season-end mini-league win probability with uncertainty-aware continuation | COMPLETE |
-| 86–91% | League-state-aware captaincy: safe / best-EV / chase modes | IN PROGRESS |
-| 91–96% | Historical coefficient calibration and backtesting | PLANNED |
+| 86–91% | League-state-aware captaincy: Safe / Best-EV / Chase modes | COMPLETE |
+| 91–96% | Historical calibration and backtesting feedback | IN PROGRESS |
 | 96–100% | Decision-quality self-evaluation, calibration drift and continuous tuning | PLANNED |
 
 ## Validation rules
@@ -36,7 +36,8 @@ A capability is not counted complete merely because code exists. It should satis
 5. Existing legal-squad, budget, captaincy, rival and chip contracts must remain valid.
 6. League-game-theory overlays must remain secondary to expected-value evidence early in the season and grow only as season state warrants.
 7. Long-horizon or season-end probabilities must expose confidence/assumptions rather than imply false precision.
-8. No new paid dependency is allowed.
+8. Calibration feedback may recommend investigation before it has enough evidence; it must not mutate model coefficients automatically from a tiny sample.
+9. No new paid dependency is allowed.
 
 ## Current public/free signal stack
 
@@ -48,6 +49,7 @@ A capability is not counted complete merely because code exists. It should satis
 - Internal signal consensus/disagreement model.
 - Shared Monte Carlo, multi-GW, adaptive-rival and chip simulations.
 - Explicit horizon league-lead probability and confidence-discounted season-win estimate.
+- League-state-aware immediate captaincy with future Gameweeks re-optimised rather than pre-committed.
 
 ## Strategic objective
 
