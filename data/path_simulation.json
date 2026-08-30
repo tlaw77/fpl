@@ -1,8 +1,8 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-08-30T09:25:00.305765+00:00",
-  "engine_version": 5,
-  "planner": "bounded beam search + GW-specific shared-outcome Monte Carlo + live FT state + season calibration + shared captaincy",
+  "generated_at_utc": "2026-08-30T09:36:17.578855+00:00",
+  "engine_version": 6,
+  "planner": "bounded beam search + GW-specific shared-outcome Monte Carlo + live FT state + season calibration + shared captaincy + deadline-aware sampling",
   "projection_model": "season-maturity calibrated + shared captaincy model",
   "season_maturity_weight": 0.25,
   "depth_gameweeks": [
@@ -12,7 +12,14 @@
     6
   ],
   "beam_width": 14,
-  "iterations": 1800,
+  "iterations": 1200,
+  "iteration_policy": {
+    "layer": "path",
+    "deadline_phase": "normal",
+    "hours_to_deadline": 127.9,
+    "iterations": 1200,
+    "policy": "lighter normal-week sampling; higher precision inside 72h/24h/6h of official FPL deadline"
+  },
   "starting_free_transfers": 0,
   "max_free_transfers": 5,
   "transfer_hit_cost": 4,
@@ -157,24 +164,24 @@
         "in_id": 316
       }
     ],
-    "expected_points": 217.39,
-    "p10_points": 178.69,
-    "p90_points": 258.98,
-    "expected_rank_after_path": 5.57,
-    "prob_gain_league_place": 0.817,
+    "expected_points": 221.32,
+    "p10_points": 182.71,
+    "p90_points": 260.96,
+    "expected_rank_after_path": 5.33,
+    "prob_gain_league_place": 0.856,
     "prob_finish_ahead_each_rival": [
-      0.112,
-      0.162,
-      0.335,
-      0.328,
-      0.279,
-      0.501,
-      0.717
+      0.125,
+      0.189,
+      0.393,
+      0.383,
+      0.308,
+      0.538,
+      0.736
     ],
     "ending_bank": 0.8,
     "ending_free_transfers": 1,
     "first_transfer_incoming_starts": true,
-    "utility_score": 225.266
+    "utility_score": 230.396
   },
   "paths": [
     {
@@ -212,24 +219,24 @@
           "in_id": 316
         }
       ],
-      "expected_points": 217.39,
-      "p10_points": 178.69,
-      "p90_points": 258.98,
-      "expected_rank_after_path": 5.57,
-      "prob_gain_league_place": 0.817,
+      "expected_points": 221.32,
+      "p10_points": 182.71,
+      "p90_points": 260.96,
+      "expected_rank_after_path": 5.33,
+      "prob_gain_league_place": 0.856,
       "prob_finish_ahead_each_rival": [
-        0.112,
-        0.162,
-        0.335,
-        0.328,
-        0.279,
-        0.501,
-        0.717
+        0.125,
+        0.189,
+        0.393,
+        0.383,
+        0.308,
+        0.538,
+        0.736
       ],
       "ending_bank": 0.8,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
-      "utility_score": 225.266
+      "utility_score": 230.396
     },
     {
       "actions": [
@@ -266,24 +273,24 @@
           "in_id": 316
         }
       ],
-      "expected_points": 217.19,
-      "p10_points": 178.19,
-      "p90_points": 258.48,
-      "expected_rank_after_path": 5.56,
-      "prob_gain_league_place": 0.808,
+      "expected_points": 221.15,
+      "p10_points": 183.82,
+      "p90_points": 260.01,
+      "expected_rank_after_path": 5.36,
+      "prob_gain_league_place": 0.84,
       "prob_finish_ahead_each_rival": [
-        0.119,
-        0.161,
-        0.337,
-        0.325,
-        0.287,
-        0.5,
-        0.707
+        0.125,
+        0.188,
+        0.389,
+        0.386,
+        0.307,
+        0.522,
+        0.725
       ],
       "ending_bank": 5.8,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
-      "utility_score": 225.037
+      "utility_score": 230.228
     },
     {
       "actions": [
@@ -320,24 +327,24 @@
           "in_id": 316
         }
       ],
-      "expected_points": 217.19,
-      "p10_points": 178.19,
-      "p90_points": 258.48,
-      "expected_rank_after_path": 5.56,
-      "prob_gain_league_place": 0.808,
+      "expected_points": 221.15,
+      "p10_points": 183.82,
+      "p90_points": 260.01,
+      "expected_rank_after_path": 5.36,
+      "prob_gain_league_place": 0.84,
       "prob_finish_ahead_each_rival": [
-        0.119,
-        0.161,
-        0.337,
-        0.325,
-        0.287,
-        0.5,
-        0.707
+        0.125,
+        0.188,
+        0.389,
+        0.386,
+        0.307,
+        0.522,
+        0.725
       ],
       "ending_bank": 5.3,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
-      "utility_score": 225.037
+      "utility_score": 230.228
     },
     {
       "actions": [
@@ -374,24 +381,24 @@
           "in_id": 316
         }
       ],
-      "expected_points": 217.19,
-      "p10_points": 178.19,
-      "p90_points": 258.48,
-      "expected_rank_after_path": 5.56,
-      "prob_gain_league_place": 0.808,
+      "expected_points": 221.15,
+      "p10_points": 183.82,
+      "p90_points": 260.01,
+      "expected_rank_after_path": 5.36,
+      "prob_gain_league_place": 0.84,
       "prob_finish_ahead_each_rival": [
-        0.119,
-        0.161,
-        0.337,
-        0.325,
-        0.287,
-        0.5,
-        0.707
+        0.125,
+        0.188,
+        0.389,
+        0.386,
+        0.307,
+        0.522,
+        0.725
       ],
       "ending_bank": 6.8,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
-      "utility_score": 225.037
+      "utility_score": 230.228
     },
     {
       "actions": [
@@ -428,24 +435,24 @@
           "in_id": 316
         }
       ],
-      "expected_points": 217.19,
-      "p10_points": 178.19,
-      "p90_points": 258.48,
-      "expected_rank_after_path": 5.56,
-      "prob_gain_league_place": 0.808,
+      "expected_points": 221.15,
+      "p10_points": 183.82,
+      "p90_points": 260.01,
+      "expected_rank_after_path": 5.36,
+      "prob_gain_league_place": 0.84,
       "prob_finish_ahead_each_rival": [
-        0.119,
-        0.161,
-        0.337,
-        0.325,
-        0.287,
-        0.5,
-        0.707
+        0.125,
+        0.188,
+        0.389,
+        0.386,
+        0.307,
+        0.522,
+        0.725
       ],
       "ending_bank": 6.3,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
-      "utility_score": 225.037
+      "utility_score": 230.228
     },
     {
       "actions": [
@@ -482,24 +489,24 @@
           "in_id": 544
         }
       ],
-      "expected_points": 217.0,
-      "p10_points": 178.7,
-      "p90_points": 257.88,
-      "expected_rank_after_path": 5.59,
-      "prob_gain_league_place": 0.8,
+      "expected_points": 220.59,
+      "p10_points": 182.03,
+      "p90_points": 259.38,
+      "expected_rank_after_path": 5.38,
+      "prob_gain_league_place": 0.84,
       "prob_finish_ahead_each_rival": [
         0.107,
-        0.159,
-        0.341,
-        0.32,
-        0.29,
-        0.49,
-        0.701
+        0.186,
+        0.384,
+        0.376,
+        0.319,
+        0.528,
+        0.721
       ],
       "ending_bank": 6.8,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
-      "utility_score": 224.792
+      "utility_score": 229.415
     },
     {
       "actions": [
@@ -536,24 +543,24 @@
           "in_id": 544
         }
       ],
-      "expected_points": 217.0,
-      "p10_points": 178.7,
-      "p90_points": 257.88,
-      "expected_rank_after_path": 5.59,
-      "prob_gain_league_place": 0.8,
+      "expected_points": 220.59,
+      "p10_points": 182.03,
+      "p90_points": 259.38,
+      "expected_rank_after_path": 5.38,
+      "prob_gain_league_place": 0.84,
       "prob_finish_ahead_each_rival": [
         0.107,
-        0.159,
-        0.341,
-        0.32,
-        0.29,
-        0.49,
-        0.701
+        0.186,
+        0.384,
+        0.376,
+        0.319,
+        0.528,
+        0.721
       ],
       "ending_bank": 5.3,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
-      "utility_score": 224.792
+      "utility_score": 229.415
     },
     {
       "actions": [
@@ -590,25 +597,25 @@
           "in_id": 544
         }
       ],
-      "expected_points": 217.0,
-      "p10_points": 178.7,
-      "p90_points": 257.88,
-      "expected_rank_after_path": 5.59,
-      "prob_gain_league_place": 0.8,
+      "expected_points": 220.59,
+      "p10_points": 182.03,
+      "p90_points": 259.38,
+      "expected_rank_after_path": 5.38,
+      "prob_gain_league_place": 0.84,
       "prob_finish_ahead_each_rival": [
         0.107,
-        0.159,
-        0.341,
-        0.32,
-        0.29,
-        0.49,
-        0.701
+        0.186,
+        0.384,
+        0.376,
+        0.319,
+        0.528,
+        0.721
       ],
       "ending_bank": 5.8,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
-      "utility_score": 224.792
+      "utility_score": 229.415
     }
   ],
-  "method_note": "Each path is scored with the actual squad owned in each Gameweek. Current-deadline hits use live FT state. Early-season extremes are shrunk toward priors. Legal XI selection is followed by the same captaincy model used by Pick Team, keeping forward simulation captaincy aligned with the visible recommendation."
+  "method_note": "Each path is scored with the actual squad owned in each Gameweek. Current-deadline hits use live FT state. Early-season extremes are shrunk toward priors. Legal XI selection uses the shared captaincy model. Monte Carlo sampling is lighter midweek and increases close to the official FPL deadline without changing decision thresholds."
 }

@@ -1,22 +1,29 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-08-30T09:25:16.440580+00:00",
-  "engine_version": 2,
-  "iterations": 1600,
+  "generated_at_utc": "2026-08-30T09:36:32.058007+00:00",
+  "engine_version": 3,
+  "iterations": 1200,
+  "iteration_policy": {
+    "layer": "chip",
+    "deadline_phase": "normal",
+    "hours_to_deadline": 127.9,
+    "iterations": 1200,
+    "policy": "lighter normal-week sampling; higher precision inside 72h/24h/6h of official FPL deadline"
+  },
   "horizon_gws": [
     3,
     4,
     5,
     6
   ],
-  "projection_model": "season-maturity calibrated",
+  "projection_model": "season-maturity calibrated + shared captaincy model",
   "season_maturity_weight": 0.25,
   "rival_policy": "probabilistic observed-behaviour challenger",
   "exact_chip_branches": [
     "Triple Captain",
     "Bench Boost"
   ],
-  "full_squad_chip_branches_pending": [
+  "full_squad_chip_branches": [
     "Wildcard",
     "Free Hit"
   ],
@@ -57,21 +64,21 @@
     ],
     "chip": "Bench Boost",
     "chip_gw": 6,
-    "expected_points": 230.26,
-    "chip_incremental_expected_points": 12.19,
-    "p10_points": 189.56,
-    "p90_points": 271.94,
-    "expected_rank_after_path": 5.23,
+    "expected_points": 232.13,
+    "chip_incremental_expected_points": 12.26,
+    "p10_points": 192.5,
+    "p90_points": 274.27,
+    "expected_rank_after_path": 5.12,
     "prob_finish_ahead_each_rival": [
-      0.131,
-      0.189,
-      0.376,
-      0.397,
-      0.362,
-      0.571,
-      0.742
+      0.167,
+      0.17,
+      0.402,
+      0.413,
+      0.382,
+      0.576,
+      0.768
     ],
-    "utility_score": 239.224
+    "utility_score": 241.76
   },
   "best_no_chip_path": {
     "actions": [
@@ -86,17 +93,17 @@
       {
         "gw": 4,
         "action": "TRANSFER",
-        "route": "Schade → Ødegaard",
+        "route": "B.Fernandes → Ødegaard",
         "hit": 0,
-        "out_id": 94,
+        "out_id": 426,
         "in_id": 15
       },
       {
         "gw": 5,
         "action": "TRANSFER",
-        "route": "Groß → Elanga",
+        "route": "Hughes → Elanga",
         "hit": 0,
-        "out_id": 124,
+        "out_id": 212,
         "in_id": 454
       },
       {
@@ -110,21 +117,21 @@
     ],
     "chip": null,
     "chip_gw": null,
-    "expected_points": 218.19,
+    "expected_points": 219.87,
     "chip_incremental_expected_points": 0.0,
-    "p10_points": 178.69,
-    "p90_points": 259.88,
-    "expected_rank_after_path": 6.08,
+    "p10_points": 181.2,
+    "p90_points": 261.69,
+    "expected_rank_after_path": 5.97,
     "prob_finish_ahead_each_rival": [
-      0.058,
-      0.098,
-      0.248,
-      0.273,
-      0.221,
-      0.426,
-      0.602
+      0.084,
+      0.093,
+      0.276,
+      0.271,
+      0.235,
+      0.43,
+      0.636
     ],
-    "utility_score": 223.069
+    "utility_score": 225.354
   },
   "best_triple_captain_window": {
     "actions": [
@@ -162,22 +169,22 @@
       }
     ],
     "chip": "Triple Captain",
-    "chip_gw": 4,
-    "expected_points": 224.11,
-    "chip_incremental_expected_points": 5.92,
-    "p10_points": 182.61,
-    "p90_points": 267.47,
-    "expected_rank_after_path": 5.7,
+    "chip_gw": 6,
+    "expected_points": 226.05,
+    "chip_incremental_expected_points": 6.02,
+    "p10_points": 183.64,
+    "p90_points": 270.51,
+    "expected_rank_after_path": 5.55,
     "prob_finish_ahead_each_rival": [
-      0.083,
-      0.138,
-      0.309,
-      0.331,
-      0.276,
+      0.14,
+      0.143,
+      0.335,
+      0.328,
+      0.31,
       0.496,
-      0.67
+      0.702
     ],
-    "utility_score": 230.641
+    "utility_score": 233.234
   },
   "best_bench_boost_window": {
     "actions": [
@@ -216,21 +223,21 @@
     ],
     "chip": "Bench Boost",
     "chip_gw": 6,
-    "expected_points": 230.26,
-    "chip_incremental_expected_points": 12.19,
-    "p10_points": 189.56,
-    "p90_points": 271.94,
-    "expected_rank_after_path": 5.23,
+    "expected_points": 232.13,
+    "chip_incremental_expected_points": 12.26,
+    "p10_points": 192.5,
+    "p90_points": 274.27,
+    "expected_rank_after_path": 5.12,
     "prob_finish_ahead_each_rival": [
-      0.131,
-      0.189,
-      0.376,
-      0.397,
-      0.362,
-      0.571,
-      0.742
+      0.167,
+      0.17,
+      0.402,
+      0.413,
+      0.382,
+      0.576,
+      0.768
     ],
-    "utility_score": 239.224
+    "utility_score": 241.76
   },
   "rival_behaviour": [
     {
@@ -328,74 +335,21 @@
       ],
       "chip": "Bench Boost",
       "chip_gw": 6,
-      "expected_points": 230.26,
-      "chip_incremental_expected_points": 12.19,
-      "p10_points": 189.56,
-      "p90_points": 271.94,
-      "expected_rank_after_path": 5.23,
+      "expected_points": 232.13,
+      "chip_incremental_expected_points": 12.26,
+      "p10_points": 192.5,
+      "p90_points": 274.27,
+      "expected_rank_after_path": 5.12,
       "prob_finish_ahead_each_rival": [
-        0.131,
-        0.189,
-        0.376,
-        0.397,
-        0.362,
-        0.571,
-        0.742
+        0.167,
+        0.17,
+        0.402,
+        0.413,
+        0.382,
+        0.576,
+        0.768
       ],
-      "utility_score": 239.224
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Dubravka → Tzolakis",
-          "hit": 4,
-          "out_id": 497,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Ødegaard",
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 15
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Hughes → Elanga",
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 454
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Calvert-Lewin → Emersonn",
-          "hit": 0,
-          "out_id": 346,
-          "in_id": 316
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 5,
-      "expected_points": 230.1,
-      "chip_incremental_expected_points": 12.03,
-      "p10_points": 190.19,
-      "p90_points": 271.52,
-      "expected_rank_after_path": 5.25,
-      "prob_finish_ahead_each_rival": [
-        0.133,
-        0.18,
-        0.379,
-        0.389,
-        0.356,
-        0.57,
-        0.744
-      ],
-      "utility_score": 239.071
+      "utility_score": 241.76
     },
     {
       "actions": [
@@ -434,21 +388,21 @@
       ],
       "chip": "Bench Boost",
       "chip_gw": 4,
-      "expected_points": 230.08,
-      "chip_incremental_expected_points": 12.01,
-      "p10_points": 189.85,
-      "p90_points": 272.06,
-      "expected_rank_after_path": 5.25,
+      "expected_points": 231.93,
+      "chip_incremental_expected_points": 12.06,
+      "p10_points": 192.21,
+      "p90_points": 275.83,
+      "expected_rank_after_path": 5.14,
       "prob_finish_ahead_each_rival": [
-        0.131,
-        0.177,
-        0.387,
-        0.391,
-        0.357,
-        0.568,
-        0.741
+        0.17,
+        0.169,
+        0.398,
+        0.406,
+        0.384,
+        0.575,
+        0.757
       ],
-      "utility_score": 239.02
+      "utility_score": 241.455
     },
     {
       "actions": [
@@ -487,74 +441,21 @@
       ],
       "chip": "Bench Boost",
       "chip_gw": 4,
-      "expected_points": 230.08,
-      "chip_incremental_expected_points": 12.01,
-      "p10_points": 189.85,
-      "p90_points": 272.06,
-      "expected_rank_after_path": 5.25,
+      "expected_points": 231.93,
+      "chip_incremental_expected_points": 12.06,
+      "p10_points": 192.21,
+      "p90_points": 275.83,
+      "expected_rank_after_path": 5.14,
       "prob_finish_ahead_each_rival": [
-        0.131,
-        0.177,
-        0.387,
-        0.391,
-        0.357,
-        0.568,
-        0.741
+        0.17,
+        0.169,
+        0.398,
+        0.406,
+        0.384,
+        0.575,
+        0.757
       ],
-      "utility_score": 239.02
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Dubravka → Tzolakis",
-          "hit": 4,
-          "out_id": 497,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Ødegaard",
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 15
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Groß → Elanga",
-          "hit": 0,
-          "out_id": 124,
-          "in_id": 454
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Calvert-Lewin → Emersonn",
-          "hit": 0,
-          "out_id": 346,
-          "in_id": 316
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 6,
-      "expected_points": 229.83,
-      "chip_incremental_expected_points": 11.75,
-      "p10_points": 188.81,
-      "p90_points": 270.93,
-      "expected_rank_after_path": 5.25,
-      "prob_finish_ahead_each_rival": [
-        0.138,
-        0.184,
-        0.379,
-        0.395,
-        0.358,
-        0.568,
-        0.734
-      ],
-      "utility_score": 238.68
+      "utility_score": 241.455
     },
     {
       "actions": [
@@ -593,74 +494,551 @@
       ],
       "chip": "Bench Boost",
       "chip_gw": 6,
-      "expected_points": 229.84,
-      "chip_incremental_expected_points": 11.77,
-      "p10_points": 189.32,
-      "p90_points": 271.39,
-      "expected_rank_after_path": 5.27,
+      "expected_points": 231.78,
+      "chip_incremental_expected_points": 11.91,
+      "p10_points": 191.96,
+      "p90_points": 273.78,
+      "expected_rank_after_path": 5.14,
       "prob_finish_ahead_each_rival": [
-        0.123,
-        0.181,
-        0.378,
-        0.387,
+        0.168,
+        0.168,
+        0.398,
+        0.405,
+        0.379,
+        0.571,
+        0.769
+      ],
+      "utility_score": 241.29
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Dubravka → Tzolakis",
+          "hit": 4,
+          "out_id": 497,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Ødegaard",
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 15
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Hughes → Elanga",
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 454
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Calvert-Lewin → Emersonn",
+          "hit": 0,
+          "out_id": 346,
+          "in_id": 316
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 5,
+      "expected_points": 231.78,
+      "chip_incremental_expected_points": 11.91,
+      "p10_points": 192.14,
+      "p90_points": 274.43,
+      "expected_rank_after_path": 5.16,
+      "prob_finish_ahead_each_rival": [
+        0.168,
+        0.172,
+        0.391,
+        0.403,
+        0.373,
+        0.573,
+        0.762
+      ],
+      "utility_score": 241.229
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Dubravka → Tzolakis",
+          "hit": 4,
+          "out_id": 497,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Ødegaard",
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 15
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Groß → Elanga",
+          "hit": 0,
+          "out_id": 124,
+          "in_id": 454
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Calvert-Lewin → Emersonn",
+          "hit": 0,
+          "out_id": 346,
+          "in_id": 316
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 6,
+      "expected_points": 231.76,
+      "chip_incremental_expected_points": 11.89,
+      "p10_points": 191.93,
+      "p90_points": 273.41,
+      "expected_rank_after_path": 5.16,
+      "prob_finish_ahead_each_rival": [
+        0.162,
+        0.17,
+        0.394,
+        0.401,
+        0.38,
+        0.574,
+        0.762
+      ],
+      "utility_score": 241.194
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Dubravka → Tzolakis",
+          "hit": 4,
+          "out_id": 497,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Ødegaard",
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 15
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Hughes → Elanga",
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 454
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Calvert-Lewin → Emersonn",
+          "hit": 0,
+          "out_id": 346,
+          "in_id": 316
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 3,
+      "expected_points": 231.5,
+      "chip_incremental_expected_points": 11.63,
+      "p10_points": 192.79,
+      "p90_points": 274.7,
+      "expected_rank_after_path": 5.18,
+      "prob_finish_ahead_each_rival": [
+        0.166,
+        0.168,
+        0.397,
+        0.398,
+        0.363,
+        0.569,
+        0.758
+      ],
+      "utility_score": 240.947
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Dubravka → Tzolakis",
+          "hit": 4,
+          "out_id": 497,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Ødegaard",
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 15
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Groß → Elanga",
+          "hit": 0,
+          "out_id": 124,
+          "in_id": 454
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Calvert-Lewin → Emersonn",
+          "hit": 0,
+          "out_id": 346,
+          "in_id": 316
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 3,
+      "expected_points": 231.5,
+      "chip_incremental_expected_points": 11.63,
+      "p10_points": 192.79,
+      "p90_points": 274.7,
+      "expected_rank_after_path": 5.18,
+      "prob_finish_ahead_each_rival": [
+        0.166,
+        0.168,
+        0.397,
+        0.398,
+        0.363,
+        0.569,
+        0.758
+      ],
+      "utility_score": 240.947
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Schade → Ødegaard",
+          "hit": 0,
+          "out_id": 94,
+          "in_id": 15
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Groß → Elanga",
+          "hit": 0,
+          "out_id": 124,
+          "in_id": 454
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Calvert-Lewin → Emersonn",
+          "hit": 0,
+          "out_id": 346,
+          "in_id": 316
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 6,
+      "expected_points": 231.74,
+      "chip_incremental_expected_points": 11.7,
+      "p10_points": 190.61,
+      "p90_points": 273.84,
+      "expected_rank_after_path": 5.17,
+      "prob_finish_ahead_each_rival": [
+        0.174,
+        0.167,
+        0.386,
+        0.392,
+        0.384,
+        0.562,
+        0.763
+      ],
+      "utility_score": 240.943
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Ødegaard",
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 15
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Hughes → Elanga",
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 454
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Calvert-Lewin → Emersonn",
+          "hit": 0,
+          "out_id": 346,
+          "in_id": 316
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 4,
+      "expected_points": 231.46,
+      "chip_incremental_expected_points": 11.59,
+      "p10_points": 192.03,
+      "p90_points": 274.09,
+      "expected_rank_after_path": 5.17,
+      "prob_finish_ahead_each_rival": [
+        0.167,
+        0.172,
+        0.388,
+        0.403,
+        0.369,
+        0.57,
+        0.757
+      ],
+      "utility_score": 240.855
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Ødegaard",
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 15
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Groß → Elanga",
+          "hit": 0,
+          "out_id": 124,
+          "in_id": 454
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Calvert-Lewin → Emersonn",
+          "hit": 0,
+          "out_id": 346,
+          "in_id": 316
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 4,
+      "expected_points": 231.46,
+      "chip_incremental_expected_points": 11.59,
+      "p10_points": 192.03,
+      "p90_points": 274.09,
+      "expected_rank_after_path": 5.17,
+      "prob_finish_ahead_each_rival": [
+        0.167,
+        0.172,
+        0.388,
+        0.403,
+        0.369,
+        0.57,
+        0.757
+      ],
+      "utility_score": 240.855
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Ødegaard",
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 15
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Groß → Elanga",
+          "hit": 0,
+          "out_id": 124,
+          "in_id": 454
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Calvert-Lewin → Emersonn",
+          "hit": 0,
+          "out_id": 346,
+          "in_id": 316
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 6,
+      "expected_points": 231.41,
+      "chip_incremental_expected_points": 11.54,
+      "p10_points": 190.95,
+      "p90_points": 273.47,
+      "expected_rank_after_path": 5.18,
+      "prob_finish_ahead_each_rival": [
+        0.166,
+        0.166,
+        0.393,
+        0.393,
+        0.372,
+        0.57,
+        0.762
+      ],
+      "utility_score": 240.659
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Ødegaard",
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 15
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Hughes → Elanga",
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 454
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Calvert-Lewin → Emersonn",
+          "hit": 0,
+          "out_id": 346,
+          "in_id": 316
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 5,
+      "expected_points": 231.3,
+      "chip_incremental_expected_points": 11.43,
+      "p10_points": 191.63,
+      "p90_points": 274.2,
+      "expected_rank_after_path": 5.18,
+      "prob_finish_ahead_each_rival": [
+        0.165,
+        0.166,
+        0.393,
+        0.404,
+        0.367,
+        0.566,
+        0.761
+      ],
+      "utility_score": 240.655
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Dubravka → Tzolakis",
+          "hit": 4,
+          "out_id": 497,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Ødegaard",
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 15
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Groß → Elanga",
+          "hit": 0,
+          "out_id": 124,
+          "in_id": 454
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Calvert-Lewin → Emersonn",
+          "hit": 0,
+          "out_id": 346,
+          "in_id": 316
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 5,
+      "expected_points": 231.51,
+      "chip_incremental_expected_points": 11.64,
+      "p10_points": 190.93,
+      "p90_points": 274.2,
+      "expected_rank_after_path": 5.2,
+      "prob_finish_ahead_each_rival": [
+        0.168,
+        0.166,
+        0.384,
+        0.399,
         0.357,
         0.564,
-        0.736
+        0.759
       ],
-      "utility_score": 238.611
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Dubravka → Tzolakis",
-          "hit": 4,
-          "out_id": 497,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Ødegaard",
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 15
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Groß → Elanga",
-          "hit": 0,
-          "out_id": 124,
-          "in_id": 454
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Calvert-Lewin → Emersonn",
-          "hit": 0,
-          "out_id": 346,
-          "in_id": 316
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 5,
-      "expected_points": 229.74,
-      "chip_incremental_expected_points": 11.66,
-      "p10_points": 189.53,
-      "p90_points": 271.95,
-      "expected_rank_after_path": 5.28,
-      "prob_finish_ahead_each_rival": [
-        0.131,
-        0.178,
-        0.378,
-        0.384,
-        0.349,
-        0.561,
-        0.737
-      ],
-      "utility_score": 238.496
+      "utility_score": 240.631
     },
     {
       "actions": [
@@ -699,180 +1077,21 @@
       ],
       "chip": "Bench Boost",
       "chip_gw": 4,
-      "expected_points": 229.68,
-      "chip_incremental_expected_points": 11.5,
-      "p10_points": 190.52,
-      "p90_points": 271.08,
-      "expected_rank_after_path": 5.3,
+      "expected_points": 231.42,
+      "chip_incremental_expected_points": 11.39,
+      "p10_points": 190.77,
+      "p90_points": 273.11,
+      "expected_rank_after_path": 5.19,
       "prob_finish_ahead_each_rival": [
-        0.118,
-        0.174,
-        0.375,
-        0.386,
-        0.341,
-        0.563,
-        0.74
-      ],
-      "utility_score": 238.472
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Kinsky → Tzolakis",
-          "hit": 4,
-          "out_id": 496,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Ødegaard",
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 15
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Hughes → Elanga",
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 454
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Calvert-Lewin → Emersonn",
-          "hit": 0,
-          "out_id": 346,
-          "in_id": 316
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 4,
-      "expected_points": 229.7,
-      "chip_incremental_expected_points": 11.62,
-      "p10_points": 189.84,
-      "p90_points": 271.8,
-      "expected_rank_after_path": 5.29,
-      "prob_finish_ahead_each_rival": [
-        0.128,
-        0.17,
-        0.376,
+        0.164,
+        0.167,
         0.391,
-        0.351,
+        0.395,
+        0.377,
         0.562,
-        0.734
+        0.752
       ],
-      "utility_score": 238.472
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Kinsky → Tzolakis",
-          "hit": 4,
-          "out_id": 496,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Ødegaard",
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 15
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Groß → Elanga",
-          "hit": 0,
-          "out_id": 124,
-          "in_id": 454
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Calvert-Lewin → Emersonn",
-          "hit": 0,
-          "out_id": 346,
-          "in_id": 316
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 4,
-      "expected_points": 229.7,
-      "chip_incremental_expected_points": 11.62,
-      "p10_points": 189.84,
-      "p90_points": 271.8,
-      "expected_rank_after_path": 5.29,
-      "prob_finish_ahead_each_rival": [
-        0.128,
-        0.17,
-        0.376,
-        0.391,
-        0.351,
-        0.562,
-        0.734
-      ],
-      "utility_score": 238.472
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Kinsky → Tzolakis",
-          "hit": 4,
-          "out_id": 496,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Ødegaard",
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 15
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Hughes → Elanga",
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 454
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Calvert-Lewin → Emersonn",
-          "hit": 0,
-          "out_id": 346,
-          "in_id": 316
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 5,
-      "expected_points": 229.66,
-      "chip_incremental_expected_points": 11.59,
-      "p10_points": 189.26,
-      "p90_points": 270.9,
-      "expected_rank_after_path": 5.27,
-      "prob_finish_ahead_each_rival": [
-        0.136,
-        0.178,
-        0.378,
-        0.386,
-        0.344,
-        0.566,
-        0.739
-      ],
-      "utility_score": 238.444
+      "utility_score": 240.587
     },
     {
       "actions": [
@@ -890,112 +1109,6 @@
           "route": "Schade → Ødegaard",
           "hit": 0,
           "out_id": 94,
-          "in_id": 15
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Groß → Elanga",
-          "hit": 0,
-          "out_id": 124,
-          "in_id": 454
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Calvert-Lewin → Emersonn",
-          "hit": 0,
-          "out_id": 346,
-          "in_id": 316
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 6,
-      "expected_points": 229.72,
-      "chip_incremental_expected_points": 11.54,
-      "p10_points": 188.69,
-      "p90_points": 271.21,
-      "expected_rank_after_path": 5.29,
-      "prob_finish_ahead_each_rival": [
-        0.12,
-        0.179,
-        0.374,
-        0.397,
-        0.342,
-        0.561,
-        0.733
-      ],
-      "utility_score": 238.327
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Dubravka → Tzolakis",
-          "hit": 4,
-          "out_id": 497,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Ødegaard",
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 15
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Hughes → Elanga",
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 454
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Calvert-Lewin → Emersonn",
-          "hit": 0,
-          "out_id": 346,
-          "in_id": 316
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 3,
-      "expected_points": 229.4,
-      "chip_incremental_expected_points": 11.32,
-      "p10_points": 189.39,
-      "p90_points": 271.42,
-      "expected_rank_after_path": 5.29,
-      "prob_finish_ahead_each_rival": [
-        0.124,
-        0.177,
-        0.375,
-        0.386,
-        0.356,
-        0.563,
-        0.727
-      ],
-      "utility_score": 238.137
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Dubravka → Tzolakis",
-          "hit": 4,
-          "out_id": 497,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Ødegaard",
-          "hit": 0,
-          "out_id": 426,
           "in_id": 15
         },
         {
@@ -1017,233 +1130,21 @@
       ],
       "chip": "Bench Boost",
       "chip_gw": 3,
-      "expected_points": 229.4,
-      "chip_incremental_expected_points": 11.32,
-      "p10_points": 189.39,
-      "p90_points": 271.42,
-      "expected_rank_after_path": 5.29,
+      "expected_points": 231.28,
+      "chip_incremental_expected_points": 11.25,
+      "p10_points": 191.47,
+      "p90_points": 274.33,
+      "expected_rank_after_path": 5.21,
       "prob_finish_ahead_each_rival": [
-        0.124,
-        0.177,
-        0.375,
-        0.386,
-        0.356,
-        0.563,
-        0.727
-      ],
-      "utility_score": 238.137
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Kinsky → Tzolakis",
-          "hit": 4,
-          "out_id": 496,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Schade → Ødegaard",
-          "hit": 0,
-          "out_id": 94,
-          "in_id": 15
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Groß → Elanga",
-          "hit": 0,
-          "out_id": 124,
-          "in_id": 454
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Calvert-Lewin → Emersonn",
-          "hit": 0,
-          "out_id": 346,
-          "in_id": 316
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 5,
-      "expected_points": 229.41,
-      "chip_incremental_expected_points": 11.22,
-      "p10_points": 189.73,
-      "p90_points": 271.4,
-      "expected_rank_after_path": 5.3,
-      "prob_finish_ahead_each_rival": [
-        0.128,
-        0.177,
-        0.375,
-        0.391,
-        0.342,
-        0.551,
-        0.733
-      ],
-      "utility_score": 238.13
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Kinsky → Tzolakis",
-          "hit": 4,
-          "out_id": 496,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Ødegaard",
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 15
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Groß → Elanga",
-          "hit": 0,
-          "out_id": 124,
-          "in_id": 454
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Calvert-Lewin → Emersonn",
-          "hit": 0,
-          "out_id": 346,
-          "in_id": 316
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 6,
-      "expected_points": 229.41,
-      "chip_incremental_expected_points": 11.33,
-      "p10_points": 188.1,
-      "p90_points": 271.14,
-      "expected_rank_after_path": 5.28,
-      "prob_finish_ahead_each_rival": [
-        0.131,
-        0.18,
-        0.376,
-        0.387,
-        0.349,
-        0.56,
-        0.736
-      ],
-      "utility_score": 238.042
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Kinsky → Tzolakis",
-          "hit": 4,
-          "out_id": 496,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Ødegaard",
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 15
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Groß → Elanga",
-          "hit": 0,
-          "out_id": 124,
-          "in_id": 454
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Calvert-Lewin → Emersonn",
-          "hit": 0,
-          "out_id": 346,
-          "in_id": 316
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 5,
-      "expected_points": 229.29,
-      "chip_incremental_expected_points": 11.22,
-      "p10_points": 189.46,
-      "p90_points": 271.52,
-      "expected_rank_after_path": 5.3,
-      "prob_finish_ahead_each_rival": [
-        0.129,
-        0.178,
-        0.376,
-        0.385,
-        0.343,
+        0.163,
+        0.168,
+        0.378,
+        0.393,
+        0.378,
         0.556,
-        0.731
+        0.756
       ],
-      "utility_score": 238.001
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Kinsky → Tzolakis",
-          "hit": 4,
-          "out_id": 496,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Schade → Ødegaard",
-          "hit": 0,
-          "out_id": 94,
-          "in_id": 15
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Groß → Elanga",
-          "hit": 0,
-          "out_id": 124,
-          "in_id": 454
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Calvert-Lewin → Emersonn",
-          "hit": 0,
-          "out_id": 346,
-          "in_id": 316
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 3,
-      "expected_points": 229.21,
-      "chip_incremental_expected_points": 11.02,
-      "p10_points": 188.94,
-      "p90_points": 271.21,
-      "expected_rank_after_path": 5.33,
-      "prob_finish_ahead_each_rival": [
-        0.115,
-        0.173,
-        0.369,
-        0.388,
-        0.342,
-        0.551,
-        0.73
-      ],
-      "utility_score": 237.717
+      "utility_score": 240.459
     },
     {
       "actions": [
@@ -1282,21 +1183,21 @@
       ],
       "chip": "Bench Boost",
       "chip_gw": 3,
-      "expected_points": 229.1,
-      "chip_incremental_expected_points": 11.02,
-      "p10_points": 188.56,
-      "p90_points": 271.03,
-      "expected_rank_after_path": 5.32,
+      "expected_points": 231.11,
+      "chip_incremental_expected_points": 11.25,
+      "p10_points": 192.58,
+      "p90_points": 273.41,
+      "expected_rank_after_path": 5.23,
       "prob_finish_ahead_each_rival": [
-        0.127,
-        0.177,
-        0.367,
+        0.158,
+        0.159,
         0.384,
-        0.348,
-        0.561,
-        0.72
+        0.392,
+        0.36,
+        0.559,
+        0.756
       ],
-      "utility_score": 237.652
+      "utility_score": 240.332
     },
     {
       "actions": [
@@ -1335,21 +1236,21 @@
       ],
       "chip": "Bench Boost",
       "chip_gw": 3,
-      "expected_points": 229.1,
-      "chip_incremental_expected_points": 11.02,
-      "p10_points": 188.56,
-      "p90_points": 271.03,
-      "expected_rank_after_path": 5.32,
+      "expected_points": 231.11,
+      "chip_incremental_expected_points": 11.25,
+      "p10_points": 192.58,
+      "p90_points": 273.41,
+      "expected_rank_after_path": 5.23,
       "prob_finish_ahead_each_rival": [
-        0.127,
-        0.177,
-        0.367,
+        0.158,
+        0.159,
         0.384,
-        0.348,
-        0.561,
-        0.72
+        0.392,
+        0.36,
+        0.559,
+        0.756
       ],
-      "utility_score": 237.652
+      "utility_score": 240.332
     },
     {
       "actions": [
@@ -1386,341 +1287,129 @@
           "in_id": 316
         }
       ],
-      "chip": "Triple Captain",
-      "chip_gw": 4,
-      "expected_points": 224.11,
-      "chip_incremental_expected_points": 5.92,
-      "p10_points": 182.61,
-      "p90_points": 267.47,
-      "expected_rank_after_path": 5.7,
-      "prob_finish_ahead_each_rival": [
-        0.083,
-        0.138,
-        0.309,
-        0.331,
-        0.276,
-        0.496,
-        0.67
-      ],
-      "utility_score": 230.641
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Kinsky → Tzolakis",
-          "hit": 4,
-          "out_id": 496,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Ødegaard",
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 15
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Hughes → Elanga",
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 454
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Calvert-Lewin → Emersonn",
-          "hit": 0,
-          "out_id": 346,
-          "in_id": 316
-        }
-      ],
-      "chip": "Triple Captain",
-      "chip_gw": 4,
-      "expected_points": 224.0,
-      "chip_incremental_expected_points": 5.92,
-      "p10_points": 182.46,
-      "p90_points": 268.44,
-      "expected_rank_after_path": 5.7,
-      "prob_finish_ahead_each_rival": [
-        0.087,
-        0.136,
-        0.312,
-        0.333,
-        0.286,
-        0.495,
-        0.656
-      ],
-      "utility_score": 230.537
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Dubravka → Tzolakis",
-          "hit": 4,
-          "out_id": 497,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Ødegaard",
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 15
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Hughes → Elanga",
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 454
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Calvert-Lewin → Emersonn",
-          "hit": 0,
-          "out_id": 346,
-          "in_id": 316
-        }
-      ],
-      "chip": "Triple Captain",
-      "chip_gw": 4,
-      "expected_points": 224.0,
-      "chip_incremental_expected_points": 5.92,
-      "p10_points": 182.46,
-      "p90_points": 268.44,
-      "expected_rank_after_path": 5.7,
-      "prob_finish_ahead_each_rival": [
-        0.087,
-        0.136,
-        0.312,
-        0.333,
-        0.286,
-        0.495,
-        0.656
-      ],
-      "utility_score": 230.537
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Kinsky → Tzolakis",
-          "hit": 4,
-          "out_id": 496,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Ødegaard",
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 15
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Groß → Elanga",
-          "hit": 0,
-          "out_id": 124,
-          "in_id": 454
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Calvert-Lewin → Emersonn",
-          "hit": 0,
-          "out_id": 346,
-          "in_id": 316
-        }
-      ],
-      "chip": "Triple Captain",
-      "chip_gw": 4,
-      "expected_points": 224.0,
-      "chip_incremental_expected_points": 5.92,
-      "p10_points": 182.46,
-      "p90_points": 268.44,
-      "expected_rank_after_path": 5.7,
-      "prob_finish_ahead_each_rival": [
-        0.087,
-        0.136,
-        0.312,
-        0.333,
-        0.286,
-        0.495,
-        0.656
-      ],
-      "utility_score": 230.537
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Dubravka → Tzolakis",
-          "hit": 4,
-          "out_id": 497,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Ødegaard",
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 15
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Groß → Elanga",
-          "hit": 0,
-          "out_id": 124,
-          "in_id": 454
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Calvert-Lewin → Emersonn",
-          "hit": 0,
-          "out_id": 346,
-          "in_id": 316
-        }
-      ],
-      "chip": "Triple Captain",
-      "chip_gw": 4,
-      "expected_points": 224.0,
-      "chip_incremental_expected_points": 5.92,
-      "p10_points": 182.46,
-      "p90_points": 268.44,
-      "expected_rank_after_path": 5.7,
-      "prob_finish_ahead_each_rival": [
-        0.087,
-        0.136,
-        0.312,
-        0.333,
-        0.286,
-        0.495,
-        0.656
-      ],
-      "utility_score": 230.537
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Kinsky → Tzolakis",
-          "hit": 4,
-          "out_id": 496,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Schade → Ødegaard",
-          "hit": 0,
-          "out_id": 94,
-          "in_id": 15
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Groß → Elanga",
-          "hit": 0,
-          "out_id": 124,
-          "in_id": 454
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Calvert-Lewin → Emersonn",
-          "hit": 0,
-          "out_id": 346,
-          "in_id": 316
-        }
-      ],
-      "chip": "Triple Captain",
-      "chip_gw": 6,
-      "expected_points": 223.85,
-      "chip_incremental_expected_points": 5.66,
-      "p10_points": 182.02,
-      "p90_points": 267.37,
-      "expected_rank_after_path": 5.68,
-      "prob_finish_ahead_each_rival": [
-        0.093,
-        0.137,
-        0.309,
-        0.333,
-        0.285,
-        0.489,
-        0.674
-      ],
-      "utility_score": 230.435
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Kinsky → Tzolakis",
-          "hit": 4,
-          "out_id": 496,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Schade → Ødegaard",
-          "hit": 0,
-          "out_id": 94,
-          "in_id": 15
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Groß → Elanga",
-          "hit": 0,
-          "out_id": 124,
-          "in_id": 454
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Calvert-Lewin → Emersonn",
-          "hit": 0,
-          "out_id": 346,
-          "in_id": 316
-        }
-      ],
-      "chip": "Triple Captain",
+      "chip": "Bench Boost",
       "chip_gw": 5,
-      "expected_points": 223.78,
-      "chip_incremental_expected_points": 5.59,
-      "p10_points": 181.76,
-      "p90_points": 266.75,
-      "expected_rank_after_path": 5.68,
+      "expected_points": 231.21,
+      "chip_incremental_expected_points": 11.17,
+      "p10_points": 190.28,
+      "p90_points": 274.34,
+      "expected_rank_after_path": 5.22,
       "prob_finish_ahead_each_rival": [
-        0.086,
-        0.146,
-        0.309,
-        0.335,
-        0.279,
-        0.495,
-        0.671
+        0.165,
+        0.163,
+        0.372,
+        0.396,
+        0.372,
+        0.553,
+        0.756
       ],
-      "utility_score": 230.34
+      "utility_score": 240.183
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Ødegaard",
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 15
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Groß → Elanga",
+          "hit": 0,
+          "out_id": 124,
+          "in_id": 454
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Calvert-Lewin → Emersonn",
+          "hit": 0,
+          "out_id": 346,
+          "in_id": 316
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 5,
+      "expected_points": 231.04,
+      "chip_incremental_expected_points": 11.17,
+      "p10_points": 191.19,
+      "p90_points": 273.8,
+      "expected_rank_after_path": 5.22,
+      "prob_finish_ahead_each_rival": [
+        0.161,
+        0.159,
+        0.383,
+        0.395,
+        0.359,
+        0.563,
+        0.761
+      ],
+      "utility_score": 240.165
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Schade → Ødegaard",
+          "hit": 0,
+          "out_id": 94,
+          "in_id": 15
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Groß → Elanga",
+          "hit": 0,
+          "out_id": 124,
+          "in_id": 454
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Calvert-Lewin → Emersonn",
+          "hit": 0,
+          "out_id": 346,
+          "in_id": 316
+        }
+      ],
+      "chip": "Triple Captain",
+      "chip_gw": 6,
+      "expected_points": 226.05,
+      "chip_incremental_expected_points": 6.02,
+      "p10_points": 183.64,
+      "p90_points": 270.51,
+      "expected_rank_after_path": 5.55,
+      "prob_finish_ahead_each_rival": [
+        0.14,
+        0.143,
+        0.335,
+        0.328,
+        0.31,
+        0.496,
+        0.702
+      ],
+      "utility_score": 233.234
     },
     {
       "actions": [
@@ -1759,21 +1448,233 @@
       ],
       "chip": "Triple Captain",
       "chip_gw": 3,
-      "expected_points": 223.74,
-      "chip_incremental_expected_points": 5.56,
-      "p10_points": 182.24,
-      "p90_points": 266.34,
-      "expected_rank_after_path": 5.69,
+      "expected_points": 226.06,
+      "chip_incremental_expected_points": 6.02,
+      "p10_points": 184.09,
+      "p90_points": 271.46,
+      "expected_rank_after_path": 5.56,
       "prob_finish_ahead_each_rival": [
-        0.087,
-        0.144,
-        0.304,
-        0.333,
-        0.279,
-        0.492,
-        0.673
+        0.127,
+        0.132,
+        0.326,
+        0.341,
+        0.302,
+        0.495,
+        0.713
       ],
-      "utility_score": 230.323
+      "utility_score": 233.199
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Ødegaard",
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 15
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Hughes → Elanga",
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 454
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Calvert-Lewin → Emersonn",
+          "hit": 0,
+          "out_id": 346,
+          "in_id": 316
+        }
+      ],
+      "chip": "Triple Captain",
+      "chip_gw": 3,
+      "expected_points": 225.89,
+      "chip_incremental_expected_points": 6.02,
+      "p10_points": 184.89,
+      "p90_points": 271.7,
+      "expected_rank_after_path": 5.56,
+      "prob_finish_ahead_each_rival": [
+        0.127,
+        0.132,
+        0.335,
+        0.339,
+        0.295,
+        0.506,
+        0.706
+      ],
+      "utility_score": 233.164
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Dubravka → Tzolakis",
+          "hit": 4,
+          "out_id": 497,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Ødegaard",
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 15
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Hughes → Elanga",
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 454
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Calvert-Lewin → Emersonn",
+          "hit": 0,
+          "out_id": 346,
+          "in_id": 316
+        }
+      ],
+      "chip": "Triple Captain",
+      "chip_gw": 3,
+      "expected_points": 225.89,
+      "chip_incremental_expected_points": 6.02,
+      "p10_points": 184.89,
+      "p90_points": 271.7,
+      "expected_rank_after_path": 5.56,
+      "prob_finish_ahead_each_rival": [
+        0.127,
+        0.132,
+        0.335,
+        0.339,
+        0.295,
+        0.506,
+        0.706
+      ],
+      "utility_score": 233.164
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Ødegaard",
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 15
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Groß → Elanga",
+          "hit": 0,
+          "out_id": 124,
+          "in_id": 454
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Calvert-Lewin → Emersonn",
+          "hit": 0,
+          "out_id": 346,
+          "in_id": 316
+        }
+      ],
+      "chip": "Triple Captain",
+      "chip_gw": 3,
+      "expected_points": 225.89,
+      "chip_incremental_expected_points": 6.02,
+      "p10_points": 184.89,
+      "p90_points": 271.7,
+      "expected_rank_after_path": 5.56,
+      "prob_finish_ahead_each_rival": [
+        0.127,
+        0.132,
+        0.335,
+        0.339,
+        0.295,
+        0.506,
+        0.706
+      ],
+      "utility_score": 233.164
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Dubravka → Tzolakis",
+          "hit": 4,
+          "out_id": 497,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Ødegaard",
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 15
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Groß → Elanga",
+          "hit": 0,
+          "out_id": 124,
+          "in_id": 454
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Calvert-Lewin → Emersonn",
+          "hit": 0,
+          "out_id": 346,
+          "in_id": 316
+        }
+      ],
+      "chip": "Triple Captain",
+      "chip_gw": 3,
+      "expected_points": 225.89,
+      "chip_incremental_expected_points": 6.02,
+      "p10_points": 184.89,
+      "p90_points": 271.7,
+      "expected_rank_after_path": 5.56,
+      "prob_finish_ahead_each_rival": [
+        0.127,
+        0.132,
+        0.335,
+        0.339,
+        0.295,
+        0.506,
+        0.706
+      ],
+      "utility_score": 233.164
     },
     {
       "actions": [
@@ -1812,21 +1713,21 @@
       ],
       "chip": "Triple Captain",
       "chip_gw": 6,
-      "expected_points": 223.74,
-      "chip_incremental_expected_points": 5.66,
-      "p10_points": 182.0,
-      "p90_points": 267.35,
-      "expected_rank_after_path": 5.69,
+      "expected_points": 225.88,
+      "chip_incremental_expected_points": 6.02,
+      "p10_points": 184.38,
+      "p90_points": 268.84,
+      "expected_rank_after_path": 5.55,
       "prob_finish_ahead_each_rival": [
-        0.098,
-        0.136,
-        0.309,
+        0.135,
+        0.141,
         0.333,
-        0.284,
-        0.496,
-        0.659
+        0.337,
+        0.297,
+        0.501,
+        0.703
       ],
-      "utility_score": 230.3
+      "utility_score": 233.141
     },
     {
       "actions": [
@@ -1865,22 +1766,128 @@
       ],
       "chip": "Triple Captain",
       "chip_gw": 6,
-      "expected_points": 223.74,
-      "chip_incremental_expected_points": 5.66,
-      "p10_points": 182.0,
-      "p90_points": 267.35,
-      "expected_rank_after_path": 5.69,
+      "expected_points": 225.88,
+      "chip_incremental_expected_points": 6.02,
+      "p10_points": 184.38,
+      "p90_points": 268.84,
+      "expected_rank_after_path": 5.55,
       "prob_finish_ahead_each_rival": [
-        0.098,
-        0.136,
-        0.309,
+        0.135,
+        0.141,
         0.333,
-        0.284,
-        0.496,
-        0.659
+        0.337,
+        0.297,
+        0.501,
+        0.703
       ],
-      "utility_score": 230.3
+      "utility_score": 233.141
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Ødegaard",
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 15
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Groß → Elanga",
+          "hit": 0,
+          "out_id": 124,
+          "in_id": 454
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Calvert-Lewin → Emersonn",
+          "hit": 0,
+          "out_id": 346,
+          "in_id": 316
+        }
+      ],
+      "chip": "Triple Captain",
+      "chip_gw": 6,
+      "expected_points": 225.88,
+      "chip_incremental_expected_points": 6.02,
+      "p10_points": 184.38,
+      "p90_points": 268.84,
+      "expected_rank_after_path": 5.55,
+      "prob_finish_ahead_each_rival": [
+        0.135,
+        0.141,
+        0.333,
+        0.337,
+        0.297,
+        0.501,
+        0.703
+      ],
+      "utility_score": 233.141
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Dubravka → Tzolakis",
+          "hit": 4,
+          "out_id": 497,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Ødegaard",
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 15
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Groß → Elanga",
+          "hit": 0,
+          "out_id": 124,
+          "in_id": 454
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Calvert-Lewin → Emersonn",
+          "hit": 0,
+          "out_id": 346,
+          "in_id": 316
+        }
+      ],
+      "chip": "Triple Captain",
+      "chip_gw": 6,
+      "expected_points": 225.88,
+      "chip_incremental_expected_points": 6.02,
+      "p10_points": 184.38,
+      "p90_points": 268.84,
+      "expected_rank_after_path": 5.55,
+      "prob_finish_ahead_each_rival": [
+        0.135,
+        0.141,
+        0.333,
+        0.337,
+        0.297,
+        0.501,
+        0.703
+      ],
+      "utility_score": 233.141
     }
   ],
-  "method_note": "Triple Captain and Bench Boost are scored exactly on the calibrated transfer paths against probabilistic rival behaviour. The values are opportunity windows, not automatic play recommendations: half-season chip option value and future blank/double information must still be considered. Wildcard and Free Hit remain excluded until a legal full-squad optimiser is available."
+  "method_note": "Triple Captain and Bench Boost are scored exactly on calibrated transfer paths against probabilistic rival behaviour. Values are opportunity windows, not automatic play recommendations. Sampling precision increases as the official FPL deadline approaches. Wildcard and Free Hit are handled by the separate legal full-squad optimiser and activation gate."
 }
