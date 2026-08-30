@@ -6,9 +6,9 @@ Progress is capability-weighted, not commit-count weighted. A milestone advances
 
 ## Current validated progress: 99.5%
 
-Last validated milestone: **longitudinal model-health persistence is now implemented and CI-validated with an activation marker, current-GW health history, finalized-archive reconciliation and a hard failure for any post-activation finalized Gameweek that loses its health snapshot**.
+Last validated milestone: **longitudinal model-health persistence is implemented and CI-validated, and a dedicated promotion-readiness gate now cryptographically verifies that finalized post-activation health evidence is the exact pre-rollover snapshot recorded before archive finalization**.
 
-Current validation gate: **observe the first post-activation Gameweek rollover and prove that its pre-rollover health snapshot is persisted into the immutable finalized archive before declaring production-complete status**.
+Current validation gate: **observe the first post-activation Gameweek rollover. Promotion readiness automatically moves from `WAITING_EVIDENCE` to `READY` only when at least one finalized Gameweek at or after activation has a source health snapshot, immutable archive copy and manifest SHA-256 that all match. Any missing or tampered evidence produces `BLOCKED`.**
 
 ## Capability roadmap
 
@@ -26,7 +26,15 @@ Current validation gate: **observe the first post-activation Gameweek rollover a
 | 96–98% | Decision-quality self-evaluation, calibration drift and continuous model-health monitoring | COMPLETE |
 | 98–99% | Production reconciliation and cross-layer decision-contract validation | COMPLETE |
 | 99–99.5% | Durable model-health persistence mechanism and no-hindsight activation boundary | COMPLETE |
-| 99.5–100% | First finalized post-activation Gameweek persisted and verified end-to-end | IN PROGRESS |
+| 99.5–100% | First finalized post-activation Gameweek persisted, hash-verified and promotion gate reports READY | IN PROGRESS |
+
+## Promotion readiness states
+
+- `WAITING_EVIDENCE`: engineering and safeguards pass, but no real finalized post-activation rollover has yet been observed.
+- `READY`: at least one finalized post-activation Gameweek has a matching pre-rollover health history file, immutable archive copy and manifest SHA-256; all safeguards pass.
+- `BLOCKED`: required evidence is missing, inconsistent, tampered, hindsight-invalid, or automatic coefficient mutation is not locked off.
+
+The gate is implemented by `promotion_readiness.py` and validated by `.github/workflows/promotion-readiness.yml`. The workflow also regression-tests all three critical behaviours: waiting before evidence exists, readiness after valid evidence exists, and blocking when archived evidence is tampered with.
 
 ## Validation rules
 
@@ -45,7 +53,9 @@ A capability is not counted complete merely because code exists. It should satis
 11. A branch is not considered production-complete while it is materially diverged from `main`; reconciliation must be validated before merge.
 12. Captaincy presented to the user, used in simulation, and frozen for backtesting must resolve from the same freshly generated decision contract.
 13. Longitudinal health persistence must never reconstruct pre-activation health with hindsight; historical archives before the activation marker are legacy, while every finalized Gameweek at or after activation must have a matching persisted health snapshot or CI fails.
-14. No new paid dependency is allowed.
+14. Promotion readiness requires at least one real finalized post-activation rollover whose health-history snapshot, archived copy and manifest SHA-256 all match exactly.
+15. Any claimed finalized evidence that fails hash, Gameweek, manifest or no-auto-mutation checks must block promotion rather than degrade silently.
+16. No new paid dependency is allowed.
 
 ## Current public/free signal stack
 
@@ -64,6 +74,7 @@ A capability is not counted complete merely because code exists. It should satis
 - Dedicated model-health CI contract that keeps early-season LEARNING separate from genuine DEGRADED states and forbids automatic coefficient mutation.
 - Reconciled stability CI that regenerates the league-aware simulation contract before asserting captain consistency with the dedicated review and backtest contract.
 - Durable `model_health_history/gwN.json` persistence with an explicit activation boundary, immutable finalized-archive copy, manifest hashing and post-activation missing-snapshot failure.
+- Promotion-readiness gate with exact source/archive/manifest hash verification before the branch can be considered production complete.
 
 ## Strategic objective
 
