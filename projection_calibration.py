@@ -66,8 +66,6 @@ def fixture_market_signal(player, f, maturity):
     if not row:
         return 1.0, None
     raw = row['home'] if venue == 'H' else row['away']
-    # The external market is an independent calibration check, not ground truth.
-    # Even late season only 55% of its already-bounded 0.90..1.10 move is admitted.
     evidence = max(.20, min(.55, .28 + maturity * .27))
     factor = 1.0 + (raw - 1.0) * evidence
     return max(.94, min(1.06, factor)), row
@@ -98,10 +96,18 @@ def expected_gw(player, gw, model_lo, model_hi, scout_maps, market_maps, current
     avail = max(0.0, min(1.0, n(player.get('adjusted_availability', player.get('availability')), 1)))
     sched = max(.78, min(1.04, n(player.get('schedule_modifier'), 1)))
 
-    xmins = max(8.0, min(90.0, n(player.get('expected_minutes'), 68.0)))
-    minutes_factor = max(.58, min(1.08, xmins / 72.0))
+    # Probabilistic xMins v2: mean minutes and the 60-minute threshold both matter
+    # in FPL, while start/cameo probabilities primarily alter uncertainty.
+    xmins = max(2.0, min(90.0, n(player.get('expected_minutes'), 68.0)))
+    p_start = max(0.0, min(1.0, n(player.get('prob_start'), xmins / 90.0)))
+    p_cameo = max(0.0, min(1.0 - p_start, n(player.get('prob_cameo'), .08)))
+    p60 = max(0.0, min(p_start, n(player.get('prob_60_plus'), p_start * .82)))
+    p80 = max(0.0, min(p60, n(player.get('prob_80_plus'), p60 * .55)))
+
+    raw_minutes_factor = max(.60, min(1.07, xmins / 72.0))
+    threshold_factor = max(.92, min(1.05, .965 + (p60 - .65) * .12))
     minutes_evidence = max(.20, min(.78, source_rel * (.70 + .30 * maturity)))
-    minutes_factor = 1.0 + (minutes_factor - 1.0) * minutes_evidence
+    minutes_factor = 1.0 + ((raw_minutes_factor * threshold_factor) - 1.0) * minutes_evidence
 
     xgi90 = max(0.0, min(1.8, n(player.get('expected_goal_involvements_per_90'), 0.0)))
     xgi_prior = {'GKP': .01, 'DEF': .10, 'MID': .30, 'FWD': .42}.get(pos, .25)
@@ -125,25 +131,36 @@ def expected_gw(player, gw, model_lo, model_hi, scout_maps, market_maps, current
     mean = base * model_factor * fixture_factor * avail * sched * minutes_factor * underlying_factor * scout_factor * independent_factor
 
     cv = .86 - maturity * .13 - source_rel * .10
-    if xmins < 55:
-        cv += .10
-    elif xmins < 68:
+    if p_start < .40:
+        cv += .13
+    elif p_start < .62:
+        cv += .075
+    elif p_start < .78:
+        cv += .035
+    elif p_start >= .88:
+        cv -= .018
+    if p_cameo >= .25:
+        cv += .035
+    if p60 < .45:
         cv += .045
-    elif xmins >= 80:
-        cv -= .02
+    if p80 >= .70:
+        cv -= .012
+
     risk = norm(player.get('schedule_risk'))
     if risk == 'high':
         cv += .12
     elif risk == 'medium':
         cv += .05
-    if not player.get('player_workload_observed', False):
-        cv += .04
+    # Lack of a relevant midweek observation should be a small uncertainty only;
+    # during long gaps there may simply be no workload close enough to matter.
+    if not player.get('player_workload_observed', False) and risk != 'low':
+        cv += .025
+
     mid, mname = market_maps
     market = mid.get(int(player.get('player_id') or 0)) or mname.get(norm(player.get('player'))) or {}
     if 'strong_' in norm(market.get('market_status')):
         cv += .02
 
-    # Disagreement between FPL fixture difficulty and the independent market is itself uncertainty.
     if independent:
         fpl_direction = 3.0 - diff + (.35 if f.get('venue') == 'H' else 0)
         market_direction = independent_factor - 1.0
