@@ -4,11 +4,11 @@ This is the durable progress gauge for the zero-extra-cost, mini-league-winning 
 
 Progress is capability-weighted, not commit-count weighted. A milestone advances only after production-equivalent validation succeeds.
 
-## Current validated progress: 82%
+## Current validated progress: 86%
 
-Last validated milestone: **mini-league lead probability over the explicit Monte Carlo horizon**.
+Last validated milestone: **estimated season-end mini-league win probability using a mean-reverting residual-season continuation**.
 
-Current validation gate: **season-end mini-league win probability using a mean-reverting residual-season continuation**.
+Current validation gate: **league-state-aware captaincy with safe / best-EV / chase modes**.
 
 ## Capability roadmap
 
@@ -20,8 +20,8 @@ Current validation gate: **season-end mini-league win probability using a mean-r
 | 65–72% | Probabilistic xMins: appearance/start/cameo/60+/80+ | COMPLETE |
 | 72–78% | Explainable cross-source agreement/disagreement intelligence | COMPLETE |
 | 78–82% | Route-level probability of taking/holding mini-league lead over explicit horizon | COMPLETE |
-| 82–86% | Estimated season-end mini-league win probability with uncertainty-aware continuation | IN VALIDATION |
-| 86–91% | League-state-aware captaincy: safe / best-EV / chase modes | NEXT |
+| 82–86% | Estimated season-end mini-league win probability with uncertainty-aware continuation | COMPLETE |
+| 86–91% | League-state-aware captaincy: safe / best-EV / chase modes | IN PROGRESS |
 | 91–96% | Historical coefficient calibration and backtesting | PLANNED |
 | 96–100% | Decision-quality self-evaluation, calibration drift and continuous tuning | PLANNED |
 
@@ -47,6 +47,7 @@ A capability is not counted complete merely because code exists. It should satis
 - Internal probabilistic xMins model.
 - Internal signal consensus/disagreement model.
 - Shared Monte Carlo, multi-GW, adaptive-rival and chip simulations.
+- Explicit horizon league-lead probability and confidence-discounted season-win estimate.
 
 ## Strategic objective
 
