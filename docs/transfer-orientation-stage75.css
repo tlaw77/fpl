@@ -1,0 +1,30 @@
+/* Transfer tab orientation: vertical decision flow with horizontal comparison surfaces */
+#view-transfer .decision-lens.tx-why-strip{padding-bottom:12px}
+#view-transfer .decision-lens.tx-why-strip .panel-head{margin-bottom:7px}
+#view-transfer .decision-lens.tx-why-strip .decision-summary-grid{display:flex!important;gap:8px!important;overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none;padding:2px 1px 6px;margin-top:9px}
+#view-transfer .decision-lens.tx-why-strip .decision-summary-grid::-webkit-scrollbar{display:none}
+#view-transfer .decision-lens.tx-why-strip .decision-summary-item{flex:1 0 190px;min-width:190px;scroll-snap-align:start}
+#view-transfer [data-safe-routes].tx-routes-carousel .dc-player-list{display:flex!important;grid-template-columns:none!important;gap:10px!important;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-padding:2px;padding:2px 2px 9px;margin-top:10px!important;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+#view-transfer [data-safe-routes].tx-routes-carousel .dc-player-list::-webkit-scrollbar{display:none}
+#view-transfer [data-safe-routes].tx-routes-carousel .dc-player{display:block!important;flex:0 0 min(360px,82vw);width:min(360px,82vw);scroll-snap-align:start;margin:0!important;box-sizing:border-box}
+#view-transfer [data-safe-routes].tx-routes-carousel .tx-route-secondary{display:block!important}
+#view-transfer [data-safe-routes].tx-routes-carousel .tx-route-toggle{display:none!important}
+#view-transfer [data-safe-routes].tx-routes-carousel:after{content:'Swipe to compare routes →';display:block;margin-top:2px;font-size:8px;color:#7f91aa;font-weight:800;letter-spacing:.04em;text-align:right}
+#view-transfer .transfer-evidence .tx-evidence-toggle{white-space:nowrap}
+#view-transfer .history-panel.tx-history-section-collapsed>*:not(.panel-head){display:none!important}
+#view-transfer .history-panel.tx-history-section-collapsed{padding-bottom:10px}
+#view-transfer .history-panel .tx-history-section-toggle{margin-left:auto;flex:0 0 auto;white-space:nowrap}
+#view-transfer .history-panel .panel-head{align-items:center}
+@media(min-width:760px){
+ #view-transfer [data-safe-routes].tx-routes-carousel .dc-player{flex-basis:340px;width:340px}
+ #view-transfer .decision-lens.tx-why-strip .decision-summary-item{flex-basis:220px;min-width:220px}
+}
+@media(max-width:560px){
+ #view-transfer .decision-lens.tx-why-strip .decision-summary-item{flex-basis:78vw;min-width:78vw}
+ #view-transfer [data-safe-routes].tx-routes-carousel .dc-player{flex-basis:86vw;width:86vw}
+ #view-transfer [data-safe-routes].tx-routes-carousel:after{text-align:left}
+ #view-transfer .history-panel .panel-head{gap:7px}
+ #view-transfer .history-panel .panel-head>div{min-width:0}
+ #view-transfer .history-panel .panel-head h2{font-size:15px;margin-bottom:0}
+ #view-transfer .history-panel .panel-head>.subtle{display:none}
+}
