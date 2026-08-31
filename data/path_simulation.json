@@ -1,6 +1,6 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-08-31T19:56:35.722032+00:00",
+  "generated_at_utc": "2026-08-31T22:12:32.379583+00:00",
   "engine_version": 6,
   "planner": "bounded beam search + GW-specific shared-outcome Monte Carlo + live FT state + season calibration + shared captaincy + deadline-aware sampling",
   "projection_model": "season-maturity calibrated + shared captaincy model",
@@ -16,7 +16,7 @@
   "iteration_policy": {
     "layer": "path",
     "deadline_phase": "normal",
-    "hours_to_deadline": 93.57,
+    "hours_to_deadline": 91.3,
     "iterations": 1200,
     "policy": "lighter normal-week sampling; higher precision inside 72h/24h/6h of official FPL deadline"
   },
@@ -84,35 +84,35 @@
       "team_name": "Ballon Dorgu",
       "manager": "Darren Nestor",
       "rank": 1,
-      "total_points": 155.0
+      "total_points": 165.0
     },
     {
       "entry_id": 7711703,
       "team_name": "Shamrock Sheilas",
       "manager": "Jack Cheevers",
       "rank": 2,
-      "total_points": 139.0
+      "total_points": 153.0
     },
     {
       "entry_id": 5129943,
       "team_name": "YesWeCanice FC",
       "manager": "Canice Cheevers",
       "rank": 3,
-      "total_points": 139.0
-    },
-    {
-      "entry_id": 5227829,
-      "team_name": "De-Mainoo Event",
-      "manager": "Dan Nestor",
-      "rank": 5,
-      "total_points": 123.0
+      "total_points": 141.0
     },
     {
       "entry_id": 5202441,
       "team_name": "Rayan Kirk-i",
       "manager": "John Cheevers",
+      "rank": 5,
+      "total_points": 131.0
+    },
+    {
+      "entry_id": 5227829,
+      "team_name": "De-Mainoo Event",
+      "manager": "Dan Nestor",
       "rank": 6,
-      "total_points": 115.0
+      "total_points": 123.0
     },
     {
       "entry_id": 8179701,
@@ -126,7 +126,7 @@
       "team_name": "Johnians 2026Taepotz",
       "manager": "Johneen Cheevers Snr",
       "rank": 8,
-      "total_points": 99.0
+      "total_points": 105.0
     }
   ],
   "recommendation": {
@@ -142,46 +142,46 @@
       {
         "gw": 4,
         "action": "TRANSFER",
-        "route": "Gabriel → Tarkowski",
+        "route": "Schade → Elanga",
         "hit": 0,
-        "out_id": 4,
-        "in_id": 229
+        "out_id": 94,
+        "in_id": 454
       },
       {
         "gw": 5,
         "action": "TRANSFER",
-        "route": "Hughes → Elanga",
+        "route": "Maguire → Ajayi",
         "hit": 0,
-        "out_id": 212,
-        "in_id": 454
+        "out_id": 418,
+        "in_id": 279
       },
       {
         "gw": 6,
         "action": "TRANSFER",
-        "route": "Schade → Xhaka",
+        "route": "Cherki → Saka",
         "hit": 0,
-        "out_id": 94,
-        "in_id": 544
+        "out_id": 399,
+        "in_id": 12
       }
     ],
-    "expected_points": 230.15,
-    "p10_points": 189.49,
-    "p90_points": 272.36,
-    "expected_rank_after_path": 2.52,
-    "prob_gain_league_place": 0.75,
+    "expected_points": 230.49,
+    "p10_points": 188.59,
+    "p90_points": 273.11,
+    "expected_rank_after_path": 2.69,
+    "prob_gain_league_place": 0.73,
     "prob_finish_ahead_each_rival": [
-      0.389,
-      0.723,
-      0.643,
-      0.868,
-      0.92,
-      0.954,
-      0.98
+      0.335,
+      0.567,
+      0.734,
+      0.837,
+      0.882,
+      0.96,
+      0.992
     ],
-    "ending_bank": 2.3,
+    "ending_bank": 0.4,
     "ending_free_transfers": 1,
     "first_transfer_incoming_starts": true,
-    "utility_score": 233.005
+    "utility_score": 232.347
   },
   "paths": [
     {
@@ -197,46 +197,100 @@
         {
           "gw": 4,
           "action": "TRANSFER",
-          "route": "Gabriel → Tarkowski",
+          "route": "Schade → Elanga",
           "hit": 0,
-          "out_id": 4,
-          "in_id": 229
+          "out_id": 94,
+          "in_id": 454
         },
         {
           "gw": 5,
           "action": "TRANSFER",
-          "route": "Hughes → Elanga",
+          "route": "Maguire → Ajayi",
           "hit": 0,
-          "out_id": 212,
+          "out_id": 418,
+          "in_id": 279
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Cherki → Saka",
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 12
+        }
+      ],
+      "expected_points": 230.49,
+      "p10_points": 188.59,
+      "p90_points": 273.11,
+      "expected_rank_after_path": 2.69,
+      "prob_gain_league_place": 0.73,
+      "prob_finish_ahead_each_rival": [
+        0.335,
+        0.567,
+        0.734,
+        0.837,
+        0.882,
+        0.96,
+        0.992
+      ],
+      "ending_bank": 0.4,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "utility_score": 232.347
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Maguire → Calafiori",
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 8
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Schade → Elanga",
+          "hit": 0,
+          "out_id": 94,
           "in_id": 454
         },
         {
           "gw": 6,
           "action": "TRANSFER",
-          "route": "Schade → Xhaka",
+          "route": "B.Fernandes → Saka",
           "hit": 0,
-          "out_id": 94,
-          "in_id": 544
+          "out_id": 426,
+          "in_id": 12
         }
       ],
-      "expected_points": 230.15,
-      "p10_points": 189.49,
-      "p90_points": 272.36,
-      "expected_rank_after_path": 2.52,
-      "prob_gain_league_place": 0.75,
+      "expected_points": 230.51,
+      "p10_points": 187.76,
+      "p90_points": 273.22,
+      "expected_rank_after_path": 2.71,
+      "prob_gain_league_place": 0.707,
       "prob_finish_ahead_each_rival": [
-        0.389,
-        0.723,
-        0.643,
-        0.868,
-        0.92,
-        0.954,
-        0.98
+        0.345,
+        0.565,
+        0.718,
+        0.846,
+        0.866,
+        0.959,
+        0.989
       ],
-      "ending_bank": 2.3,
+      "ending_bank": 3.2,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
-      "utility_score": 233.005
+      "utility_score": 232.173
     },
     {
       "actions": [
@@ -251,10 +305,64 @@
         {
           "gw": 4,
           "action": "TRANSFER",
-          "route": "Gabriel → Tarkowski",
+          "route": "Maguire → Calafiori",
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 8
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Schade → Elanga",
+          "hit": 0,
+          "out_id": 94,
+          "in_id": 454
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Saka",
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 12
+        }
+      ],
+      "expected_points": 230.51,
+      "p10_points": 187.76,
+      "p90_points": 273.22,
+      "expected_rank_after_path": 2.71,
+      "prob_gain_league_place": 0.707,
+      "prob_finish_ahead_each_rival": [
+        0.345,
+        0.565,
+        0.718,
+        0.846,
+        0.866,
+        0.959,
+        0.989
+      ],
+      "ending_bank": 2.7,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "utility_score": 232.173
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Gabriel → Calafiori",
           "hit": 0,
           "out_id": 4,
-          "in_id": 229
+          "in_id": 8
         },
         {
           "gw": 5,
@@ -267,30 +375,30 @@
         {
           "gw": 6,
           "action": "TRANSFER",
-          "route": "Schade → Xhaka",
+          "route": "Cherki → Saka",
           "hit": 0,
-          "out_id": 94,
-          "in_id": 544
+          "out_id": 399,
+          "in_id": 12
         }
       ],
-      "expected_points": 230.15,
-      "p10_points": 189.49,
-      "p90_points": 272.36,
-      "expected_rank_after_path": 2.52,
-      "prob_gain_league_place": 0.75,
+      "expected_points": 230.32,
+      "p10_points": 187.98,
+      "p90_points": 274.62,
+      "expected_rank_after_path": 2.73,
+      "prob_gain_league_place": 0.72,
       "prob_finish_ahead_each_rival": [
-        0.389,
-        0.723,
-        0.643,
+        0.334,
+        0.569,
+        0.725,
+        0.834,
         0.868,
-        0.92,
-        0.954,
-        0.98
+        0.958,
+        0.987
       ],
-      "ending_bank": 1.8,
+      "ending_bank": 0.3,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
-      "utility_score": 233.005
+      "utility_score": 231.967
     },
     {
       "actions": [
@@ -321,30 +429,30 @@
         {
           "gw": 6,
           "action": "TRANSFER",
-          "route": "Gabriel → Mukiele",
+          "route": "B.Fernandes → Saka",
           "hit": 0,
-          "out_id": 4,
-          "in_id": 533
+          "out_id": 426,
+          "in_id": 12
         }
       ],
-      "expected_points": 230.05,
-      "p10_points": 189.66,
-      "p90_points": 272.31,
-      "expected_rank_after_path": 2.52,
-      "prob_gain_league_place": 0.759,
+      "expected_points": 230.21,
+      "p10_points": 188.2,
+      "p90_points": 272.85,
+      "expected_rank_after_path": 2.73,
+      "prob_gain_league_place": 0.708,
       "prob_finish_ahead_each_rival": [
-        0.393,
-        0.724,
-        0.653,
-        0.864,
-        0.916,
-        0.952,
-        0.983
+        0.335,
+        0.556,
+        0.718,
+        0.837,
+        0.877,
+        0.961,
+        0.99
       ],
       "ending_bank": 2.8,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
-      "utility_score": 232.977
+      "utility_score": 231.887
     },
     {
       "actions": [
@@ -359,46 +467,46 @@
         {
           "gw": 4,
           "action": "TRANSFER",
-          "route": "Gabriel → Tarkowski",
+          "route": "Gabriel → Calafiori",
           "hit": 0,
           "out_id": 4,
-          "in_id": 229
+          "in_id": 8
         },
         {
           "gw": 5,
           "action": "TRANSFER",
-          "route": "Hughes → Elanga",
+          "route": "Schade → Saka",
           "hit": 0,
-          "out_id": 212,
-          "in_id": 454
+          "out_id": 94,
+          "in_id": 12
         },
         {
           "gw": 6,
           "action": "TRANSFER",
-          "route": "Greaves → Mukiele",
+          "route": "Greaves → Ajayi",
           "hit": 0,
           "out_id": 306,
-          "in_id": 533
+          "in_id": 279
         }
       ],
-      "expected_points": 230.05,
-      "p10_points": 189.66,
-      "p90_points": 272.31,
-      "expected_rank_after_path": 2.52,
-      "prob_gain_league_place": 0.759,
+      "expected_points": 230.14,
+      "p10_points": 189.56,
+      "p90_points": 273.7,
+      "expected_rank_after_path": 2.75,
+      "prob_gain_league_place": 0.708,
       "prob_finish_ahead_each_rival": [
-        0.393,
-        0.724,
-        0.653,
-        0.864,
-        0.916,
-        0.952,
+        0.332,
+        0.561,
+        0.715,
+        0.832,
+        0.867,
+        0.963,
         0.983
       ],
       "ending_bank": 0.3,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
-      "utility_score": 232.977
+      "utility_score": 231.883
     },
     {
       "actions": [
@@ -413,100 +521,46 @@
         {
           "gw": 4,
           "action": "TRANSFER",
-          "route": "Gabriel → Tarkowski",
+          "route": "Gabriel → Calafiori",
           "hit": 0,
           "out_id": 4,
-          "in_id": 229
+          "in_id": 8
         },
         {
           "gw": 5,
           "action": "TRANSFER",
-          "route": "Hughes → Elanga",
+          "route": "Schade → Saka",
           "hit": 0,
-          "out_id": 212,
-          "in_id": 454
+          "out_id": 94,
+          "in_id": 12
         },
         {
           "gw": 6,
           "action": "TRANSFER",
-          "route": "Maguire → Mukiele",
+          "route": "Maguire → Ajayi",
           "hit": 0,
           "out_id": 418,
-          "in_id": 533
+          "in_id": 279
         }
       ],
-      "expected_points": 230.05,
-      "p10_points": 189.66,
-      "p90_points": 272.31,
-      "expected_rank_after_path": 2.52,
-      "prob_gain_league_place": 0.759,
+      "expected_points": 230.14,
+      "p10_points": 189.56,
+      "p90_points": 273.7,
+      "expected_rank_after_path": 2.75,
+      "prob_gain_league_place": 0.708,
       "prob_finish_ahead_each_rival": [
-        0.393,
-        0.724,
-        0.653,
-        0.864,
-        0.916,
-        0.952,
+        0.332,
+        0.561,
+        0.715,
+        0.832,
+        0.867,
+        0.963,
         0.983
       ],
       "ending_bank": 1.3,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
-      "utility_score": 232.977
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Dubravka → Tzolakis",
-          "hit": 4,
-          "out_id": 497,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Gabriel → Tarkowski",
-          "hit": 0,
-          "out_id": 4,
-          "in_id": 229
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Hughes → Elanga",
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 454
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Maguire → Mukiele",
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 533
-        }
-      ],
-      "expected_points": 230.05,
-      "p10_points": 189.66,
-      "p90_points": 272.31,
-      "expected_rank_after_path": 2.52,
-      "prob_gain_league_place": 0.759,
-      "prob_finish_ahead_each_rival": [
-        0.393,
-        0.724,
-        0.653,
-        0.864,
-        0.916,
-        0.952,
-        0.983
-      ],
-      "ending_bank": 0.8,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "utility_score": 232.977
+      "utility_score": 231.883
     },
     {
       "actions": [
@@ -521,100 +575,46 @@
         {
           "gw": 4,
           "action": "TRANSFER",
-          "route": "Gabriel → Tarkowski",
+          "route": "Gabriel → Calafiori",
           "hit": 0,
           "out_id": 4,
-          "in_id": 229
+          "in_id": 8
         },
         {
           "gw": 5,
           "action": "TRANSFER",
-          "route": "Schade → Elanga",
+          "route": "Schade → Saka",
           "hit": 0,
           "out_id": 94,
-          "in_id": 454
+          "in_id": 12
         },
         {
           "gw": 6,
           "action": "TRANSFER",
-          "route": "Greaves → Mukiele",
+          "route": "Calvert-Lewin → Wissa",
           "hit": 0,
-          "out_id": 306,
-          "in_id": 533
+          "out_id": 346,
+          "in_id": 464
         }
       ],
-      "expected_points": 230.05,
-      "p10_points": 189.66,
-      "p90_points": 272.31,
-      "expected_rank_after_path": 2.52,
-      "prob_gain_league_place": 0.759,
+      "expected_points": 230.08,
+      "p10_points": 188.8,
+      "p90_points": 275.3,
+      "expected_rank_after_path": 2.76,
+      "prob_gain_league_place": 0.697,
       "prob_finish_ahead_each_rival": [
-        0.393,
-        0.724,
-        0.653,
-        0.864,
-        0.916,
-        0.952,
-        0.983
+        0.324,
+        0.562,
+        0.708,
+        0.838,
+        0.862,
+        0.963,
+        0.984
       ],
-      "ending_bank": 1.8,
+      "ending_bank": 0.2,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
-      "utility_score": 232.977
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Dubravka → Tzolakis",
-          "hit": 4,
-          "out_id": 497,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Gabriel → Tarkowski",
-          "hit": 0,
-          "out_id": 4,
-          "in_id": 229
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Schade → Elanga",
-          "hit": 0,
-          "out_id": 94,
-          "in_id": 454
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Greaves → Mukiele",
-          "hit": 0,
-          "out_id": 306,
-          "in_id": 533
-        }
-      ],
-      "expected_points": 230.05,
-      "p10_points": 189.66,
-      "p90_points": 272.31,
-      "expected_rank_after_path": 2.52,
-      "prob_gain_league_place": 0.759,
-      "prob_finish_ahead_each_rival": [
-        0.393,
-        0.724,
-        0.653,
-        0.864,
-        0.916,
-        0.952,
-        0.983
-      ],
-      "ending_bank": 1.3,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "utility_score": 232.977
+      "utility_score": 231.678
     }
   ],
   "method_note": "Each path is scored with the actual squad owned in each Gameweek. Current-deadline hits use live FT state. Early-season extremes are shrunk toward priors. Legal XI selection uses the shared captaincy model. Monte Carlo sampling is lighter midweek and increases close to the official FPL deadline without changing decision thresholds."
