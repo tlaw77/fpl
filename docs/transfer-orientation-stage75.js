@@ -1,8 +1,9 @@
 (()=>{
-const BUILD='transfer-orientation-stage75-20260831-2118';
+const BUILD='transfer-orientation-stage75-20260831-2130';
 const q=(s,r=document)=>r.querySelector(s),qa=(s,r=document)=>[...r.querySelectorAll(s)];
 function button(label,cls){const b=document.createElement('button');b.type='button';b.className=`tx-detail-toggle ${cls}`;b.textContent=label;return b}
 function synthesis(){return window.FPLCoreData?.decision_synthesis?.current_action||null}
+function loadPhaseAssets(){if(!q('link[data-transfer-phase-css]')){const l=document.createElement('link');l.rel='stylesheet';l.href='transfer-phase-stage76.css?v=20260831-2125';l.dataset.transferPhaseCss='1';document.head.appendChild(l)}if(!q('script[data-transfer-phase-js]')){const s=document.createElement('script');s.src='transfer-phase-stage76.js?v=20260831-2125';s.defer=true;s.dataset.transferPhaseJs='1';document.head.appendChild(s)}}
 function hero(view){const card=q('.transfer-hero',view),act=synthesis();if(!card||!act)return;const holding=String(act.action||'').toUpperCase()==='HOLD';card.classList.toggle('tx-authoritative-hold',holding);if(!holding){q('[data-tx-hold-banner]',card)?.remove();return}
  const routeEl=q('.transfer-route-display',card)||q('h2',card);const route=(card.dataset.txContingencyRoute||String(routeEl?.textContent||'').replace(/\s+/g,' ').trim());if(route&&!/^HOLD$/i.test(route))card.dataset.txContingencyRoute=route;
  let banner=q('[data-tx-hold-banner]',card);if(!banner){banner=document.createElement('div');banner.dataset.txHoldBanner='1';card.insertAdjacentElement('afterbegin',banner)}
@@ -17,6 +18,6 @@ function history(view){const panel=q('.history-panel',view);if(!panel)return;con
 function summary(view){const act=synthesis(),rail=q('[data-tx-summary]',view);if(!rail||!act)return;const holding=String(act.action||'').toUpperCase()==='HOLD';const d=q('.tx-summary-decision',rail);if(d&&holding)d.textContent='HOLD';if(holding)rail.classList.add('tx-summary-hold')}
 function orient(){const view=q('#view-transfer');if(!view)return;hero(view);why(view);routes(view);evidence(view);history(view);summary(view);document.documentElement.dataset.transferOrientationBuild=BUILD}
 let scheduled=false;function schedule(){if(scheduled)return;scheduled=true;setTimeout(()=>{scheduled=false;orient()},60)}
-function bind(){orient();[180,700,1500,3000].forEach(ms=>setTimeout(orient,ms));q('#decision-nav button[data-view="transfer"]')?.addEventListener('click',()=>setTimeout(orient,80),{passive:true});window.addEventListener('fplSafePlanUpdated',()=>setTimeout(orient,90),{passive:true});window.addEventListener('fplCoreDataReady',()=>setTimeout(orient,120),{passive:true});const view=q('#view-transfer');if(view)new MutationObserver(schedule).observe(view,{childList:true,subtree:true})}
+function bind(){loadPhaseAssets();orient();[180,700,1500,3000].forEach(ms=>setTimeout(orient,ms));q('#decision-nav button[data-view="transfer"]')?.addEventListener('click',()=>setTimeout(orient,80),{passive:true});window.addEventListener('fplSafePlanUpdated',()=>setTimeout(orient,90),{passive:true});window.addEventListener('fplCoreDataReady',()=>setTimeout(orient,120),{passive:true});const view=q('#view-transfer');if(view)new MutationObserver(schedule).observe(view,{childList:true,subtree:true})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind,{once:true});else bind();
 })();
