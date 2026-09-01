@@ -1,0 +1,97 @@
+name: Model Health Persistence
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 * * * *"
+  push:
+    branches:
+      - feature/public-signal-layer
+    paths:
+      - "model_health.py"
+      - "model_health_persistence.py"
+      - ".github/workflows/model-health-persistence.yml"
+
+concurrency:
+  group: model-health-persistence-${{ github.ref_name }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  persist-model-health:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Compile health persistence layer
+        run: python -m py_compile model_health.py model_health_persistence.py
+
+      - name: Build current health snapshot
+        run: python model_health.py
+
+      - name: Persist finalized Gameweek health
+        run: python model_health_persistence.py
+
+      - name: Validate longitudinal persistence contract
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          health = json.loads(Path('data/model_health.json').read_text())
+          index = json.loads(Path('data/model_health_history/index.json').read_text())
+          activation = json.loads(Path('data/model_health_history/activation.json').read_text())
+
+          assert health['status'] == 'SUCCESS'
+          assert health.get('continuous_tuning', {}).get('auto_coefficient_mutation') is False
+          assert index['status'] == 'SUCCESS'
+          assert index.get('persistence_status') in ('LEARNING', 'HEALTHY')
+          assert index.get('missing_required_gameweeks') == []
+          assert index.get('auto_coefficient_mutation') is False
+          assert int(index.get('activation_gw') or 0) == int(activation.get('activation_gw') or 0)
+          assert int(index.get('current_gw') or 0) == int(health.get('current_gw') or 0)
+
+          current_gw = int(health.get('current_gw') or 0)
+          current_history = Path(f'data/model_health_history/gw{current_gw}.json')
+          assert current_history.exists()
+          current_snapshot = json.loads(current_history.read_text())
+          assert int(current_snapshot.get('current_gw') or 0) == current_gw
+          assert current_snapshot.get('continuous_tuning', {}).get('auto_coefficient_mutation') is False
+
+          for gw in index.get('finalized_health_gameweeks', []):
+              target = Path(f'data/history/gw{int(gw)}')
+              assert (target / 'model_health.json').exists(), gw
+              manifest = json.loads((target / 'manifest.json').read_text())
+              archived = {x.get('name') for x in manifest.get('files', [])}
+              assert 'model_health.json' in archived, gw
+
+          print({
+              'status': 'SUCCESS',
+              'persistence_status': index['persistence_status'],
+              'activation_gw': index['activation_gw'],
+              'longitudinal_evidence_gameweeks': index['longitudinal_evidence_gameweeks'],
+              'legacy_finalized_gameweeks': index['legacy_finalized_gameweeks'],
+          })
+          PY
+
+      - name: Commit health history
+        if: github.ref_name == 'main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/model_health.json data/model_health_history/ data/history/
+          if git diff --cached --quiet; then
+            echo "No model-health persistence changes to commit"
+          else
+            git commit -m "Persist FPL model health"
+            git pull --rebase origin main
+            git push origin main
+          fi

@@ -1,0 +1,85 @@
+name: Model Health Validation
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - feature/public-signal-layer
+    paths:
+      - "model_health.py"
+      - "calibration_audit.py"
+      - "projection_snapshot.py"
+      - "decision_synthesis.py"
+      - ".github/workflows/model-health-validation.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate-model-health:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Compile learning and health layer
+        run: python -m py_compile projection_snapshot.py calibration_audit.py model_health.py decision_synthesis.py
+
+      - name: Build model-health snapshot from repository evidence
+        run: python model_health.py
+
+      - name: Validate health contracts and safety gates
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          health = json.loads(Path('data/model_health.json').read_text())
+          assert health['status'] == 'SUCCESS'
+          assert health.get('version', 0) >= 1
+          assert health.get('overall_health') in ('HEALTHY', 'LEARNING', 'WATCH', 'REVIEW', 'DEGRADED')
+
+          required_domains = {
+              'core_projection_data',
+              'scout_evidence',
+              'independent_market',
+              'signal_consensus',
+              'projection_calibration',
+              'decision_stability',
+              'realized_decision_quality',
+          }
+          domains = health.get('domains') or {}
+          assert required_domains.issubset(domains), sorted(required_domains - set(domains))
+          for name in required_domains:
+              assert domains[name].get('status') in (
+                  'HEALTHY', 'AVAILABLE', 'LEARNING', 'OPTIONAL_UNAVAILABLE',
+                  'WATCH', 'REVIEW', 'DEGRADED'
+              ), (name, domains[name])
+              assert domains[name].get('detail'), (name, domains[name])
+
+          tuning = health.get('continuous_tuning') or {}
+          assert tuning.get('state') in ('LOCKED_LEARNING', 'BOUNDED_REVIEW_AVAILABLE', 'STABLE_MONITORING')
+          assert tuning.get('auto_coefficient_mutation') is False
+          assert tuning.get('instruction')
+
+          # Early-season / missing optional evidence must never be mislabeled as core degradation.
+          if domains['projection_calibration']['status'] == 'LEARNING':
+              assert health['overall_health'] != 'DEGRADED' or domains['core_projection_data']['status'] == 'DEGRADED'
+          if domains['independent_market']['status'] == 'OPTIONAL_UNAVAILABLE':
+              assert domains['independent_market']['detail']
+
+          history_dir = Path('data/model_health_history')
+          assert history_dir.exists()
+          assert any(history_dir.glob('gw*.json'))
+          print({
+              'status': 'SUCCESS',
+              'overall_health': health['overall_health'],
+              'tuning_state': tuning['state'],
+              'domains': {k: v['status'] for k, v in domains.items()},
+          })
+          PY

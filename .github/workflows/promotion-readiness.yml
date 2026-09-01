@@ -1,0 +1,138 @@
+name: Promotion Readiness
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "29 * * * *"
+  push:
+    branches:
+      - feature/public-signal-layer
+    paths:
+      - "promotion_readiness.py"
+      - "model_health.py"
+      - "model_health_persistence.py"
+      - ".github/workflows/promotion-readiness.yml"
+
+concurrency:
+  group: promotion-readiness-${{ github.ref_name }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  promotion-readiness:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Compile readiness layer
+        run: python -m py_compile model_health.py model_health_persistence.py promotion_readiness.py
+
+      - name: Build current model health
+        run: python model_health.py
+
+      - name: Reconcile model-health persistence
+        run: python model_health_persistence.py
+
+      - name: Assess current promotion state
+        run: python promotion_readiness.py
+
+      - name: Validate current readiness contract
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          result = json.loads(Path('data/promotion_readiness.json').read_text())
+          assert result['status'] in ('WAITING_EVIDENCE', 'READY')
+          assert result['failures'] == []
+          assert result['checks']['automatic_coefficient_mutation_disabled'] is True
+          assert result['checks']['no_missing_required_gameweeks'] is True
+          assert result['policy']['minimum_verified_post_activation_rollovers'] == 1
+          assert result['policy']['hindsight_reconstruction_allowed'] is False
+          assert result['policy']['auto_coefficient_mutation_allowed'] is False
+          if result['status'] == 'READY':
+              assert result['ready_to_promote'] is True
+              assert len(result['verified_gameweeks']) >= 1
+          else:
+              assert result['ready_to_promote'] is False
+              assert result['verified_gameweeks'] == []
+          print({
+              'status': result['status'],
+              'activation_gw': result['activation_gw'],
+              'verified_gameweeks': result['verified_gameweeks'],
+          })
+          PY
+
+      - name: Regression-test waiting, ready and tamper states
+        run: |
+          python - <<'PY'
+          import json
+          import tempfile
+          from pathlib import Path
+          from promotion_readiness import assess, sha256
+
+          def write(path, payload):
+              path.parent.mkdir(parents=True, exist_ok=True)
+              path.write_text(json.dumps(payload, indent=2) + '\n')
+
+          def base(root, evidence=False, tamper=False):
+              data = root / 'data'
+              health = {
+                  'status': 'SUCCESS',
+                  'current_gw': 3,
+                  'continuous_tuning': {'auto_coefficient_mutation': False},
+              }
+              write(data / 'model_health.json', health)
+              write(data / 'model_health_history' / 'activation.json', {'version': 1, 'activation_gw': 2})
+              write(data / 'model_health_history' / 'gw3.json', health)
+              evidence_gws = [2] if evidence else []
+              write(data / 'model_health_history' / 'index.json', {
+                  'status': 'SUCCESS',
+                  'activation_gw': 2,
+                  'current_gw': 3,
+                  'persistence_status': 'HEALTHY' if evidence else 'LEARNING',
+                  'finalized_health_gameweeks': evidence_gws,
+                  'missing_required_gameweeks': [],
+                  'auto_coefficient_mutation': False,
+              })
+              if evidence:
+                  historical = {
+                      'status': 'SUCCESS',
+                      'current_gw': 2,
+                      'continuous_tuning': {'auto_coefficient_mutation': False},
+                  }
+                  source = data / 'model_health_history' / 'gw2.json'
+                  archived = data / 'history' / 'gw2' / 'model_health.json'
+                  write(source, historical)
+                  write(archived, historical)
+                  if tamper:
+                      archived.write_text(archived.read_text() + ' ')
+                  write(data / 'history' / 'gw2' / 'manifest.json', {
+                      'files': [{'name': 'model_health.json', 'sha256': sha256(source)}],
+                  })
+              return data
+
+          with tempfile.TemporaryDirectory() as tmp:
+              waiting = assess(base(Path(tmp) / 'waiting'))
+              assert waiting['status'] == 'WAITING_EVIDENCE'
+              assert waiting['ready_to_promote'] is False
+
+              ready = assess(base(Path(tmp) / 'ready', evidence=True))
+              assert ready['status'] == 'READY'
+              assert ready['verified_gameweeks'] == [2]
+
+              blocked = assess(base(Path(tmp) / 'tamper', evidence=True, tamper=True))
+              assert blocked['status'] == 'BLOCKED'
+              assert blocked['ready_to_promote'] is False
+              assert any('source_archive_hash_match' in x for x in blocked['failures'])
+
+          print({'status': 'SUCCESS', 'cases': ['WAITING_EVIDENCE', 'READY', 'BLOCKED_ON_TAMPER']})
+          PY
