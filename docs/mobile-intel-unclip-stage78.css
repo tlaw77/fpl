@@ -1,0 +1,18 @@
+/* Mobile Safari League Intel render stability: prevent content clipping / blank lower canvas */
+@media (max-width: 900px){
+  html,body{min-height:100%;min-height:100dvh;background:#08101f!important;}
+  body,.shell,#view-intel,#dc-intel-view{height:auto!important;max-height:none!important;min-height:0!important;overflow:visible!important;overflow-x:visible!important;overflow-y:visible!important;contain:none!important;content-visibility:visible!important;clip-path:none!important;}
+  #view-intel.active{display:block!important;position:relative!important;}
+  #view-intel #dc-intel-view,
+  #view-intel #dc-intel-view>*,
+  #view-intel .dc-card,
+  #view-intel [data-live-standings-card],
+  #view-intel [data-threats-leverage-board]{height:auto!important;max-height:none!important;min-height:0!important;overflow:visible!important;contain:none!important;content-visibility:visible!important;clip-path:none!important;transform:none!important;}
+  #view-intel .table-wrap,
+  #view-intel .matrix-wrap,
+  #view-intel .heatmap{max-height:none!important;overflow-x:auto!important;overflow-y:visible!important;-webkit-overflow-scrolling:touch;}
+  #view-intel footer{position:static!important;}
+}
+@media (max-width:560px){
+  #view-intel,#dc-intel-view{padding-bottom:24px!important;}
+}
