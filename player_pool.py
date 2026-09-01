@@ -182,4 +182,9 @@ def main():
                                'players':rows},indent=2,ensure_ascii=False)+'\n')
     observed=sum(1 for x in rows if x.get('player_workload_observed'))
     print(f'Wrote {OUT} with {len(rows)} players, reliability={reliability:.2f}, observed workloads={observed}, defcon=v1')
+    try:
+        from post_window_review import main as post_window_review_main
+        post_window_review_main()
+    except Exception as exc:
+        print(f'Post-window review skipped: {exc}')
 if __name__=='__main__':main()
