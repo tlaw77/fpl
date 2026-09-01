@@ -215,6 +215,14 @@ def run():
     latest['decision_synthesis'] = output
     LATEST.write_text(json.dumps(latest, indent=2, ensure_ascii=False) + '\n')
     OUT.write_text(json.dumps(output, indent=2, ensure_ascii=False) + '\n')
+
+    # Persist the monitoring signal after the authoritative files are written.
+    try:
+        from decision_signal_history import run as record_signal_history
+        record_signal_history()
+    except Exception as exc:
+        print(json.dumps({'warning': 'decision_signal_history_failed', 'error': str(exc)}))
+
     print(json.dumps({'status': 'SUCCESS', 'action': action, 'headline': headline, 'sim_edge': round(sim_edge, 2), 'measured_support': measured_leader_support, 'chip_action': chip_action}))
 
 
