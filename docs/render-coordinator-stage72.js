@@ -1,9 +1,9 @@
 (()=>{
-const BUILD='render-coordinator-stage72-20260901-2322';
+const BUILD='render-coordinator-stage72-20260901-2326';
 const mobile=()=>window.matchMedia('(max-width:900px)').matches;
 let activeSession=null;
 function loadLeagueStatus(){if(document.querySelector('script[src*="league-gw-status-stage81.js"]'))return;const s=document.createElement('script');s.src='league-gw-status-stage81.js?v=20260901-2310';s.defer=true;document.head.appendChild(s)}
-function loadMonitoringSession(){if(!document.querySelector('link[href*="monitoring-session-stage83.css"]')){const l=document.createElement('link');l.rel='stylesheet';l.href='monitoring-session-stage83.css?v=20260901-2318';document.head.appendChild(l)}if(document.querySelector('script[src*="monitoring-session-stage83.js"]'))return;const s=document.createElement('script');s.src='monitoring-session-stage83.js?v=20260901-2318';s.defer=true;document.head.appendChild(s)}
+function loadMonitoringSession(){if(!document.querySelector('link[href*="monitoring-session-stage83.css"]')){const l=document.createElement('link');l.rel='stylesheet';l.href='monitoring-session-stage83.css?v=20260901-2318';document.head.appendChild(l)}if(document.querySelector('script[src*="monitoring-session-stage83.js"]'))return;const s=document.createElement('script');s.src='monitoring-session-stage83.js?v=20260901-2325';s.defer=true;document.head.appendChild(s)}
 function injectStyle(){if(document.getElementById('render-coordinator-style'))return;const s=document.createElement('style');s.id='render-coordinator-style';s.textContent=`@media(min-width:901px){.dashboard-view.render-settling.active{opacity:0;pointer-events:none}.dashboard-view.render-revealed.active{opacity:1;transition:opacity .12s ease}}`;document.head.appendChild(s)}
 function emit(name,view){window.dispatchEvent(new CustomEvent('fplViewSettled',{detail:{view,viewName:name}}))}
 function finish(session){if(!session||session.done)return;session.done=true;clearTimeout(session.quietTimer);clearTimeout(session.maxTimer);session.observer?.disconnect();const view=session.view;if(view){view.classList.remove('render-settling');view.classList.add('render-revealed');emit(session.name,view)}if(activeSession===session)activeSession=null}
