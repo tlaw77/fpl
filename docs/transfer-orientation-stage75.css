@@ -1,9 +1,11 @@
 /* Transfer tab orientation: vertical decision flow with horizontal comparison surfaces */
-#view-transfer .decision-lens.tx-why-strip{padding-bottom:12px}
+#view-transfer .decision-lens.tx-why-strip{padding-bottom:12px;min-width:0}
 #view-transfer .decision-lens.tx-why-strip .panel-head{margin-bottom:7px}
-#view-transfer .decision-lens.tx-why-strip .decision-summary-grid{display:flex!important;gap:8px!important;overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none;padding:2px 1px 6px;margin-top:9px}
+#view-transfer .decision-lens.tx-why-strip .decision-summary-grid{display:flex!important;gap:8px!important;width:100%;max-width:100%;min-width:0;box-sizing:border-box;overflow-x:auto!important;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-padding-inline:1px;scrollbar-width:none;padding:2px 12px 7px 1px;margin-top:9px;-webkit-overflow-scrolling:touch;overscroll-behavior-inline:contain;touch-action:pan-x pan-y}
 #view-transfer .decision-lens.tx-why-strip .decision-summary-grid::-webkit-scrollbar{display:none}
-#view-transfer .decision-lens.tx-why-strip .decision-summary-item{flex:1 0 190px;min-width:190px;scroll-snap-align:start}
+#view-transfer .decision-lens.tx-why-strip .decision-summary-item{flex:0 0 190px;min-width:190px;max-width:190px;box-sizing:border-box;scroll-snap-align:start;scroll-snap-stop:normal}
+#view-transfer .decision-lens.tx-why-strip .decision-summary-grid+button:before{content:''}
+#view-transfer .decision-lens.tx-why-strip .decision-summary-grid:after{content:'';display:block;flex:0 0 1px;width:1px}
 #view-transfer [data-safe-routes].tx-routes-carousel .dc-player-list{display:flex!important;grid-template-columns:none!important;gap:10px!important;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-padding:2px;padding:2px 2px 9px;margin-top:10px!important;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 #view-transfer [data-safe-routes].tx-routes-carousel .dc-player-list::-webkit-scrollbar{display:none}
 #view-transfer [data-safe-routes].tx-routes-carousel .dc-player{display:block!important;flex:0 0 min(360px,82vw);width:min(360px,82vw);scroll-snap-align:start;margin:0!important;box-sizing:border-box}
@@ -29,10 +31,13 @@
 #view-transfer .tx-summary-hold .tx-summary-decision{color:#93c5fd!important}
 @media(min-width:760px){
  #view-transfer [data-safe-routes].tx-routes-carousel .dc-player{flex-basis:340px;width:340px}
- #view-transfer .decision-lens.tx-why-strip .decision-summary-item{flex-basis:220px;min-width:220px}
+ #view-transfer .decision-lens.tx-why-strip .decision-summary-item{flex-basis:220px;min-width:220px;max-width:220px}
 }
 @media(max-width:560px){
- #view-transfer .decision-lens.tx-why-strip .decision-summary-item{flex-basis:78vw;min-width:78vw}
+ #view-transfer .decision-lens.tx-why-strip .decision-summary-grid{margin-right:0;padding-right:18px}
+ #view-transfer .decision-lens.tx-why-strip .decision-summary-item{flex:0 0 min(68vw,260px);width:min(68vw,260px);min-width:min(68vw,260px);max-width:min(68vw,260px)}
+ #view-transfer .decision-lens.tx-why-strip .decision-summary-grid:before{content:'';display:none}
+ #view-transfer .decision-lens.tx-why-strip:has(.decision-summary-grid):after{content:'Swipe metrics →';display:block;margin-top:-2px;margin-bottom:4px;color:#7f91aa;font-size:8px;font-weight:800;letter-spacing:.04em;text-align:right}
  #view-transfer [data-safe-routes].tx-routes-carousel .dc-player{flex-basis:86vw;width:86vw}
  #view-transfer [data-safe-routes].tx-routes-carousel:after{text-align:left}
  #view-transfer .history-panel .panel-head{gap:7px}
