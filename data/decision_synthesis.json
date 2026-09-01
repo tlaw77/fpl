@@ -1,6 +1,6 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-08-31T23:44:58.421737+00:00",
+  "generated_at_utc": "2026-09-01T04:51:39.962622+00:00",
   "version": 2,
   "current_gw": 2,
   "next_gw": 3,
@@ -8,7 +8,7 @@
     "action": "HOLD",
     "headline": "Transfer complete · hold",
     "confidence": 79,
-    "reason": "Mbeumo → Cherki is already applied. A further move costs -4. The best six-GW alternative is only 5.0 projected points ahead of holding, below the 8.0-point early-season hurdle, and the measured leader is supported by only 1/3 models.",
+    "reason": "Mbeumo → Cherki is already applied. A further move costs -4. The best six-GW alternative is only 4.5 projected points ahead of holding, below the 8.0-point early-season hurdle, and the measured leader is supported by only 1/3 models.",
     "completed_transfer": {
       "event": 3,
       "out": "Mbeumo",
@@ -22,7 +22,7 @@
   "robustness": {
     "season_maturity_weight": 0.25,
     "single_step_leader": "Dubravka → Tzolakis",
-    "single_step_edge_over_hold_6gw": 5.02,
+    "single_step_edge_over_hold_6gw": 4.54,
     "multi_gw_first_action": "Kinsky → Tzolakis",
     "adaptive_rival_first_action": "Kinsky → Tzolakis",
     "exact_route_consensus_models": 2,
@@ -54,61 +54,8 @@
   },
   "chips": {
     "action": "HOLD",
-    "reason": "Hold chips. Best visible TC uplift is 6.0 and BB uplift is 12.9, but the first-half portfolio remains comfortable with 13 slack Gameweeks. Preserve option value for stronger blank/double or squad-structure windows.",
+    "reason": "Hold chips. Best visible TC uplift is 6.0 and BB uplift is 13.0, but the first-half portfolio remains comfortable with 13 slack Gameweeks. Preserve option value for stronger blank/double or squad-structure windows.",
     "best_visible_triple_captain": {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Kinsky → Tzolakis",
-          "hit": 4,
-          "out_id": 496,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Schade → Elanga",
-          "hit": 0,
-          "out_id": 94,
-          "in_id": 454
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Maguire → Ajayi",
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 279
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Cherki → Saka",
-          "hit": 0,
-          "out_id": 399,
-          "in_id": 12
-        }
-      ],
-      "chip": "Triple Captain",
-      "chip_gw": 4,
-      "expected_points": 237.94,
-      "chip_incremental_expected_points": 6.04,
-      "p10_points": 195.06,
-      "p90_points": 283.68,
-      "expected_rank_after_path": 2.77,
-      "prob_finish_ahead_each_rival": [
-        0.343,
-        0.565,
-        0.707,
-        0.782,
-        0.882,
-        0.959,
-        0.99
-      ],
-      "utility_score": 238.94
-    },
-    "best_visible_bench_boost": {
       "actions": [
         {
           "gw": 3,
@@ -143,23 +90,76 @@
           "in_id": 12
         }
       ],
+      "chip": "Triple Captain",
+      "chip_gw": 4,
+      "expected_points": 238.38,
+      "chip_incremental_expected_points": 6.03,
+      "p10_points": 197.94,
+      "p90_points": 281.82,
+      "expected_rank_after_path": 2.69,
+      "prob_finish_ahead_each_rival": [
+        0.364,
+        0.588,
+        0.707,
+        0.808,
+        0.899,
+        0.962,
+        0.983
+      ],
+      "utility_score": 240.081
+    },
+    "best_visible_bench_boost": {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Dubravka → Tzolakis",
+          "hit": 4,
+          "out_id": 497,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Maguire → Calafiori",
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 8
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Schade → Elanga",
+          "hit": 0,
+          "out_id": 94,
+          "in_id": 454
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Saka",
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 12
+        }
+      ],
       "chip": "Bench Boost",
       "chip_gw": 4,
-      "expected_points": 243.96,
-      "chip_incremental_expected_points": 12.88,
-      "p10_points": 203.18,
-      "p90_points": 287.68,
-      "expected_rank_after_path": 2.47,
+      "expected_points": 245.37,
+      "chip_incremental_expected_points": 12.96,
+      "p10_points": 205.01,
+      "p90_points": 285.85,
+      "expected_rank_after_path": 2.35,
       "prob_finish_ahead_each_rival": [
-        0.412,
-        0.624,
-        0.764,
-        0.849,
-        0.911,
-        0.973,
+        0.433,
+        0.667,
+        0.775,
+        0.886,
+        0.92,
+        0.978,
         0.994
       ],
-      "utility_score": 246.703
+      "utility_score": 248.795
     },
     "portfolio_pressure": "comfortable",
     "latest_safe_start_gw": 16
