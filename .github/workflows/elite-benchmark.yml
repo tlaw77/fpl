@@ -5,6 +5,10 @@ on:
   workflow_run:
     workflows: ["FPL ETL"]
     types: [completed]
+  push:
+    paths:
+      - "elite_benchmark.py"
+      - ".github/workflows/elite-benchmark.yml"
 
 concurrency:
   group: elite-fpl-benchmark
@@ -15,7 +19,7 @@ permissions:
 
 jobs:
   benchmark:
-    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event_name == 'push' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout latest main
