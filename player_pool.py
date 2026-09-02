@@ -181,6 +181,11 @@ def main():
     observed=sum(1 for x in rows if x.get('player_workload_observed'))
     print(f'Wrote {OUT} with {len(rows)} players, reliability={reliability:.2f}, observed workloads={observed}, defcon=v1')
     try:
+        from current_player_outcomes import main as current_player_outcomes_main
+        current_player_outcomes_main()
+    except Exception as exc:
+        print(f'Current-player outcome snapshot skipped: {exc}')
+    try:
         from attacking_role import main as attacking_role_main
         attacking_role_main()
     except Exception as exc:
