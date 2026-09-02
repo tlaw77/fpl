@@ -1,0 +1,47 @@
+name: Elite FPL Benchmark
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["FPL ETL"]
+    types: [completed]
+
+concurrency:
+  group: elite-fpl-benchmark
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  benchmark:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout latest main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build elite FPL benchmark
+        run: python elite_benchmark.py
+        continue-on-error: true
+      - name: Commit benchmark snapshot
+        run: |
+          if [ ! -f data/elite_benchmark.json ]; then
+            echo "No elite benchmark snapshot produced"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/elite_benchmark.json
+          if git diff --cached --quiet; then
+            echo "No elite benchmark changes"
+          else
+            git commit -m "Update elite FPL benchmark"
+            git pull --rebase origin main
+            git push origin main
+          fi
