@@ -158,7 +158,6 @@ def main():
                      'defcon_expected_points_per_90':round(dc_xpts,3) if dc_xpts is not None else None,
                      'defcon_floor_band':dc_band(dc_xpts)})
 
-    # Compare DC value with positional peers. This avoids double-counting the DC already embedded in PPG.
     pos_dc={k:[] for k in ('DEF','MID','FWD')}
     for r in rows:
         if r['position'] in pos_dc and r.get('defcon_expected_points_per_90') is not None:
@@ -168,7 +167,6 @@ def main():
         x=r.get('defcon_expected_points_per_90')
         baseline=baselines.get(r['position'])
         edge=(float(x)-baseline) if x is not None and baseline is not None else 0.0
-        # Small early-season ranking effect; the calibrated projection layer applies the same edge conservatively per GW.
         r['defcon_position_baseline_xpts']=round(baseline,3) if baseline is not None else None
         r['defcon_edge_per_90']=round(edge,3) if x is not None else None
         r['six_gw_score']=round(float(r['six_gw_score_base'])+max(-.45,min(.45,edge))*reliability*1.4,2)
@@ -182,6 +180,11 @@ def main():
                                'players':rows},indent=2,ensure_ascii=False)+'\n')
     observed=sum(1 for x in rows if x.get('player_workload_observed'))
     print(f'Wrote {OUT} with {len(rows)} players, reliability={reliability:.2f}, observed workloads={observed}, defcon=v1')
+    try:
+        from attacking_role import main as attacking_role_main
+        attacking_role_main()
+    except Exception as exc:
+        print(f'Attacking-role enrichment skipped: {exc}')
     try:
         from post_window_review import main as post_window_review_main
         post_window_review_main()
