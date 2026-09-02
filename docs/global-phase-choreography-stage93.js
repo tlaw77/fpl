@@ -1,19 +1,19 @@
 (()=>{
-const BUILD='global-phase-choreography-stage93-20260902-1514';
+const BUILD='global-phase-choreography-stage93-20260902-1921';
 const q=(s,r=document)=>r.querySelector(s);
 function data(){return window.FPLCoreData||{}}
 function phase(d){const fs=Array.isArray(d?.current_gw_fixtures)?d.current_gw_fixtures:[];if(fs.some(f=>f.started&&!f.finished&&!f.finished_provisional))return'live';if(fs.some(f=>!f.finished&&!f.finished_provisional))return'pre';return'post'}
 const COPY={
- transfer:{pre:['PRE-GW DECISION','Decide only when the evidence clears the gate. Decision state and deadline information come first.'],live:['LIVE GW · OBSERVE','Avoid manufacturing transfers during live play. Monitor workload, injuries and decision stability first.'],post:['POST-GW · REASSESS','Review what changed, then reopen the next-GW decision with fresh evidence.']},
+ transfer:{pre:['PRE-GW DECISION','Decide only when the evidence clears the gate. Decision state, price risk and deadline information come first.'],live:['LIVE GW · OBSERVE','Avoid manufacturing transfers during live play. Monitor workload, injuries, market movement and decision stability first.'],post:['POST-GW · REASSESS','Review what changed, then reopen the next-GW decision and market with fresh evidence.']},
  team:{pre:['PRE-GW SELECTION','XI, captain and availability decisions come first before the deadline.'],live:['LIVE XI','Follow captaincy, players in action and bench consequences while the round is live.'],post:['POST-GW SELECTION REVIEW','Review captain and XI execution, then use new evidence to shape the next team.']},
  shape:{pre:['PRE-GW STRUCTURE','Prioritise squad balance, fixtures and useful leverage before locking the week.'],live:['LIVE STRUCTURAL EXPOSURE','Ownership, leverage and role exposure matter most while points are landing.'],post:['POST-GW STRUCTURE REVIEW','See what the squad structure revealed, then reassess roles and forward strength.']},
  pool:{pre:['PRE-GW PLAYER MARKET','Actionable targets first; role, fixtures and price context support the shortlist.'],live:['LIVE EVIDENCE','Minutes, roles and new information matter more than raw rankings while matches are being played.'],post:['POST-GW DISCOVERY','New roles, emerging options and updated evidence lead; rankings follow after the review.']}
 };
 const RULES={
  transfer:{
-  pre:[[/SINCE YOUR LAST CHECK/,0],[/DECISION TIMELINE|HOW THE DECISION HAS EVOLVED/,10],[/CURRENT ACTION|DECISION SIGNAL|GAMEWEEK DECISION|TRANSFER PHASE/,20],[/PRESSURE INDEX/,30],[/WEEKEND WATCHLIST|WORKLOAD/,40],[/WHY HOLD|DECISION LENS/,50],[/CONTINGENC|ALTERNATIVE|ROUTE|SHORTLIST/,60],[/HISTORY|JOURNAL/,80]],
-  live:[[/SINCE YOUR LAST CHECK/,0],[/WEEKEND WATCHLIST|WORKLOAD|AVAILABILITY|MINUTES/,10],[/TRANSFER PHASE|CURRENT ACTION|DECISION SIGNAL/,20],[/DECISION TIMELINE/,30],[/PRESSURE INDEX/,40],[/WHY HOLD/,50],[/CONTINGENC|ALTERNATIVE|ROUTE|SHORTLIST/,80]],
-  post:[[/SINCE YOUR LAST CHECK/,0],[/DECISION TIMELINE/,10],[/TRANSFER PHASE|CURRENT ACTION|DECISION SIGNAL/,20],[/PRESSURE INDEX/,30],[/WEEKEND WATCHLIST|WORKLOAD/,40],[/WHY HOLD/,50],[/CONTINGENC|ALTERNATIVE|ROUTE|SHORTLIST/,60],[/HISTORY|JOURNAL/,70]]
+  pre:[[/SINCE YOUR LAST CHECK/,0],[/DECISION TIMELINE|HOW THE DECISION HAS EVOLVED/,10],[/CURRENT ACTION|DECISION SIGNAL|GAMEWEEK DECISION|TRANSFER PHASE/,20],[/PRESSURE INDEX/,30],[/PRICE & MARKET WATCH|MARKET ACTION|MARKET PRESSURE|MARKET CALM/,35],[/WEEKEND WATCHLIST|WORKLOAD/,40],[/WHY HOLD|DECISION LENS/,50],[/CONTINGENC|ALTERNATIVE|ROUTE|SHORTLIST/,60],[/HISTORY|JOURNAL/,80]],
+  live:[[/SINCE YOUR LAST CHECK/,0],[/WEEKEND WATCHLIST|WORKLOAD|AVAILABILITY|MINUTES/,10],[/TRANSFER PHASE|CURRENT ACTION|DECISION SIGNAL/,20],[/DECISION TIMELINE/,30],[/PRICE & MARKET WATCH|MARKET ACTION|MARKET PRESSURE|MARKET CALM/,35],[/PRESSURE INDEX/,40],[/WHY HOLD/,50],[/CONTINGENC|ALTERNATIVE|ROUTE|SHORTLIST/,80]],
+  post:[[/SINCE YOUR LAST CHECK/,0],[/DECISION TIMELINE/,10],[/TRANSFER PHASE|CURRENT ACTION|DECISION SIGNAL/,20],[/PRICE & MARKET WATCH|MARKET ACTION|MARKET PRESSURE|MARKET CALM/,25],[/PRESSURE INDEX/,30],[/WEEKEND WATCHLIST|WORKLOAD/,40],[/WHY HOLD/,50],[/CONTINGENC|ALTERNATIVE|ROUTE|SHORTLIST/,60],[/HISTORY|JOURNAL/,70]]
  },
  team:{
   pre:[[/RECOMMENDED XI|PICK TEAM|STARTING XI|XI FOR/,0],[/CAPTAIN/,10],[/WEEKEND WATCHLIST|WORKLOAD|AVAILABILITY|MINUTES/,20],[/BENCH|SUBSTITUTE/,30],[/FIXTURE|OUTLOOK/,40],[/CHIP/,50]],
