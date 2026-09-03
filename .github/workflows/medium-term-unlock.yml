@@ -1,0 +1,60 @@
+name: Medium-Term Unlock Challenger
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["FPL ETL"]
+    types: [completed]
+  push:
+    paths:
+      - "path_simulation_v4.py"
+      - ".github/workflows/medium-term-unlock.yml"
+
+concurrency:
+  group: medium-term-unlock
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  unlock:
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout latest main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run enabling-downgrade challenger
+        run: python path_simulation_v4.py
+      - name: Validate challenger output
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('data/path_simulation_unlock.json')
+          assert p.exists()
+          x=json.loads(p.read_text())
+          assert x.get('status')=='SUCCESS'
+          assert x.get('challenger_only') is True
+          assert int(x.get('engine_version') or 0) >= 7
+          assert x.get('paths')
+          print('Unlock challenger validation passed')
+          PY
+      - name: Commit challenger snapshot
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/path_simulation_unlock.json
+          if git diff --cached --quiet; then
+            echo "No unlock challenger changes"
+          else
+            git commit -m "Update medium-term unlock challenger"
+            git pull --rebase origin main
+            git push origin main
+          fi
