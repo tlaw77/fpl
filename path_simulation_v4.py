@@ -1,8 +1,11 @@
 import json
 from copy import deepcopy
+from pathlib import Path
 
 import path_simulation as p
 import path_simulation_v3 as v3
+
+UNLOCK_OUT = Path('data/path_simulation_unlock.json')
 
 
 def enhanced_transfer_candidates(state, remaining_gws, pool_rows, exp, limit=10):
@@ -28,7 +31,6 @@ def enhanced_transfer_candidates(state, remaining_gws, pool_rows, exp, limit=10)
             key=lambda x: sum(exp.get(g, {}).get(p.pid(x), (0, 0))[0] for g in remaining_gws),
             reverse=True,
         )
-        # Search deeper down the cheap end as well as the normal top projected players.
         top = rows[:p.INCOMING_PER_POSITION]
         cheap = sorted(rows, key=lambda x: (p.price(x), -p.n(x.get('six_gw_score'))))[:6]
         seen = set()
@@ -58,8 +60,6 @@ def enhanced_transfer_candidates(state, remaining_gws, pool_rows, exp, limit=10)
             }
             if uplift > .15:
                 normal.append(row)
-            # Preserve a few structurally plausible downgrades even when their own
-            # projection is slightly worse. The later premium upgrade must rescue them.
             elif bank_released >= .8 and uplift >= -2.75:
                 row['enabler'] = True
                 row['enabler_search_score'] = round(uplift + min(2.8, bank_released * .9), 3)
@@ -69,7 +69,6 @@ def enhanced_transfer_candidates(state, remaining_gws, pool_rows, exp, limit=10)
     enablers.sort(key=lambda x: (x.get('enabler_search_score', -99), x['bank_released']), reverse=True)
     enabler_slots = min(3, max(1, limit // 4))
     picked = normal[:max(0, limit - enabler_slots)] + enablers[:enabler_slots]
-    # If there are few normal candidates, fill remaining slots with either type.
     if len(picked) < limit:
         used = {(p.pid(x['out']), p.pid(x['in'])) for x in picked}
         rest = [x for x in normal + enablers if (p.pid(x['out']), p.pid(x['in'])) not in used]
@@ -123,6 +122,8 @@ def annotate_output():
     data = json.loads(p.OUT.read_text())
     data['engine_version'] = max(7, int(data.get('engine_version') or 0))
     data['planner'] = str(data.get('planner') or '') + ' + enabling-downgrade retention'
+    data['challenger_only'] = True
+    data['promotion_rule'] = 'Compare with authoritative path planner before allowing unlock logic to influence decision synthesis.'
     data['method_note'] = (
         str(data.get('method_note') or '')
         + ' A bounded set of slightly negative budget-release moves is retained in the beam so a later premium upgrade can be discovered. '
@@ -155,6 +156,7 @@ def annotate_output():
 
 
 def run():
+    p.OUT = UNLOCK_OUT
     p.transfer_candidates = enhanced_transfer_candidates
     p.expand_state = enhanced_expand_state
     v3.run()
