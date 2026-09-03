@@ -1,12 +1,12 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-09-03T19:24:28.555441+00:00",
+  "generated_at_utc": "2026-09-03T21:52:31.275623+00:00",
   "engine_version": 3,
   "iterations": 1900,
   "iteration_policy": {
     "layer": "chip",
     "deadline_phase": "deadline_day",
-    "hours_to_deadline": 22.1,
+    "hours_to_deadline": 19.64,
     "iterations": 1900,
     "policy": "lighter normal-week sampling; higher precision inside 72h/24h/6h of official FPL deadline"
   },
@@ -32,18 +32,18 @@
       {
         "gw": 3,
         "action": "TRANSFER",
-        "route": "Dubravka → Tzolakis",
+        "route": "Kinsky → Tzolakis",
         "hit": 4,
-        "out_id": 497,
+        "out_id": 496,
         "in_id": 572
       },
       {
         "gw": 4,
         "action": "TRANSFER",
-        "route": "Maguire → Calafiori",
+        "route": "Maguire → Tarkowski",
         "hit": 0,
         "out_id": 418,
-        "in_id": 8
+        "in_id": 229
       },
       {
         "gw": 5,
@@ -56,29 +56,29 @@
       {
         "gw": 6,
         "action": "TRANSFER",
-        "route": "B.Fernandes → Saka",
+        "route": "Gabriel → Calafiori",
         "hit": 0,
-        "out_id": 426,
-        "in_id": 12
+        "out_id": 4,
+        "in_id": 8
       }
     ],
     "chip": "Bench Boost",
     "chip_gw": 4,
-    "expected_points": 244.63,
-    "chip_incremental_expected_points": 13.23,
-    "p10_points": 202.38,
-    "p90_points": 288.41,
+    "expected_points": 243.88,
+    "chip_incremental_expected_points": 12.98,
+    "p10_points": 203.06,
+    "p90_points": 286.3,
     "expected_rank_after_path": 2.5,
     "prob_finish_ahead_each_rival": [
-      0.416,
-      0.664,
-      0.764,
-      0.852,
-      0.848,
-      0.987,
-      0.972
+      0.392,
+      0.642,
+      0.769,
+      0.859,
+      0.887,
+      0.989,
+      0.967
     ],
-    "utility_score": 247.074
+    "utility_score": 246.5
   },
   "best_no_chip_path": {
     "actions": [
@@ -93,13 +93,58 @@
       {
         "gw": 4,
         "action": "TRANSFER",
-        "route": "Maguire → Tarkowski",
+        "route": "Schade → Elanga",
         "hit": 0,
-        "out_id": 418,
-        "in_id": 229
+        "out_id": 94,
+        "in_id": 454
       },
       {
         "gw": 5,
+        "action": "TRANSFER",
+        "route": "Maguire → Ajayi",
+        "hit": 0,
+        "out_id": 418,
+        "in_id": 279
+      },
+      {
+        "gw": 6,
+        "action": "TRANSFER",
+        "route": "Cherki → Saka",
+        "hit": 0,
+        "out_id": 399,
+        "in_id": 12
+      }
+    ],
+    "chip": null,
+    "chip_gw": null,
+    "expected_points": 231.6,
+    "chip_incremental_expected_points": 0.0,
+    "p10_points": 190.44,
+    "p90_points": 275.5,
+    "expected_rank_after_path": 3.2,
+    "prob_finish_ahead_each_rival": [
+      0.263,
+      0.495,
+      0.613,
+      0.755,
+      0.771,
+      0.964,
+      0.935
+    ],
+    "utility_score": 230.641
+  },
+  "best_triple_captain_window": {
+    "actions": [
+      {
+        "gw": 3,
+        "action": "TRANSFER",
+        "route": "Kinsky → Tzolakis",
+        "hit": 4,
+        "out_id": 496,
+        "in_id": 572
+      },
+      {
+        "gw": 4,
         "action": "TRANSFER",
         "route": "Schade → Elanga",
         "hit": 0,
@@ -107,33 +152,41 @@
         "in_id": 454
       },
       {
+        "gw": 5,
+        "action": "TRANSFER",
+        "route": "Maguire → Ajayi",
+        "hit": 0,
+        "out_id": 418,
+        "in_id": 279
+      },
+      {
         "gw": 6,
         "action": "TRANSFER",
-        "route": "B.Fernandes → Saka",
+        "route": "Cherki → Saka",
         "hit": 0,
-        "out_id": 426,
+        "out_id": 399,
         "in_id": 12
       }
     ],
-    "chip": null,
-    "chip_gw": null,
-    "expected_points": 231.91,
-    "chip_incremental_expected_points": 0.0,
-    "p10_points": 189.16,
-    "p90_points": 275.46,
-    "expected_rank_after_path": 3.17,
+    "chip": "Triple Captain",
+    "chip_gw": 6,
+    "expected_points": 237.76,
+    "chip_incremental_expected_points": 6.15,
+    "p10_points": 194.46,
+    "p90_points": 284.23,
+    "expected_rank_after_path": 2.93,
     "prob_finish_ahead_each_rival": [
-      0.282,
-      0.512,
-      0.632,
-      0.732,
-      0.779,
-      0.958,
-      0.937
+      0.325,
+      0.562,
+      0.671,
+      0.786,
+      0.809,
+      0.973,
+      0.947
     ],
-    "utility_score": 230.934
+    "utility_score": 237.923
   },
-  "best_triple_captain_window": {
+  "best_bench_boost_window": {
     "actions": [
       {
         "gw": 3,
@@ -162,82 +215,29 @@
       {
         "gw": 6,
         "action": "TRANSFER",
-        "route": "B.Fernandes → Saka",
+        "route": "Gabriel → Calafiori",
         "hit": 0,
-        "out_id": 426,
-        "in_id": 12
-      }
-    ],
-    "chip": "Triple Captain",
-    "chip_gw": 6,
-    "expected_points": 237.8,
-    "chip_incremental_expected_points": 5.89,
-    "p10_points": 193.99,
-    "p90_points": 284.41,
-    "expected_rank_after_path": 2.9,
-    "prob_finish_ahead_each_rival": [
-      0.336,
-      0.577,
-      0.684,
-      0.777,
-      0.809,
-      0.965,
-      0.952
-    ],
-    "utility_score": 238.045
-  },
-  "best_bench_boost_window": {
-    "actions": [
-      {
-        "gw": 3,
-        "action": "TRANSFER",
-        "route": "Dubravka → Tzolakis",
-        "hit": 4,
-        "out_id": 497,
-        "in_id": 572
-      },
-      {
-        "gw": 4,
-        "action": "TRANSFER",
-        "route": "Maguire → Calafiori",
-        "hit": 0,
-        "out_id": 418,
+        "out_id": 4,
         "in_id": 8
-      },
-      {
-        "gw": 5,
-        "action": "TRANSFER",
-        "route": "Schade → Elanga",
-        "hit": 0,
-        "out_id": 94,
-        "in_id": 454
-      },
-      {
-        "gw": 6,
-        "action": "TRANSFER",
-        "route": "B.Fernandes → Saka",
-        "hit": 0,
-        "out_id": 426,
-        "in_id": 12
       }
     ],
     "chip": "Bench Boost",
     "chip_gw": 4,
-    "expected_points": 244.63,
-    "chip_incremental_expected_points": 13.23,
-    "p10_points": 202.38,
-    "p90_points": 288.41,
+    "expected_points": 243.88,
+    "chip_incremental_expected_points": 12.98,
+    "p10_points": 203.06,
+    "p90_points": 286.3,
     "expected_rank_after_path": 2.5,
     "prob_finish_ahead_each_rival": [
-      0.416,
-      0.664,
-      0.764,
-      0.852,
-      0.848,
-      0.987,
-      0.972
+      0.392,
+      0.642,
+      0.769,
+      0.859,
+      0.887,
+      0.989,
+      0.967
     ],
-    "utility_score": 247.074
+    "utility_score": 246.5
   },
   "rival_behaviour": [
     {
@@ -303,18 +303,18 @@
         {
           "gw": 3,
           "action": "TRANSFER",
-          "route": "Dubravka → Tzolakis",
+          "route": "Kinsky → Tzolakis",
           "hit": 4,
-          "out_id": 497,
+          "out_id": 496,
           "in_id": 572
         },
         {
           "gw": 4,
           "action": "TRANSFER",
-          "route": "Maguire → Calafiori",
+          "route": "Maguire → Tarkowski",
           "hit": 0,
           "out_id": 418,
-          "in_id": 8
+          "in_id": 229
         },
         {
           "gw": 5,
@@ -327,1036 +327,135 @@
         {
           "gw": 6,
           "action": "TRANSFER",
-          "route": "B.Fernandes → Saka",
+          "route": "Gabriel → Calafiori",
           "hit": 0,
-          "out_id": 426,
-          "in_id": 12
+          "out_id": 4,
+          "in_id": 8
         }
       ],
       "chip": "Bench Boost",
       "chip_gw": 4,
-      "expected_points": 244.63,
-      "chip_incremental_expected_points": 13.23,
-      "p10_points": 202.38,
-      "p90_points": 288.41,
-      "expected_rank_after_path": 2.5,
-      "prob_finish_ahead_each_rival": [
-        0.416,
-        0.664,
-        0.764,
-        0.852,
-        0.848,
-        0.987,
-        0.972
-      ],
-      "utility_score": 247.074
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Kinsky → Tzolakis",
-          "hit": 4,
-          "out_id": 496,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Maguire → Tarkowski",
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 229
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Schade → Elanga",
-          "hit": 0,
-          "out_id": 94,
-          "in_id": 454
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Saka",
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 12
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 4,
-      "expected_points": 244.74,
-      "chip_incremental_expected_points": 12.82,
-      "p10_points": 201.59,
-      "p90_points": 289.28,
-      "expected_rank_after_path": 2.5,
-      "prob_finish_ahead_each_rival": [
-        0.422,
-        0.656,
-        0.767,
-        0.835,
-        0.861,
-        0.985,
-        0.973
-      ],
-      "utility_score": 247.052
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Kinsky → Tzolakis",
-          "hit": 4,
-          "out_id": 496,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Maguire → Tarkowski",
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 229
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Schade → Elanga",
-          "hit": 0,
-          "out_id": 94,
-          "in_id": 454
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Cherki → Xhaka",
-          "hit": 0,
-          "out_id": 399,
-          "in_id": 544
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 4,
-      "expected_points": 244.35,
-      "chip_incremental_expected_points": 12.82,
-      "p10_points": 201.29,
-      "p90_points": 286.58,
-      "expected_rank_after_path": 2.43,
-      "prob_finish_ahead_each_rival": [
-        0.424,
-        0.667,
-        0.789,
-        0.844,
-        0.881,
-        0.984,
-        0.977
-      ],
-      "utility_score": 247.016
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Kinsky → Tzolakis",
-          "hit": 4,
-          "out_id": 496,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Maguire → Calafiori",
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 8
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Schade → Elanga",
-          "hit": 0,
-          "out_id": 94,
-          "in_id": 454
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Saka",
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 12
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 4,
-      "expected_points": 244.22,
-      "chip_incremental_expected_points": 12.82,
-      "p10_points": 201.02,
-      "p90_points": 287.75,
-      "expected_rank_after_path": 2.52,
-      "prob_finish_ahead_each_rival": [
-        0.412,
-        0.66,
-        0.753,
-        0.849,
-        0.847,
-        0.988,
-        0.972
-      ],
-      "utility_score": 246.439
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Kinsky → Tzolakis",
-          "hit": 4,
-          "out_id": 496,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Maguire → Tarkowski",
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 229
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Schade → Elanga",
-          "hit": 0,
-          "out_id": 94,
-          "in_id": 454
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Saka",
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 12
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 5,
-      "expected_points": 244.21,
-      "chip_incremental_expected_points": 12.3,
-      "p10_points": 201.34,
-      "p90_points": 288.48,
-      "expected_rank_after_path": 2.54,
-      "prob_finish_ahead_each_rival": [
-        0.414,
-        0.655,
-        0.759,
-        0.826,
-        0.858,
-        0.982,
-        0.97
-      ],
-      "utility_score": 246.383
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Kinsky → Tzolakis",
-          "hit": 4,
-          "out_id": 496,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Maguire → Tarkowski",
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 229
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Schade → Elanga",
-          "hit": 0,
-          "out_id": 94,
-          "in_id": 454
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Cherki → Xhaka",
-          "hit": 0,
-          "out_id": 399,
-          "in_id": 544
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 5,
-      "expected_points": 243.82,
-      "chip_incremental_expected_points": 12.3,
-      "p10_points": 200.4,
-      "p90_points": 286.93,
-      "expected_rank_after_path": 2.47,
-      "prob_finish_ahead_each_rival": [
-        0.412,
-        0.664,
-        0.783,
-        0.839,
-        0.881,
-        0.981,
-        0.975
-      ],
-      "utility_score": 246.284
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Dubravka → Tzolakis",
-          "hit": 4,
-          "out_id": 497,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Maguire → Calafiori",
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 8
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Schade → Elanga",
-          "hit": 0,
-          "out_id": 94,
-          "in_id": 454
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Saka",
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 12
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 5,
-      "expected_points": 243.91,
-      "chip_incremental_expected_points": 12.51,
-      "p10_points": 201.02,
-      "p90_points": 287.24,
-      "expected_rank_after_path": 2.54,
-      "prob_finish_ahead_each_rival": [
-        0.407,
-        0.659,
-        0.756,
-        0.839,
-        0.846,
-        0.985,
-        0.969
-      ],
-      "utility_score": 246.061
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Kinsky → Tzolakis",
-          "hit": 4,
-          "out_id": 496,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Schade → Elanga",
-          "hit": 0,
-          "out_id": 94,
-          "in_id": 454
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Maguire → Ajayi",
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 279
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Cherki → Saka",
-          "hit": 0,
-          "out_id": 399,
-          "in_id": 12
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 5,
-      "expected_points": 243.57,
-      "chip_incremental_expected_points": 12.3,
-      "p10_points": 202.07,
-      "p90_points": 288.22,
-      "expected_rank_after_path": 2.54,
-      "prob_finish_ahead_each_rival": [
-        0.406,
-        0.643,
-        0.761,
-        0.833,
-        0.859,
-        0.984,
-        0.977
-      ],
-      "utility_score": 245.91
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Kinsky → Tzolakis",
-          "hit": 4,
-          "out_id": 496,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Maguire → Tarkowski",
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 229
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Schade → Elanga",
-          "hit": 0,
-          "out_id": 94,
-          "in_id": 454
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Saka",
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 12
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 6,
-      "expected_points": 243.69,
-      "chip_incremental_expected_points": 11.78,
-      "p10_points": 201.24,
-      "p90_points": 286.96,
-      "expected_rank_after_path": 2.56,
-      "prob_finish_ahead_each_rival": [
-        0.401,
-        0.652,
-        0.758,
-        0.822,
-        0.863,
-        0.979,
-        0.967
-      ],
-      "utility_score": 245.81
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Kinsky → Tzolakis",
-          "hit": 4,
-          "out_id": 496,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Maguire → Calafiori",
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 8
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Schade → Elanga",
-          "hit": 0,
-          "out_id": 94,
-          "in_id": 454
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Saka",
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 12
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 5,
-      "expected_points": 243.69,
-      "chip_incremental_expected_points": 12.3,
-      "p10_points": 200.8,
-      "p90_points": 287.31,
-      "expected_rank_after_path": 2.55,
-      "prob_finish_ahead_each_rival": [
-        0.403,
-        0.658,
-        0.751,
-        0.842,
-        0.841,
-        0.984,
-        0.969
-      ],
-      "utility_score": 245.785
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Kinsky → Tzolakis",
-          "hit": 4,
-          "out_id": 496,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Maguire → Tarkowski",
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 229
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Schade → Elanga",
-          "hit": 0,
-          "out_id": 94,
-          "in_id": 454
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Cherki → Xhaka",
-          "hit": 0,
-          "out_id": 399,
-          "in_id": 544
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 6,
-      "expected_points": 243.31,
-      "chip_incremental_expected_points": 11.78,
-      "p10_points": 200.78,
-      "p90_points": 285.77,
-      "expected_rank_after_path": 2.49,
-      "prob_finish_ahead_each_rival": [
-        0.404,
-        0.655,
-        0.775,
-        0.834,
-        0.884,
-        0.981,
-        0.976
-      ],
-      "utility_score": 245.748
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Dubravka → Tzolakis",
-          "hit": 4,
-          "out_id": 497,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Maguire → Calafiori",
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 8
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Schade → Elanga",
-          "hit": 0,
-          "out_id": 94,
-          "in_id": 454
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Saka",
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 12
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 6,
-      "expected_points": 243.35,
-      "chip_incremental_expected_points": 11.96,
-      "p10_points": 200.46,
-      "p90_points": 285.86,
-      "expected_rank_after_path": 2.55,
-      "prob_finish_ahead_each_rival": [
-        0.397,
-        0.657,
-        0.753,
-        0.839,
-        0.85,
-        0.984,
-        0.969
-      ],
-      "utility_score": 245.455
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Kinsky → Tzolakis",
-          "hit": 4,
-          "out_id": 496,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Schade → Elanga",
-          "hit": 0,
-          "out_id": 94,
-          "in_id": 454
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Maguire → Ajayi",
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 279
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Cherki → Saka",
-          "hit": 0,
-          "out_id": 399,
-          "in_id": 12
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 6,
-      "expected_points": 243.05,
-      "chip_incremental_expected_points": 11.78,
-      "p10_points": 200.44,
-      "p90_points": 286.5,
-      "expected_rank_after_path": 2.54,
-      "prob_finish_ahead_each_rival": [
-        0.399,
-        0.646,
-        0.765,
-        0.831,
-        0.863,
-        0.982,
-        0.972
-      ],
-      "utility_score": 245.229
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Kinsky → Tzolakis",
-          "hit": 4,
-          "out_id": 496,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Maguire → Calafiori",
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 8
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Schade → Elanga",
-          "hit": 0,
-          "out_id": 94,
-          "in_id": 454
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Saka",
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 12
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 6,
-      "expected_points": 243.18,
-      "chip_incremental_expected_points": 11.78,
-      "p10_points": 200.05,
-      "p90_points": 286.66,
-      "expected_rank_after_path": 2.58,
-      "prob_finish_ahead_each_rival": [
-        0.397,
-        0.648,
-        0.746,
-        0.836,
-        0.845,
-        0.983,
-        0.967
-      ],
-      "utility_score": 245.115
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Kinsky → Tzolakis",
-          "hit": 4,
-          "out_id": 496,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Maguire → Tarkowski",
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 229
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Schade → Elanga",
-          "hit": 0,
-          "out_id": 94,
-          "in_id": 454
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Cherki → Xhaka",
-          "hit": 0,
-          "out_id": 399,
-          "in_id": 544
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 3,
-      "expected_points": 242.68,
-      "chip_incremental_expected_points": 11.15,
-      "p10_points": 200.08,
-      "p90_points": 284.78,
-      "expected_rank_after_path": 2.52,
-      "prob_finish_ahead_each_rival": [
-        0.404,
-        0.648,
-        0.766,
-        0.832,
-        0.878,
-        0.979,
-        0.974
-      ],
-      "utility_score": 244.966
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Kinsky → Tzolakis",
-          "hit": 4,
-          "out_id": 496,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Schade → Elanga",
-          "hit": 0,
-          "out_id": 94,
-          "in_id": 454
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Maguire → Ajayi",
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 279
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Cherki → Saka",
-          "hit": 0,
-          "out_id": 399,
-          "in_id": 12
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 4,
-      "expected_points": 242.88,
-      "chip_incremental_expected_points": 11.61,
-      "p10_points": 200.63,
-      "p90_points": 286.64,
-      "expected_rank_after_path": 2.57,
-      "prob_finish_ahead_each_rival": [
-        0.391,
-        0.634,
-        0.755,
-        0.831,
-        0.861,
-        0.984,
-        0.973
-      ],
-      "utility_score": 244.955
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Kinsky → Tzolakis",
-          "hit": 4,
-          "out_id": 496,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Maguire → Tarkowski",
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 229
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Schade → Elanga",
-          "hit": 0,
-          "out_id": 94,
-          "in_id": 454
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Saka",
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 12
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 3,
-      "expected_points": 243.06,
-      "chip_incremental_expected_points": 11.15,
-      "p10_points": 200.5,
-      "p90_points": 286.16,
-      "expected_rank_after_path": 2.6,
-      "prob_finish_ahead_each_rival": [
-        0.4,
-        0.64,
-        0.748,
-        0.814,
-        0.851,
-        0.98,
-        0.967
-      ],
-      "utility_score": 244.95
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Dubravka → Tzolakis",
-          "hit": 4,
-          "out_id": 497,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Maguire → Calafiori",
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 8
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Schade → Elanga",
-          "hit": 0,
-          "out_id": 94,
-          "in_id": 454
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Saka",
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 12
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 3,
-      "expected_points": 242.83,
-      "chip_incremental_expected_points": 11.43,
-      "p10_points": 199.76,
-      "p90_points": 286.5,
-      "expected_rank_after_path": 2.59,
-      "prob_finish_ahead_each_rival": [
-        0.39,
-        0.647,
-        0.741,
-        0.836,
-        0.842,
-        0.984,
-        0.966
-      ],
-      "utility_score": 244.688
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Kinsky → Tzolakis",
-          "hit": 4,
-          "out_id": 496,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Maguire → Calafiori",
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 8
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Schade → Elanga",
-          "hit": 0,
-          "out_id": 94,
-          "in_id": 454
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Saka",
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 12
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 3,
-      "expected_points": 242.54,
-      "chip_incremental_expected_points": 11.15,
-      "p10_points": 199.69,
+      "expected_points": 243.88,
+      "chip_incremental_expected_points": 12.98,
+      "p10_points": 203.06,
       "p90_points": 286.3,
-      "expected_rank_after_path": 2.6,
-      "prob_finish_ahead_each_rival": [
-        0.396,
-        0.64,
-        0.735,
-        0.834,
-        0.842,
-        0.983,
-        0.967
-      ],
-      "utility_score": 244.38
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Kinsky → Tzolakis",
-          "hit": 4,
-          "out_id": 496,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Schade → Elanga",
-          "hit": 0,
-          "out_id": 94,
-          "in_id": 454
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Maguire → Ajayi",
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 279
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Cherki → Saka",
-          "hit": 0,
-          "out_id": 399,
-          "in_id": 12
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 3,
-      "expected_points": 242.42,
-      "chip_incremental_expected_points": 11.15,
-      "p10_points": 199.66,
-      "p90_points": 287.28,
-      "expected_rank_after_path": 2.6,
+      "expected_rank_after_path": 2.5,
       "prob_finish_ahead_each_rival": [
         0.392,
-        0.631,
-        0.747,
-        0.822,
-        0.857,
-        0.981,
-        0.971
+        0.642,
+        0.769,
+        0.859,
+        0.887,
+        0.989,
+        0.967
       ],
-      "utility_score": 244.287
+      "utility_score": 246.5
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Maguire → Tarkowski",
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 229
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Schade → Elanga",
+          "hit": 0,
+          "out_id": 94,
+          "in_id": 454
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Cherki → Xhaka",
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 544
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 4,
+      "expected_points": 243.78,
+      "chip_incremental_expected_points": 12.98,
+      "p10_points": 202.82,
+      "p90_points": 287.19,
+      "expected_rank_after_path": 2.5,
+      "prob_finish_ahead_each_rival": [
+        0.39,
+        0.643,
+        0.773,
+        0.856,
+        0.888,
+        0.986,
+        0.967
+      ],
+      "utility_score": 246.381
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Maguire → Tarkowski",
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 229
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Schade → Elanga",
+          "hit": 0,
+          "out_id": 94,
+          "in_id": 454
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Groß → Xhaka",
+          "hit": 0,
+          "out_id": 124,
+          "in_id": 544
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 4,
+      "expected_points": 243.8,
+      "chip_incremental_expected_points": 12.98,
+      "p10_points": 202.45,
+      "p90_points": 286.59,
+      "expected_rank_after_path": 2.5,
+      "prob_finish_ahead_each_rival": [
+        0.391,
+        0.64,
+        0.772,
+        0.853,
+        0.886,
+        0.987,
+        0.966
+      ],
+      "utility_score": 246.319
     },
     {
       "actions": [
@@ -1393,23 +492,288 @@
           "in_id": 12
         }
       ],
-      "chip": "Triple Captain",
+      "chip": "Bench Boost",
       "chip_gw": 4,
-      "expected_points": 237.73,
-      "chip_incremental_expected_points": 5.82,
-      "p10_points": 193.34,
-      "p90_points": 283.21,
-      "expected_rank_after_path": 2.87,
+      "expected_points": 244.04,
+      "chip_incremental_expected_points": 12.98,
+      "p10_points": 202.65,
+      "p90_points": 288.12,
+      "expected_rank_after_path": 2.56,
       "prob_finish_ahead_each_rival": [
-        0.338,
-        0.582,
-        0.693,
-        0.777,
-        0.82,
-        0.968,
-        0.953
+        0.394,
+        0.635,
+        0.742,
+        0.858,
+        0.859,
+        0.985,
+        0.967
       ],
-      "utility_score": 238.061
+      "utility_score": 246.276
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Schade → Elanga",
+          "hit": 0,
+          "out_id": 94,
+          "in_id": 454
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Maguire → Ajayi",
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 279
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Cherki → Saka",
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 12
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 5,
+      "expected_points": 243.95,
+      "chip_incremental_expected_points": 12.35,
+      "p10_points": 202.94,
+      "p90_points": 288.07,
+      "expected_rank_after_path": 2.55,
+      "prob_finish_ahead_each_rival": [
+        0.396,
+        0.634,
+        0.749,
+        0.853,
+        0.864,
+        0.987,
+        0.963
+      ],
+      "utility_score": 246.258
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Maguire → Tarkowski",
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 229
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Schade → Elanga",
+          "hit": 0,
+          "out_id": 94,
+          "in_id": 454
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Gabriel → Calafiori",
+          "hit": 0,
+          "out_id": 4,
+          "in_id": 8
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 5,
+      "expected_points": 243.25,
+      "chip_incremental_expected_points": 12.35,
+      "p10_points": 202.77,
+      "p90_points": 285.79,
+      "expected_rank_after_path": 2.53,
+      "prob_finish_ahead_each_rival": [
+        0.381,
+        0.632,
+        0.769,
+        0.855,
+        0.881,
+        0.986,
+        0.969
+      ],
+      "utility_score": 245.758
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Maguire → Tarkowski",
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 229
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Schade → Elanga",
+          "hit": 0,
+          "out_id": 94,
+          "in_id": 454
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Cherki → Xhaka",
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 544
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 5,
+      "expected_points": 243.16,
+      "chip_incremental_expected_points": 12.35,
+      "p10_points": 202.94,
+      "p90_points": 285.24,
+      "expected_rank_after_path": 2.53,
+      "prob_finish_ahead_each_rival": [
+        0.376,
+        0.627,
+        0.776,
+        0.857,
+        0.883,
+        0.985,
+        0.965
+      ],
+      "utility_score": 245.68
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Schade → Elanga",
+          "hit": 0,
+          "out_id": 94,
+          "in_id": 454
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Maguire → Ajayi",
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 279
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Cherki → Saka",
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 12
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 6,
+      "expected_points": 243.26,
+      "chip_incremental_expected_points": 11.66,
+      "p10_points": 202.44,
+      "p90_points": 286.35,
+      "expected_rank_after_path": 2.56,
+      "prob_finish_ahead_each_rival": [
+        0.397,
+        0.637,
+        0.749,
+        0.851,
+        0.863,
+        0.985,
+        0.96
+      ],
+      "utility_score": 245.577
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Maguire → Tarkowski",
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 229
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Schade → Elanga",
+          "hit": 0,
+          "out_id": 94,
+          "in_id": 454
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Groß → Xhaka",
+          "hit": 0,
+          "out_id": 124,
+          "in_id": 544
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 5,
+      "expected_points": 243.18,
+      "chip_incremental_expected_points": 12.35,
+      "p10_points": 202.19,
+      "p90_points": 286.11,
+      "expected_rank_after_path": 2.54,
+      "prob_finish_ahead_each_rival": [
+        0.371,
+        0.632,
+        0.765,
+        0.854,
+        0.888,
+        0.983,
+        0.964
+      ],
+      "utility_score": 245.543
     },
     {
       "actions": [
@@ -1443,26 +807,768 @@
           "route": "B.Fernandes → Saka",
           "hit": 0,
           "out_id": 426,
+          "in_id": 12
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 5,
+      "expected_points": 243.41,
+      "chip_incremental_expected_points": 12.35,
+      "p10_points": 202.28,
+      "p90_points": 286.23,
+      "expected_rank_after_path": 2.59,
+      "prob_finish_ahead_each_rival": [
+        0.383,
+        0.627,
+        0.739,
+        0.849,
+        0.859,
+        0.984,
+        0.967
+      ],
+      "utility_score": 245.526
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Schade → Elanga",
+          "hit": 0,
+          "out_id": 94,
+          "in_id": 454
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Maguire → Ajayi",
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 279
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Cherki → Saka",
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 12
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 4,
+      "expected_points": 243.32,
+      "chip_incremental_expected_points": 11.71,
+      "p10_points": 202.1,
+      "p90_points": 287.8,
+      "expected_rank_after_path": 2.57,
+      "prob_finish_ahead_each_rival": [
+        0.393,
+        0.634,
+        0.749,
+        0.843,
+        0.861,
+        0.986,
+        0.962
+      ],
+      "utility_score": 245.511
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Maguire → Tarkowski",
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 229
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Schade → Elanga",
+          "hit": 0,
+          "out_id": 94,
+          "in_id": 454
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Gabriel → Calafiori",
+          "hit": 0,
+          "out_id": 4,
+          "in_id": 8
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 6,
+      "expected_points": 242.56,
+      "chip_incremental_expected_points": 11.66,
+      "p10_points": 202.01,
+      "p90_points": 284.18,
+      "expected_rank_after_path": 2.55,
+      "prob_finish_ahead_each_rival": [
+        0.374,
+        0.634,
+        0.762,
+        0.847,
+        0.878,
+        0.986,
+        0.968
+      ],
+      "utility_score": 244.942
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Maguire → Tarkowski",
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 229
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Schade → Elanga",
+          "hit": 0,
+          "out_id": 94,
+          "in_id": 454
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Saka",
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 12
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 6,
+      "expected_points": 242.72,
+      "chip_incremental_expected_points": 11.66,
+      "p10_points": 201.28,
+      "p90_points": 285.03,
+      "expected_rank_after_path": 2.59,
+      "prob_finish_ahead_each_rival": [
+        0.379,
+        0.627,
+        0.743,
+        0.851,
+        0.858,
+        0.984,
+        0.967
+      ],
+      "utility_score": 244.793
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Maguire → Tarkowski",
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 229
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Schade → Elanga",
+          "hit": 0,
+          "out_id": 94,
+          "in_id": 454
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Groß → Xhaka",
+          "hit": 0,
+          "out_id": 124,
+          "in_id": 544
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 6,
+      "expected_points": 242.49,
+      "chip_incremental_expected_points": 11.66,
+      "p10_points": 201.32,
+      "p90_points": 285.11,
+      "expected_rank_after_path": 2.57,
+      "prob_finish_ahead_each_rival": [
+        0.375,
+        0.623,
+        0.764,
+        0.847,
+        0.884,
+        0.98,
+        0.962
+      ],
+      "utility_score": 244.722
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Schade → Elanga",
+          "hit": 0,
+          "out_id": 94,
+          "in_id": 454
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Maguire → Ajayi",
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 279
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Cherki → Saka",
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 12
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 3,
+      "expected_points": 242.65,
+      "chip_incremental_expected_points": 11.04,
+      "p10_points": 202.0,
+      "p90_points": 286.74,
+      "expected_rank_after_path": 2.61,
+      "prob_finish_ahead_each_rival": [
+        0.382,
+        0.632,
+        0.736,
+        0.84,
+        0.855,
+        0.984,
+        0.96
+      ],
+      "utility_score": 244.713
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Maguire → Tarkowski",
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 229
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Schade → Elanga",
+          "hit": 0,
+          "out_id": 94,
+          "in_id": 454
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Cherki → Xhaka",
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 544
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 6,
+      "expected_points": 242.47,
+      "chip_incremental_expected_points": 11.66,
+      "p10_points": 200.72,
+      "p90_points": 284.01,
+      "expected_rank_after_path": 2.56,
+      "prob_finish_ahead_each_rival": [
+        0.377,
+        0.627,
+        0.759,
+        0.843,
+        0.884,
+        0.983,
+        0.966
+      ],
+      "utility_score": 244.652
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Maguire → Tarkowski",
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 229
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Schade → Elanga",
+          "hit": 0,
+          "out_id": 94,
+          "in_id": 454
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Gabriel → Calafiori",
+          "hit": 0,
+          "out_id": 4,
+          "in_id": 8
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 3,
+      "expected_points": 241.94,
+      "chip_incremental_expected_points": 11.04,
+      "p10_points": 201.6,
+      "p90_points": 283.82,
+      "expected_rank_after_path": 2.59,
+      "prob_finish_ahead_each_rival": [
+        0.365,
+        0.621,
+        0.751,
+        0.845,
+        0.871,
+        0.987,
+        0.967
+      ],
+      "utility_score": 244.136
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Maguire → Tarkowski",
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 229
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Schade → Elanga",
+          "hit": 0,
+          "out_id": 94,
+          "in_id": 454
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Cherki → Xhaka",
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 544
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 3,
+      "expected_points": 241.85,
+      "chip_incremental_expected_points": 11.04,
+      "p10_points": 201.05,
+      "p90_points": 284.86,
+      "expected_rank_after_path": 2.6,
+      "prob_finish_ahead_each_rival": [
+        0.372,
+        0.613,
+        0.751,
+        0.845,
+        0.875,
+        0.983,
+        0.965
+      ],
+      "utility_score": 243.974
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Maguire → Tarkowski",
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 229
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Schade → Elanga",
+          "hit": 0,
+          "out_id": 94,
+          "in_id": 454
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Groß → Xhaka",
+          "hit": 0,
+          "out_id": 124,
+          "in_id": 544
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 3,
+      "expected_points": 241.87,
+      "chip_incremental_expected_points": 11.04,
+      "p10_points": 200.73,
+      "p90_points": 284.14,
+      "expected_rank_after_path": 2.59,
+      "prob_finish_ahead_each_rival": [
+        0.375,
+        0.622,
+        0.751,
+        0.841,
+        0.872,
+        0.981,
+        0.964
+      ],
+      "utility_score": 243.959
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Maguire → Tarkowski",
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 229
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Schade → Elanga",
+          "hit": 0,
+          "out_id": 94,
+          "in_id": 454
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Saka",
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 12
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 3,
+      "expected_points": 242.1,
+      "chip_incremental_expected_points": 11.04,
+      "p10_points": 201.04,
+      "p90_points": 285.85,
+      "expected_rank_after_path": 2.65,
+      "prob_finish_ahead_each_rival": [
+        0.369,
+        0.615,
+        0.724,
+        0.847,
+        0.853,
+        0.983,
+        0.964
+      ],
+      "utility_score": 243.951
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Schade → Elanga",
+          "hit": 0,
+          "out_id": 94,
+          "in_id": 454
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Maguire → Ajayi",
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 279
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Cherki → Saka",
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 12
+        }
+      ],
+      "chip": "Triple Captain",
+      "chip_gw": 4,
+      "expected_points": 237.65,
+      "chip_incremental_expected_points": 6.05,
+      "p10_points": 194.73,
+      "p90_points": 283.63,
+      "expected_rank_after_path": 2.89,
+      "prob_finish_ahead_each_rival": [
+        0.331,
+        0.567,
+        0.68,
+        0.795,
+        0.818,
+        0.975,
+        0.946
+      ],
+      "utility_score": 238.066
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Schade → Elanga",
+          "hit": 0,
+          "out_id": 94,
+          "in_id": 454
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Maguire → Ajayi",
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 279
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Cherki → Saka",
+          "hit": 0,
+          "out_id": 399,
           "in_id": 12
         }
       ],
       "chip": "Triple Captain",
       "chip_gw": 6,
-      "expected_points": 237.8,
-      "chip_incremental_expected_points": 5.89,
-      "p10_points": 193.99,
-      "p90_points": 284.41,
+      "expected_points": 237.76,
+      "chip_incremental_expected_points": 6.15,
+      "p10_points": 194.46,
+      "p90_points": 284.23,
+      "expected_rank_after_path": 2.93,
+      "prob_finish_ahead_each_rival": [
+        0.325,
+        0.562,
+        0.671,
+        0.786,
+        0.809,
+        0.973,
+        0.947
+      ],
+      "utility_score": 237.923
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Maguire → Tarkowski",
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 229
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Schade → Elanga",
+          "hit": 0,
+          "out_id": 94,
+          "in_id": 454
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Gabriel → Calafiori",
+          "hit": 0,
+          "out_id": 4,
+          "in_id": 8
+        }
+      ],
+      "chip": "Triple Captain",
+      "chip_gw": 4,
+      "expected_points": 236.95,
+      "chip_incremental_expected_points": 6.05,
+      "p10_points": 195.51,
+      "p90_points": 280.73,
       "expected_rank_after_path": 2.9,
       "prob_finish_ahead_each_rival": [
-        0.336,
-        0.577,
+        0.304,
+        0.559,
         0.684,
-        0.777,
-        0.809,
-        0.965,
-        0.952
+        0.795,
+        0.834,
+        0.974,
+        0.953
       ],
-      "utility_score": 238.045
+      "utility_score": 237.493
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Maguire → Tarkowski",
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 229
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Schade → Elanga",
+          "hit": 0,
+          "out_id": 94,
+          "in_id": 454
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Saka",
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 12
+        }
+      ],
+      "chip": "Triple Captain",
+      "chip_gw": 4,
+      "expected_points": 237.11,
+      "chip_incremental_expected_points": 6.05,
+      "p10_points": 194.58,
+      "p90_points": 282.98,
+      "expected_rank_after_path": 2.91,
+      "prob_finish_ahead_each_rival": [
+        0.325,
+        0.562,
+        0.677,
+        0.796,
+        0.816,
+        0.971,
+        0.949
+      ],
+      "utility_score": 237.482
     },
     {
       "actions": [
@@ -1501,21 +1607,21 @@
       ],
       "chip": "Triple Captain",
       "chip_gw": 4,
-      "expected_points": 237.34,
-      "chip_incremental_expected_points": 5.82,
-      "p10_points": 193.14,
-      "p90_points": 282.14,
-      "expected_rank_after_path": 2.84,
+      "expected_points": 236.86,
+      "chip_incremental_expected_points": 6.05,
+      "p10_points": 194.75,
+      "p90_points": 281.46,
+      "expected_rank_after_path": 2.89,
       "prob_finish_ahead_each_rival": [
-        0.328,
-        0.582,
-        0.709,
-        0.774,
-        0.84,
-        0.969,
-        0.958
+        0.315,
+        0.553,
+        0.682,
+        0.792,
+        0.836,
+        0.975,
+        0.953
       ],
-      "utility_score": 237.844
+      "utility_score": 237.335
     },
     {
       "actions": [
@@ -1530,310 +1636,45 @@
         {
           "gw": 4,
           "action": "TRANSFER",
-          "route": "Maguire → Tarkowski",
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 229
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
           "route": "Schade → Elanga",
           "hit": 0,
           "out_id": 94,
           "in_id": 454
         },
         {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Saka",
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 12
-        }
-      ],
-      "chip": "Triple Captain",
-      "chip_gw": 3,
-      "expected_points": 237.49,
-      "chip_incremental_expected_points": 5.58,
-      "p10_points": 192.8,
-      "p90_points": 283.04,
-      "expected_rank_after_path": 2.88,
-      "prob_finish_ahead_each_rival": [
-        0.337,
-        0.584,
-        0.685,
-        0.779,
-        0.806,
-        0.968,
-        0.956
-      ],
-      "utility_score": 237.708
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Kinsky → Tzolakis",
-          "hit": 4,
-          "out_id": 496,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Maguire → Tarkowski",
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 229
-        },
-        {
           "gw": 5,
           "action": "TRANSFER",
-          "route": "Schade → Elanga",
-          "hit": 0,
-          "out_id": 94,
-          "in_id": 454
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Saka",
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 12
-        }
-      ],
-      "chip": "Triple Captain",
-      "chip_gw": 5,
-      "expected_points": 237.38,
-      "chip_incremental_expected_points": 5.47,
-      "p10_points": 193.2,
-      "p90_points": 283.19,
-      "expected_rank_after_path": 2.88,
-      "prob_finish_ahead_each_rival": [
-        0.336,
-        0.581,
-        0.693,
-        0.776,
-        0.804,
-        0.971,
-        0.955
-      ],
-      "utility_score": 237.656
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Kinsky → Tzolakis",
-          "hit": 4,
-          "out_id": 496,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Maguire → Tarkowski",
+          "route": "Maguire → Ajayi",
           "hit": 0,
           "out_id": 418,
-          "in_id": 229
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Schade → Elanga",
-          "hit": 0,
-          "out_id": 94,
-          "in_id": 454
+          "in_id": 279
         },
         {
           "gw": 6,
           "action": "TRANSFER",
-          "route": "Cherki → Xhaka",
+          "route": "Cherki → Saka",
           "hit": 0,
           "out_id": 399,
-          "in_id": 544
+          "in_id": 12
         }
       ],
       "chip": "Triple Captain",
       "chip_gw": 3,
       "expected_points": 237.11,
-      "chip_incremental_expected_points": 5.58,
-      "p10_points": 192.4,
-      "p90_points": 281.49,
-      "expected_rank_after_path": 2.85,
+      "chip_incremental_expected_points": 5.5,
+      "p10_points": 193.61,
+      "p90_points": 282.97,
+      "expected_rank_after_path": 2.92,
       "prob_finish_ahead_each_rival": [
-        0.331,
-        0.581,
-        0.699,
-        0.782,
-        0.827,
-        0.969,
-        0.962
+        0.319,
+        0.565,
+        0.671,
+        0.798,
+        0.805,
+        0.973,
+        0.947
       ],
-      "utility_score": 237.501
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Kinsky → Tzolakis",
-          "hit": 4,
-          "out_id": 496,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Maguire → Tarkowski",
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 229
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Schade → Elanga",
-          "hit": 0,
-          "out_id": 94,
-          "in_id": 454
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Cherki → Xhaka",
-          "hit": 0,
-          "out_id": 399,
-          "in_id": 544
-        }
-      ],
-      "chip": "Triple Captain",
-      "chip_gw": 5,
-      "expected_points": 237.0,
-      "chip_incremental_expected_points": 5.47,
-      "p10_points": 192.52,
-      "p90_points": 280.82,
-      "expected_rank_after_path": 2.84,
-      "prob_finish_ahead_each_rival": [
-        0.336,
-        0.582,
-        0.699,
-        0.78,
-        0.831,
-        0.969,
-        0.961
-      ],
-      "utility_score": 237.45
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Kinsky → Tzolakis",
-          "hit": 4,
-          "out_id": 496,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Maguire → Calafiori",
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 8
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Schade → Elanga",
-          "hit": 0,
-          "out_id": 94,
-          "in_id": 454
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Saka",
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 12
-        }
-      ],
-      "chip": "Triple Captain",
-      "chip_gw": 4,
-      "expected_points": 237.21,
-      "chip_incremental_expected_points": 5.82,
-      "p10_points": 192.97,
-      "p90_points": 281.02,
-      "expected_rank_after_path": 2.89,
-      "prob_finish_ahead_each_rival": [
-        0.335,
-        0.583,
-        0.68,
-        0.783,
-        0.807,
-        0.971,
-        0.948
-      ],
-      "utility_score": 237.436
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Dubravka → Tzolakis",
-          "hit": 4,
-          "out_id": 497,
-          "in_id": 572
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Maguire → Calafiori",
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 8
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Schade → Elanga",
-          "hit": 0,
-          "out_id": 94,
-          "in_id": 454
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Saka",
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 12
-        }
-      ],
-      "chip": "Triple Captain",
-      "chip_gw": 4,
-      "expected_points": 237.21,
-      "chip_incremental_expected_points": 5.82,
-      "p10_points": 192.97,
-      "p90_points": 281.02,
-      "expected_rank_after_path": 2.89,
-      "prob_finish_ahead_each_rival": [
-        0.335,
-        0.583,
-        0.68,
-        0.783,
-        0.807,
-        0.971,
-        0.948
-      ],
-      "utility_score": 237.436
+      "utility_score": 237.279
     },
     {
       "actions": [
@@ -1871,22 +1712,181 @@
         }
       ],
       "chip": "Triple Captain",
-      "chip_gw": 4,
-      "expected_points": 237.09,
-      "chip_incremental_expected_points": 5.82,
-      "p10_points": 193.22,
-      "p90_points": 281.74,
-      "expected_rank_after_path": 2.88,
+      "chip_gw": 5,
+      "expected_points": 237.07,
+      "chip_incremental_expected_points": 5.47,
+      "p10_points": 194.06,
+      "p90_points": 283.89,
+      "expected_rank_after_path": 2.93,
       "prob_finish_ahead_each_rival": [
-        0.333,
-        0.578,
-        0.695,
-        0.767,
-        0.822,
-        0.972,
-        0.954
+        0.312,
+        0.559,
+        0.671,
+        0.799,
+        0.806,
+        0.976,
+        0.949
       ],
-      "utility_score": 237.428
+      "utility_score": 237.274
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Maguire → Tarkowski",
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 229
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Schade → Elanga",
+          "hit": 0,
+          "out_id": 94,
+          "in_id": 454
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Groß → Xhaka",
+          "hit": 0,
+          "out_id": 124,
+          "in_id": 544
+        }
+      ],
+      "chip": "Triple Captain",
+      "chip_gw": 4,
+      "expected_points": 236.88,
+      "chip_incremental_expected_points": 6.05,
+      "p10_points": 194.12,
+      "p90_points": 279.87,
+      "expected_rank_after_path": 2.9,
+      "prob_finish_ahead_each_rival": [
+        0.318,
+        0.555,
+        0.682,
+        0.791,
+        0.837,
+        0.971,
+        0.95
+      ],
+      "utility_score": 237.264
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Maguire → Tarkowski",
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 229
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Schade → Elanga",
+          "hit": 0,
+          "out_id": 94,
+          "in_id": 454
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Saka",
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 12
+        }
+      ],
+      "chip": "Triple Captain",
+      "chip_gw": 6,
+      "expected_points": 237.21,
+      "chip_incremental_expected_points": 6.15,
+      "p10_points": 194.22,
+      "p90_points": 282.42,
+      "expected_rank_after_path": 2.96,
+      "prob_finish_ahead_each_rival": [
+        0.323,
+        0.548,
+        0.661,
+        0.787,
+        0.802,
+        0.969,
+        0.949
+      ],
+      "utility_score": 237.256
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Maguire → Tarkowski",
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 229
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Schade → Elanga",
+          "hit": 0,
+          "out_id": 94,
+          "in_id": 454
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Gabriel → Calafiori",
+          "hit": 0,
+          "out_id": 4,
+          "in_id": 8
+        }
+      ],
+      "chip": "Triple Captain",
+      "chip_gw": 6,
+      "expected_points": 236.57,
+      "chip_incremental_expected_points": 5.67,
+      "p10_points": 194.9,
+      "p90_points": 281.08,
+      "expected_rank_after_path": 2.9,
+      "prob_finish_ahead_each_rival": [
+        0.305,
+        0.553,
+        0.686,
+        0.8,
+        0.833,
+        0.974,
+        0.951
+      ],
+      "utility_score": 237.074
     }
   ],
   "method_note": "Triple Captain and Bench Boost are scored exactly on calibrated transfer paths against probabilistic rival behaviour. Values are opportunity windows, not automatic play recommendations. Sampling precision increases as the official FPL deadline approaches. Wildcard and Free Hit are handled by the separate legal full-squad optimiser and activation gate."
