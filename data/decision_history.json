@@ -1,8 +1,8 @@
 {
   "version": 4,
-  "generated_at_utc": "2026-09-04T17:00:24.361256+00:00",
+  "generated_at_utc": "2026-09-04T19:48:51.012107+00:00",
   "entry_id": 5332809,
-  "current_gw": 2,
+  "current_gw": 3,
   "weeks": [
     {
       "event": 1,
@@ -37,6 +37,101 @@
         }
       ],
       "source": "official_fpl_history"
+    },
+    {
+      "event": 3,
+      "captain_id": 411,
+      "captain_name": "Haaland",
+      "vice_id": 399,
+      "vice_name": "Cherki",
+      "active_chip": "3xc",
+      "transfers": [
+        {
+          "event": 3,
+          "time": "2026-08-29T19:41:25.857201Z",
+          "element_out": 427,
+          "out_name": "Mbeumo",
+          "element_in": 399,
+          "in_name": "Cherki",
+          "out_cost": 8.0,
+          "in_cost": 7.6,
+          "source": "official_transfer_history",
+          "status": "confirmed",
+          "recommendation_context": {
+            "matched": true,
+            "match_type": "exact_route",
+            "snapshot_at_utc": "2026-08-29T18:19:12.122183+00:00",
+            "strategy": "Balanced+ / controlled leverage",
+            "team_rank_at_snapshot": 8,
+            "bank_at_snapshot": 1.0,
+            "lenses": [
+              {
+                "type": "lower_variance",
+                "label": "Lower variance",
+                "model_uplift": 28.005,
+                "target_rival_ownership_pct": 0.0,
+                "next3": [
+                  {
+                    "gw": 3,
+                    "opponent": "Coventry City",
+                    "venue": "H",
+                    "fdr": 2
+                  },
+                  {
+                    "gw": 4,
+                    "opponent": "Man Utd",
+                    "venue": "A",
+                    "fdr": 4
+                  },
+                  {
+                    "gw": 5,
+                    "opponent": "Sunderland",
+                    "venue": "H",
+                    "fdr": 2
+                  }
+                ],
+                "rationale": [
+                  "Next-3 fixtures: Coventry City H FDR 2, Man Utd A FDR 4, Sunderland H FDR 2",
+                  "Nearest-rival ownership 0%: ownership context only; the football case still leads.",
+                  "Model uplift 28.0 versus the outgoing player on the dashboard heuristic."
+                ]
+              },
+              {
+                "type": "variety",
+                "label": "Leverage",
+                "model_uplift": 32.255,
+                "target_rival_ownership_pct": 0.0,
+                "next3": [
+                  {
+                    "gw": 3,
+                    "opponent": "Coventry City",
+                    "venue": "H",
+                    "fdr": 2
+                  },
+                  {
+                    "gw": 4,
+                    "opponent": "Man Utd",
+                    "venue": "A",
+                    "fdr": 4
+                  },
+                  {
+                    "gw": 5,
+                    "opponent": "Sunderland",
+                    "venue": "H",
+                    "fdr": 2
+                  }
+                ],
+                "rationale": [
+                  "Next-3 fixtures: Coventry City H FDR 2, Man Utd A FDR 4, Sunderland H FDR 2",
+                  "Nearest-rival ownership 0%: lower ownership can add leverage if the football case is strong.",
+                  "Model uplift 32.3 versus the outgoing player on the dashboard heuristic."
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "source": "official_fpl_history"
     }
   ],
   "decisions": [
@@ -52,6 +147,90 @@
       "source": "official_transfer_history",
       "status": "confirmed",
       "recommendation_context": null
+    },
+    {
+      "event": 3,
+      "time": "2026-08-29T19:41:25.857201Z",
+      "element_out": 427,
+      "out_name": "Mbeumo",
+      "element_in": 399,
+      "in_name": "Cherki",
+      "out_cost": 8.0,
+      "in_cost": 7.6,
+      "source": "official_transfer_history",
+      "status": "confirmed",
+      "recommendation_context": {
+        "matched": true,
+        "match_type": "exact_route",
+        "snapshot_at_utc": "2026-08-29T18:19:12.122183+00:00",
+        "strategy": "Balanced+ / controlled leverage",
+        "team_rank_at_snapshot": 8,
+        "bank_at_snapshot": 1.0,
+        "lenses": [
+          {
+            "type": "lower_variance",
+            "label": "Lower variance",
+            "model_uplift": 28.005,
+            "target_rival_ownership_pct": 0.0,
+            "next3": [
+              {
+                "gw": 3,
+                "opponent": "Coventry City",
+                "venue": "H",
+                "fdr": 2
+              },
+              {
+                "gw": 4,
+                "opponent": "Man Utd",
+                "venue": "A",
+                "fdr": 4
+              },
+              {
+                "gw": 5,
+                "opponent": "Sunderland",
+                "venue": "H",
+                "fdr": 2
+              }
+            ],
+            "rationale": [
+              "Next-3 fixtures: Coventry City H FDR 2, Man Utd A FDR 4, Sunderland H FDR 2",
+              "Nearest-rival ownership 0%: ownership context only; the football case still leads.",
+              "Model uplift 28.0 versus the outgoing player on the dashboard heuristic."
+            ]
+          },
+          {
+            "type": "variety",
+            "label": "Leverage",
+            "model_uplift": 32.255,
+            "target_rival_ownership_pct": 0.0,
+            "next3": [
+              {
+                "gw": 3,
+                "opponent": "Coventry City",
+                "venue": "H",
+                "fdr": 2
+              },
+              {
+                "gw": 4,
+                "opponent": "Man Utd",
+                "venue": "A",
+                "fdr": 4
+              },
+              {
+                "gw": 5,
+                "opponent": "Sunderland",
+                "venue": "H",
+                "fdr": 2
+              }
+            ],
+            "rationale": [
+              "Next-3 fixtures: Coventry City H FDR 2, Man Utd A FDR 4, Sunderland H FDR 2",
+              "Nearest-rival ownership 0%: lower ownership can add leverage if the football case is strong.",
+              "Model uplift 32.3 versus the outgoing player on the dashboard heuristic."
+            ]
+          }
+        ]
+      }
     }
   ],
   "recommendation_evidence": "Exact pre-transfer route matches only; no rationale is invented for unmatched decisions."
