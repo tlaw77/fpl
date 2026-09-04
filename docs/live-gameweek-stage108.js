@@ -2,7 +2,7 @@
 'use strict';
 const BUILD='live-gameweek-stage108-20260904-1';
 const URL='https://raw.githubusercontent.com/tlaw77/fpl/main/data/live_gameweek.json';
-let opened=false,timer=null;
+let opened=false,timer=null,current=null;
 const n=(v,d=0)=>Number.isFinite(Number(v))?Number(v):d;
 const esc=v=>String(v??'—').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const signed=v=>`${n(v)>0?'+':''}${n(v).toFixed(n(v)%1?1:0)}`;
@@ -14,6 +14,7 @@ function render(d){
  const host=document.getElementById('dc-intel-view'),button=document.querySelector('#decision-nav button[data-view="intel"]');if(!host||!button)return;
  button.textContent=d.phase==='PRE_DEADLINE'?'League Intel':'Live GW';button.dataset.livePhase=d.phase;
  if(d.phase==='PRE_DEADLINE'){document.documentElement.dataset.liveGameweekPhase='pre-deadline';return}
+ if(!opened){opened=true;button.click()}
  const me=d.me||{},threats=d.threats||[],damage=d.damage_done||[],leverage=d.leverage||[],visible=n(d.league?.visible_managers),expected=n(d.league?.expected_managers);
  host.innerHTML=`<section class="lgw-hero"><div><p class="eyebrow">GW${esc(d.gw)} COMMAND CENTRE</p><h2>Every score. Every threat.</h2><p>Official player points and revealed squads refresh every five minutes. ${d.provisional?'Scores, bonus and ranks remain provisional.':'Gameweek scores are complete.'}</p></div>${statusPill(d.phase)}</section>
  <section class="lgw-kpis"><article><span>Live rank</span><strong>#${n(me.live_rank)||'—'}</strong><small>of ${expected}</small></article><article><span>Your score</span><strong>${n(me.live_gw_points)}</strong><small>avg ${n(d.league?.average_live_points).toFixed(1)}</small></article><article><span>Still active</span><strong>${n(me.players_remaining)}</strong><small>${n(me.players_live)} playing now</small></article><article><span>Squads visible</span><strong>${visible}/${expected}</strong><small>${d.status==='PARTIAL'?'retrying missing teams':'all revealed'}</small></article></section>
@@ -22,10 +23,9 @@ function render(d){
  <section class="dc-card lgw-table"><div class="panel-head"><div><p class="eyebrow">ALL ${expected} TEAMS</p><h3>Live mini-league</h3></div><span class="subtle">Tap any manager for all 15 players</span></div>${(d.managers||[]).map(m=>standingRow(m,me)).join('')}</section>
  <section class="lgw-method"><strong>How threat works:</strong> if rivals have more effective copies of a player than you, every point costs you the difference versus the league average. Captaincy and chips are already included through the official multiplier.</section>`;
  document.documentElement.dataset.liveGameweekPhase=d.phase;document.documentElement.dataset.liveGameweekBuild=BUILD;
- if(!opened){opened=true;button.click()}
 }
 async function requestData(signal){const urls=location.hostname==='localhost'||location.hostname==='127.0.0.1'?['../data/live_gameweek.json',URL]:[URL];let last;for(const url of urls){try{const response=await fetch(`${url}?v=${Date.now()}`,{cache:'no-store',signal});if(!response.ok)throw new Error(`HTTP ${response.status}`);return await response.json()}catch(error){last=error}}throw last}
-async function load(){try{const ctl=new AbortController(),timeout=setTimeout(()=>ctl.abort(),10000);const data=await requestData(ctl.signal);clearTimeout(timeout);render(data)}catch(error){console.warn('Live Gameweek snapshot unavailable',error)}finally{clearTimeout(timer);timer=setTimeout(load,300000)}}
-function start(){load();document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')load()},{passive:true})}
+async function load(){try{const ctl=new AbortController(),timeout=setTimeout(()=>ctl.abort(),10000);current=await requestData(ctl.signal);clearTimeout(timeout);render(current)}catch(error){console.warn('Live Gameweek snapshot unavailable',error)}finally{clearTimeout(timer);timer=setTimeout(load,300000)}}
+function start(){load();window.addEventListener('fplLeagueIntelRendered',()=>{if(current?.phase&&current.phase!=='PRE_DEADLINE')setTimeout(()=>render(current),0)},{passive:true});document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')load()},{passive:true})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
 })();
