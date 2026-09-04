@@ -42,8 +42,10 @@ on:
       - ".github/workflows/fpl-etl.yml"
 
 concurrency:
-  group: fpl-etl-${{ github.ref }}
-  cancel-in-progress: true
+  # Decision Twin is also refreshed by stability and press-conference jobs.
+  # Serialize those writers so data/decision_twin.json never races at commit time.
+  group: fpl-decision-writers
+  cancel-in-progress: false
 
 permissions:
   contents: write

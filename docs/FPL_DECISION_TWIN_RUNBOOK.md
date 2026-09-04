@@ -28,6 +28,8 @@ This version uses the existing repository, public/free data and current Football
 5. The browser loads `data/decision_twin.json` and renders the Twin card in the Transfer view.
 6. On a later completed Gameweek, the existing archive/backtest path can score the frozen contract.
 
+The core ETL, stability and press-conference workflows share the `fpl-decision-writers` concurrency group. They queue rather than cancel so only one job can update the shared Decision Twin snapshot at a time.
+
 ## Inputs
 
 Required inputs:
@@ -89,6 +91,7 @@ The workflow additionally requires:
 - **Models disagree:** show `CONTESTED`; the chair keeps the authoritative synthesis and names the disagreement.
 - **New evidence changes action/headline:** set `change_radar.decision_changed` and publish before/after values.
 - **UI fetch fails:** leave the existing Transfer view intact and show no empty placeholder.
+- **Concurrent writer:** jobs queue under the shared concurrency group; do not restore independent writer groups.
 
 ## Recovery and rollback
 
