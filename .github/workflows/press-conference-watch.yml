@@ -1,0 +1,59 @@
+name: Press Conference Watch
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["FPL ETL"]
+    types: [completed]
+  schedule:
+    # Thu/Fri daytime UTC. In Irish summer time this is 08:00-20:45 local.
+    - cron: "*/15 7-19 * * 4,5"
+  push:
+    paths:
+      - "press_conference_watch.py"
+      - ".github/workflows/press-conference-watch.yml"
+
+concurrency:
+  group: press-conference-watch
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Refresh press conference evidence
+        run: python press_conference_watch.py
+      - name: Validate
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          x=json.loads(Path('data/press_conference_watch.json').read_text())
+          assert x['status']=='SUCCESS'
+          assert 'players' in x and 'friday_press_window' in x
+          print('press conference watch valid', x.get('article_count'), len(x.get('players',[])))
+          PY
+      - name: Commit snapshot
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/press_conference_watch.json
+          if git diff --cached --quiet; then
+            echo "No press-conference changes"
+          else
+            git commit -m "Refresh press conference watch"
+            git pull --rebase origin main
+            git push origin main
+          fi
