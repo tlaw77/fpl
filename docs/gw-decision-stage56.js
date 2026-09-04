@@ -1,6 +1,6 @@
 (()=>{
 const BUILD='gw-decision-20260829-2025';
-const q=(s,r=document)=>r.querySelector(s);
+const q=(s,r=document)=>r?.querySelector?.(s)||null;
 const text=el=>String(el?.textContent||'').replace(/\s+/g,' ').trim();
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
 function transferState(){const view=q('#view-transfer'),hero=q('.transfer-hero,.dc-recommendation',view),full=text(view),title=text(q('h2',hero)),tag=text(q('.transfer-hero-tag',hero)),evidence=text(q('.transfer-evidence h3,[data-stage9-evidence] h3',view)),roll=/hold\s*\/\s*roll|\broll\b/i.test(title)||/your choice[^.]*roll/i.test(full),route=!roll&&/→|->/.test(title)?title:'';let confidence=58;if(/strong leading case/i.test(tag))confidence=86;else if(/supported leader/i.test(tag))confidence=76;else if(/tentative leader/i.test(tag))confidence=61;else if(/model leader/i.test(tag))confidence=68;if(/strong/i.test(evidence))confidence+=4;if(/cautious|limited/i.test(evidence))confidence-=7;confidence=Math.max(45,Math.min(92,confidence));return{action:roll?'ROLL':route?'TRANSFER':'HOLD',route,confidence,full}}
