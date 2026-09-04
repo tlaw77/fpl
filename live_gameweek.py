@@ -136,7 +136,8 @@ def build_snapshot(
                 captaincy[player_id] += 1
         history = picks_data.get("entry_history") or {}
         hit_cost = int(history.get("event_transfers_cost") or 0)
-        live_score = sum(item["effective_points"] for item in picks) - hit_cost
+        raw_score = sum(item["effective_points"] for item in picks)
+        live_score = raw_score - hit_cost
         official_gw = int(standing.get("event_total") or 0)
         official_total = int(standing.get("total") or 0)
         baseline = official_total - official_gw
@@ -148,6 +149,8 @@ def build_snapshot(
             "manager": standing.get("player_name"),
             "active_chip": picks_data.get("active_chip"),
             "hit_cost": hit_cost,
+            "raw_gw_points": raw_score,
+            "net_gw_points": live_score,
             "live_gw_points": live_score,
             "live_overall_points": baseline + live_score,
             "players_complete": sum(item["state"] == "complete" for item in active),
@@ -220,6 +223,7 @@ def build_snapshot(
 
     fixture_counts = Counter(fixture_state(fixture) for fixture in fixtures)
     avg_live = round(sum(manager["live_gw_points"] for manager in managers) / max(1, len(managers)), 2)
+    avg_raw = round(sum(manager["raw_gw_points"] for manager in managers) / max(1, len(managers)), 2)
     return {
         "status": "SUCCESS" if not failures else "PARTIAL",
         "version": 1,
@@ -230,7 +234,7 @@ def build_snapshot(
         "provisional": phase in ("LOCKED", "LIVE", "BETWEEN_FIXTURES"),
         "refresh_seconds": 300,
         "deadline_utc": deadline.isoformat() if deadline else None,
-        "league": {"id": LEAGUE_ID, "name": league_name, "expected_managers": manager_count, "visible_managers": len(managers), "average_live_points": avg_live},
+        "league": {"id": LEAGUE_ID, "name": league_name, "expected_managers": manager_count, "visible_managers": len(managers), "average_live_points": avg_live, "average_raw_live_points": avg_raw, "average_net_live_points": avg_live},
         "fixtures": {"total": len(fixtures), "complete": fixture_counts["complete"], "live": fixture_counts["live"], "upcoming": fixture_counts["upcoming"]},
         "me": me,
         "managers": managers,
@@ -241,7 +245,8 @@ def build_snapshot(
         "exposure": exposures,
         "failures": failures,
         "methodology": {
-            "live_score": "Sum of official live player points × FPL multiplier, minus transfer hit cost.",
+            "raw_score": "Sum of official live player points × FPL multiplier.",
+            "live_score": "Raw score minus transfer hit cost; this net score drives live rank.",
             "live_overall": "Official total minus official GW total, plus calculated live GW score.",
             "damage_per_point": "League-average multiplier minus your multiplier, floored at zero.",
             "remaining": "Active picks whose club fixture is live, upcoming or awaiting status; multipliers follow the official revealed squad.",

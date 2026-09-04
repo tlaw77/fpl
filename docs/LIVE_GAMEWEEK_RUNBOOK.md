@@ -31,6 +31,8 @@ Example: four of eight managers captain a player and you do not own him. The lea
 
 `gain_per_point` is the mirror calculation for your leverage. `live_damage` and `live_gain` multiply those rates by points already scored.
 
+The scoring grid leads with **player points**. Transfer deductions are shown separately as “hit” and “net”; the net value continues to drive live overall points and rank. This prevents a legitimate large transfer hit from making the score build-up itself appear broken or negative.
+
 ## Incident response
 
 - **PARTIAL / fewer than 8 teams:** wait for the next five-minute retry. Immediately after deadline the FPL picks endpoints can reveal at different times.

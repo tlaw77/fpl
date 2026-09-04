@@ -39,6 +39,8 @@ class LiveGameweekTests(unittest.TestCase):
     def test_scores_include_multiplier_and_hit(self):
         data = self.snapshot()
         me = data["me"]
+        self.assertEqual(me["raw_gw_points"], 10)
+        self.assertEqual(me["net_gw_points"], 6)
         self.assertEqual(me["live_gw_points"], 6)
         self.assertEqual(me["live_overall_points"], 106)
         self.assertEqual(data["league"]["visible_managers"], 2)
