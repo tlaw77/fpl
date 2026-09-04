@@ -13,8 +13,21 @@ def norm(s):
     return str(s or '').strip().lower()
 
 
+def fixtures_for_gw(player, gw):
+    """Return every scheduled fixture for the player in a Gameweek.
+
+    FPL can assign more than one Premier League fixture to the same event during a
+    Double Gameweek. Older callers used only the first match, which understated a
+    confirmed DGW. Keep the list ordered by kickoff where the feed provides it.
+    """
+    rows = [f for f in (player.get('fixtures') or []) if int(f.get('gw') or -1) == int(gw)]
+    return sorted(rows, key=lambda f: str(f.get('kickoff_time') or ''))
+
+
 def fixture(player, gw):
-    return next((f for f in (player.get('fixtures') or []) if int(f.get('gw') or -1) == int(gw)), None)
+    """Backward-compatible first-fixture helper for display-only callers."""
+    rows = fixtures_for_gw(player, gw)
+    return rows[0] if rows else None
 
 
 def season_maturity(current_gw):
@@ -25,8 +38,8 @@ def season_maturity(current_gw):
 
 
 def expected_gw(player, gw, model_lo, model_hi, scout_maps, market_maps, current_gw=2):
-    f = fixture(player, gw)
-    if not f:
+    fixtures = fixtures_for_gw(player, gw)
+    if not fixtures:
         return 0.0, 0.0
 
     pos_base = {'GKP': 3.1, 'DEF': 3.3, 'MID': 3.7, 'FWD': 3.9}.get(player.get('position'), 3.5)
@@ -52,8 +65,6 @@ def expected_gw(player, gw, model_lo, model_hi, scout_maps, market_maps, current
     model_evidence = max(.12, min(.75, maturity * (.55 + .45 * source_rel)))
     model_factor = 1.0 + (raw_model_factor - 1.0) * model_evidence
 
-    diff = n(f.get('difficulty'), 3)
-    fixture_factor = max(.72, min(1.30, 1 + (3 - diff) * .105 + (.04 if f.get('venue') == 'H' else 0)))
     avail = max(0.0, min(1.0, n(player.get('adjusted_availability', player.get('availability')), 1)))
     sched = max(.78, min(1.04, n(player.get('schedule_modifier'), 1)))
 
@@ -68,7 +79,26 @@ def expected_gw(player, gw, model_lo, model_hi, scout_maps, market_maps, current
     if any(x in merit for x in ('avoid', 'concern', 'sell')):
         scout_factor -= .045
 
-    mean = base * model_factor * fixture_factor * avail * sched * scout_factor
+    # Score each confirmed PL fixture independently. For a DGW we conservatively
+    # haircut later fixtures for rotation/minutes risk rather than assuming two full
+    # 90-minute appearances. This preserves almost identical SGW behaviour while
+    # making confirmed doubles visible to transfers, captaincy and chip optimisation.
+    risk = norm(player.get('schedule_risk'))
+    later_fixture_factor = .92
+    if risk == 'medium':
+        later_fixture_factor = .86
+    elif risk == 'high':
+        later_fixture_factor = .76
+    if avail < .85:
+        later_fixture_factor *= max(.72, avail / .85)
+
+    fixture_means = []
+    for idx, f in enumerate(fixtures):
+        diff = n(f.get('difficulty'), 3)
+        ff = max(.72, min(1.30, 1 + (3 - diff) * .105 + (.04 if f.get('venue') == 'H' else 0)))
+        minutes_factor = 1.0 if idx == 0 else later_fixture_factor
+        fixture_means.append(base * model_factor * ff * avail * sched * scout_factor * minutes_factor)
+    mean = sum(fixture_means)
 
     # Reliable DC floor slightly reduces volatility for outfield players who project
     # materially above their positional peers, without changing their ceiling directly.
@@ -77,7 +107,6 @@ def expected_gw(player, gw, model_lo, model_hi, scout_maps, market_maps, current
         cv -= min(.055, dc_edge * dc_evidence * .08)
     elif dc_edge < -.18:
         cv += min(.035, abs(dc_edge) * dc_evidence * .05)
-    risk = norm(player.get('schedule_risk'))
     if risk == 'high':
         cv += .12
     elif risk == 'medium':
@@ -89,4 +118,9 @@ def expected_gw(player, gw, model_lo, model_hi, scout_maps, market_maps, current
     if 'strong_' in norm(market.get('market_status')):
         cv += .02
 
-    return max(0.0, mean), max(.42, min(1.15, cv))
+    # Multiple scoring opportunities reduce pure match-result variance, but rotation
+    # correlation means the reduction should be much smaller than sqrt(n).
+    if len(fixtures) >= 2:
+        cv *= .90 if risk == 'high' else (.86 if risk == 'medium' else .82)
+
+    return max(0.0, mean), max(.38 if len(fixtures) >= 2 else .42, min(1.15, cv))
