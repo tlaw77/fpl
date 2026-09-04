@@ -1,9 +1,9 @@
 {
   "status": "SUCCESS",
   "version": 1,
-  "generated_at_utc": "2026-09-04T18:33:37.311926+00:00",
-  "current_gw": 2,
-  "next_gw": 3,
+  "generated_at_utc": "2026-09-04T19:49:59.596110+00:00",
+  "current_gw": 3,
+  "next_gw": 4,
   "progress": {
     "label": "Decision Twin v1",
     "completion_pct": 100,
@@ -12,19 +12,19 @@
     "state": "COMPLETE"
   },
   "decision_certificate": {
-    "certificate_id": "DT-837AD5198D91",
+    "certificate_id": "DT-AB949A57E8AA",
     "action": "HOLD",
-    "headline": "Transfer complete · hold",
-    "confidence": 79,
+    "headline": "Hold / roll",
+    "confidence": 78,
     "objective": "Maximise mini-league winning potential while protecting downside and future flexibility.",
-    "six_gw_edge_over_hold": 4.71,
-    "probability_gain_league_place_pct": 58.3,
-    "strongest_alternative": "Kinsky → Tzolakis",
-    "alternative_expected_points_6gw": 329.08,
-    "rationale": "Mbeumo → Cherki is already applied. A further move costs -4. The best six-GW alternative is only 4.7 projected points ahead of holding, below the 8.0-point early-season hurdle, and the measured leader is supported by only 1/3 models.",
+    "six_gw_edge_over_hold": 15.61,
+    "probability_gain_league_place_pct": 94.9,
+    "strongest_alternative": "Dubravka → Tzolakis",
+    "alternative_expected_points_6gw": 353.88,
+    "rationale": "The leading transfer edge is 15.6 projected points over holding and does not yet clear the full evidence hurdle with sufficient agreement on that exact route.",
     "evidence": {
-      "newest_at_utc": "2026-09-04T18:33:14.001207+00:00",
-      "oldest_at_utc": "2026-09-04T17:00:23.241786+00:00",
+      "newest_at_utc": "2026-09-04T19:49:45.578771+00:00",
+      "oldest_at_utc": "2026-09-04T17:01:49.674404+00:00",
       "age_minutes": 0,
       "sources_available": 12
     }
@@ -34,8 +34,8 @@
       "agent": "Quant Analyst",
       "focus": "Magnitude and model agreement",
       "verdict": "SUPPORT",
-      "confidence": 79,
-      "argument": "The leading route is Dubravka → Tzolakis. Its 4.71-point six-GW edge is tested against a 8.00-point hurdle with 1/2 required model support.",
+      "confidence": 78,
+      "argument": "The leading route is Hughes → M.Sangaré. Its 15.61-point six-GW edge is tested against a 3.00-point hurdle with 1/2 required model support.",
       "evidence": [
         "simulation",
         "path_simulation",
@@ -46,8 +46,8 @@
       "agent": "Rival Strategist",
       "focus": "Mini-league consequence",
       "verdict": "SUPPORT",
-      "confidence": 58,
-      "argument": "The simulated route has a 58.3% probability of gaining a league place against 7 modelled rivals; adaptive rivals prefer Kinsky → Tzolakis.",
+      "confidence": 95,
+      "argument": "The simulated route has a 94.9% probability of gaining a league place against 8 modelled rivals; adaptive rivals prefer Gabriel → Tarkowski.",
       "evidence": [
         "simulation",
         "adaptive_rival_simulation"
@@ -57,8 +57,8 @@
       "agent": "Evidence Scout",
       "focus": "News, role and availability",
       "verdict": "SUPPORT",
-      "confidence": 81,
-      "argument": "The evidence layer covers 197 public Scout/news items and 80 matched players. 0 current-squad players carry a press-conference signal.",
+      "confidence": 72,
+      "argument": "The evidence layer covers 152 public Scout/news items and 69 matched players. 0 current-squad players carry a press-conference signal.",
       "evidence": [
         "scout_consensus",
         "press_conference_watch"
@@ -69,7 +69,7 @@
       "focus": "Downside and fragility",
       "verdict": "WATCH",
       "confidence": 80,
-      "argument": "The simulated six-GW outcome range spans 98.2 points. Action persistence is 100% across 10 effective stability runs.",
+      "argument": "The simulated six-GW outcome range spans 101.7 points. Action persistence is 100% across 10 effective stability runs.",
       "evidence": [
         "simulation",
         "simulation_stability"
@@ -89,8 +89,8 @@
       "agent": "Decision Chair",
       "focus": "Resolved recommendation",
       "verdict": "SUPPORT",
-      "confidence": 79,
-      "argument": "Keep the authoritative action: Transfer complete · hold. No specialist presents enough contrary evidence to overturn it.",
+      "confidence": 78,
+      "argument": "Keep the authoritative action: Hold / roll. No specialist presents enough contrary evidence to overturn it.",
       "evidence": [
         "decision_synthesis",
         "specialist_council"
@@ -101,12 +101,14 @@
     "state": "ALIGNED",
     "model_route_agreement_pct": 33,
     "challengers": [],
-    "resolved_position": "Transfer complete · hold",
+    "resolved_position": "Hold / roll",
     "rule": "Specialists may challenge the authoritative synthesis but cannot silently replace it."
   },
   "change_radar": {
-    "decision_changed": false,
-    "changed_fields": [],
+    "decision_changed": true,
+    "changed_fields": [
+      "headline"
+    ],
     "previous_certificate_id": "DT-837AD5198D91",
     "decision_breakers": [
       {
@@ -117,8 +119,8 @@
       },
       {
         "signal": "edge_over_hold",
-        "state": "4.71 points",
-        "review_when": "edge crosses the 8.00-point action hurdle",
+        "state": "15.61 points",
+        "review_when": "edge crosses the 3.00-point action hurdle",
         "priority": "high"
       },
       {
@@ -129,7 +131,7 @@
       },
       {
         "signal": "market_flexibility",
-        "state": "7 relevant price watches",
+        "state": "0 relevant price watches",
         "review_when": "a preferred route becomes unaffordable or an owned player loses value",
         "priority": "medium"
       },
@@ -143,27 +145,27 @@
     "notification_rule": "Notify only when action/headline changes or a high-priority breaker crosses its stated review condition."
   },
   "learning_contract": {
-    "target_gw": 3,
-    "decision_certificate_id": "DT-837AD5198D91",
+    "target_gw": 4,
+    "decision_certificate_id": "DT-AB949A57E8AA",
     "recommended_action": "HOLD",
-    "recommended_route": "Dubravka → Tzolakis",
+    "recommended_route": "Hughes → M.Sangaré",
     "baseline_xi_ids": [
       496,
       115,
+      173,
       4,
-      418,
-      399,
-      426,
       124,
+      399,
       94,
-      411,
+      426,
       165,
+      411,
       346
     ],
-    "baseline_captain_id": 411,
+    "baseline_captain_id": 165,
     "alternative_routes": [
+      "Dubravka → Tzolakis",
       "Kinsky → Tzolakis",
-      "Maguire → Calafiori",
       "Greaves → Ajayi"
     ],
     "evaluable_gameweeks": 0,
