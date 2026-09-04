@@ -92,6 +92,7 @@ The workflow additionally requires:
 - **New evidence changes action/headline:** set `change_radar.decision_changed` and publish before/after values.
 - **UI fetch fails:** leave the existing Transfer view intact and show no empty placeholder.
 - **Concurrent refresh:** only `decision-twin.yml` may commit the Twin artifact; its newest run supersedes an older in-progress refresh.
+- **Concurrent repository push:** every snapshot writer rebases and retries up to three times when another independent data workflow wins the push race.
 
 ## Recovery and rollback
 

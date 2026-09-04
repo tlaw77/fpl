@@ -101,6 +101,12 @@ jobs:
             echo "No supplemental changes"
           else
             git commit -m "Update simulation stability chip captaincy and backtest reviews"
-            git pull --rebase origin main
-            git push origin main
+            for attempt in 1 2 3; do
+              git pull --rebase origin main
+              if git push origin HEAD:main; then exit 0; fi
+              echo "Supplemental push raced with another writer; retrying ($attempt/3)"
+              sleep $((attempt * 2))
+            done
+            echo "Supplemental push failed after 3 attempts"
+            exit 1
           fi

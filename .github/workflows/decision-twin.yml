@@ -68,6 +68,12 @@ jobs:
             echo "No Decision Twin change"
           else
             git commit -m "Refresh FPL Decision Twin"
-            git pull --rebase origin main
-            git push origin main
+            for attempt in 1 2 3; do
+              git pull --rebase origin main
+              if git push origin HEAD:main; then exit 0; fi
+              echo "Decision Twin push raced with another writer; retrying ($attempt/3)"
+              sleep $((attempt * 2))
+            done
+            echo "Decision Twin push failed after 3 attempts"
+            exit 1
           fi
