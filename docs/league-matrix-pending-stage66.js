@@ -1,5 +1,5 @@
 (()=>{
-const BUILD='league-matrix-pending-stage66-20260830-2351';
+const BUILD='league-matrix-pending-stage66-20260904-0011';
 let observer=null,timer=null;
 const n=(v,d=0)=>Number.isFinite(Number(v))?Number(v):d;
 const norm=s=>String(s||'').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
@@ -13,6 +13,6 @@ function isBench(t){return /bench/i.test(t||'')}
 function paint(){const sec=matrix(),d=window.FPLCoreData;if(!sec||!d)return;const states=stateByName(d);sec.querySelectorAll('[title]').forEach(el=>{const t=el.getAttribute('title')||'',score=scoreFromTitle(t);if(score==null||isBench(t))return;el.removeAttribute('data-pending-return');el.removeAttribute('data-finished-zero');el.removeAttribute('data-negative-return');const state=states.get(titleName(t))||'unknown';if(score<0){el.dataset.negativeReturn='1';el.style.background='#641f33';el.style.color='#ffe4e6';if(!/captain/i.test(t))el.style.border='1px solid #fb7185';return}if(score===0&&state==='done'){el.dataset.finishedZero='1';el.style.background='#4a2230';el.style.color='#fecdd3';if(!/captain/i.test(t))el.style.border='1px solid #fb718566';return}if(score===0){el.dataset.pendingReturn='1';el.style.background='#1e293b';el.style.color='#cbd5e1';if(!/captain/i.test(t))el.style.border='1px solid #64748b';return}});const legend=[...sec.querySelectorAll('div')].find(el=>/low/i.test(el.textContent||'')&&/high/i.test(el.textContent||''));if(legend){legend.querySelectorAll('[data-pending-legend],[data-negative-legend]').forEach(x=>x.remove());const pending=document.createElement('span');pending.dataset.pendingLegend='1';pending.style.color='#cbd5e1';pending.textContent='■ yet to return';legend.insertBefore(pending,legend.children[1]||null);const neg=document.createElement('span');neg.dataset.negativeLegend='1';neg.style.color='#fb7185';neg.textContent='■ negative';legend.appendChild(neg)}document.documentElement.dataset.leagueMatrixPendingBuild=BUILD}
 function schedule(){clearTimeout(timer);timer=setTimeout(paint,80)}
 function watch(){const view=document.getElementById('view-intel');if(!view||observer)return;observer=new MutationObserver(schedule);observer.observe(view,{childList:true,subtree:true});schedule()}
-function bind(){watch();document.querySelector('#decision-nav button[data-view="intel"]')?.addEventListener('click',()=>setTimeout(paint,180),{passive:true});window.addEventListener('fplCoreDataReady',()=>setTimeout(paint,500),{passive:true})}
+function bind(){watch();document.querySelector('#decision-nav button[data-view="intel"]')?.addEventListener('click',()=>setTimeout(paint,180),{passive:true});window.addEventListener('fplCoreDataReady',()=>setTimeout(paint,500),{passive:true});window.addEventListener('fplManagerMatrixRendered',()=>setTimeout(paint,0),{passive:true})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind,{once:true});else bind();
 })();

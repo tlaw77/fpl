@@ -1,5 +1,5 @@
 (()=>{
-const BUILD='league-matrix-live-progress-stage71-20260831-0003';
+const BUILD='league-matrix-live-progress-stage71-20260904-0011';
 let timer=null,observer=null,poll=null;
 const n=(v,d=0)=>Number.isFinite(Number(v))?Number(v):d;
 function section(){return [...document.querySelectorAll('#view-intel .dc-card')].find(s=>/MANAGER MATRIX/i.test(s.querySelector('.eyebrow')?.textContent||''))}
@@ -18,6 +18,6 @@ function decorate(){const d=window.FPLCoreData,sec=section();if(!d||!sec)return;
 document.documentElement.dataset.leagueMatrixLiveProgressBuild=BUILD}
 function schedule(){clearTimeout(timer);timer=setTimeout(decorate,100)}
 function watch(){const host=document.getElementById('dc-intel-view');if(!host||observer)return;observer=new MutationObserver(schedule);observer.observe(host,{childList:true,subtree:true})}
-function bind(){watch();[150,450,900,1600,2600].forEach(ms=>setTimeout(decorate,ms));document.querySelector('#decision-nav button[data-view="intel"]')?.addEventListener('click',()=>[80,300,700].forEach(ms=>setTimeout(decorate,ms)),{passive:true});window.addEventListener('fplCoreDataReady',()=>[100,350,800].forEach(ms=>setTimeout(decorate,ms)),{passive:true});poll=setInterval(()=>{const view=document.getElementById('view-intel');if(view?.classList.contains('active'))decorate()},30000)}
+function bind(){watch();[150,450,900,1600,2600].forEach(ms=>setTimeout(decorate,ms));document.querySelector('#decision-nav button[data-view="intel"]')?.addEventListener('click',()=>[80,300,700].forEach(ms=>setTimeout(decorate,ms)),{passive:true});window.addEventListener('fplCoreDataReady',()=>[100,350,800].forEach(ms=>setTimeout(decorate,ms)),{passive:true});window.addEventListener('fplManagerMatrixRendered',()=>setTimeout(decorate,0),{passive:true});poll=setInterval(()=>{const view=document.getElementById('view-intel');if(view?.classList.contains('active'))decorate()},30000)}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind,{once:true});else bind();
 })();
