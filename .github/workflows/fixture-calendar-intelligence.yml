@@ -1,0 +1,71 @@
+name: Fixture Calendar Intelligence
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["FPL ETL"]
+    types: [completed]
+  push:
+    paths:
+      - "fixture_calendar_intelligence.py"
+      - "chip_calendar_challenger.py"
+      - "projection_calibration.py"
+      - ".github/workflows/fixture-calendar-intelligence.yml"
+
+concurrency:
+  group: fixture-calendar-intelligence-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build fixture calendar intelligence
+        run: python fixture_calendar_intelligence.py
+      - name: Build calendar-aware chip challenger
+        run: |
+          if [ -f data/chip_path_simulation.json ]; then
+            python chip_calendar_challenger.py
+          else
+            echo "chip_path_simulation.json not available yet; calendar output still valid"
+          fi
+      - name: Validate
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          cal=json.loads(Path('data/fixture_calendar_intelligence.json').read_text())
+          assert cal['status']=='SUCCESS' and cal.get('version',0)>=1
+          assert 0 <= cal.get('chip_preservation_score',0) <= 100
+          assert 'confirmed_doubles' in cal and 'confirmed_blanks' in cal
+          assert 'unassigned_fixture_backlog' in cal and 'potential_dgw_windows' in cal
+          ch=Path('data/chip_calendar_challenger.json')
+          if ch.exists():
+              d=json.loads(ch.read_text())
+              assert d['status']=='SUCCESS' and d.get('challenger_only') is True
+          print('Calendar validation passed')
+          PY
+      - name: Commit snapshots
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/fixture_calendar_intelligence.json data/chip_calendar_challenger.json 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No calendar changes to commit"
+          else
+            git commit -m "Update fixture calendar intelligence"
+            git pull --rebase origin main
+            git push origin main
+          fi
