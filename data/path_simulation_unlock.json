@@ -1,6 +1,6 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-09-04T09:01:16.748024+00:00",
+  "generated_at_utc": "2026-09-04T13:27:52.242714+00:00",
   "engine_version": 7,
   "planner": "bounded beam search + GW-specific shared-outcome Monte Carlo + live FT state + season calibration + shared captaincy + deadline-aware sampling + enabling-downgrade retention",
   "projection_model": "season-maturity calibrated + shared captaincy model",
@@ -12,12 +12,12 @@
     6
   ],
   "beam_width": 14,
-  "iterations": 2200,
+  "iterations": 3000,
   "iteration_policy": {
     "layer": "path",
-    "deadline_phase": "deadline_day",
-    "hours_to_deadline": 8.5,
-    "iterations": 2200,
+    "deadline_phase": "final",
+    "hours_to_deadline": 4.06,
+    "iterations": 3000,
     "policy": "lighter normal-week sampling; higher precision inside 72h/24h/6h of official FPL deadline"
   },
   "starting_free_transfers": 0,
@@ -46,7 +46,7 @@
         "preferred_gw": 3,
         "provisional_gw": 3,
         "status": "hold",
-        "visible_score": 53.18
+        "visible_score": 53.17
       },
       {
         "chip": "Bench Boost",
@@ -144,10 +144,10 @@
       {
         "gw": 4,
         "action": "TRANSFER",
-        "route": "Maguire → Calafiori",
+        "route": "Maguire → Tarkowski",
         "hit": 0,
         "out_id": 418,
-        "in_id": 8,
+        "in_id": 229,
         "enabler": false,
         "bank_released": 0
       },
@@ -164,37 +164,37 @@
       {
         "gw": 6,
         "action": "TRANSFER",
-        "route": "Gabriel → Egan",
+        "route": "Haaland → Gonzalo",
         "hit": 0,
-        "out_id": 4,
-        "in_id": 277,
+        "out_id": 411,
+        "in_id": 569,
         "enabler": true,
-        "bank_released": 4.0
+        "bank_released": 9.5
       }
     ],
-    "expected_points": 231.0,
-    "p10_points": 190.4,
-    "p90_points": 273.61,
-    "expected_rank_after_path": 2.85,
-    "prob_gain_league_place": 0.69,
+    "expected_points": 232.25,
+    "p10_points": 191.7,
+    "p90_points": 275.26,
+    "expected_rank_after_path": 2.8,
+    "prob_gain_league_place": 0.687,
     "prob_finish_ahead_each_rival": [
-      0.295,
-      0.562,
-      0.694,
-      0.832,
-      0.825,
-      0.979,
-      0.961
+      0.317,
+      0.56,
+      0.711,
+      0.815,
+      0.858,
+      0.975,
+      0.959
     ],
-    "ending_bank": 4.5,
+    "ending_bank": 9.7,
     "ending_free_transfers": 1,
     "first_transfer_incoming_starts": true,
-    "utility_score": 232.219,
+    "utility_score": 233.71,
     "contains_enabler": true,
     "unlock_sequence": {
       "enabler_gw": 6,
-      "enabler_route": "Gabriel → Egan",
-      "bank_released": 4.0,
+      "enabler_route": "Haaland → Gonzalo",
+      "bank_released": 9.5,
       "follow_up_gw": null,
       "follow_up_route": null,
       "completed_unlock": false
@@ -216,10 +216,10 @@
         {
           "gw": 4,
           "action": "TRANSFER",
-          "route": "Maguire → Calafiori",
+          "route": "Maguire → Tarkowski",
           "hit": 0,
           "out_id": 418,
-          "in_id": 8,
+          "in_id": 229,
           "enabler": false,
           "bank_released": 0
         },
@@ -236,108 +236,37 @@
         {
           "gw": 6,
           "action": "TRANSFER",
-          "route": "Gabriel → Egan",
+          "route": "Haaland → Gonzalo",
           "hit": 0,
-          "out_id": 4,
-          "in_id": 277,
+          "out_id": 411,
+          "in_id": 569,
           "enabler": true,
-          "bank_released": 4.0
+          "bank_released": 9.5
         }
       ],
-      "expected_points": 231.0,
-      "p10_points": 190.4,
-      "p90_points": 273.61,
-      "expected_rank_after_path": 2.85,
-      "prob_gain_league_place": 0.69,
+      "expected_points": 232.25,
+      "p10_points": 191.7,
+      "p90_points": 275.26,
+      "expected_rank_after_path": 2.8,
+      "prob_gain_league_place": 0.687,
       "prob_finish_ahead_each_rival": [
-        0.295,
-        0.562,
-        0.694,
-        0.832,
-        0.825,
-        0.979,
-        0.961
+        0.317,
+        0.56,
+        0.711,
+        0.815,
+        0.858,
+        0.975,
+        0.959
       ],
-      "ending_bank": 4.5,
+      "ending_bank": 9.7,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
-      "utility_score": 232.219,
+      "utility_score": 233.71,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 6,
-        "enabler_route": "Gabriel → Egan",
-        "bank_released": 4.0,
-        "follow_up_gw": null,
-        "follow_up_route": null,
-        "completed_unlock": false
-      }
-    },
-    {
-      "actions": [
-        {
-          "gw": 3,
-          "action": "TRANSFER",
-          "route": "Dubravka → Tzolakis",
-          "hit": 4,
-          "out_id": 497,
-          "in_id": 572,
-          "enabler": false,
-          "bank_released": 0
-        },
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Maguire → Calafiori",
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 8,
-          "enabler": false,
-          "bank_released": 0
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Schade → Elanga",
-          "hit": 0,
-          "out_id": 94,
-          "in_id": 454,
-          "enabler": false,
-          "bank_released": 0
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Gabriel → Egan",
-          "hit": 0,
-          "out_id": 4,
-          "in_id": 277,
-          "enabler": true,
-          "bank_released": 4.0
-        }
-      ],
-      "expected_points": 231.0,
-      "p10_points": 190.4,
-      "p90_points": 273.61,
-      "expected_rank_after_path": 2.85,
-      "prob_gain_league_place": 0.69,
-      "prob_finish_ahead_each_rival": [
-        0.295,
-        0.562,
-        0.694,
-        0.832,
-        0.825,
-        0.979,
-        0.961
-      ],
-      "ending_bank": 4.0,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "utility_score": 232.219,
-      "contains_enabler": true,
-      "unlock_sequence": {
-        "enabler_gw": 6,
-        "enabler_route": "Gabriel → Egan",
-        "bank_released": 4.0,
+        "enabler_route": "Haaland → Gonzalo",
+        "bank_released": 9.5,
         "follow_up_gw": null,
         "follow_up_route": null,
         "completed_unlock": false
@@ -386,24 +315,24 @@
           "bank_released": 4.0
         }
       ],
-      "expected_points": 230.91,
-      "p10_points": 189.18,
-      "p90_points": 274.23,
-      "expected_rank_after_path": 2.85,
-      "prob_gain_league_place": 0.682,
+      "expected_points": 232.2,
+      "p10_points": 191.68,
+      "p90_points": 274.99,
+      "expected_rank_after_path": 2.81,
+      "prob_gain_league_place": 0.692,
       "prob_finish_ahead_each_rival": [
-        0.298,
-        0.553,
-        0.7,
-        0.822,
-        0.841,
-        0.977,
-        0.959
+        0.315,
+        0.559,
+        0.71,
+        0.812,
+        0.859,
+        0.972,
+        0.958
       ],
       "ending_bank": 4.2,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
-      "utility_score": 232.005,
+      "utility_score": 233.615,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 6,
@@ -457,24 +386,24 @@
           "bank_released": 9.5
         }
       ],
-      "expected_points": 230.76,
-      "p10_points": 190.84,
-      "p90_points": 273.08,
-      "expected_rank_after_path": 2.86,
-      "prob_gain_league_place": 0.684,
+      "expected_points": 232.2,
+      "p10_points": 191.69,
+      "p90_points": 275.79,
+      "expected_rank_after_path": 2.82,
+      "prob_gain_league_place": 0.692,
       "prob_finish_ahead_each_rival": [
-        0.292,
-        0.557,
-        0.696,
-        0.832,
-        0.821,
-        0.979,
-        0.959
+        0.307,
+        0.555,
+        0.707,
+        0.83,
+        0.842,
+        0.976,
+        0.962
       ],
       "ending_bank": 10.0,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
-      "utility_score": 232.0,
+      "utility_score": 233.586,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 6,
@@ -528,24 +457,24 @@
           "bank_released": 9.5
         }
       ],
-      "expected_points": 230.76,
-      "p10_points": 190.84,
-      "p90_points": 273.08,
-      "expected_rank_after_path": 2.86,
-      "prob_gain_league_place": 0.684,
+      "expected_points": 232.2,
+      "p10_points": 191.69,
+      "p90_points": 275.79,
+      "expected_rank_after_path": 2.82,
+      "prob_gain_league_place": 0.692,
       "prob_finish_ahead_each_rival": [
-        0.292,
-        0.557,
-        0.696,
-        0.832,
-        0.821,
-        0.979,
-        0.959
+        0.307,
+        0.555,
+        0.707,
+        0.83,
+        0.842,
+        0.976,
+        0.962
       ],
       "ending_bank": 9.5,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
-      "utility_score": 232.0,
+      "utility_score": 233.586,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 6,
@@ -571,10 +500,10 @@
         {
           "gw": 4,
           "action": "TRANSFER",
-          "route": "Maguire → Tarkowski",
+          "route": "Maguire → Calafiori",
           "hit": 0,
           "out_id": 418,
-          "in_id": 229,
+          "in_id": 8,
           "enabler": false,
           "bank_released": 0
         },
@@ -591,37 +520,108 @@
         {
           "gw": 6,
           "action": "TRANSFER",
-          "route": "Haaland → Gonzalo",
+          "route": "Gabriel → Egan",
           "hit": 0,
-          "out_id": 411,
-          "in_id": 569,
+          "out_id": 4,
+          "in_id": 277,
           "enabler": true,
-          "bank_released": 9.5
+          "bank_released": 4.0
         }
       ],
-      "expected_points": 230.67,
-      "p10_points": 189.81,
-      "p90_points": 272.88,
-      "expected_rank_after_path": 2.89,
-      "prob_gain_league_place": 0.682,
+      "expected_points": 232.15,
+      "p10_points": 191.1,
+      "p90_points": 275.44,
+      "expected_rank_after_path": 2.81,
+      "prob_gain_league_place": 0.695,
       "prob_finish_ahead_each_rival": [
-        0.294,
-        0.539,
-        0.692,
-        0.812,
-        0.841,
-        0.98,
-        0.956
+        0.313,
+        0.559,
+        0.709,
+        0.836,
+        0.84,
+        0.974,
+        0.958
       ],
-      "ending_bank": 9.7,
+      "ending_bank": 4.5,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
-      "utility_score": 231.688,
+      "utility_score": 233.521,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 6,
-        "enabler_route": "Haaland → Gonzalo",
-        "bank_released": 9.5,
+        "enabler_route": "Gabriel → Egan",
+        "bank_released": 4.0,
+        "follow_up_gw": null,
+        "follow_up_route": null,
+        "completed_unlock": false
+      }
+    },
+    {
+      "actions": [
+        {
+          "gw": 3,
+          "action": "TRANSFER",
+          "route": "Dubravka → Tzolakis",
+          "hit": 4,
+          "out_id": 497,
+          "in_id": 572,
+          "enabler": false,
+          "bank_released": 0
+        },
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Maguire → Calafiori",
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 8,
+          "enabler": false,
+          "bank_released": 0
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Schade → Elanga",
+          "hit": 0,
+          "out_id": 94,
+          "in_id": 454,
+          "enabler": false,
+          "bank_released": 0
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Gabriel → Egan",
+          "hit": 0,
+          "out_id": 4,
+          "in_id": 277,
+          "enabler": true,
+          "bank_released": 4.0
+        }
+      ],
+      "expected_points": 232.15,
+      "p10_points": 191.1,
+      "p90_points": 275.44,
+      "expected_rank_after_path": 2.81,
+      "prob_gain_league_place": 0.695,
+      "prob_finish_ahead_each_rival": [
+        0.313,
+        0.559,
+        0.709,
+        0.836,
+        0.84,
+        0.974,
+        0.958
+      ],
+      "ending_bank": 4.0,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "utility_score": 233.521,
+      "contains_enabler": true,
+      "unlock_sequence": {
+        "enabler_gw": 6,
+        "enabler_route": "Gabriel → Egan",
+        "bank_released": 4.0,
         "follow_up_gw": null,
         "follow_up_route": null,
         "completed_unlock": false
@@ -670,24 +670,24 @@
           "bank_released": 4.0
         }
       ],
-      "expected_points": 230.33,
-      "p10_points": 190.27,
-      "p90_points": 273.44,
-      "expected_rank_after_path": 2.89,
-      "prob_gain_league_place": 0.676,
+      "expected_points": 231.54,
+      "p10_points": 191.45,
+      "p90_points": 274.62,
+      "expected_rank_after_path": 2.84,
+      "prob_gain_league_place": 0.688,
       "prob_finish_ahead_each_rival": [
-        0.291,
-        0.546,
-        0.701,
-        0.807,
-        0.837,
-        0.975,
-        0.955
+        0.309,
+        0.554,
+        0.705,
+        0.814,
+        0.851,
+        0.968,
+        0.956
       ],
       "ending_bank": 4.2,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
-      "utility_score": 231.438,
+      "utility_score": 232.865,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 6,
@@ -741,24 +741,24 @@
           "bank_released": 9.5
         }
       ],
-      "expected_points": 230.09,
-      "p10_points": 190.01,
-      "p90_points": 272.39,
-      "expected_rank_after_path": 2.91,
-      "prob_gain_league_place": 0.671,
+      "expected_points": 231.59,
+      "p10_points": 191.03,
+      "p90_points": 274.4,
+      "expected_rank_after_path": 2.85,
+      "prob_gain_league_place": 0.688,
       "prob_finish_ahead_each_rival": [
-        0.291,
-        0.535,
-        0.685,
-        0.806,
-        0.836,
-        0.979,
+        0.311,
+        0.552,
+        0.704,
+        0.812,
+        0.849,
+        0.97,
         0.955
       ],
       "ending_bank": 9.7,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
-      "utility_score": 231.067,
+      "utility_score": 232.837,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 6,
