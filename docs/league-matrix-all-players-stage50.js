@@ -1,5 +1,5 @@
 (()=>{
-const BUILD='league-matrix-all-players-20260830-0008';
+const BUILD='league-matrix-all-players-20260904-0010';
 const n=(v,d=0)=>Number.isFinite(Number(v))?Number(v):d;
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#039;'}[c]));
 let mode='players';
@@ -28,6 +28,6 @@ const body=ms.map(m=>{const arr=(m.picks||[]).map((p,i)=>({...p,_i:i}));let star
 return `${legend}<div style="overflow-x:auto;padding-bottom:5px">${head}${body}</div>`}
 function apply(){const d=window.FPLCoreData,sec=findSection();if(!d||!sec)return;const ms=managers(d);if(!ms.length)return;const exp=new Map((d.player_exposure||[]).map(p=>[Number(p.player_id),p]));const scores=ms.map(m=>n(m.live_calculated_points,m.gw_points)),min=Math.min(...scores),max=Math.max(...scores);const intro=mode==='players'?'Players line up in the same columns so you can compare ownership, captaincy and live impact across the league.':'Each manager is compressed into the anatomy of their score: captain first, then the other ten starters from highest to lowest contribution, followed by the four non-counting bench players.';sec.innerHTML=`<p class="eyebrow">MANAGER MATRIX · ${mode==='players'?'ALL LEAGUE PLAYERS':'SCORE BUILD-UP'}</p><p class="subtle" style="margin:2px 0 0">${intro}</p>${controls()}${mode==='players'?alignedView(d,ms,exp,scores,min,max):scoreBuildView(d,ms,scores,min,max)}`;bindControls(sec);document.documentElement.dataset.leagueMatrixAllPlayersBuild=BUILD;document.documentElement.dataset.leagueMatrixMode=mode}
 function run(){[180,650,1300,2200].forEach(ms=>setTimeout(apply,ms))}
-function bind(){run();document.querySelector('#decision-nav button[data-view="intel"]')?.addEventListener('click',run,{passive:true});window.addEventListener('fplCoreDataReady',run,{passive:true})}
+function bind(){run();document.querySelector('#decision-nav button[data-view="intel"]')?.addEventListener('click',run,{passive:true});window.addEventListener('fplCoreDataReady',run,{passive:true});window.addEventListener('fplLiveGameweekRendered',apply,{passive:true})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind,{once:true});else bind();
 })();
