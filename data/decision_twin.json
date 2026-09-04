@@ -1,0 +1,181 @@
+{
+  "status": "SUCCESS",
+  "version": 1,
+  "generated_at_utc": "2026-09-04T15:08:25.318115+00:00",
+  "current_gw": 2,
+  "next_gw": 3,
+  "progress": {
+    "label": "Decision Twin v1",
+    "completion_pct": 100,
+    "completed_gates": 6,
+    "total_gates": 6,
+    "state": "COMPLETE"
+  },
+  "decision_certificate": {
+    "certificate_id": "DT-837AD5198D91",
+    "action": "HOLD",
+    "headline": "Transfer complete · hold",
+    "confidence": 79,
+    "objective": "Maximise mini-league winning potential while protecting downside and future flexibility.",
+    "six_gw_edge_over_hold": 4.85,
+    "probability_gain_league_place_pct": 55.6,
+    "strongest_alternative": "Kinsky → Tzolakis",
+    "alternative_expected_points_6gw": 329.16,
+    "rationale": "Mbeumo → Cherki is already applied. A further move costs -4. The best six-GW alternative is only 4.9 projected points ahead of holding, below the 8.0-point early-season hurdle, and the measured leader is supported by only 1/3 models.",
+    "evidence": {
+      "newest_at_utc": "2026-09-04T13:27:45.469676+00:00",
+      "oldest_at_utc": "2026-09-04T13:26:28.019234+00:00",
+      "age_minutes": 101,
+      "sources_available": 12
+    }
+  },
+  "council": [
+    {
+      "agent": "Quant Analyst",
+      "focus": "Magnitude and model agreement",
+      "verdict": "SUPPORT",
+      "confidence": 79,
+      "argument": "The leading route is Dubravka → Tzolakis. Its 4.85-point six-GW edge is tested against a 8.00-point hurdle with 1/2 required model support.",
+      "evidence": [
+        "simulation",
+        "path_simulation",
+        "decision_synthesis"
+      ]
+    },
+    {
+      "agent": "Rival Strategist",
+      "focus": "Mini-league consequence",
+      "verdict": "SUPPORT",
+      "confidence": 56,
+      "argument": "The simulated route has a 55.6% probability of gaining a league place against 7 modelled rivals; adaptive rivals prefer Kinsky → Tzolakis.",
+      "evidence": [
+        "simulation",
+        "adaptive_rival_simulation"
+      ]
+    },
+    {
+      "agent": "Evidence Scout",
+      "focus": "News, role and availability",
+      "verdict": "SUPPORT",
+      "confidence": 79,
+      "argument": "The evidence layer covers 186 public Scout/news items and 68 matched players. 0 current-squad players carry a press-conference signal.",
+      "evidence": [
+        "scout_consensus",
+        "press_conference_watch"
+      ]
+    },
+    {
+      "agent": "Risk Officer",
+      "focus": "Downside and fragility",
+      "verdict": "WATCH",
+      "confidence": 80,
+      "argument": "The simulated six-GW outcome range spans 99.2 points. Action persistence is 100% across 11 effective stability runs.",
+      "evidence": [
+        "simulation",
+        "simulation_stability"
+      ]
+    },
+    {
+      "agent": "Chip Planner",
+      "focus": "Portfolio option value",
+      "verdict": "WATCH",
+      "confidence": 72,
+      "argument": "Portfolio pressure is comfortable. Active watchlist: Free Hit, Triple Captain.",
+      "evidence": [
+        "chip_activation_gate"
+      ]
+    },
+    {
+      "agent": "Decision Chair",
+      "focus": "Resolved recommendation",
+      "verdict": "SUPPORT",
+      "confidence": 79,
+      "argument": "Keep the authoritative action: Transfer complete · hold. No specialist presents enough contrary evidence to overturn it.",
+      "evidence": [
+        "decision_synthesis",
+        "specialist_council"
+      ]
+    }
+  ],
+  "council_summary": {
+    "state": "ALIGNED",
+    "model_route_agreement_pct": 33,
+    "challengers": [],
+    "resolved_position": "Transfer complete · hold",
+    "rule": "Specialists may challenge the authoritative synthesis but cannot silently replace it."
+  },
+  "change_radar": {
+    "decision_changed": false,
+    "changed_fields": [],
+    "previous_certificate_id": "DT-837AD5198D91",
+    "decision_breakers": [
+      {
+        "signal": "model_consensus",
+        "state": "1/2 support",
+        "review_when": "support reaches 2 models or the leader changes",
+        "priority": "high"
+      },
+      {
+        "signal": "edge_over_hold",
+        "state": "4.85 points",
+        "review_when": "edge crosses the 8.00-point action hurdle",
+        "priority": "high"
+      },
+      {
+        "signal": "availability_news",
+        "state": "0 squad signals",
+        "review_when": "official or press-conference evidence changes expected minutes",
+        "priority": "high"
+      },
+      {
+        "signal": "market_flexibility",
+        "state": "7 relevant price watches",
+        "review_when": "a preferred route becomes unaffordable or an owned player loses value",
+        "priority": "medium"
+      },
+      {
+        "signal": "captaincy_separation",
+        "state": "0.12 score edge",
+        "review_when": "captain leader changes or the top-two gap materially widens",
+        "priority": "medium"
+      }
+    ],
+    "notification_rule": "Notify only when action/headline changes or a high-priority breaker crosses its stated review condition."
+  },
+  "learning_contract": {
+    "target_gw": 3,
+    "decision_certificate_id": "DT-837AD5198D91",
+    "recommended_action": "HOLD",
+    "recommended_route": "Dubravka → Tzolakis",
+    "baseline_xi_ids": [
+      496,
+      115,
+      4,
+      418,
+      399,
+      426,
+      124,
+      94,
+      411,
+      165,
+      346
+    ],
+    "baseline_captain_id": 411,
+    "alternative_routes": [
+      "Kinsky → Tzolakis",
+      "Maguire → Calafiori",
+      "Greaves → Ajayi"
+    ],
+    "evaluable_gameweeks": 0,
+    "learning_stage": "collecting",
+    "tuning_allowed": false,
+    "rule": "Score decision quality and calibration after the target GW; do not tune from isolated outcomes."
+  },
+  "what_if_prompts": [
+    "What changes if the captain is ruled out?",
+    "What evidence would make the leading transfer worth a hit?",
+    "Which route maximises league-place gain rather than expected points?",
+    "What is lost by waiting for the final press conferences?"
+  ],
+  "method_note": "Decision Twin v1 packages existing deterministic and probabilistic evidence into an auditable council, decision-change radar and frozen learning contract. It does not use generative opinion to alter the authoritative action."
+}
