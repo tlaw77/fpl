@@ -42,10 +42,8 @@ on:
       - ".github/workflows/fpl-etl.yml"
 
 concurrency:
-  # Decision Twin is also refreshed by stability and press-conference jobs.
-  # Serialize those writers so data/decision_twin.json never races at commit time.
-  group: fpl-decision-writers
-  cancel-in-progress: false
+  group: fpl-etl-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: write
@@ -104,8 +102,6 @@ jobs:
         run: python full_squad_chip_optimizer_v2.py
       - name: Synthesize authoritative decision
         run: python decision_synthesis.py
-      - name: Build auditable Decision Twin
-        run: python decision_twin.py
       - name: Refresh history index
         run: |
           python - <<'PY'
@@ -135,7 +131,6 @@ jobs:
           budget_state = json.loads(Path('data/budget_state.json').read_text())
           full_chip = json.loads(Path('data/full_squad_chip_optimizer.json').read_text())
           synthesis = json.loads(Path('data/decision_synthesis.json').read_text())
-          twin = json.loads(Path('data/decision_twin.json').read_text())
           history = json.loads(Path('data/decision_history.json').read_text())
           rec_history = json.loads(Path('data/recommendation_history.json').read_text())
           history_index = json.loads(Path('data/history/index.json').read_text())
@@ -220,20 +215,6 @@ jobs:
           assert data.get('decision_synthesis', {}).get('version') == synthesis.get('version')
           assert synthesis.get('chips', {}).get('action') in ('HOLD', 'CONSIDER')
 
-          assert twin['status'] == 'SUCCESS' and twin.get('version', 0) >= 1
-          assert twin.get('progress', {}).get('completion_pct') == 100
-          certificate = twin.get('decision_certificate') or {}
-          assert certificate.get('certificate_id') and certificate.get('action') in ('HOLD', 'TRANSFER')
-          assert certificate.get('headline') and certificate.get('rationale')
-          assert certificate.get('evidence', {}).get('newest_at_utc')
-          council = twin.get('council') or []
-          assert len(council) == 6 and len({row.get('agent') for row in council}) == 6
-          assert all(row.get('verdict') in ('SUPPORT','CHALLENGE','WATCH','HOLD','CONTESTED') for row in council)
-          assert all(0 <= int(row.get('confidence', -1)) <= 100 for row in council)
-          assert len(twin.get('change_radar', {}).get('decision_breakers', [])) >= 3
-          learning = twin.get('learning_contract') or {}
-          twin_xi = {int(x) for x in learning.get('baseline_xi_ids', [])}
-          assert len(twin_xi) == 11 and int(learning.get('baseline_captain_id') or 0) in twin_xi
 
           assert history.get('version') == 4 and 'weeks' in history and 'decisions' in history
           assert 'snapshots' in rec_history and history_index.get('version') == 1

@@ -11,12 +11,11 @@ on:
   push:
     paths:
       - "press_conference_watch.py"
-      - "decision_twin.py"
       - ".github/workflows/press-conference-watch.yml"
 
 concurrency:
-  group: fpl-decision-writers
-  cancel-in-progress: false
+  group: press-conference-watch
+  cancel-in-progress: true
 
 permissions:
   contents: write
@@ -36,25 +35,21 @@ jobs:
           python-version: "3.12"
       - name: Refresh press conference evidence
         run: python press_conference_watch.py
-      - name: Refresh Decision Twin change radar
-        run: python decision_twin.py
       - name: Validate
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
           x=json.loads(Path('data/press_conference_watch.json').read_text())
-          twin=json.loads(Path('data/decision_twin.json').read_text())
           assert x['status']=='SUCCESS'
           assert 'players' in x and 'friday_press_window' in x
-          assert twin['status']=='SUCCESS' and len(twin.get('change_radar',{}).get('decision_breakers',[])) >= 3
           print('press conference watch valid', x.get('article_count'), len(x.get('players',[])))
           PY
       - name: Commit snapshot
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/press_conference_watch.json data/decision_twin.json
+          git add data/press_conference_watch.json
           if git diff --cached --quiet; then
             echo "No press-conference changes"
           else

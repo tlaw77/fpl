@@ -13,12 +13,11 @@ on:
       - "captaincy_model.py"
       - "captaincy_review.py"
       - "backtest_engine.py"
-      - "decision_twin.py"
       - ".github/workflows/simulation-stability.yml"
 
 concurrency:
-  group: fpl-decision-writers
-  cancel-in-progress: false
+  group: fpl-simulation-stability
+  cancel-in-progress: true
 
 permissions:
   contents: write
@@ -46,8 +45,6 @@ jobs:
         run: python captaincy_review.py
       - name: Evaluate archived decision performance
         run: python backtest_engine.py
-      - name: Refresh Decision Twin learning and council evidence
-        run: python decision_twin.py
       - name: Validate supplemental outputs
         run: |
           python - <<'PY'
@@ -59,7 +56,6 @@ jobs:
           cap = json.loads(Path('data/captaincy_review.json').read_text())
           sim = json.loads(Path('data/simulation.json').read_text())
           backtest = json.loads(Path('data/backtest_summary.json').read_text())
-          twin = json.loads(Path('data/decision_twin.json').read_text())
           assert data['status'] == 'SUCCESS'
           assert data.get('version', 0) >= 2
           assert data.get('snapshot_count', 0) >= 1
@@ -94,15 +90,13 @@ jobs:
           assert backtest['status'] == 'SUCCESS'
           assert backtest.get('version', 0) >= 2
           assert backtest.get('evaluable_gameweeks', 0) >= 0
-          assert twin['status'] == 'SUCCESS' and twin.get('progress', {}).get('completion_pct') == 100
-          assert twin.get('learning_contract', {}).get('evaluable_gameweeks') == backtest.get('evaluable_gameweeks')
           print('Simulation stability, unified chip gate, captain consistency and backtest validation passed')
           PY
       - name: Commit supplemental snapshots
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/simulation_stability.json data/chip_activation_gate.json data/triple_captain_review.json data/captaincy_review.json data/backtest_summary.json data/decision_twin.json
+          git add data/simulation_stability.json data/chip_activation_gate.json data/triple_captain_review.json data/captaincy_review.json data/backtest_summary.json
           if git diff --cached --quiet; then
             echo "No supplemental changes"
           else

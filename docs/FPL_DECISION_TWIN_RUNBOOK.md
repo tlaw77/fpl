@@ -23,12 +23,12 @@ This version uses the existing repository, public/free data and current Football
 
 1. `fpl-etl.yml` refreshes official FPL, squad, market, player, Scout and simulation inputs.
 2. `decision_synthesis.py` produces the authoritative engine recommendation.
-3. `decision_twin.py` challenges and packages that recommendation; it does not silently override it.
-4. The pipeline validates the certificate, council, radar and learning contract before committing data.
+3. ETL, stability and press-conference workflows publish independent evidence snapshots.
+4. The dedicated `decision-twin.yml` workflow is the sole writer of `data/decision_twin.json`; it challenges and packages the latest evidence without silently overriding the synthesis.
 5. The browser loads `data/decision_twin.json` and renders the Twin card in the Transfer view.
 6. On a later completed Gameweek, the existing archive/backtest path can score the frozen contract.
 
-The core ETL, stability and press-conference workflows share the `fpl-decision-writers` concurrency group. They queue rather than cancel so only one job can update the shared Decision Twin snapshot at a time.
+The Decision Twin workflow runs after each successful upstream producer and at staggered quarter-hour checkpoints. Its own concurrency group keeps only the newest refresh, eliminating shared-file commit races while upstream producers remain independent.
 
 ## Inputs
 
@@ -91,7 +91,7 @@ The workflow additionally requires:
 - **Models disagree:** show `CONTESTED`; the chair keeps the authoritative synthesis and names the disagreement.
 - **New evidence changes action/headline:** set `change_radar.decision_changed` and publish before/after values.
 - **UI fetch fails:** leave the existing Transfer view intact and show no empty placeholder.
-- **Concurrent writer:** jobs queue under the shared concurrency group; do not restore independent writer groups.
+- **Concurrent refresh:** only `decision-twin.yml` may commit the Twin artifact; its newest run supersedes an older in-progress refresh.
 
 ## Recovery and rollback
 
