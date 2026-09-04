@@ -1,8 +1,8 @@
 (()=>{
 'use strict';
-const BUILD='live-gameweek-stage108-20260904-5';
+const BUILD='live-gameweek-stage108-20260904-6';
 const URL='https://raw.githubusercontent.com/tlaw77/fpl/main/data/live_gameweek.json';
-let opened=false,timer=null,current=null,matrixMode='score';
+let opened=false,timer=null,current=null,matrixMode='score',priorityObserver=null,priorityQueued=false;
 const n=(v,d=0)=>Number.isFinite(Number(v))?Number(v):d;
 const esc=v=>String(v??'—').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const signed=v=>`${n(v)>0?'+':''}${n(v).toFixed(n(v)%1?1:0)}`;
@@ -17,6 +17,7 @@ function scoreGrid(d){const managers=d.managers||[];if(matrixMode==='players'){c
 function matrixPanel(d){return `<section class="dc-card lgw-scoring-grid"><div class="panel-head"><div><p class="eyebrow">SCORING GRID</p><h3>${matrixMode==='score'?'Score build-up':'Player alignment'}</h3></div><span class="subtle">Every manager · every pick</span></div><div class="lgw-grid-toggle"><button type="button" data-lgw-matrix="score" aria-pressed="${matrixMode==='score'}">Score build-up</button><button type="button" data-lgw-matrix="players" aria-pressed="${matrixMode==='players'}">Player alignment</button></div><p class="subtle">${matrixMode==='score'?'Captain first, then scoring starters and the four bench slots.':'Players share the same column across every manager; orange rings mark captains.'}</p>${scoreGrid(d)}</section>`}
 function prioritizeLiveScore(){if(!current||current.phase==='PRE_DEADLINE')return;const host=document.getElementById('dc-intel-view'),hero=host?.querySelector('.lgw-hero'),kpis=host?.querySelector('.lgw-kpis'),grid=host?.querySelector('.lgw-scoring-grid');if(host&&hero&&kpis&&grid)host.prepend(hero,kpis,grid)}
 function schedulePriority(){[0,250,800,1800,3500].forEach(ms=>setTimeout(prioritizeLiveScore,ms))}
+function watchPriority(){const host=document.getElementById('dc-intel-view');if(!host||priorityObserver)return;priorityObserver=new MutationObserver(()=>{if(priorityQueued||!current||current.phase==='PRE_DEADLINE')return;const children=[...host.children],grid=host.querySelector('.lgw-scoring-grid');if(grid&&children.indexOf(grid)===2)return;priorityQueued=true;setTimeout(()=>{priorityQueued=false;prioritizeLiveScore()},0)});priorityObserver.observe(host,{childList:true})}
 function render(d){
  const host=document.getElementById('dc-intel-view'),button=document.querySelector('#decision-nav button[data-view="intel"]');if(!host||!button)return;
  button.textContent=d.phase==='PRE_DEADLINE'?'League Intel':'Live GW';button.dataset.livePhase=d.phase;
@@ -36,6 +37,6 @@ function render(d){
 }
 async function requestData(signal){const urls=location.hostname==='localhost'||location.hostname==='127.0.0.1'?['../data/live_gameweek.json',URL]:[URL];let last;for(const url of urls){try{const response=await fetch(`${url}?v=${Date.now()}`,{cache:'no-store',signal});if(!response.ok)throw new Error(`HTTP ${response.status}`);return await response.json()}catch(error){last=error}}throw last}
 async function load(){try{const ctl=new AbortController(),timeout=setTimeout(()=>ctl.abort(),10000);current=await requestData(ctl.signal);clearTimeout(timeout);render(current)}catch(error){console.warn('Live Gameweek snapshot unavailable',error)}finally{clearTimeout(timer);timer=setTimeout(load,300000)}}
-function start(){load();window.addEventListener('fplLeagueIntelRendered',()=>{if(current?.phase&&current.phase!=='PRE_DEADLINE')setTimeout(()=>render(current),0)},{passive:true});document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')load()},{passive:true})}
+function start(){watchPriority();load();window.addEventListener('fplLeagueIntelRendered',()=>{if(current?.phase&&current.phase!=='PRE_DEADLINE')setTimeout(()=>render(current),0)},{passive:true});document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')load()},{passive:true})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
 })();
