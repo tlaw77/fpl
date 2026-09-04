@@ -1,6 +1,6 @@
 (()=>{
 'use strict';
-const BUILD='live-gameweek-stage108-20260904-10';
+const BUILD='live-gameweek-stage108-20260904-11';
 const URL='https://raw.githubusercontent.com/tlaw77/fpl/main/data/live_gameweek.json';
 let opened=false,timer=null,current=null,matrixMode='players',priorityObserver=null,priorityQueued=false;
 const n=(v,d=0)=>Number.isFinite(Number(v))?Number(v):d;
@@ -11,7 +11,6 @@ const netScore=m=>m?.net_gw_points!=null?n(m.net_gw_points):n(m?.live_gw_points)
 const phaseLabel=p=>({PRE_DEADLINE:'Opens at deadline',LOCKED:'Teams locked',LIVE:'Live now',BETWEEN_FIXTURES:'Between fixtures',COMPLETE:'Gameweek complete'})[p]||p;
 function statusPill(p){return `<span class="lgw-phase lgw-${String(p||'').toLowerCase()}"><i></i>${esc(phaseLabel(p))}</span>`}
 function playerRow(p,mode){const swing=mode==='threat'?-n(p.damage_per_point):n(p.gain_per_point);return `<div class="lgw-player"><div><strong>${esc(p.player)}</strong><small>${esc(p.club)} · ${esc(p.state)} · ${n(p.effective_ownership_pct).toFixed(1)}% EO${p.captains?.length?` · C ${esc(p.captains.join(', '))}`:''}</small></div><div class="lgw-swing ${swing>=0?'good':'bad'}">${signed(swing)}<small>per point</small></div></div>`}
-function standingRow(m,me){const gap=n(m.live_overall_points)-n(me?.live_overall_points),raw=rawScore(m),net=netScore(m);return `<details class="lgw-manager ${m.entry_id===me?.entry_id?'you':''}"><summary><span class="lgw-rank">#${n(m.live_rank)}</span><span><strong>${esc(m.team_name)}</strong><small>${esc(m.manager)} · C ${esc(m.captain)}${m.active_chip?` · ${esc(m.active_chip)}`:''}</small></span><span class="lgw-score"><strong>${raw}</strong><small>${m.hit_cost?`−${n(m.hit_cost)} hit · ${net} net`:`${n(m.players_live)} live · ${n(m.players_remaining)} left`}</small></span><span class="lgw-gap ${gap>0?'bad':gap<0?'good':''}">${m.entry_id===me?.entry_id?'YOU':signed(gap)}</span></summary><div class="lgw-squad">${(m.picks||[]).map(p=>`<div class="lgw-pick ${p.multiplier?'active':'bench'} ${esc(p.state)}"><span>${p.slot}</span><div><strong>${esc(p.player)}${p.captain?' (C)':p.vice_captain?' (V)':''}</strong><small>${esc(p.club)} · ${esc(p.state)}</small></div><b>${n(p.effective_points)}</b><small>${n(p.live_points)} × ${n(p.multiplier)}</small></div>`).join('')}</div></details>`}
 function pointTone(p,bench){const points=n(p?.effective_points);if(bench)return'bench';if(points===0&&['upcoming','live','unknown'].includes(p?.state))return'pending';if(points<=1)return'low';if(points<=3)return'amber';if(points<=5)return'mid';if(points<=8)return'high';return'top'}
 function scoreTone(score,min,max){if(max<=min)return'mid';const ratio=(score-min)/(max-min);return ratio<.2?'low':ratio<.4?'amber':ratio<.65?'mid':ratio<.85?'high':'top'}
 function matrixCell(p,kind='active'){if(!p)return'<span class="lgw-grid-cell empty"></span>';const captain=p.captain||n(p.multiplier)>1,bench=kind==='bench'||!n(p.multiplier),points=bench?n(p.live_points):n(p.effective_points),tone=pointTone(p,bench);return `<span class="lgw-grid-cell tone-${tone} ${captain?'captain':''}" title="${esc(p.player)} · ${n(p.live_points)} raw · ${n(p.effective_points)} effective${bench?' · bench':' · counts'}"><b>${bench?'B':points}</b><small>${esc(String(p.player||'—').slice(0,9))}</small></span>`}
@@ -21,7 +20,7 @@ function matrixPanel(){return `<section class="dc-card lgw-scoring-grid"><p clas
 function prioritizeLiveScore(){
  if(!current||current.phase==='PRE_DEADLINE')return;
  const host=document.getElementById('dc-intel-view'),view=document.getElementById('view-intel');if(!host||!view)return;
- const primary=['.lgw-hero','.lgw-scoring-grid','.lgw-grid','.lgw-damage-ledger','.lgw-table','.lgw-method'].map(selector=>host.querySelector(selector)).filter(Boolean),children=[...host.children];
+ const primary=['.lgw-hero','.lgw-scoring-grid','.lgw-grid','.lgw-damage-ledger','.lgw-method'].map(selector=>host.querySelector(selector)).filter(Boolean),children=[...host.children];
  if(primary.some((node,index)=>children[index]!==node))host.prepend(...primary);
  if(view.firstElementChild!==host)view.prepend(host);
 }
@@ -32,12 +31,11 @@ function render(d){
  button.textContent=d.phase==='PRE_DEADLINE'?'League Intel':'Live GW';button.dataset.livePhase=d.phase;
  if(d.phase==='PRE_DEADLINE'){document.documentElement.dataset.liveGameweekPhase='pre-deadline';return}
  if(!opened){opened=true;button.click()}
- const me=d.me||{},threats=d.threats||[],damage=d.damage_done||[],leverage=d.leverage||[],expected=n(d.league?.expected_managers);
+ const threats=d.threats||[],damage=d.damage_done||[],leverage=d.leverage||[];
  host.innerHTML=`<section class="lgw-hero"><div><p class="eyebrow">GW${esc(d.gw)} COMMAND CENTRE</p><h2>Every score. Every threat.</h2><p>Official player points and revealed squads refresh every five minutes. ${d.provisional?'Scores, bonus and ranks remain provisional.':'Gameweek scores are complete.'}</p></div>${statusPill(d.phase)}</section>
  ${matrixPanel(d)}
  <section class="lgw-grid"><article class="dc-card"><div class="panel-head"><div><p class="eyebrow">ACTIVE THREATS</p><h3>Who can hurt you</h3></div><span class="subtle">Loss per player point</span></div>${threats.length?threats.slice(0,6).map(p=>playerRow(p,'threat')).join(''):'<p class="subtle">No remaining negative exposure.</p>'}</article><article class="dc-card"><div class="panel-head"><div><p class="eyebrow">YOUR LEVERAGE</p><h3>Who moves you up</h3></div><span class="subtle">Gain per player point</span></div>${leverage.length?leverage.slice(0,6).map(p=>playerRow(p,'leverage')).join(''):'<p class="subtle">No remaining positive exposure.</p>'}</article></section>
  ${damage.length?`<section class="dc-card lgw-damage-ledger"><div class="panel-head"><div><p class="eyebrow">DAMAGE LEDGER</p><h3>Threat points already landed</h3></div><span class="subtle">EO-adjusted vs league average</span></div>${damage.slice(0,5).map(p=>`<div class="lgw-player"><div><strong>${esc(p.player)}</strong><small>${n(p.live_points)} points · ${n(p.effective_ownership_pct).toFixed(1)}% EO</small></div><div class="lgw-swing bad">-${n(p.live_damage).toFixed(1)}<small>net impact</small></div></div>`).join('')}</section>`:''}
- <section class="dc-card lgw-table"><div class="panel-head"><div><p class="eyebrow">ALL ${expected} TEAMS</p><h3>Live mini-league</h3></div><span class="subtle">Tap any manager for all 15 players</span></div>${(d.managers||[]).map(m=>standingRow(m,me)).join('')}</section>
  <section class="lgw-method"><strong>How threat works:</strong> if rivals have more effective copies of a player than you, every point costs you the difference versus the league average. Captaincy and chips are already included through the official multiplier.</section>`;
  document.documentElement.dataset.liveGameweekPhase=d.phase;document.documentElement.dataset.liveGameweekBuild=BUILD;
  window.dispatchEvent(new CustomEvent('fplLiveGameweekRendered',{detail:d}));
