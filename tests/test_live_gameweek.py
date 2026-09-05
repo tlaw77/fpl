@@ -8,7 +8,7 @@ class LiveGameweekTests(unittest.TestCase):
     def setUp(self):
         self.now = datetime(2026, 9, 5, 15, 0, tzinfo=timezone.utc)
         self.event = {"id": 3, "deadline_time": "2026-09-05T13:00:00Z"}
-        self.fixtures = [{"team_h": 1, "team_a": 2, "started": True, "finished": False, "finished_provisional": False}]
+        self.fixtures = [{"id": 301, "team_h": 1, "team_a": 2, "kickoff_time": "2026-09-05T14:00:00Z", "minutes": 61, "started": True, "finished": False, "finished_provisional": False}]
         self.teams = [{"id": 1, "name": "Alpha"}, {"id": 2, "name": "Beta"}]
         self.elements = [
             {"id": pid, "web_name": f"P{pid}", "team": 1 if pid % 2 else 2, "element_type": 3}
@@ -25,9 +25,9 @@ class LiveGameweekTests(unittest.TestCase):
             99: {"picks": rival, "entry_history": {"event_transfers_cost": 0}},
         }
 
-    def snapshot(self):
-        live = [{"id": pid, "stats": {"total_points": 5 if pid in (1, 16) else 0}} for pid in range(1, 31)]
-        return build_snapshot(event=self.event, fixtures=self.fixtures, standings=self.standings, picks_by_entry=self.picks, elements=self.elements, teams=self.teams, live_elements=live, now=self.now)
+    def snapshot(self, fixtures=None):
+        live = [{"id": pid, "stats": {"total_points": 5 if pid in (1, 16) else 0, "minutes": 61}} for pid in range(1, 31)]
+        return build_snapshot(event=self.event, fixtures=fixtures or self.fixtures, standings=self.standings, picks_by_entry=self.picks, elements=self.elements, teams=self.teams, live_elements=live, now=self.now)
 
     def test_phase_is_live(self):
         self.assertEqual(phase_for(datetime(2026, 9, 5, 13, tzinfo=timezone.utc), self.fixtures, self.now), "LIVE")
@@ -56,6 +56,22 @@ class LiveGameweekTests(unittest.TestCase):
     def test_every_revealed_squad_has_fifteen(self):
         data = self.snapshot()
         self.assertTrue(all(len(manager["picks"]) == 15 for manager in data["managers"]))
+
+    def test_exposure_includes_fixture_and_live_context(self):
+        data = self.snapshot()
+        rival_captain = next(row for row in data["exposure"] if row["player_id"] == 16)
+        self.assertEqual(rival_captain["gw_points"], 5)
+        self.assertEqual(rival_captain["minutes"], 61)
+        self.assertEqual(rival_captain["fixture"]["state"], "live")
+        self.assertEqual(rival_captain["fixture"]["opponent"], "Alpha")
+        self.assertFalse(rival_captain["fixture"]["home"])
+
+    def test_completed_leverage_remains_in_tracker(self):
+        finished = [{**self.fixtures[0], "minutes": 90, "started": True, "finished": True}]
+        data = self.snapshot(finished)
+        my_captain = next(row for row in data["leverage"] if row["player_id"] == 1)
+        self.assertEqual(my_captain["state"], "complete")
+        self.assertEqual(my_captain["live_gain"], 5.0)
 
 
 if __name__ == "__main__":

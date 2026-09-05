@@ -92,11 +92,32 @@ def build_snapshot(
     phase = phase_for(deadline, fixtures, now)
     team_names = {team["id"]: team["name"] for team in teams}
     raw_players = {player["id"]: player for player in elements}
-    live_points = {row["id"]: int((row.get("stats") or {}).get("total_points") or 0) for row in live_elements}
+    live_stats = {row["id"]: row.get("stats") or {} for row in live_elements}
+    live_points = {player_id: int(stats.get("total_points") or 0) for player_id, stats in live_stats.items()}
     fixtures_by_team: dict[int, list[dict]] = defaultdict(list)
     for fixture in fixtures:
         fixtures_by_team[int(fixture["team_h"])].append(fixture)
         fixtures_by_team[int(fixture["team_a"])].append(fixture)
+
+    def fixture_context(team_id: int | None) -> dict | None:
+        team_id = int(team_id or 0)
+        rows = fixtures_by_team.get(team_id, [])
+        if not rows:
+            return None
+        ordered = sorted(rows, key=lambda row: row.get("kickoff_time") or "")
+        chosen = next((row for row in ordered if fixture_state(row) == "live"), None)
+        chosen = chosen or next((row for row in ordered if fixture_state(row) == "upcoming"), None)
+        chosen = chosen or ordered[-1]
+        home = int(chosen.get("team_h") or 0) == team_id
+        opponent_id = int(chosen.get("team_a") if home else chosen.get("team_h") or 0)
+        return {
+            "fixture_id": chosen.get("id"),
+            "state": fixture_state(chosen),
+            "kickoff_utc": chosen.get("kickoff_time"),
+            "opponent": team_names.get(opponent_id, "—"),
+            "home": home,
+            "minutes": int(chosen.get("minutes") or 0),
+        }
 
     ownership, captaincy, multiplier_totals = Counter(), Counter(), Counter()
     managers = []
@@ -188,6 +209,9 @@ def build_snapshot(
             "club": team_names.get(raw.get("team"), "—"),
             "state": player_state(raw.get("team"), fixtures_by_team),
             "live_points": points,
+            "gw_points": points,
+            "minutes": int(live_stats.get(player_id, {}).get("minutes") or 0),
+            "fixture": fixture_context(raw.get("team")),
             "owned_by": ownership[player_id],
             "captained_by": captaincy[player_id],
             "effective_ownership_pct": round(100 * avg_multiplier, 1),
@@ -208,9 +232,10 @@ def build_snapshot(
         (row for row in exposures if row["live_damage"] > 0),
         key=lambda row: (-row["live_damage"], -row["damage_per_point"], row["player"]),
     )
+    state_order = {"live": 0, "upcoming": 1, "complete": 2, "unknown": 3}
     leverage = sorted(
-        (row for row in exposures if row["gain_per_point"] > 0 and row["state"] != "complete"),
-        key=lambda row: (-row["gain_per_point"], row["effective_ownership_pct"], row["player"]),
+        (row for row in exposures if row["gain_per_point"] > 0),
+        key=lambda row: (-row["live_gain"], state_order.get(row["state"], 3), -row["gain_per_point"], row["effective_ownership_pct"], row["player"]),
     )
     previous_points = {int(row["player_id"]): int(row.get("live_points") or 0) for row in (previous or {}).get("exposure", [])}
     swings = []
@@ -226,7 +251,7 @@ def build_snapshot(
     avg_raw = round(sum(manager["raw_gw_points"] for manager in managers) / max(1, len(managers)), 2)
     return {
         "status": "SUCCESS" if not failures else "PARTIAL",
-        "version": 1,
+        "version": 2,
         "generated_at_utc": now.isoformat(),
         "gw": int(event["id"]),
         "phase": phase,
@@ -250,6 +275,7 @@ def build_snapshot(
             "live_overall": "Official total minus official GW total, plus calculated live GW score.",
             "damage_per_point": "League-average multiplier minus your multiplier, floored at zero.",
             "remaining": "Active picks whose club fixture is live, upcoming or awaiting status; multipliers follow the official revealed squad.",
+            "fixture_context": "Each tracked player carries their live or next GW fixture, kickoff, opponent, minutes, GW points and realised EO-adjusted impact.",
         },
     }
 
