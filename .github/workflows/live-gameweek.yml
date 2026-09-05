@@ -3,7 +3,8 @@ name: Live Gameweek
 on:
   workflow_dispatch:
   schedule:
-    - cron: "*/5 * * * *"
+    # Keep the five-minute cadence but avoid the busiest top-of-hour minute.
+    - cron: "2-57/5 * * * *"
   push:
     paths:
       - "live_gameweek.py"

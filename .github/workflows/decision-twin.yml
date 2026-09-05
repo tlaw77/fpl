@@ -2,9 +2,6 @@ name: FPL Decision Twin
 
 on:
   workflow_dispatch:
-  workflow_run:
-    workflows: ["FPL ETL", "Simulation Stability", "Press Conference Watch"]
-    types: [completed]
   schedule:
     - cron: "7,22,37,52 * * * *"
   push:
@@ -22,7 +19,6 @@ permissions:
 
 jobs:
   refresh:
-    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout latest main

@@ -2,9 +2,6 @@ name: Press Conference Watch
 
 on:
   workflow_dispatch:
-  workflow_run:
-    workflows: ["FPL ETL"]
-    types: [completed]
   schedule:
     # Thu/Fri daytime UTC. In Irish summer time this is 08:00-20:45 local.
     - cron: "*/15 7-19 * * 4,5"
@@ -22,7 +19,6 @@ permissions:
 
 jobs:
   refresh:
-    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

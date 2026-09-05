@@ -1,7 +1,8 @@
 (()=>{
 'use strict';
-const BUILD='live-gameweek-stage108-20260905-24';
+const BUILD='live-gameweek-stage108-20260905-25';
 const URL='https://raw.githubusercontent.com/tlaw77/fpl/main/data/live_gameweek.json';
+const LIVE_POLL_MS=60000,IDLE_POLL_MS=300000,STALE_AFTER_MS=8*60000;
 let opened=false,timer=null,current=null,matrixMode='players',priorityObserver=null,priorityQueued=false;
 const LIVE_PHASES=new Set(['LOCKED','LIVE','BETWEEN_FIXTURES']);
 const isLivePhase=phase=>LIVE_PHASES.has(String(phase||'').toUpperCase());
@@ -15,6 +16,7 @@ const rawScore=m=>m?.raw_gw_points!=null?n(m.raw_gw_points):(m?.picks||[]).reduc
 const netScore=m=>m?.net_gw_points!=null?n(m.net_gw_points):n(m?.live_gw_points);
 const phaseLabel=p=>({PRE_DEADLINE:'Opens at deadline',LOCKED:'Teams locked',LIVE:'Live now',BETWEEN_FIXTURES:'Between fixtures',COMPLETE:'Gameweek complete'})[p]||p;
 function statusPill(p){return `<span class="lgw-phase lgw-${String(p||'').toLowerCase()}"><i></i>${esc(phaseLabel(p))}</span>`}
+function freshness(d){if(!d.generated_at_utc)return{tone:'unknown',label:'Refresh time unavailable'};const stamp=new Date(d.generated_at_utc),age=Math.max(0,Date.now()-stamp.getTime());if(Number.isNaN(stamp.getTime()))return{tone:'unknown',label:'Refresh time unavailable'};const mins=Math.floor(age/60000),ageLabel=mins<1?'just now':`${mins}m ago`;return{tone:age>STALE_AFTER_MS?'stale':'fresh',label:age>STALE_AFTER_MS?`Scores ${ageLabel} · update delayed`:`Scores ${ageLabel} · checks every minute`}}
 function kickoffLabel(value){if(!value)return'Time TBC';const date=new Date(value);return Number.isNaN(date.getTime())?'Time TBC':date.toLocaleString([],{weekday:'short',hour:'2-digit',minute:'2-digit'})}
 function fixtureBand(p){const f=p.fixture||{},state=String(f.state||p.state||'unknown').toLowerCase();if(state==='live')return'live';if(state==='complete')return'done';if(state!=='upcoming')return'future';const date=f.kickoff_utc?new Date(f.kickoff_utc):null,now=new Date();return date&&!Number.isNaN(date.getTime())&&date.getFullYear()===now.getFullYear()&&date.getMonth()===now.getMonth()&&date.getDate()===now.getDate()?'today':'future'}
 function kickoffTime(value){if(!value)return'Time TBC';const date=new Date(value);return Number.isNaN(date.getTime())?'Time TBC':date.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}
@@ -50,8 +52,9 @@ function render(d){
  const active=isLivePhase(d.phase);button.textContent=active?'Live GW':'League Intel';button.dataset.livePhase=d.phase;
  if(!active){document.documentElement.dataset.liveGameweekPhase=String(d.phase||'inactive');if(opened)location.reload();return}
  if(!opened){opened=true;button.click()}
- const threats=d.threats||[],damage=(d.damage_done||[]).filter(p=>p.state==='complete'),leverage=d.leverage||[],damageTotal=damage.reduce((sum,p)=>sum+n(p.live_damage),0);
+ const threats=d.threats||[],damage=(d.damage_done||[]).filter(p=>p.state==='complete'),leverage=d.leverage||[],damageTotal=damage.reduce((sum,p)=>sum+n(p.live_damage),0),fresh=freshness(d);
  host.innerHTML=`<section class="lgw-hero lgw-hero-compact"><div><p class="eyebrow">GW${esc(d.gw)} COMMAND CENTRE</p><h2>Every score. Every threat.</h2></div><div class="lgw-hero-status">${statusPill(d.phase)}<small>Official · 5 min refresh${d.provisional?' · provisional':''}</small></div></section>
+ <div class="lgw-refresh-state ${esc(fresh.tone)}" role="status" aria-live="polite"><i></i>${esc(fresh.label)}</div>
  ${matrixPanel(d)}
  <section class="lgw-grid lgw-swing-board"><article class="dc-card lgw-side-threat"><div class="panel-head"><div><p class="eyebrow">HURTING</p><h3>Threats</h3></div></div>${threats.length?threats.slice(0,6).map(p=>playerRow(p,'threat')).join(''):'<p class="subtle">No remaining negative exposure.</p>'}</article><article class="dc-card lgw-side-leverage"><div class="panel-head"><div><p class="eyebrow">HELPING</p><h3>Leverage</h3></div></div>${leverage.length?leverage.slice(0,6).map(p=>playerRow(p,'leverage')).join(''):'<p class="subtle">No positive exposure yet.</p>'}</article></section>
  ${damage.length?`<details class="dc-card lgw-damage-ledger lgw-damage-compact"><summary><span><small>DAMAGE LANDED</small><strong>-${damageTotal.toFixed(1)}</strong></span><span class="lgw-damage-leaders">${damage.slice(0,3).map(p=>`${esc(p.player)} −${n(p.live_damage).toFixed(1)}`).join(' · ')}</span><b>Details</b></summary><div class="lgw-damage-detail">${damage.map(p=>`<div class="lgw-player"><div><strong>${esc(p.player)}</strong><small>${n(p.live_points)} GW points · ${n(p.effective_ownership_pct).toFixed(1)}% EO</small></div><div class="lgw-swing bad">-${n(p.live_damage).toFixed(1)}<small>landed</small></div></div>`).join('')}</div></details>`:''}
@@ -62,7 +65,7 @@ function render(d){
  schedulePriority();
 }
 async function requestData(signal){const urls=location.hostname==='localhost'||location.hostname==='127.0.0.1'?['../data/live_gameweek.json',URL]:[URL];let last;for(const url of urls){try{const response=await fetch(`${url}?v=${Date.now()}`,{cache:'no-store',signal});if(!response.ok)throw new Error(`HTTP ${response.status}`);return await response.json()}catch(error){last=error}}throw last}
-async function load(){try{const ctl=new AbortController(),timeout=setTimeout(()=>ctl.abort(),10000);current=await requestData(ctl.signal);clearTimeout(timeout);render(current)}catch(error){console.warn('Live Gameweek snapshot unavailable',error)}finally{clearTimeout(timer);timer=setTimeout(load,300000)}}
+async function load(){try{const ctl=new AbortController(),timeout=setTimeout(()=>ctl.abort(),10000);current=await requestData(ctl.signal);clearTimeout(timeout);render(current)}catch(error){console.warn('Live Gameweek snapshot unavailable',error)}finally{clearTimeout(timer);timer=setTimeout(load,isLivePhase(current?.phase)?LIVE_POLL_MS:IDLE_POLL_MS)}}
 function start(){watchPriority();load();document.querySelectorAll('#decision-nav button[data-view]').forEach(button=>button.addEventListener('click',()=>setTimeout(prioritizeLiveScore,0),{passive:true}));window.addEventListener('fplLeagueIntelRendered',()=>{if(REVIEW_REMOVED||isLivePhase(current?.phase))setTimeout(()=>render(current),0)},{passive:true});document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')load()},{passive:true})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
 })();
