@@ -1,6 +1,6 @@
 (()=>{
 'use strict';
-const BUILD='live-gameweek-stage108-20260905-19';
+const BUILD='live-gameweek-stage108-20260905-20';
 const URL='https://raw.githubusercontent.com/tlaw77/fpl/main/data/live_gameweek.json';
 let opened=false,timer=null,current=null,matrixMode='players',priorityObserver=null,priorityQueued=false;
 const LIVE_PHASES=new Set(['LOCKED','LIVE','BETWEEN_FIXTURES']);
@@ -41,11 +41,11 @@ function render(d){
  const active=isLivePhase(d.phase);button.textContent=active?'Live GW':'League Intel';button.dataset.livePhase=d.phase;
  if(!active){document.documentElement.dataset.liveGameweekPhase=String(d.phase||'inactive');if(opened)location.reload();return}
  if(!opened){opened=true;button.click()}
- const threats=d.threats||[],damage=(d.damage_done||[]).filter(p=>p.state==='complete'),leverage=d.leverage||[];
+ const threats=d.threats||[],damage=(d.damage_done||[]).filter(p=>p.state==='complete'),leverage=d.leverage||[],damageTotal=damage.reduce((sum,p)=>sum+n(p.live_damage),0);
  host.innerHTML=`<section class="lgw-hero lgw-hero-compact"><div><p class="eyebrow">GW${esc(d.gw)} COMMAND CENTRE</p><h2>Every score. Every threat.</h2></div><div class="lgw-hero-status">${statusPill(d.phase)}<small>Official · 5 min refresh${d.provisional?' · provisional':''}</small></div></section>
  ${matrixPanel(d)}
  <section class="lgw-grid lgw-swing-board"><article class="dc-card lgw-side-threat"><div class="panel-head"><div><p class="eyebrow">HURTING</p><h3>Threats</h3></div></div>${threats.length?threats.slice(0,6).map(p=>playerRow(p,'threat')).join(''):'<p class="subtle">No remaining negative exposure.</p>'}</article><article class="dc-card lgw-side-leverage"><div class="panel-head"><div><p class="eyebrow">HELPING</p><h3>Leverage</h3></div></div>${leverage.length?leverage.slice(0,6).map(p=>playerRow(p,'leverage')).join(''):'<p class="subtle">No positive exposure yet.</p>'}</article></section>
- ${damage.length?`<section class="dc-card lgw-damage-ledger"><div class="panel-head"><div><p class="eyebrow">DAMAGE LEDGER</p><h3>Threat points already landed</h3></div><span class="subtle">EO-adjusted vs league average</span></div>${damage.slice(0,5).map(p=>`<div class="lgw-player"><div><strong>${esc(p.player)}</strong><small>${n(p.live_points)} points · ${n(p.effective_ownership_pct).toFixed(1)}% EO</small></div><div class="lgw-swing bad">-${n(p.live_damage).toFixed(1)}<small>net impact</small></div></div>`).join('')}</section>`:''}
+ ${damage.length?`<details class="dc-card lgw-damage-ledger lgw-damage-compact"><summary><span><small>DAMAGE LANDED</small><strong>-${damageTotal.toFixed(1)}</strong></span><span class="lgw-damage-leaders">${damage.slice(0,3).map(p=>`${esc(p.player)} −${n(p.live_damage).toFixed(1)}`).join(' · ')}</span><b>Details</b></summary><div class="lgw-damage-detail">${damage.map(p=>`<div class="lgw-player"><div><strong>${esc(p.player)}</strong><small>${n(p.live_points)} GW points · ${n(p.effective_ownership_pct).toFixed(1)}% EO</small></div><div class="lgw-swing bad">-${n(p.live_damage).toFixed(1)}<small>landed</small></div></div>`).join('')}</div></details>`:''}
  <section class="lgw-method"><strong>How threat works:</strong> if rivals have more effective copies of a player than you, every point costs you the difference versus the league average. Captaincy and chips are already included through the official multiplier.</section>`;
  document.documentElement.dataset.liveGameweekPhase=d.phase;document.documentElement.dataset.liveGameweekBuild=BUILD;
  window.dispatchEvent(new CustomEvent('fplLiveGameweekRendered',{detail:d}));
