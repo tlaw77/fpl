@@ -23,14 +23,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Select fixture-aware cadence
+        id: cadence
+        run: python3 live_gameweek.py --gate >> "$GITHUB_OUTPUT"
+      - name: Show cadence decision
+        run: |
+          echo "### Live Gameweek cadence" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Phase: ${{ steps.cadence.outputs.phase }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Full refresh: ${{ steps.cadence.outputs.run }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Reason: ${{ steps.cadence.outputs.reason }}" >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/setup-python@v5
+        if: github.event_name == 'workflow_dispatch' || steps.cadence.outputs.run == 'true'
         with:
           python-version: "3.12"
       - name: Build live command-centre snapshot
+        if: github.event_name == 'workflow_dispatch' || steps.cadence.outputs.run == 'true'
         run: python live_gameweek.py
       - name: Validate live contract
+        if: github.event_name == 'workflow_dispatch' || steps.cadence.outputs.run == 'true'
         run: python -m unittest tests.test_live_gameweek -v
       - name: Commit changed snapshot
+        if: github.event_name == 'workflow_dispatch' || steps.cadence.outputs.run == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"

@@ -3,10 +3,11 @@
 from __future__ import annotations
 
 import json
+import sys
 import urllib.error
 import urllib.request
 from collections import Counter, defaultdict
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 LEAGUE_ID = 582464
@@ -52,6 +53,38 @@ def phase_for(deadline: datetime | None, fixtures: list[dict], now: datetime) ->
     if any(f.get("finished") or f.get("finished_provisional") for f in fixtures):
         return "BETWEEN_FIXTURES"
     return "LOCKED"
+
+
+def refresh_decision(phase: str, fixtures: list[dict], previous: dict | None, now: datetime) -> tuple[bool, str]:
+    """Choose the expensive snapshot cadence from the official fixture state."""
+    if phase == "PRE_DEADLINE":
+        return False, "before deadline"
+    if phase == "LIVE":
+        return True, "fixture live"
+
+    previous = previous or {}
+    previous_phase = previous.get("phase")
+    generated = parse_time(previous.get("generated_at_utc"))
+    age = now - generated if generated else None
+
+    if phase in ("LOCKED", "BETWEEN_FIXTURES"):
+        if previous_phase != phase:
+            return True, f"phase changed to {phase.lower()}"
+        if age is None or age >= timedelta(minutes=25):
+            return True, "between-match refresh due"
+        return False, "between-match snapshot still fresh"
+
+    if phase == "COMPLETE":
+        if previous_phase != "COMPLETE":
+            return True, "final score refresh"
+        kickoffs = [parse_time(fixture.get("kickoff_time")) for fixture in fixtures]
+        last_kickoff = max((kickoff for kickoff in kickoffs if kickoff), default=None)
+        settling = bool(last_kickoff and now <= last_kickoff + timedelta(hours=3))
+        if settling and (age is None or age >= timedelta(minutes=25)):
+            return True, "post-match bonus settlement"
+        return False, "gameweek settled"
+
+    return False, "unknown phase"
 
 
 def fixture_state(fixture: dict) -> str:
@@ -300,6 +333,13 @@ def main() -> None:
     deadline = parse_time(event.get("deadline_time"))
     phase = phase_for(deadline, fixtures, now)
     previous = json.loads(OUTPUT.read_text()) if OUTPUT.exists() else None
+    previous_for_event = previous if previous and previous.get("gw") == event["id"] else None
+    if "--gate" in sys.argv:
+        should_run, reason = refresh_decision(phase, fixtures, previous_for_event, now)
+        print(f"run={str(should_run).lower()}")
+        print(f"phase={phase}")
+        print(f"reason={reason}")
+        return
     league_name, standings = fetch_standings()
     picks_by_entry = {}
     failures = []
@@ -311,7 +351,7 @@ def main() -> None:
             except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError) as error:
                 failures.append({"entry_id": entry_id, "reason": type(error).__name__})
     live = get_json(f"{BASE}/event/{event['id']}/live/") if phase != "PRE_DEADLINE" else {"elements": []}
-    snapshot = build_snapshot(event=event, fixtures=fixtures, standings=standings, picks_by_entry=picks_by_entry, elements=bootstrap["elements"], teams=bootstrap["teams"], live_elements=live.get("elements") or [], previous=previous if previous and previous.get("gw") == event["id"] else None, now=now, league_name=league_name)
+    snapshot = build_snapshot(event=event, fixtures=fixtures, standings=standings, picks_by_entry=picks_by_entry, elements=bootstrap["elements"], teams=bootstrap["teams"], live_elements=live.get("elements") or [], previous=previous_for_event, now=now, league_name=league_name)
     if failures:
         snapshot["status"] = "PARTIAL"
         snapshot["failures"].extend(failures)

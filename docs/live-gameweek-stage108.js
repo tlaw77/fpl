@@ -1,8 +1,8 @@
 (()=>{
 'use strict';
-const BUILD='live-gameweek-stage108-20260905-25';
+const BUILD='live-gameweek-stage108-20260905-26';
 const URL='https://raw.githubusercontent.com/tlaw77/fpl/main/data/live_gameweek.json';
-const LIVE_POLL_MS=60000,IDLE_POLL_MS=300000,STALE_AFTER_MS=8*60000;
+const LIVE_POLL_MS=60000,IDLE_POLL_MS=300000,LIVE_STALE_MS=8*60000,BETWEEN_STALE_MS=35*60000;
 let opened=false,timer=null,current=null,matrixMode='players',priorityObserver=null,priorityQueued=false;
 const LIVE_PHASES=new Set(['LOCKED','LIVE','BETWEEN_FIXTURES']);
 const isLivePhase=phase=>LIVE_PHASES.has(String(phase||'').toUpperCase());
@@ -16,7 +16,7 @@ const rawScore=m=>m?.raw_gw_points!=null?n(m.raw_gw_points):(m?.picks||[]).reduc
 const netScore=m=>m?.net_gw_points!=null?n(m.net_gw_points):n(m?.live_gw_points);
 const phaseLabel=p=>({PRE_DEADLINE:'Opens at deadline',LOCKED:'Teams locked',LIVE:'Live now',BETWEEN_FIXTURES:'Between fixtures',COMPLETE:'Gameweek complete'})[p]||p;
 function statusPill(p){return `<span class="lgw-phase lgw-${String(p||'').toLowerCase()}"><i></i>${esc(phaseLabel(p))}</span>`}
-function freshness(d){if(!d.generated_at_utc)return{tone:'unknown',label:'Refresh time unavailable'};const stamp=new Date(d.generated_at_utc),age=Math.max(0,Date.now()-stamp.getTime());if(Number.isNaN(stamp.getTime()))return{tone:'unknown',label:'Refresh time unavailable'};const mins=Math.floor(age/60000),ageLabel=mins<1?'just now':`${mins}m ago`;return{tone:age>STALE_AFTER_MS?'stale':'fresh',label:age>STALE_AFTER_MS?`Scores ${ageLabel} · update delayed`:`Scores ${ageLabel} · checks every minute`}}
+function freshness(d){if(!d.generated_at_utc)return{tone:'unknown',label:'Refresh time unavailable'};const stamp=new Date(d.generated_at_utc),age=Math.max(0,Date.now()-stamp.getTime()),live=String(d.phase||'').toUpperCase()==='LIVE',staleAfter=live?LIVE_STALE_MS:BETWEEN_STALE_MS;if(Number.isNaN(stamp.getTime()))return{tone:'unknown',label:'Refresh time unavailable'};const mins=Math.floor(age/60000),ageLabel=mins<1?'just now':`${mins}m ago`,cadence=live?'live checks every minute':'between-match refresh';return{tone:age>staleAfter?'stale':'fresh',label:age>staleAfter?`Scores ${ageLabel} · update delayed`:`Scores ${ageLabel} · ${cadence}`}}
 function kickoffLabel(value){if(!value)return'Time TBC';const date=new Date(value);return Number.isNaN(date.getTime())?'Time TBC':date.toLocaleString([],{weekday:'short',hour:'2-digit',minute:'2-digit'})}
 function fixtureBand(p){const f=p.fixture||{},state=String(f.state||p.state||'unknown').toLowerCase();if(state==='live')return'live';if(state==='complete')return'done';if(state!=='upcoming')return'future';const date=f.kickoff_utc?new Date(f.kickoff_utc):null,now=new Date();return date&&!Number.isNaN(date.getTime())&&date.getFullYear()===now.getFullYear()&&date.getMonth()===now.getMonth()&&date.getDate()===now.getDate()?'today':'future'}
 function kickoffTime(value){if(!value)return'Time TBC';const date=new Date(value);return Number.isNaN(date.getTime())?'Time TBC':date.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}
@@ -65,7 +65,7 @@ function render(d){
  schedulePriority();
 }
 async function requestData(signal){const urls=location.hostname==='localhost'||location.hostname==='127.0.0.1'?['../data/live_gameweek.json',URL]:[URL];let last;for(const url of urls){try{const response=await fetch(`${url}?v=${Date.now()}`,{cache:'no-store',signal});if(!response.ok)throw new Error(`HTTP ${response.status}`);return await response.json()}catch(error){last=error}}throw last}
-async function load(){try{const ctl=new AbortController(),timeout=setTimeout(()=>ctl.abort(),10000);current=await requestData(ctl.signal);clearTimeout(timeout);render(current)}catch(error){console.warn('Live Gameweek snapshot unavailable',error)}finally{clearTimeout(timer);timer=setTimeout(load,isLivePhase(current?.phase)?LIVE_POLL_MS:IDLE_POLL_MS)}}
+async function load(){try{const ctl=new AbortController(),timeout=setTimeout(()=>ctl.abort(),10000);current=await requestData(ctl.signal);clearTimeout(timeout);render(current)}catch(error){console.warn('Live Gameweek snapshot unavailable',error)}finally{clearTimeout(timer);timer=setTimeout(load,String(current?.phase||'').toUpperCase()==='LIVE'?LIVE_POLL_MS:IDLE_POLL_MS)}}
 function start(){watchPriority();load();document.querySelectorAll('#decision-nav button[data-view]').forEach(button=>button.addEventListener('click',()=>setTimeout(prioritizeLiveScore,0),{passive:true}));window.addEventListener('fplLeagueIntelRendered',()=>{if(REVIEW_REMOVED||isLivePhase(current?.phase))setTimeout(()=>render(current),0)},{passive:true});document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')load()},{passive:true})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
 })();
