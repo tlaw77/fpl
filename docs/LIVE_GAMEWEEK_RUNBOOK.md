@@ -16,7 +16,7 @@ Give Terry one post-deadline view of every revealed mini-league squad, calculate
 4. After lock it requests the official standings, all manager picks, fixtures and event-live points when the selected cadence is due.
 5. It writes only `data/live_gameweek.json`; the heavier decision pipeline remains independent.
 6. The browser checks for a new snapshot every minute during a live fixture and every five minutes between fixtures. It also checks immediately when the page becomes visible again.
-7. The compact freshness line says when the scores were produced. During live play, more than eight minutes old changes to **update delayed**; between matches the allowance is 35 minutes.
+7. The compact freshness line says when the scores were produced. The same snapshot age is repeated on the Manager Matrix and once across the Threats/Leverage board. During live play, more than eight minutes old changes to **update delayed**; between matches the allowance is 35 minutes.
 
 The page reads the raw live JSON directly from the repository, so it does not wait for the GitHub Pages build to finish. A normal visible update is: GitHub schedule wait (0–5 minutes) + snapshot job (about 15 seconds) + browser check (0–1 minute). GitHub schedules are targets rather than guarantees, so the stale indicator is the operational source of truth.
 
