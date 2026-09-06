@@ -109,6 +109,8 @@ def gate_wc(latest, chip_window, full, stability):
     effective = n((stability.get('summary') or {}).get('effective_evidence_runs'))
     adjustment = wc_activation_adjustment(gain, maturity, changes, budget_conf, bank_left, stability)
     adjusted_gain = n(adjustment.get('activation_adjusted_gain_6gw'))
+    hit_rescue = max(0.0, n(latest.get('transfer_hits_already_incurred_next_gw')))
+    activation_value = adjusted_gain + hit_rescue
     persistence = n(adjustment.get('wc_squad_persistence_pct'))
     deadline = latest.get('deadline_context') or {}
     deadline_phase = deadline.get('phase') or 'unknown'
@@ -118,6 +120,8 @@ def gate_wc(latest, chip_window, full, stability):
         positives.append(f'Raw six-GW Wildcard scout is large (+{gain:.1f} simulation points before activation shrinkage).')
     if adjusted_gain >= 20:
         positives.append(f'Conservative activation-adjusted uplift remains material (+{adjusted_gain:.1f} over six Gameweeks).')
+    if hit_rescue:
+        positives.append(f'Activating Wildcard would also erase {hit_rescue:.0f} transfer-hit points already incurred this Gameweek.')
     if changes is not None and changes >= 6:
         positives.append(f'The optimiser would change {changes}/15 players, so this is a genuinely different squad structure.')
 
@@ -150,19 +154,22 @@ def gate_wc(latest, chip_window, full, stability):
     budget_usable = budget_conf == 'exact' or (budget_conf == 'reconstructed' and bank_left >= 1.0)
     robust_wc = persistence >= 75 and effective >= 3
     structural_need = weak_assets >= 3 or pressure in ('tight', 'critical')
-    if budget_usable and maturity >= .45 and robust_wc and adjusted_gain >= 20 and structural_need:
+    hit_rescue_case = hit_rescue >= 8 and adjusted_gain >= 8
+    if budget_usable and maturity >= .45 and robust_wc and ((adjusted_gain >= 20 and structural_need) or hit_rescue_case):
         status = 'CONSIDER'
-    elif adjusted_gain >= 12 and (maturity >= .35 or structural_need):
+    elif (adjusted_gain >= 12 and (maturity >= .35 or structural_need)) or (hit_rescue >= 4 and adjusted_gain >= 6):
         status = 'WATCH'
     else:
         status = 'HOLD'
-    if maturity < .35 and pressure == 'comfortable' and weak_assets < 3:
+    if maturity < .35 and pressure == 'comfortable' and weak_assets < 3 and not hit_rescue_case:
         status = 'HOLD'
 
     return {
         'status': status,
         'raw_gain_6gw': round(gain, 2),
         'activation_adjusted_gain_6gw': round(adjusted_gain, 2),
+        'transfer_hit_rescue': round(hit_rescue, 2),
+        'activation_value_including_hit_rescue': round(activation_value, 2),
         'activation_adjustment': adjustment,
         'budget_confidence': budget_conf,
         'budget_buffer': round(bank_left, 2),
@@ -195,6 +202,15 @@ def gate_fh(chip_window, full, stability):
     mode_gw = st.get('best_fh_gw_mode')
     mode_weight = n(st.get('best_fh_gw_mode_weight'))
     blockers, positives = [], []
+    if structural.get('eligibility') == 'blocked_consecutive':
+        return {
+            'status': 'HOLD', 'best_visible_gw': gw, 'raw_gain': round(gain, 2),
+            'eligibility': 'blocked_consecutive', 'blank_team_count': blank_count,
+            'double_team_count': double_count, 'squad_without_fixture': missing,
+            'effective_stability_evidence': round(effective, 2), 'positives': [],
+            'blockers': structural.get('reasons', [])[:1],
+            'reason': (structural.get('reasons') or ['Free Hit is not legally available this Gameweek.'])[0],
+        }
     if gain >= 10:
         positives.append(f'Best visible Free Hit squad is +{gain:.1f} modelled points in GW{gw}.')
     if mode_gw == gw and mode_weight >= 1:

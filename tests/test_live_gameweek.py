@@ -1,7 +1,7 @@
 import unittest
 from datetime import datetime, timedelta, timezone
 
-from live_gameweek import build_snapshot, phase_for, refresh_decision
+from live_gameweek import build_snapshot, phase_for, refresh_decision, score_finalisation_utc
 
 
 class LiveGameweekTests(unittest.TestCase):
@@ -83,12 +83,18 @@ class LiveGameweekTests(unittest.TestCase):
         self.assertFalse(refresh_decision("BETWEEN_FIXTURES", self.fixtures, recent, self.now)[0])
         self.assertTrue(refresh_decision("BETWEEN_FIXTURES", self.fixtures, stale, self.now)[0])
 
-    def test_complete_gameweek_gets_final_then_stops(self):
+    def test_complete_gameweek_refreshes_until_official_morning_finalisation(self):
         finished = [{**self.fixtures[0], "kickoff_time": "2026-09-05T12:00:00Z", "finished": True}]
         previous_live = {"phase": "LIVE", "generated_at_utc": (self.now - timedelta(minutes=5)).isoformat()}
         settled = {"phase": "COMPLETE", "generated_at_utc": (self.now - timedelta(minutes=30)).isoformat()}
         self.assertTrue(refresh_decision("COMPLETE", finished, previous_live, self.now)[0])
-        self.assertFalse(refresh_decision("COMPLETE", finished, settled, self.now + timedelta(hours=1))[0])
+        self.assertTrue(refresh_decision("COMPLETE", finished, settled, self.now + timedelta(hours=1))[0])
+        after_finalisation = datetime(2026, 9, 6, 9, 1, tzinfo=timezone.utc)
+        self.assertFalse(refresh_decision("COMPLETE", finished, settled, after_finalisation)[0])
+
+    def test_finalisation_respects_uk_summer_time(self):
+        finished = [{**self.fixtures[0], "kickoff_time": "2026-09-05T14:00:00Z", "finished": True}]
+        self.assertEqual(score_finalisation_utc(finished), datetime(2026, 9, 6, 8, 0, tzinfo=timezone.utc))
 
 
 if __name__ == "__main__":

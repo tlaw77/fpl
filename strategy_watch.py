@@ -59,6 +59,10 @@ def chip_inventory(chips, gw):
     used_this_half = [c for c in chips if lo <= (c.get("event") or 0) <= hi]
     used_names = [c.get("name") for c in used_this_half]
     remaining = [c for c in CHIPS if c not in used_names]
+    last_free_hit_gw = max(
+        (int(c.get("event") or 0) for c in chips if c.get("name") == "freehit"),
+        default=None,
+    )
     return {
         "half": half,
         "window": f"GW{lo}-GW{hi}",
@@ -66,6 +70,9 @@ def chip_inventory(chips, gw):
         "remaining_this_half": [CHIP_LABELS[x] for x in remaining],
         "used_count": len(used_this_half),
         "remaining_count": len(remaining),
+        "planning_gw": gw,
+        "last_free_hit_gw": last_free_hit_gw,
+        "free_hit_consecutive_blocked": last_free_hit_gw == gw - 1,
     }
 
 
@@ -160,6 +167,7 @@ def chip_adjusted_context(gw, managers):
 def main():
     bootstrap = get_json(f"{BASE}/bootstrap-static/")
     gw = current_gw(bootstrap.get("events", []))
+    planning_gw = min(38, gw + 1)
     teams = {t["id"]: t["name"] for t in bootstrap.get("teams", [])}
     standings = standings_all()
 
@@ -172,7 +180,9 @@ def main():
             "entry_id": entry_id, "manager": row.get("player_name"), "team_name": row.get("entry_name"), "rank": row.get("rank"),
             "total_points": row.get("total"),
             "chip_history": [{"chip": CHIP_LABELS.get(c.get("name"), c.get("name")), "gw": c.get("event")} for c in chips],
-            "inventory": chip_inventory(chips, gw),
+            # Strategy is for the next decision deadline, which matters at the
+            # GW19/20 chip-set boundary and for consecutive Free Hit legality.
+            "inventory": chip_inventory(chips, planning_gw),
         })
 
     me = next(x for x in managers if x["entry_id"] == MY_ENTRY_ID)
@@ -195,7 +205,7 @@ def main():
             strategic_notes.append({"manager": r["manager"], "team_name": r["team_name"], "note": f"This rival retains {', '.join(edge['their_extra_chips'])} that you have already spent. Expect a future chip-driven swing and favour squad flexibility."})
 
     result = {
-        "status": "SUCCESS", "generated_at_utc": datetime.now(timezone.utc).isoformat(), "current_gw": gw,
+        "status": "SUCCESS", "generated_at_utc": datetime.now(timezone.utc).isoformat(), "current_gw": gw, "planning_gw": planning_gw,
         "chip_rules": {"two_sets": True, "first_half": "GW1-GW19", "second_half": "GW20-GW38", "chips_per_half": ["Wildcard", "Free Hit", "Triple Captain", "Bench Boost"]},
         "me": me, "target_rivals": target_rivals, "managers": managers,
         "current_gw_chip_context": chip_adjusted_context(gw, managers),

@@ -21,6 +21,7 @@ on:
       - "market_watch.py"
       - "squad_intelligence.py"
       - "chip_window.py"
+      - "rules_edge_audit.py"
       - "schedule_load.py"
       - "player_pool.py"
       - "scout_consensus.py"
@@ -36,6 +37,7 @@ on:
       - "chip_path_simulation_v2.py"
       - "decision_synthesis.py"
       - "tests/test_free_transfer_logic.py"
+      - "tests/test_rules_edges.py"
       - "decision_twin.py"
       - "tests/test_decision_twin.py"
       - "exposure_semantics.py"
@@ -85,6 +87,8 @@ jobs:
         run: python squad_intelligence.py
       - name: Run chip window evaluation
         run: python chip_window.py
+      - name: Publish official-rules edge audit
+        run: python rules_edge_audit.py
       - name: Run club and player schedule-load watch
         run: python schedule_load.py
       - name: Run six-GW player pool
@@ -103,8 +107,8 @@ jobs:
         run: python full_squad_chip_optimizer_v2.py
       - name: Synthesize authoritative decision
         run: python decision_synthesis.py
-      - name: Test free-transfer and fixture-timing logic
-        run: python -m unittest tests.test_free_transfer_logic
+      - name: Test rule, transfer and fixture-timing logic
+        run: python -m unittest tests.test_free_transfer_logic tests.test_rules_edges
       - name: Refresh history index
         run: |
           python - <<'PY'
@@ -124,6 +128,7 @@ jobs:
           market = json.loads(Path('data/market.json').read_text())
           squad_intel = json.loads(Path('data/squad_intelligence.json').read_text())
           chip_window = json.loads(Path('data/chip_window.json').read_text())
+          rules_audit = json.loads(Path('data/rules_edge_audit.json').read_text())
           schedule_load = json.loads(Path('data/schedule_load.json').read_text())
           player_pool = json.loads(Path('data/player_pool.json').read_text())
           scout_consensus = json.loads(Path('data/scout_consensus.json').read_text())
@@ -161,6 +166,7 @@ jobs:
           assert market['status'] == 'SUCCESS'
           assert squad_intel['status'] == 'SUCCESS' and len(squad_intel['managers']) == data['league']['manager_count']
           assert chip_window['status'] == 'SUCCESS' and len(chip_window['evaluations']) == 4
+          assert rules_audit['status'] == 'SUCCESS' and rules_audit['coverage']['gaps'] == 0
           assert schedule_load['status'] == 'SUCCESS' and 'clubs' in schedule_load and 'players' in schedule_load
           assert len(schedule_load.get('failures', [])) < len(schedule_load.get('coverage', [])), 'All schedule-load sources failed'
           assert player_pool['status'] == 'SUCCESS' and player_pool['horizon'] == 6 and len(player_pool['players']) > 50

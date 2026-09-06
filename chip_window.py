@@ -21,6 +21,10 @@ def player_strength(p):
     return float(p.get('decision_score') or 0)
 
 
+def free_hit_eligible(inventory):
+    return 'Free Hit' in set(inventory.get('remaining_this_half') or []) and not bool(inventory.get('free_hit_consecutive_blocked'))
+
+
 def evaluate():
     latest = json.loads(LATEST.read_text())
     strategy = json.loads(STRATEGY.read_text()) if STRATEGY.exists() else {}
@@ -30,6 +34,7 @@ def evaluate():
     me_strategy = strategy.get('me') or {}
     inventory = (me_strategy.get('inventory') or {})
     remaining = set(inventory.get('remaining_this_half') or [])
+    fh_consecutive_blocked = bool(inventory.get('free_hit_consecutive_blocked'))
     schedule = {int(x['gw']): x for x in strategy.get('confirmed_blank_double_events', []) if x.get('gw')}
     gws = sorted({int(f['gw']) for p in rows for f in (p.get('fixtures') or []) if f.get('gw')})[:5]
     if not gws:
@@ -118,7 +123,11 @@ def evaluate():
         if fh_now['squad_players_without_playable_fixture']>=5 or fh_now['blank_team_count']>=6: fh_status='strong_window'
         elif fh_now['squad_players_without_playable_fixture']>=3 or fh_now['double_team_count']>=4: fh_status='candidate_window'
         elif not early_sample and fh_now['score']>=best_fh['score']-1 and fh_now['score']>=5: fh_status='watch'
-    evaluations.append({'chip':'Free Hit','available':'Free Hit' in remaining,'status':fh_status,'current_window':fh_now,'best_window_next5':best_fh,'reasons':[f"Current squad has {fh_now['squad_players_without_playable_fixture']} players without a playable fixture and {fh_now['weak_fixture_count']} weak fixtures." if fh_now else 'Coverage unavailable.','Free Hit value rises sharply in a major blank or unusually concentrated double.',f"Best disruption window currently visible is GW{best_fh['gw']}" if best_fh else 'No disruption window available.']})
+    fh_reasons=[f"Current squad has {fh_now['squad_players_without_playable_fixture']} players without a playable fixture and {fh_now['weak_fixture_count']} weak fixtures." if fh_now else 'Coverage unavailable.','Free Hit value rises sharply in a major blank or unusually concentrated double.',f"Best disruption window currently visible is GW{best_fh['gw']}" if best_fh else 'No disruption window available.']
+    if fh_consecutive_blocked:
+        fh_status='unavailable'
+        fh_reasons.insert(0, f"Free Hit is unavailable in GW{next_gw}: it was used in GW{next_gw - 1}, and Free Hits cannot be played in consecutive Gameweeks.")
+    evaluations.append({'chip':'Free Hit','available':free_hit_eligible(inventory),'status':fh_status,'eligibility':'blocked_consecutive' if fh_consecutive_blocked else 'eligible','current_window':fh_now,'best_window_next5':best_fh,'reasons':fh_reasons})
 
     availability_risks=sum(1 for p in rows if float(p.get('availability') if p.get('availability') is not None else 1)<.75)
     next3_bad=0; next3_good=0
@@ -137,7 +146,7 @@ def evaluate():
 
     # Portfolio optimisation: a chip is judged against the value of preserving it for the rest of its half-season.
     # GW19/GW38 are hard expiries; only one chip can be played per GW.
-    rank={'strong_window':4,'candidate_window':3,'watch':2,'hold':1}
+    rank={'strong_window':4,'candidate_window':3,'watch':2,'hold':1,'unavailable':0}
     for e in evaluations:
         e['half_season'] = half
         e['expires_after_gw'] = expiry_gw

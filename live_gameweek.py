@@ -9,6 +9,7 @@ import urllib.request
 from collections import Counter, defaultdict
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 LEAGUE_ID = 582464
 MY_ENTRY_ID = 5332809
@@ -55,7 +56,18 @@ def phase_for(deadline: datetime | None, fixtures: list[dict], now: datetime) ->
     return "LOCKED"
 
 
-def refresh_decision(phase: str, fixtures: list[dict], previous: dict | None, now: datetime) -> tuple[bool, str]:
+def score_finalisation_utc(fixtures: list[dict]) -> datetime | None:
+    """09:00 UK on the day after the final fixture, per the 2026/27 rules."""
+    kickoffs = [parse_time(fixture.get("kickoff_time")) for fixture in fixtures]
+    last_kickoff = max((kickoff for kickoff in kickoffs if kickoff), default=None)
+    if not last_kickoff:
+        return None
+    london = ZoneInfo("Europe/London")
+    next_day = last_kickoff.astimezone(london).date() + timedelta(days=1)
+    return datetime.combine(next_day, datetime.min.time(), tzinfo=london).replace(hour=9).astimezone(timezone.utc)
+
+
+def refresh_decision(phase: str, fixtures: list[dict], previous: dict | None, now: datetime, event_finished: bool = False) -> tuple[bool, str]:
     """Choose the expensive snapshot cadence from the official fixture state."""
     if phase == "PRE_DEADLINE":
         return False, "before deadline"
@@ -77,11 +89,12 @@ def refresh_decision(phase: str, fixtures: list[dict], previous: dict | None, no
     if phase == "COMPLETE":
         if previous_phase != "COMPLETE":
             return True, "final score refresh"
-        kickoffs = [parse_time(fixture.get("kickoff_time")) for fixture in fixtures]
-        last_kickoff = max((kickoff for kickoff in kickoffs if kickoff), default=None)
-        settling = bool(last_kickoff and now <= last_kickoff + timedelta(hours=3))
+        finalisation = score_finalisation_utc(fixtures)
+        settling = not event_finished and bool(finalisation and now < finalisation)
         if settling and (age is None or age >= timedelta(minutes=25)):
-            return True, "post-match bonus settlement"
+            return True, "awaiting official 09:00 UK score finalisation"
+        if settling:
+            return False, "settlement snapshot still fresh"
         return False, "gameweek settled"
 
     return False, "unknown phase"
@@ -289,7 +302,9 @@ def build_snapshot(
         "gw": int(event["id"]),
         "phase": phase,
         "picks_visible": phase != "PRE_DEADLINE",
-        "provisional": phase in ("LOCKED", "LIVE", "BETWEEN_FIXTURES"),
+        "provisional": phase in ("LOCKED", "LIVE", "BETWEEN_FIXTURES") or (phase == "COMPLETE" and not bool(event.get("finished"))),
+        "officially_finalised": bool(event.get("finished")),
+        "expected_finalisation_utc": score_finalisation_utc(fixtures).isoformat() if score_finalisation_utc(fixtures) else None,
         "refresh_seconds": 300,
         "deadline_utc": deadline.isoformat() if deadline else None,
         "league": {"id": LEAGUE_ID, "name": league_name, "expected_managers": manager_count, "visible_managers": len(managers), "average_live_points": avg_live, "average_raw_live_points": avg_raw, "average_net_live_points": avg_live},
@@ -335,7 +350,7 @@ def main() -> None:
     previous = json.loads(OUTPUT.read_text()) if OUTPUT.exists() else None
     previous_for_event = previous if previous and previous.get("gw") == event["id"] else None
     if "--gate" in sys.argv:
-        should_run, reason = refresh_decision(phase, fixtures, previous_for_event, now)
+        should_run, reason = refresh_decision(phase, fixtures, previous_for_event, now, bool(event.get("finished")))
         print(f"run={str(should_run).lower()}")
         print(f"phase={phase}")
         print(f"reason={reason}")
