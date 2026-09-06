@@ -1,5 +1,5 @@
 (()=>{
-const BUILD='transfer-synthesis-hierarchy-20260906-2044';
+const BUILD='transfer-synthesis-hierarchy-20260906-2';
 const q=(s,r=document)=>r.querySelector(s);
 function apply(){
   const d=window.FPLCoreData||{},syn=d.decision_synthesis,act=syn?.current_action;
@@ -13,6 +13,7 @@ function apply(){
     if(h)h.textContent=act.headline||'Hold / roll';
     if(status)status.textContent='HOLD';
     if(sub)sub.textContent=hit?`The current move is complete. Any additional transfer now costs -${hit}; use the routes below only as contingencies if new information materially changes the decision.`:'The synthesized decision currently prefers holding. Routes below remain planning alternatives.';
+    const items=lens.querySelectorAll('.decision-summary-item');if(items[0]){const small=q('small',items[0]);if(small)small.textContent='A heuristic route scores well, but the full agreement and timing gate still says HOLD.'}if(items[1]){const label=q('span',items[1]);if(label)label.textContent='Top heuristic model uplift'}if(items[2]){const label=q('span',items[2]);if(label)label.textContent='Top heuristic leverage uplift'}
   }
   const routes=q('[data-safe-routes]',view);
   if(routes&&holding){

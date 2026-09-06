@@ -1,5 +1,5 @@
 (()=>{
-const BUILD='decision-synthesis-20260831-0118';
+const BUILD='decision-synthesis-20260906-2';
 const CAP_URL='https://raw.githubusercontent.com/tlaw77/fpl/main/data/captaincy_review.json';
 const q=(s,r=document)=>r.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
@@ -20,10 +20,12 @@ function render(){
   const ftText=`${ft} free transfer${ft===1?'':'s'} left${hit?` · another transfer costs -${hit}`:''}`;
   host.dataset.tone=tone;
   host.dataset.synthesis='1';
-  host.innerHTML=`<div class="gwd-top"><div><p class="eyebrow">${esc(gw)} DECISION</p><div class="gwd-action">${esc(decision.headline||decision.action||'HOLD')}</div></div><div class="gwd-confidence"><strong>${esc(confidence)}%</strong><span>confidence</span></div></div><p class="gwd-why">${esc(decision.reason||'')}</p><div class="gwd-strip"><span><b>TEAM</b>${esc(teamSummary())}</span><span><b>LEAGUE</b>${esc(leaguePosture())}</span></div><div class="gwd-watch"><b>THIS WEEK</b> ${esc(done?`${done} done · ${ftText}`:ftText)}</div><div class="gwd-watch"><b>CHIPS</b> ${esc(chipText)}</div>`;
+  host.dataset.authoritative='1';
+  host.innerHTML=`<div class="gwd-top"><div><p class="eyebrow">${esc(gw)} AUTHORITATIVE DECISION</p><div class="gwd-action">${esc(decision.headline||decision.action||'HOLD')}</div></div><div class="gwd-confidence"><strong>${esc(confidence)}%</strong><span>confidence</span></div></div><p class="gwd-why">${esc(decision.reason||'')}</p><div class="gwd-strip"><span><b>TEAM</b>${esc(teamSummary())}</span><span><b>LEAGUE</b>${esc(leaguePosture())}</span></div><div class="gwd-watch"><b>THIS WEEK</b> ${esc(done?`${done} done · ${ftText}`:ftText)}</div><div class="gwd-watch"><b>CHIPS</b> ${esc(chipText)}</div>`;
+  const phase=q('[data-transfer-phase]',view);if(phase&&phase.parentElement===view)phase.insertAdjacentElement('afterend',host);
   document.documentElement.dataset.decisionSynthesisBuild=BUILD;
 }
 function run(){[120,350,800,1500,2600].forEach(ms=>setTimeout(render,ms));ensureCaptaincy().then(()=>render())}
-function bind(){run();['fplCoreDataReady','fplSafePlanUpdated','fplCaptaincyReviewReady'].forEach(ev=>window.addEventListener(ev,e=>{if(ev==='fplCaptaincyReviewReady'&&e.detail)capData=e.detail;run()},{passive:true}));q('#decision-nav button[data-view="transfer"]')?.addEventListener('click',()=>setTimeout(render,120),{passive:true})}
+function bind(){run();['fplCoreDataReady','fplSafePlanUpdated','fplCaptaincyReviewReady'].forEach(ev=>window.addEventListener(ev,e=>{if(ev==='fplCaptaincyReviewReady'&&e.detail)capData=e.detail;run()},{passive:true}));window.addEventListener('fplViewSettled',e=>{if(e.detail?.viewName==='transfer')render()},{passive:true});q('#decision-nav button[data-view="transfer"]')?.addEventListener('click',()=>setTimeout(render,120),{passive:true})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind,{once:true});else bind();
 })();
