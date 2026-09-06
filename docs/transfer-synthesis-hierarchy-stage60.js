@@ -1,11 +1,13 @@
 (()=>{
-const BUILD='transfer-synthesis-hierarchy-20260906-3';
+const BUILD='transfer-synthesis-hierarchy-20260906-4';
 const q=(s,r=document)=>r.querySelector(s);
 function apply(){
   const d=window.FPLCoreData||{},syn=d.decision_synthesis,act=syn?.current_action;
   if(!act)return;
   const view=q('#view-transfer');if(!view)return;
   const holding=act.action==='HOLD',hit=Number(act.next_transfer_hit_cost||0);
+  const hero=q('.transfer-hero',view);
+  if(hero&&holding){hero.hidden=true;hero.setAttribute('aria-hidden','true')}
   const lens=q('[data-decision-depth]',view);
   if(lens&&holding){
     const eye=q('.eyebrow',lens),h=q('h3',lens),status=q('.decision-status',lens),sub=q('.subtle',lens);
