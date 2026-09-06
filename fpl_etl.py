@@ -7,6 +7,7 @@ from pathlib import Path
 LEAGUE_ID = 582464
 MY_ENTRY_ID = 5332809
 BASE = "https://fantasy.premierleague.com/api"
+MAX_FREE_TRANSFERS = 5
 
 
 def get_json(url):
@@ -24,6 +25,34 @@ def detect_gw(events):
         return max(1, nxt["id"] - 1)
     finished = [e["id"] for e in events if e.get("finished")]
     return max(finished) if finished else 1
+
+
+def free_transfers_for_next_gw(history, current_gw):
+    """Reconstruct the entry's FT bank after the current GW deadline.
+
+    FPL starts GW2 with one free transfer. A normal deadline adds one after
+    transfers are deducted, capped at five. Wildcard and Free Hit preserve the
+    pre-chip bank rather than consuming transfers or adding a new one.
+    """
+    current_gw = max(1, int(current_gw or 1))
+    rows = {
+        int(row.get("event") or 0): row
+        for row in (history.get("current") or [])
+        if row.get("event") is not None
+    }
+    chip_events = {
+        int(chip.get("event") or 0)
+        for chip in (history.get("chips") or [])
+        if str(chip.get("name") or "").lower().replace("_", "") in {"wildcard", "freehit"}
+    }
+
+    available = 1
+    for event in range(2, current_gw + 1):
+        if event in chip_events:
+            continue
+        transfers = max(0, int((rows.get(event) or {}).get("event_transfers") or 0))
+        available = min(MAX_FREE_TRANSFERS, max(0, available - transfers) + 1)
+    return available
 
 
 def fetch_all_standings():
@@ -99,6 +128,8 @@ def main():
     league_name, standings = fetch_all_standings()
     me = next((r for r in standings if r.get("entry") == MY_ENTRY_ID), None)
     if me is None: raise RuntimeError(f"Entry {MY_ENTRY_ID} not found in league {LEAGUE_ID}")
+    my_history = get_json(f"{BASE}/entry/{MY_ENTRY_ID}/history/")
+    free_transfers_next_gw = free_transfers_for_next_gw(my_history, gw)
 
     manager_rows, ownership, starter_ownership, captaincy, total_multiplier = [], Counter(), Counter(), Counter(), defaultdict(int)
     for row in standings:
@@ -165,7 +196,7 @@ def main():
         captain_pool.append({**p, "mini_league_eo": exp.get("effective_ownership_pct", 0), "target_rival_ownership_pct": target_pct, "target_captain_count": target_captaincy[p["player_id"]], "protective_captain_score": round(p["decision_score"] + target_pct * 0.055 + target_captaincy[p["player_id"]] * 1.5, 3), "chase_captain_score": round(p["decision_score"] + (100 - target_pct) * 0.035 + max(0, 40 - exp.get("effective_ownership_pct", 0)) * 0.02, 3)})
 
     league_live_scores = [x["live_calculated_points"] for x in manager_rows]; league_avg_live = round(sum(league_live_scores) / n, 2) if n else 0
-    result = {"status": "SUCCESS", "generated_at_utc": datetime.now(timezone.utc).isoformat(), "current_gw": gw, "next_gw": next_gw, "league": {"id": LEAGUE_ID, "name": league_name, "manager_count": n, "average_live_calculated_points": league_avg_live}, "me": {"entry_id": MY_ENTRY_ID, "rank": me.get("rank"), "team_name": me.get("entry_name"), "manager": me.get("player_name"), "gw_points": me.get("event_total"), "total_points": me.get("total"), "captain": next((p["player"] for p in my_team["picks"] if p["captain"]), None), "vice_captain": next((p["player"] for p in my_team["picks"] if p["vice_captain"]), None), "active_chip": my_team.get("active_chip"), "event_transfers": my_team.get("event_transfers"), "event_transfers_cost": my_team.get("event_transfers_cost"), "points_on_bench": my_team.get("points_on_bench"), "team_value": my_team.get("team_value"), "bank": my_team.get("bank"), "live_calculated_points": my_team.get("live_calculated_points"), "live_vs_league_average": round(my_team.get("live_calculated_points", 0) - league_avg_live, 2)}, "squad_count": 15, "squad_valid": True, "squad": my_team["picks"], "squad_next5": sorted(squad_next5, key=lambda x: x["decision_score"]), "rivals": rivals, "player_exposure": sorted(player_exposure, key=lambda x: (-x["effective_ownership_pct"], -x["ownership_pct"], x["player"] or "")), "target_rivals": [{"entry_id": r["entry_id"], "team_name": r["team_name"], "manager": r["manager"], "rank": r["rank"], "gap": r["gap_to_me"]} for r in targets], "next_gw_decisions": {"model_note": "Heuristic decision support using FPL form/PPG, fixture difficulty, availability, mini-league ownership and ownership among the nearest three managers above you. It is not projected points.", "captain_protective": sorted(captain_pool, key=lambda x: x["protective_captain_score"], reverse=True)[:5], "captain_chase": sorted(captain_pool, key=lambda x: x["chase_captain_score"], reverse=True)[:5], "safe_moves": sorted(moves, key=lambda m: m["safe_gain"], reverse=True)[:5], "aggressive_moves": sorted(moves, key=lambda m: m["aggressive_gain"], reverse=True)[:5]}}
+    result = {"status": "SUCCESS", "generated_at_utc": datetime.now(timezone.utc).isoformat(), "current_gw": gw, "next_gw": next_gw, "free_transfer_cap": MAX_FREE_TRANSFERS, "free_transfers_next_gw": free_transfers_next_gw, "free_transfer_headroom": MAX_FREE_TRANSFERS - free_transfers_next_gw, "league": {"id": LEAGUE_ID, "name": league_name, "manager_count": n, "average_live_calculated_points": league_avg_live}, "me": {"entry_id": MY_ENTRY_ID, "rank": me.get("rank"), "team_name": me.get("entry_name"), "manager": me.get("player_name"), "gw_points": me.get("event_total"), "total_points": me.get("total"), "captain": next((p["player"] for p in my_team["picks"] if p["captain"]), None), "vice_captain": next((p["player"] for p in my_team["picks"] if p["vice_captain"]), None), "active_chip": my_team.get("active_chip"), "event_transfers": my_team.get("event_transfers"), "event_transfers_cost": my_team.get("event_transfers_cost"), "points_on_bench": my_team.get("points_on_bench"), "team_value": my_team.get("team_value"), "bank": my_team.get("bank"), "live_calculated_points": my_team.get("live_calculated_points"), "live_vs_league_average": round(my_team.get("live_calculated_points", 0) - league_avg_live, 2), "free_transfers_next_gw": free_transfers_next_gw}, "squad_count": 15, "squad_valid": True, "squad": my_team["picks"], "squad_next5": sorted(squad_next5, key=lambda x: x["decision_score"]), "rivals": rivals, "player_exposure": sorted(player_exposure, key=lambda x: (-x["effective_ownership_pct"], -x["ownership_pct"], x["player"] or "")), "target_rivals": [{"entry_id": r["entry_id"], "team_name": r["team_name"], "manager": r["manager"], "rank": r["rank"], "gap": r["gap_to_me"]} for r in targets], "next_gw_decisions": {"model_note": "Heuristic decision support using FPL form/PPG, fixture difficulty, availability, mini-league ownership and ownership among the nearest three managers above you. It is not projected points.", "captain_protective": sorted(captain_pool, key=lambda x: x["protective_captain_score"], reverse=True)[:5], "captain_chase": sorted(captain_pool, key=lambda x: x["chase_captain_score"], reverse=True)[:5], "safe_moves": sorted(moves, key=lambda m: m["safe_gain"], reverse=True)[:5], "aggressive_moves": sorted(moves, key=lambda m: m["aggressive_gain"], reverse=True)[:5]}}
     payload = json.dumps(result, indent=2, ensure_ascii=False) + "\n"; Path("data").mkdir(parents=True, exist_ok=True); Path("data/latest.json").write_text(payload, encoding="utf-8"); Path(f"data/gw{gw}.json").write_text(payload, encoding="utf-8")
     print(json.dumps({"status": "SUCCESS", "gw": gw, "next_gw": next_gw, "targets": len(targets), "safe_moves": len(result["next_gw_decisions"]["safe_moves"]), "aggressive_moves": len(result["next_gw_decisions"]["aggressive_moves"])}))
 

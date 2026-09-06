@@ -6,6 +6,7 @@ import current_squad as cs
 
 LATEST = Path('data/latest.json')
 DECLARED = Path('data/declared_transfers.json')
+MAX_FREE_TRANSFERS = 5
 
 
 def load(path, default):
@@ -19,7 +20,19 @@ def tx_key(t):
     return (int(t.get('event') or 0), int(t.get('element_out') or 0), int(t.get('element_in') or 0))
 
 
-def set_transfer_state(data, transfers, starting_ft=1):
+def official_starting_ft(data):
+    value = data.get('free_transfers_next_gw')
+    if value is None:
+        value = (data.get('me') or {}).get('free_transfers_next_gw')
+    try:
+        return max(1, min(MAX_FREE_TRANSFERS, int(value)))
+    except (TypeError, ValueError):
+        return 1
+
+
+def set_transfer_state(data, transfers, starting_ft=None):
+    if starting_ft is None:
+        starting_ft = official_starting_ft(data)
     used = len([t for t in transfers if int(t.get('event') or 0) == int(data.get('next_gw') or 0)])
     remaining = max(0, int(starting_ft) - used)
     excess = max(0, used - int(starting_ft))
@@ -44,7 +57,7 @@ def main():
 
     if not pending:
         all_current = [t for t in official if int(t.get('event') or 0) == next_gw]
-        set_transfer_state(data, all_current, starting_ft=1)
+        set_transfer_state(data, all_current)
         data['declared_transfer_overlay_status'] = 'resolved_official' if any(int(t.get('event') or 0) == next_gw for t in (declared.get('transfers') or [])) else 'none'
         data['declared_transfer_overlay_generated_at_utc'] = datetime.now(timezone.utc).isoformat()
         LATEST.write_text(json.dumps(data, indent=2, ensure_ascii=False) + '\n')
@@ -104,7 +117,7 @@ def main():
     data['current_squad_next5'] = current
     data['current_bank'] = round(bank, 1)
     data['current_next_gw_decisions'] = decisions
-    set_transfer_state(data, all_current, starting_ft=1)
+    set_transfer_state(data, all_current)
     data['declared_transfer_overlay_status'] = 'pending_official_api'
     data['declared_transfer_overlay_applied'] = applied
     data['declared_transfer_overlay_generated_at_utc'] = datetime.now(timezone.utc).isoformat()

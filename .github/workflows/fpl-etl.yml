@@ -35,6 +35,7 @@ on:
       - "chip_path_simulation.py"
       - "chip_path_simulation_v2.py"
       - "decision_synthesis.py"
+      - "tests/test_free_transfer_logic.py"
       - "decision_twin.py"
       - "tests/test_decision_twin.py"
       - "exposure_semantics.py"
@@ -102,6 +103,8 @@ jobs:
         run: python full_squad_chip_optimizer_v2.py
       - name: Synthesize authoritative decision
         run: python decision_synthesis.py
+      - name: Test free-transfer and fixture-timing logic
+        run: python -m unittest tests.test_free_transfer_logic
       - name: Refresh history index
         run: |
           python - <<'PY'
@@ -150,6 +153,7 @@ jobs:
               squad_ids = {int(p.get('player_id') or 0) for p in data.get('current_squad_next5', [])}
               assert all(int(t['element_in']) in squad_ids and int(t['element_out']) not in squad_ids for t in pending_declared)
           assert int(data.get('free_transfers_remaining_next_gw', 0)) >= 0
+          assert 1 <= int(data.get('free_transfers_next_gw', 0)) <= int(data.get('free_transfer_cap', 5))
           assert int(data.get('next_transfer_hit_cost', 0)) in (0, 4)
           assert data.get('exposure_semantics', {}).get('version') == 2
 
