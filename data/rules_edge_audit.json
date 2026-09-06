@@ -1,0 +1,105 @@
+{
+  "status": "SUCCESS",
+  "version": 1,
+  "generated_at_utc": "2026-09-06T10:28:36.442677+00:00",
+  "coverage": {
+    "official_rules_tracked": 15,
+    "automated": 14,
+    "official_post_gw_resolution": 1,
+    "gaps": 0
+  },
+  "active_edges": [],
+  "rules": [
+    {
+      "id": "transfer_bank",
+      "rule": "Up to five free transfers; only one earned per GW",
+      "implementation": "fpl_etl.py + path_simulation_v3.py",
+      "status": "automated"
+    },
+    {
+      "id": "transfer_cap_pressure",
+      "rule": "Avoid wasting the earned transfer when already on five",
+      "implementation": "decision_synthesis.py",
+      "status": "automated"
+    },
+    {
+      "id": "transfer_hits",
+      "rule": "Each transfer beyond the free bank costs four points",
+      "implementation": "declared_transfer_overlay.py + simulation_engine_v2.py",
+      "status": "automated"
+    },
+    {
+      "id": "wildcard_hit_rescue",
+      "rule": "Wildcard erases transfer deductions already made that GW",
+      "implementation": "chip_activation_gate.py",
+      "status": "automated"
+    },
+    {
+      "id": "chip_sets",
+      "rule": "Fresh four-chip set after GW19; unused first set expires",
+      "implementation": "strategy_watch.py + chip_window.py",
+      "status": "automated"
+    },
+    {
+      "id": "one_chip",
+      "rule": "Only one chip may be active in a Gameweek",
+      "implementation": "chip_window.py",
+      "status": "automated"
+    },
+    {
+      "id": "free_hit_sequence",
+      "rule": "Free Hits cannot be used in consecutive Gameweeks",
+      "implementation": "strategy_watch.py + chip_window.py",
+      "status": "automated"
+    },
+    {
+      "id": "free_hit_restore",
+      "rule": "Free Hit is temporary and preserves the permanent squad",
+      "implementation": "strategy_watch.py",
+      "status": "automated"
+    },
+    {
+      "id": "squad_legality",
+      "rule": "15-player positional, budget and maximum-three-per-club rules",
+      "implementation": "current_squad.py + full_squad_chip_optimizer.py",
+      "status": "automated"
+    },
+    {
+      "id": "xi_legality",
+      "rule": "Starting XI retains one goalkeeper, three defenders and one forward",
+      "implementation": "current_squad.py",
+      "status": "automated"
+    },
+    {
+      "id": "captain_fallback",
+      "rule": "Vice-captain inherits only when captain plays zero minutes",
+      "implementation": "live_gameweek.py + official post-GW processing",
+      "status": "official_post_gw_resolution"
+    },
+    {
+      "id": "double_gameweeks",
+      "rule": "Every fixture in the same GW contributes independently",
+      "implementation": "projection_calibration.py",
+      "status": "automated"
+    },
+    {
+      "id": "defensive_contributions",
+      "rule": "Position-specific defensive-contribution thresholds",
+      "implementation": "projection_calibration.py + official live points",
+      "status": "automated"
+    },
+    {
+      "id": "price_timing",
+      "rule": "Daily price changes are assessed around 00:00 UK",
+      "implementation": "market_watch.py",
+      "status": "automated"
+    },
+    {
+      "id": "score_finalisation",
+      "rule": "Live scores remain provisional until 09:00 UK after the final match",
+      "implementation": "live_gameweek.py",
+      "status": "automated"
+    }
+  ],
+  "principle": "Use rule mechanics as constraints and option value, never as a reason to override football quality, reliable minutes or expected points."
+}
