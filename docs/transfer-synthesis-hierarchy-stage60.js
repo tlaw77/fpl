@@ -1,13 +1,13 @@
 (()=>{
-const BUILD='transfer-synthesis-hierarchy-20260906-4';
+const BUILD='transfer-synthesis-hierarchy-20260906-5';
 const q=(s,r=document)=>r.querySelector(s);
 function apply(){
   const d=window.FPLCoreData||{},syn=d.decision_synthesis,act=syn?.current_action;
   if(!act)return;
   const view=q('#view-transfer');if(!view)return;
   const holding=act.action==='HOLD',hit=Number(act.next_transfer_hit_cost||0);
-  const hero=q('.transfer-hero',view);
-  if(hero&&holding){hero.hidden=true;hero.setAttribute('aria-hidden','true')}
+  const legacy=[q('.transfer-hero',view),q('.transfer-metrics',view),q('.transfer-lens,[data-decision-depth]',view)];
+  if(holding)legacy.forEach(el=>{if(!el)return;el.hidden=true;el.setAttribute('aria-hidden','true');el.style.setProperty('display','none','important')});
   const lens=q('[data-decision-depth]',view);
   if(lens&&holding){
     const eye=q('.eyebrow',lens),h=q('h3',lens),status=q('.decision-status',lens),sub=q('.subtle',lens);
@@ -21,6 +21,7 @@ function apply(){
   if(routes&&holding){
     routes.hidden=true;
     routes.setAttribute('aria-hidden','true');
+    routes.style.setProperty('display','none','important');
     const eye=q('.eyebrow',routes),h=q('h3',routes),sub=q('.subtle',routes);
     if(eye)eye.textContent=hit?'ALTERNATIVE HIT ROUTES':'ALTERNATIVE ROUTES';
     if(h)h.textContent=hit?`Contingencies only · each extra move costs -${hit}`:'Contingencies to the current hold';
