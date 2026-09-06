@@ -1,0 +1,56 @@
+/* FPL-inspired player plates: retain the full decision detail while separating
+   it from the pitch texture and markings. */
+.a99-pitch{background:
+  radial-gradient(circle at 50% 50%,rgba(255,255,255,.035),transparent 34%),
+  linear-gradient(180deg,#117b45 0%,#0b6137 100%)}
+.a99-pitch-row{margin:5px 0 9px}
+.a99-pitch-row-players{gap:6px;align-items:stretch}
+.a99-pitch-player{
+  isolation:isolate;
+  flex:0 1 82px;
+  min-height:91px;
+  padding:3px 3px 5px;
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  justify-content:flex-start;
+}
+.a99-pitch-player::before{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  inset:23px 0 0;
+  border:1px solid rgba(174,207,230,.28);
+  border-radius:8px;
+  background:linear-gradient(180deg,rgba(5,17,31,.94),rgba(7,21,37,.97));
+  box-shadow:0 5px 12px rgba(0,0,0,.24);
+}
+.a99-pitch-player.role-shield::before{border-top-color:rgba(96,165,250,.82)}
+.a99-pitch-player.role-leverage::before{border-top-color:rgba(45,212,191,.88)}
+.a99-pitch-player.role-neutral::before{border-top-color:rgba(203,213,225,.48)}
+.a99-pitch-player.role-shield,
+.a99-pitch-player.role-leverage,
+.a99-pitch-player.role-neutral{box-shadow:none}
+.a99-pitch-player .pitch-shirt{position:relative;z-index:2;margin:0 auto 2px;filter:drop-shadow(0 3px 3px rgba(0,0,0,.38))}
+.a99-exposure{top:1px;right:3px;background:#071421;border-color:#54718e;box-shadow:0 2px 5px rgba(0,0,0,.35)}
+.a99-player-name{min-height:17px;padding:0 3px;gap:2px}
+.a99-player-name strong{font-size:8.4px;line-height:1.15;color:#fff;text-shadow:0 1px 2px #000}
+.a99-player-name i{width:16px;height:16px;font-size:8px}
+.a99-pitch-player small{margin-top:1px;color:#cbd8e7;font-size:6.4px;line-height:1.2}
+.a99-pitch-player em{margin-top:1px;color:#8ee8bd;font-size:6.4px;line-height:1.2}
+.a99-pitch-player .pitch-fdrs{width:100%;margin-top:auto;padding:3px 2px 0;gap:2px}
+.a99-pitch-player .pitch-fdr{min-width:0;max-width:none;flex:1 1 0;padding:2px 1px;font-size:5.2px;line-height:1.05;white-space:nowrap;overflow:hidden}
+.a99-pitch-player .pitch-fdr b{display:none}
+.a99-row-label{margin-bottom:1px;font-size:7.5px;text-shadow:0 1px 3px rgba(0,0,0,.65)}
+
+@media(max-width:560px){
+  .a99-pitch{padding:10px 3px 8px}
+  .a99-pitch-row{margin:3px 0 7px}
+  .a99-pitch-row-players{gap:3px}
+  .a99-pitch-player{flex-basis:67px;min-height:86px;padding-left:2px;padding-right:2px}
+  .a99-pitch-player::before{inset:22px 0 0;border-radius:7px}
+  .a99-player-name{padding:0 1px}
+  .a99-player-name strong{font-size:7.8px}
+  .a99-pitch-player small,.a99-pitch-player em{font-size:6.1px}
+  .a99-pitch-player .pitch-fdr{font-size:5px;padding:2px 0}
+}
