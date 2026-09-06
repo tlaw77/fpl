@@ -1,6 +1,6 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-09-06T10:29:24.435596+00:00",
+  "generated_at_utc": "2026-09-06T10:46:31.121483+00:00",
   "engine_version": 7,
   "planner": "bounded beam search + GW-specific shared-outcome Monte Carlo + live FT state + season calibration + shared captaincy + deadline-aware sampling + enabling-downgrade retention",
   "projection_model": "season-maturity calibrated + shared captaincy model",
@@ -16,7 +16,7 @@
   "iteration_policy": {
     "layer": "path",
     "deadline_phase": "normal",
-    "hours_to_deadline": 146.03,
+    "hours_to_deadline": 145.74,
     "iterations": 1200,
     "policy": "lighter normal-week sampling; higher precision inside 72h/24h/6h of official FPL deadline"
   },
@@ -153,12 +153,12 @@
       {
         "gw": 6,
         "action": "TRANSFER",
-        "route": "Kinsky → Tzolakis",
+        "route": "Schade → King",
         "hit": 0,
-        "out_id": 496,
-        "in_id": 572,
+        "out_id": 94,
+        "in_id": 268,
         "enabler": false,
-        "bank_released": 0
+        "bank_released": 0.5
       },
       {
         "gw": 7,
@@ -171,25 +171,25 @@
         "bank_released": 7.0
       }
     ],
-    "expected_points": 238.08,
-    "p10_points": 199.32,
-    "p90_points": 280.5,
-    "expected_rank_after_path": 2.31,
-    "prob_gain_league_place": 0.631,
+    "expected_points": 236.94,
+    "p10_points": 198.83,
+    "p90_points": 277.12,
+    "expected_rank_after_path": 2.38,
+    "prob_gain_league_place": 0.593,
     "prob_finish_ahead_each_rival": [
-      0.292,
-      0.844,
-      0.955,
-      0.641,
-      0.985,
+      0.283,
+      0.828,
+      0.951,
+      0.606,
+      0.99,
       0.968,
-      1.0,
+      0.998,
       1.0
     ],
-    "ending_bank": 8.3,
+    "ending_bank": 8.9,
     "ending_free_transfers": 1,
     "first_transfer_incoming_starts": true,
-    "utility_score": 237.207,
+    "utility_score": 235.834,
     "contains_enabler": true,
     "unlock_sequence": {
       "enabler_gw": 7,
@@ -201,6 +201,222 @@
     }
   },
   "paths": [
+    {
+      "actions": [
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Gabriel → Tarkowski",
+          "hit": 0,
+          "out_id": 4,
+          "in_id": 229,
+          "enabler": false,
+          "bank_released": 2.0
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Hughes → Dewsbury-Hall",
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 236,
+          "enabler": false,
+          "bank_released": 0
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Schade → King",
+          "hit": 0,
+          "out_id": 94,
+          "in_id": 268,
+          "enabler": false,
+          "bank_released": 0.5
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Janelt",
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 98,
+          "enabler": true,
+          "bank_released": 7.0
+        }
+      ],
+      "expected_points": 236.94,
+      "p10_points": 198.83,
+      "p90_points": 277.12,
+      "expected_rank_after_path": 2.38,
+      "prob_gain_league_place": 0.593,
+      "prob_finish_ahead_each_rival": [
+        0.283,
+        0.828,
+        0.951,
+        0.606,
+        0.99,
+        0.968,
+        0.998,
+        1.0
+      ],
+      "ending_bank": 8.9,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "utility_score": 235.834,
+      "contains_enabler": true,
+      "unlock_sequence": {
+        "enabler_gw": 7,
+        "enabler_route": "B.Fernandes → Janelt",
+        "bank_released": 7.0,
+        "follow_up_gw": null,
+        "follow_up_route": null,
+        "completed_unlock": false
+      }
+    },
+    {
+      "actions": [
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Gabriel → Tarkowski",
+          "hit": 0,
+          "out_id": 4,
+          "in_id": 229,
+          "enabler": false,
+          "bank_released": 2.0
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Hughes → Dewsbury-Hall",
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 236,
+          "enabler": false,
+          "bank_released": 0
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Schade → King",
+          "hit": 0,
+          "out_id": 94,
+          "in_id": 268,
+          "enabler": false,
+          "bank_released": 0.5
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Elanga",
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 454,
+          "enabler": true,
+          "bank_released": 5.9
+        }
+      ],
+      "expected_points": 236.86,
+      "p10_points": 197.08,
+      "p90_points": 276.05,
+      "expected_rank_after_path": 2.37,
+      "prob_gain_league_place": 0.596,
+      "prob_finish_ahead_each_rival": [
+        0.278,
+        0.833,
+        0.957,
+        0.61,
+        0.992,
+        0.967,
+        0.998,
+        1.0
+      ],
+      "ending_bank": 7.8,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "utility_score": 235.608,
+      "contains_enabler": true,
+      "unlock_sequence": {
+        "enabler_gw": 7,
+        "enabler_route": "B.Fernandes → Elanga",
+        "bank_released": 5.9,
+        "follow_up_gw": null,
+        "follow_up_route": null,
+        "completed_unlock": false
+      }
+    },
+    {
+      "actions": [
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Maguire → Tarkowski",
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 229,
+          "enabler": false,
+          "bank_released": 0
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "hit": 0,
+          "out_id": 496,
+          "in_id": 572,
+          "enabler": false,
+          "bank_released": 0
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Schade → King",
+          "hit": 0,
+          "out_id": 94,
+          "in_id": 268,
+          "enabler": false,
+          "bank_released": 0.5
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Janelt",
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 98,
+          "enabler": true,
+          "bank_released": 7.0
+        }
+      ],
+      "expected_points": 236.59,
+      "p10_points": 197.08,
+      "p90_points": 277.76,
+      "expected_rank_after_path": 2.38,
+      "prob_gain_league_place": 0.599,
+      "prob_finish_ahead_each_rival": [
+        0.291,
+        0.826,
+        0.94,
+        0.613,
+        0.991,
+        0.962,
+        0.998,
+        1.0
+      ],
+      "ending_bank": 7.8,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "utility_score": 235.298,
+      "contains_enabler": true,
+      "unlock_sequence": {
+        "enabler_gw": 7,
+        "enabler_route": "B.Fernandes → Janelt",
+        "bank_released": 7.0,
+        "follow_up_gw": null,
+        "follow_up_route": null,
+        "completed_unlock": false
+      }
+    },
     {
       "actions": [
         {
@@ -244,25 +460,25 @@
           "bank_released": 7.0
         }
       ],
-      "expected_points": 238.08,
-      "p10_points": 199.32,
-      "p90_points": 280.5,
-      "expected_rank_after_path": 2.31,
-      "prob_gain_league_place": 0.631,
+      "expected_points": 236.66,
+      "p10_points": 196.18,
+      "p90_points": 276.97,
+      "expected_rank_after_path": 2.37,
+      "prob_gain_league_place": 0.595,
       "prob_finish_ahead_each_rival": [
-        0.292,
-        0.844,
-        0.955,
-        0.641,
-        0.985,
+        0.29,
+        0.823,
+        0.946,
+        0.614,
+        0.988,
         0.968,
-        1.0,
+        0.997,
         1.0
       ],
       "ending_bank": 8.3,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
-      "utility_score": 237.207,
+      "utility_score": 235.283,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 7,
@@ -316,97 +532,25 @@
           "bank_released": 7.0
         }
       ],
-      "expected_points": 238.08,
-      "p10_points": 199.32,
-      "p90_points": 280.5,
-      "expected_rank_after_path": 2.31,
-      "prob_gain_league_place": 0.631,
+      "expected_points": 236.66,
+      "p10_points": 196.18,
+      "p90_points": 276.97,
+      "expected_rank_after_path": 2.37,
+      "prob_gain_league_place": 0.595,
       "prob_finish_ahead_each_rival": [
-        0.292,
-        0.844,
-        0.955,
-        0.641,
-        0.985,
-        0.968,
-        1.0,
-        1.0
-      ],
-      "ending_bank": 7.8,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "utility_score": 237.207,
-      "contains_enabler": true,
-      "unlock_sequence": {
-        "enabler_gw": 7,
-        "enabler_route": "B.Fernandes → Janelt",
-        "bank_released": 7.0,
-        "follow_up_gw": null,
-        "follow_up_route": null,
-        "completed_unlock": false
-      }
-    },
-    {
-      "actions": [
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Maguire → Tarkowski",
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 229,
-          "enabler": false,
-          "bank_released": 0
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Kinsky → Tzolakis",
-          "hit": 0,
-          "out_id": 496,
-          "in_id": 572,
-          "enabler": false,
-          "bank_released": 0
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Schade → King",
-          "hit": 0,
-          "out_id": 94,
-          "in_id": 268,
-          "enabler": false,
-          "bank_released": 0.5
-        },
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Janelt",
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 98,
-          "enabler": true,
-          "bank_released": 7.0
-        }
-      ],
-      "expected_points": 238.06,
-      "p10_points": 198.14,
-      "p90_points": 281.22,
-      "expected_rank_after_path": 2.32,
-      "prob_gain_league_place": 0.626,
-      "prob_finish_ahead_each_rival": [
-        0.287,
-        0.84,
-        0.956,
-        0.637,
+        0.29,
+        0.823,
+        0.946,
+        0.614,
         0.988,
-        0.969,
-        1.0,
+        0.968,
+        0.997,
         1.0
       ],
       "ending_bank": 7.8,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
-      "utility_score": 237.003,
+      "utility_score": 235.283,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 7,
@@ -460,25 +604,97 @@
           "bank_released": 5.9
         }
       ],
-      "expected_points": 237.99,
-      "p10_points": 198.6,
-      "p90_points": 281.73,
-      "expected_rank_after_path": 2.33,
-      "prob_gain_league_place": 0.624,
+      "expected_points": 236.58,
+      "p10_points": 196.1,
+      "p90_points": 277.83,
+      "expected_rank_after_path": 2.37,
+      "prob_gain_league_place": 0.596,
       "prob_finish_ahead_each_rival": [
-        0.284,
-        0.846,
-        0.958,
-        0.632,
-        0.987,
-        0.968,
+        0.281,
+        0.825,
+        0.953,
+        0.613,
+        0.989,
+        0.97,
         0.998,
         1.0
       ],
       "ending_bank": 7.2,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
-      "utility_score": 236.982,
+      "utility_score": 235.221,
+      "contains_enabler": true,
+      "unlock_sequence": {
+        "enabler_gw": 7,
+        "enabler_route": "B.Fernandes → Elanga",
+        "bank_released": 5.9,
+        "follow_up_gw": null,
+        "follow_up_route": null,
+        "completed_unlock": false
+      }
+    },
+    {
+      "actions": [
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Gabriel → Tarkowski",
+          "hit": 0,
+          "out_id": 4,
+          "in_id": 229,
+          "enabler": false,
+          "bank_released": 2.0
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Hughes → Dewsbury-Hall",
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 236,
+          "enabler": false,
+          "bank_released": 0
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Dubravka → Tzolakis",
+          "hit": 0,
+          "out_id": 497,
+          "in_id": 572,
+          "enabler": false,
+          "bank_released": 0
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Elanga",
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 454,
+          "enabler": true,
+          "bank_released": 5.9
+        }
+      ],
+      "expected_points": 236.58,
+      "p10_points": 196.1,
+      "p90_points": 277.83,
+      "expected_rank_after_path": 2.37,
+      "prob_gain_league_place": 0.596,
+      "prob_finish_ahead_each_rival": [
+        0.281,
+        0.825,
+        0.953,
+        0.613,
+        0.989,
+        0.97,
+        0.998,
+        1.0
+      ],
+      "ending_bank": 6.7,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "utility_score": 235.221,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 7,
@@ -504,16 +720,6 @@
         {
           "gw": 5,
           "action": "TRANSFER",
-          "route": "Gabriel → Gvardiol",
-          "hit": 0,
-          "out_id": 4,
-          "in_id": 391,
-          "enabler": false,
-          "bank_released": 2.4
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
           "route": "Kinsky → Tzolakis",
           "hit": 0,
           "out_id": 496,
@@ -522,256 +728,50 @@
           "bank_released": 0
         },
         {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Janelt",
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 98,
-          "enabler": true,
-          "bank_released": 7.0
-        }
-      ],
-      "expected_points": 237.65,
-      "p10_points": 197.12,
-      "p90_points": 281.19,
-      "expected_rank_after_path": 2.31,
-      "prob_gain_league_place": 0.626,
-      "prob_finish_ahead_each_rival": [
-        0.292,
-        0.853,
-        0.958,
-        0.632,
-        0.984,
-        0.975,
-        0.998,
-        1.0
-      ],
-      "ending_bank": 9.7,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "utility_score": 236.601,
-      "contains_enabler": true,
-      "unlock_sequence": {
-        "enabler_gw": 7,
-        "enabler_route": "B.Fernandes → Janelt",
-        "bank_released": 7.0,
-        "follow_up_gw": null,
-        "follow_up_route": null,
-        "completed_unlock": false
-      }
-    },
-    {
-      "actions": [
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Maguire → Tarkowski",
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 229,
-          "enabler": false,
-          "bank_released": 0
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Gabriel → Gvardiol",
-          "hit": 0,
-          "out_id": 4,
-          "in_id": 391,
-          "enabler": false,
-          "bank_released": 2.4
-        },
-        {
           "gw": 6,
           "action": "TRANSFER",
-          "route": "Dubravka → Tzolakis",
+          "route": "Schade → King",
           "hit": 0,
-          "out_id": 497,
-          "in_id": 572,
+          "out_id": 94,
+          "in_id": 268,
           "enabler": false,
-          "bank_released": 0
+          "bank_released": 0.5
         },
         {
           "gw": 7,
           "action": "TRANSFER",
-          "route": "B.Fernandes → Janelt",
+          "route": "B.Fernandes → Elanga",
           "hit": 0,
           "out_id": 426,
-          "in_id": 98,
+          "in_id": 454,
           "enabler": true,
-          "bank_released": 7.0
+          "bank_released": 5.9
         }
       ],
-      "expected_points": 237.65,
-      "p10_points": 197.12,
-      "p90_points": 281.19,
-      "expected_rank_after_path": 2.31,
-      "prob_gain_league_place": 0.626,
+      "expected_points": 236.52,
+      "p10_points": 197.08,
+      "p90_points": 277.29,
+      "expected_rank_after_path": 2.38,
+      "prob_gain_league_place": 0.597,
       "prob_finish_ahead_each_rival": [
-        0.292,
-        0.853,
-        0.958,
-        0.632,
-        0.984,
-        0.975,
-        0.998,
+        0.278,
+        0.828,
+        0.941,
+        0.616,
+        0.989,
+        0.967,
+        0.999,
         1.0
       ],
-      "ending_bank": 9.2,
+      "ending_bank": 6.7,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
-      "utility_score": 236.601,
+      "utility_score": 235.221,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 7,
-        "enabler_route": "B.Fernandes → Janelt",
-        "bank_released": 7.0,
-        "follow_up_gw": null,
-        "follow_up_route": null,
-        "completed_unlock": false
-      }
-    },
-    {
-      "actions": [
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Gabriel → Tarkowski",
-          "hit": 0,
-          "out_id": 4,
-          "in_id": 229,
-          "enabler": false,
-          "bank_released": 2.0
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Greaves → Gvardiol",
-          "hit": 0,
-          "out_id": 306,
-          "in_id": 391,
-          "enabler": false,
-          "bank_released": 0
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Kinsky → Tzolakis",
-          "hit": 0,
-          "out_id": 496,
-          "in_id": 572,
-          "enabler": false,
-          "bank_released": 0
-        },
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Janelt",
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 98,
-          "enabler": true,
-          "bank_released": 7.0
-        }
-      ],
-      "expected_points": 237.65,
-      "p10_points": 197.12,
-      "p90_points": 281.19,
-      "expected_rank_after_path": 2.31,
-      "prob_gain_league_place": 0.626,
-      "prob_finish_ahead_each_rival": [
-        0.292,
-        0.853,
-        0.958,
-        0.632,
-        0.984,
-        0.975,
-        0.998,
-        1.0
-      ],
-      "ending_bank": 8.7,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "utility_score": 236.601,
-      "contains_enabler": true,
-      "unlock_sequence": {
-        "enabler_gw": 7,
-        "enabler_route": "B.Fernandes → Janelt",
-        "bank_released": 7.0,
-        "follow_up_gw": null,
-        "follow_up_route": null,
-        "completed_unlock": false
-      }
-    },
-    {
-      "actions": [
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Gabriel → Tarkowski",
-          "hit": 0,
-          "out_id": 4,
-          "in_id": 229,
-          "enabler": false,
-          "bank_released": 2.0
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Greaves → Gvardiol",
-          "hit": 0,
-          "out_id": 306,
-          "in_id": 391,
-          "enabler": false,
-          "bank_released": 0
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Dubravka → Tzolakis",
-          "hit": 0,
-          "out_id": 497,
-          "in_id": 572,
-          "enabler": false,
-          "bank_released": 0
-        },
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Janelt",
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 98,
-          "enabler": true,
-          "bank_released": 7.0
-        }
-      ],
-      "expected_points": 237.65,
-      "p10_points": 197.12,
-      "p90_points": 281.19,
-      "expected_rank_after_path": 2.31,
-      "prob_gain_league_place": 0.626,
-      "prob_finish_ahead_each_rival": [
-        0.292,
-        0.853,
-        0.958,
-        0.632,
-        0.984,
-        0.975,
-        0.998,
-        1.0
-      ],
-      "ending_bank": 8.2,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "utility_score": 236.601,
-      "contains_enabler": true,
-      "unlock_sequence": {
-        "enabler_gw": 7,
-        "enabler_route": "B.Fernandes → Janelt",
-        "bank_released": 7.0,
+        "enabler_route": "B.Fernandes → Elanga",
+        "bank_released": 5.9,
         "follow_up_gw": null,
         "follow_up_route": null,
         "completed_unlock": false
