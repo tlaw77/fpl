@@ -46,6 +46,12 @@ jobs:
             echo "No elite benchmark changes"
           else
             git commit -m "Update elite FPL benchmark"
-            git pull --rebase origin main
-            git push origin main
+            for attempt in 1 2 3 4 5; do
+              git pull --rebase origin main
+              if git push origin HEAD:main; then exit 0; fi
+              echo "Benchmark push raced with another writer; retrying ($attempt/5)"
+              sleep $((attempt * 2))
+            done
+            echo "Benchmark push failed after 5 attempts"
+            exit 1
           fi

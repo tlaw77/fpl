@@ -158,11 +158,11 @@ def main():
             if not deadline or deadline <= now:
                 continue
             days = max(1.0, (deadline - now).total_seconds() / 86400)
-            load = sum((load_map.get(c) or {}).get('europe', 0) + (load_map.get(c) or {}).get('domestic_cup', 0) for c in clubs)
+            schedule_load = sum((load_map.get(c) or {}).get('europe', 0) + (load_map.get(c) or {}).get('domestic_cup', 0) for c in clubs)
             probability = .24
             probability += .08 if days >= 14 else 0
             probability += .05 if days >= 28 else 0
-            probability -= min(.12, load * .015)
+            probability -= min(.12, schedule_load * .015)
             probability = max(.12, min(.49, probability))
             potential_windows.append({
                 'gw': gw,
