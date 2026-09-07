@@ -8,6 +8,35 @@ BASE = "https://fantasy.premierleague.com/api"
 LATEST = Path("data/latest.json")
 STRATEGY = Path("data/strategy.json")
 OUT = Path("data/squad_intelligence.json")
+LIVE = Path("data/live_gameweek.json")
+ALL_CHIPS = ["Wildcard", "Free Hit", "Triple Captain", "Bench Boost"]
+
+
+def chip_key(value):
+    raw = str(value or "").lower().replace(" ", "").replace("_", "").replace("-", "")
+    if raw in {"wc", "wildcard"}:
+        return "wildcard"
+    if raw in {"fh", "freehit"}:
+        return "freehit"
+    if raw in {"bb", "bboost", "benchboost"}:
+        return "bboost"
+    if raw in {"tc", "3xc", "triplecaptain"}:
+        return "3xc"
+    return raw
+
+
+def chip_name(value):
+    return {"wildcard": "Wildcard", "freehit": "Free Hit", "bboost": "Bench Boost", "3xc": "Triple Captain"}.get(chip_key(value), value)
+
+
+def merge_live_chip(chip, active_chip, current_gw):
+    used = [dict(x) for x in (chip.get("used", []) or [])]
+    active = chip_name(active_chip) if active_chip else None
+    if active and not any(chip_key(x.get("chip")) == chip_key(active) and int(x.get("gw") or 0) == int(current_gw or 0) for x in used):
+        used.append({"chip": active, "gw": current_gw})
+    base_remaining = chip.get("remaining") if isinstance(chip.get("remaining"), list) else ALL_CHIPS
+    remaining = [name for name in base_remaining if chip_key(name) != chip_key(active)] if active else list(base_remaining)
+    return {**chip, "used": used, "remaining": remaining, "remaining_count": len(remaining)}
 
 
 def get_json(url):
@@ -178,6 +207,8 @@ def main():
     players = player_maps()
     exposure = {x.get("player_id"): x for x in latest.get("player_exposure", [])}
     chips = chip_summary(strategy)
+    live = json.loads(LIVE.read_text()) if LIVE.exists() else {}
+    live_by_entry = {int(m.get("entry_id")): m for m in live.get("managers", []) if m.get("entry_id")}
 
     managers = []
     me = latest.get("me", {})
@@ -198,7 +229,9 @@ def main():
             continue
         squad = squad_profile(m, exposure)
         transfer = transfer_profile(entry_id, players)
-        chip = chips.get(entry_id, {"used": [], "remaining": [], "remaining_count": 0, "chip_edge_vs_me": {}})
+        chip = chips.get(entry_id, {"used": [], "remaining": ALL_CHIPS, "remaining_count": len(ALL_CHIPS), "chip_edge_vs_me": {}})
+        live_manager = live_by_entry.get(int(entry_id))
+        chip = merge_live_chip(chip, live_manager.get("active_chip") if live_manager else None, live.get("gw") or current_gw)
         ft = ft_state(current_gw)
 
         signals = []

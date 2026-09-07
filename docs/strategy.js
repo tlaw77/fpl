@@ -17,10 +17,10 @@ function loadSquadIntel(){
     if(subtle)subtle.textContent='Free transfers · chips · club stacks · squad style · transfer history';
   }
   if(!document.querySelector('link[data-squad-intel]')){
-    const l=document.createElement('link');l.rel='stylesheet';l.href='squad-intelligence.css?v=20260825-1523';l.dataset.squadIntel='1';document.head.appendChild(l);
+    const l=document.createElement('link');l.rel='stylesheet';l.href='squad-intelligence.css?v=20260907-0018';l.dataset.squadIntel='1';document.head.appendChild(l);
   }
   if(!document.querySelector('script[data-squad-intel]')){
-    const s=document.createElement('script');s.src='squad-intelligence.js?v=20260825-1541';s.dataset.squadIntel='1';document.body.appendChild(s);
+    const s=document.createElement('script');s.src='squad-intelligence.js?v=20260907-0018';s.dataset.squadIntel='1';document.body.appendChild(s);
   }
 }
 function loadDecisionJournal(){
