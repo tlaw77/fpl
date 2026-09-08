@@ -1,6 +1,6 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-09-08T01:07:04.265192+00:00",
+  "generated_at_utc": "2026-09-08T06:30:00.784583+00:00",
   "engine_version": 7,
   "planner": "bounded beam search + GW-specific shared-outcome Monte Carlo + live FT state + season calibration + shared captaincy + deadline-aware sampling + enabling-downgrade retention",
   "projection_model": "season-maturity calibrated + shared captaincy model",
@@ -16,7 +16,7 @@
   "iteration_policy": {
     "layer": "path",
     "deadline_phase": "normal",
-    "hours_to_deadline": 107.41,
+    "hours_to_deadline": 102.02,
     "iterations": 1200,
     "policy": "lighter normal-week sampling; higher precision inside 72h/24h/6h of official FPL deadline"
   },
@@ -143,496 +143,64 @@
       {
         "gw": 5,
         "action": "TRANSFER",
-        "route": "Gabriel → Gvardiol",
+        "route": "Kinsky → Tzolakis",
         "hit": 0,
-        "out_id": 4,
-        "in_id": 391,
-        "enabler": false,
-        "bank_released": 2.4
-      },
-      {
-        "gw": 6,
-        "action": "TRANSFER",
-        "route": "Hughes → King",
-        "hit": 0,
-        "out_id": 212,
-        "in_id": 268,
+        "out_id": 496,
+        "in_id": 572,
         "enabler": false,
         "bank_released": 0
       },
       {
+        "gw": 6,
+        "action": "TRANSFER",
+        "route": "Schade → King",
+        "hit": 0,
+        "out_id": 94,
+        "in_id": 268,
+        "enabler": false,
+        "bank_released": 0.5
+      },
+      {
         "gw": 7,
         "action": "TRANSFER",
-        "route": "João Pedro → Walle Egeli",
+        "route": "Gabriel → van Ewijk",
         "hit": 0,
-        "out_id": 165,
-        "in_id": 321,
+        "out_id": 4,
+        "in_id": 175,
         "enabler": true,
-        "bank_released": 3.2
+        "bank_released": 4.0
       }
     ],
-    "expected_points": 229.31,
-    "p10_points": 190.9,
-    "p90_points": 270.33,
-    "expected_rank_after_path": 2.53,
-    "prob_gain_league_place": 0.803,
+    "expected_points": 230.23,
+    "p10_points": 192.44,
+    "p90_points": 271.09,
+    "expected_rank_after_path": 2.65,
+    "prob_gain_league_place": 0.74,
     "prob_finish_ahead_each_rival": [
-      0.306,
-      0.882,
-      0.752,
-      0.948,
-      0.609,
-      0.973,
+      0.298,
+      0.854,
+      0.703,
+      0.935,
+      0.584,
+      0.982,
       0.998,
       1.0
     ],
-    "ending_bank": 4.9,
+    "ending_bank": 4.7,
     "ending_free_transfers": 1,
     "first_transfer_incoming_starts": true,
-    "utility_score": 232.4,
+    "utility_score": 232.819,
     "contains_enabler": true,
     "unlock_sequence": {
       "enabler_gw": 7,
-      "enabler_route": "João Pedro → Walle Egeli",
-      "bank_released": 3.2,
+      "enabler_route": "Gabriel → van Ewijk",
+      "bank_released": 4.0,
       "follow_up_gw": null,
       "follow_up_route": null,
       "completed_unlock": false
     }
   },
   "paths": [
-    {
-      "actions": [
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Maguire → Tarkowski",
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 229,
-          "enabler": false,
-          "bank_released": 0
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Gabriel → Gvardiol",
-          "hit": 0,
-          "out_id": 4,
-          "in_id": 391,
-          "enabler": false,
-          "bank_released": 2.4
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Hughes → King",
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 268,
-          "enabler": false,
-          "bank_released": 0
-        },
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "João Pedro → Walle Egeli",
-          "hit": 0,
-          "out_id": 165,
-          "in_id": 321,
-          "enabler": true,
-          "bank_released": 3.2
-        }
-      ],
-      "expected_points": 229.31,
-      "p10_points": 190.9,
-      "p90_points": 270.33,
-      "expected_rank_after_path": 2.53,
-      "prob_gain_league_place": 0.803,
-      "prob_finish_ahead_each_rival": [
-        0.306,
-        0.882,
-        0.752,
-        0.948,
-        0.609,
-        0.973,
-        0.998,
-        1.0
-      ],
-      "ending_bank": 4.9,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "utility_score": 232.4,
-      "contains_enabler": true,
-      "unlock_sequence": {
-        "enabler_gw": 7,
-        "enabler_route": "João Pedro → Walle Egeli",
-        "bank_released": 3.2,
-        "follow_up_gw": null,
-        "follow_up_route": null,
-        "completed_unlock": false
-      }
-    },
-    {
-      "actions": [
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Maguire → Tarkowski",
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 229,
-          "enabler": false,
-          "bank_released": 0
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Gabriel → Gvardiol",
-          "hit": 0,
-          "out_id": 4,
-          "in_id": 391,
-          "enabler": false,
-          "bank_released": 2.4
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Hughes → King",
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 268,
-          "enabler": false,
-          "bank_released": 0
-        },
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "João Pedro → Kusi-Asare",
-          "hit": 0,
-          "out_id": 165,
-          "in_id": 272,
-          "enabler": true,
-          "bank_released": 3.2
-        }
-      ],
-      "expected_points": 229.31,
-      "p10_points": 190.9,
-      "p90_points": 270.33,
-      "expected_rank_after_path": 2.53,
-      "prob_gain_league_place": 0.803,
-      "prob_finish_ahead_each_rival": [
-        0.306,
-        0.882,
-        0.752,
-        0.948,
-        0.609,
-        0.973,
-        0.998,
-        1.0
-      ],
-      "ending_bank": 4.9,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "utility_score": 232.4,
-      "contains_enabler": true,
-      "unlock_sequence": {
-        "enabler_gw": 7,
-        "enabler_route": "João Pedro → Kusi-Asare",
-        "bank_released": 3.2,
-        "follow_up_gw": null,
-        "follow_up_route": null,
-        "completed_unlock": false
-      }
-    },
-    {
-      "actions": [
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Gabriel → Tarkowski",
-          "hit": 0,
-          "out_id": 4,
-          "in_id": 229,
-          "enabler": false,
-          "bank_released": 2.0
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Greaves → Gvardiol",
-          "hit": 0,
-          "out_id": 306,
-          "in_id": 391,
-          "enabler": false,
-          "bank_released": 0
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Hughes → King",
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 268,
-          "enabler": false,
-          "bank_released": 0
-        },
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "João Pedro → Walle Egeli",
-          "hit": 0,
-          "out_id": 165,
-          "in_id": 321,
-          "enabler": true,
-          "bank_released": 3.2
-        }
-      ],
-      "expected_points": 229.31,
-      "p10_points": 190.9,
-      "p90_points": 270.33,
-      "expected_rank_after_path": 2.53,
-      "prob_gain_league_place": 0.803,
-      "prob_finish_ahead_each_rival": [
-        0.306,
-        0.882,
-        0.752,
-        0.948,
-        0.609,
-        0.973,
-        0.998,
-        1.0
-      ],
-      "ending_bank": 4.0,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "utility_score": 232.4,
-      "contains_enabler": true,
-      "unlock_sequence": {
-        "enabler_gw": 7,
-        "enabler_route": "João Pedro → Walle Egeli",
-        "bank_released": 3.2,
-        "follow_up_gw": null,
-        "follow_up_route": null,
-        "completed_unlock": false
-      }
-    },
-    {
-      "actions": [
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Gabriel → Tarkowski",
-          "hit": 0,
-          "out_id": 4,
-          "in_id": 229,
-          "enabler": false,
-          "bank_released": 2.0
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Greaves → Gvardiol",
-          "hit": 0,
-          "out_id": 306,
-          "in_id": 391,
-          "enabler": false,
-          "bank_released": 0
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Hughes → King",
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 268,
-          "enabler": false,
-          "bank_released": 0
-        },
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "João Pedro → Kusi-Asare",
-          "hit": 0,
-          "out_id": 165,
-          "in_id": 272,
-          "enabler": true,
-          "bank_released": 3.2
-        }
-      ],
-      "expected_points": 229.31,
-      "p10_points": 190.9,
-      "p90_points": 270.33,
-      "expected_rank_after_path": 2.53,
-      "prob_gain_league_place": 0.803,
-      "prob_finish_ahead_each_rival": [
-        0.306,
-        0.882,
-        0.752,
-        0.948,
-        0.609,
-        0.973,
-        0.998,
-        1.0
-      ],
-      "ending_bank": 4.0,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "utility_score": 232.4,
-      "contains_enabler": true,
-      "unlock_sequence": {
-        "enabler_gw": 7,
-        "enabler_route": "João Pedro → Kusi-Asare",
-        "bank_released": 3.2,
-        "follow_up_gw": null,
-        "follow_up_route": null,
-        "completed_unlock": false
-      }
-    },
-    {
-      "actions": [
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Maguire → Tarkowski",
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 229,
-          "enabler": false,
-          "bank_released": 0
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Gabriel → Gvardiol",
-          "hit": 0,
-          "out_id": 4,
-          "in_id": 391,
-          "enabler": false,
-          "bank_released": 2.4
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Kinsky → Tzolakis",
-          "hit": 0,
-          "out_id": 496,
-          "in_id": 572,
-          "enabler": false,
-          "bank_released": 0
-        },
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "João Pedro → Walle Egeli",
-          "hit": 0,
-          "out_id": 165,
-          "in_id": 321,
-          "enabler": true,
-          "bank_released": 3.2
-        }
-      ],
-      "expected_points": 228.89,
-      "p10_points": 190.07,
-      "p90_points": 268.16,
-      "expected_rank_after_path": 2.57,
-      "prob_gain_league_place": 0.783,
-      "prob_finish_ahead_each_rival": [
-        0.3,
-        0.868,
-        0.741,
-        0.945,
-        0.602,
-        0.973,
-        0.999,
-        1.0
-      ],
-      "ending_bank": 5.8,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "utility_score": 231.72,
-      "contains_enabler": true,
-      "unlock_sequence": {
-        "enabler_gw": 7,
-        "enabler_route": "João Pedro → Walle Egeli",
-        "bank_released": 3.2,
-        "follow_up_gw": null,
-        "follow_up_route": null,
-        "completed_unlock": false
-      }
-    },
-    {
-      "actions": [
-        {
-          "gw": 4,
-          "action": "TRANSFER",
-          "route": "Maguire → Tarkowski",
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 229,
-          "enabler": false,
-          "bank_released": 0
-        },
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Gabriel → Gvardiol",
-          "hit": 0,
-          "out_id": 4,
-          "in_id": 391,
-          "enabler": false,
-          "bank_released": 2.4
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Kinsky → Tzolakis",
-          "hit": 0,
-          "out_id": 496,
-          "in_id": 572,
-          "enabler": false,
-          "bank_released": 0
-        },
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "João Pedro → Kusi-Asare",
-          "hit": 0,
-          "out_id": 165,
-          "in_id": 272,
-          "enabler": true,
-          "bank_released": 3.2
-        }
-      ],
-      "expected_points": 228.89,
-      "p10_points": 190.07,
-      "p90_points": 268.16,
-      "expected_rank_after_path": 2.57,
-      "prob_gain_league_place": 0.783,
-      "prob_finish_ahead_each_rival": [
-        0.3,
-        0.868,
-        0.741,
-        0.945,
-        0.602,
-        0.973,
-        0.999,
-        1.0
-      ],
-      "ending_bank": 5.8,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "utility_score": 231.72,
-      "contains_enabler": true,
-      "unlock_sequence": {
-        "enabler_gw": 7,
-        "enabler_route": "João Pedro → Kusi-Asare",
-        "bank_released": 3.2,
-        "follow_up_gw": null,
-        "follow_up_route": null,
-        "completed_unlock": false
-      }
-    },
     {
       "actions": [
         {
@@ -676,25 +244,25 @@
           "bank_released": 4.0
         }
       ],
-      "expected_points": 228.93,
-      "p10_points": 190.0,
-      "p90_points": 269.51,
-      "expected_rank_after_path": 2.61,
-      "prob_gain_league_place": 0.769,
+      "expected_points": 230.23,
+      "p10_points": 192.44,
+      "p90_points": 271.09,
+      "expected_rank_after_path": 2.65,
+      "prob_gain_league_place": 0.74,
       "prob_finish_ahead_each_rival": [
-        0.308,
-        0.861,
-        0.722,
-        0.947,
-        0.591,
-        0.966,
-        0.999,
+        0.298,
+        0.854,
+        0.703,
+        0.935,
+        0.584,
+        0.982,
+        0.998,
         1.0
       ],
       "ending_bank": 4.7,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
-      "utility_score": 231.577,
+      "utility_score": 232.819,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 7,
@@ -748,30 +316,462 @@
           "bank_released": 4.0
         }
       ],
-      "expected_points": 228.93,
-      "p10_points": 190.0,
-      "p90_points": 269.51,
-      "expected_rank_after_path": 2.61,
-      "prob_gain_league_place": 0.769,
+      "expected_points": 230.23,
+      "p10_points": 192.44,
+      "p90_points": 271.09,
+      "expected_rank_after_path": 2.65,
+      "prob_gain_league_place": 0.74,
       "prob_finish_ahead_each_rival": [
-        0.308,
-        0.861,
-        0.722,
-        0.947,
-        0.591,
-        0.966,
-        0.999,
+        0.298,
+        0.854,
+        0.703,
+        0.935,
+        0.584,
+        0.982,
+        0.998,
         1.0
       ],
       "ending_bank": 4.7,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
-      "utility_score": 231.577,
+      "utility_score": 232.819,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 7,
         "enabler_route": "Gabriel → Coyle",
         "bank_released": 4.0,
+        "follow_up_gw": null,
+        "follow_up_route": null,
+        "completed_unlock": false
+      }
+    },
+    {
+      "actions": [
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Maguire → Tarkowski",
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 229,
+          "enabler": false,
+          "bank_released": 0
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Gabriel → Gvardiol",
+          "hit": 0,
+          "out_id": 4,
+          "in_id": 391,
+          "enabler": false,
+          "bank_released": 2.4
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Hughes → King",
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 268,
+          "enabler": false,
+          "bank_released": 0
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "João Pedro → Walle Egeli",
+          "hit": 0,
+          "out_id": 165,
+          "in_id": 321,
+          "enabler": true,
+          "bank_released": 3.2
+        }
+      ],
+      "expected_points": 229.9,
+      "p10_points": 190.39,
+      "p90_points": 269.49,
+      "expected_rank_after_path": 2.61,
+      "prob_gain_league_place": 0.767,
+      "prob_finish_ahead_each_rival": [
+        0.298,
+        0.858,
+        0.724,
+        0.938,
+        0.583,
+        0.987,
+        0.998,
+        1.0
+      ],
+      "ending_bank": 4.9,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "utility_score": 232.44,
+      "contains_enabler": true,
+      "unlock_sequence": {
+        "enabler_gw": 7,
+        "enabler_route": "João Pedro → Walle Egeli",
+        "bank_released": 3.2,
+        "follow_up_gw": null,
+        "follow_up_route": null,
+        "completed_unlock": false
+      }
+    },
+    {
+      "actions": [
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Maguire → Tarkowski",
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 229,
+          "enabler": false,
+          "bank_released": 0
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Gabriel → Gvardiol",
+          "hit": 0,
+          "out_id": 4,
+          "in_id": 391,
+          "enabler": false,
+          "bank_released": 2.4
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Hughes → King",
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 268,
+          "enabler": false,
+          "bank_released": 0
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "João Pedro → Kusi-Asare",
+          "hit": 0,
+          "out_id": 165,
+          "in_id": 272,
+          "enabler": true,
+          "bank_released": 3.2
+        }
+      ],
+      "expected_points": 229.9,
+      "p10_points": 190.39,
+      "p90_points": 269.49,
+      "expected_rank_after_path": 2.61,
+      "prob_gain_league_place": 0.767,
+      "prob_finish_ahead_each_rival": [
+        0.298,
+        0.858,
+        0.724,
+        0.938,
+        0.583,
+        0.987,
+        0.998,
+        1.0
+      ],
+      "ending_bank": 4.9,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "utility_score": 232.44,
+      "contains_enabler": true,
+      "unlock_sequence": {
+        "enabler_gw": 7,
+        "enabler_route": "João Pedro → Kusi-Asare",
+        "bank_released": 3.2,
+        "follow_up_gw": null,
+        "follow_up_route": null,
+        "completed_unlock": false
+      }
+    },
+    {
+      "actions": [
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Gabriel → Tarkowski",
+          "hit": 0,
+          "out_id": 4,
+          "in_id": 229,
+          "enabler": false,
+          "bank_released": 2.0
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Greaves → Gvardiol",
+          "hit": 0,
+          "out_id": 306,
+          "in_id": 391,
+          "enabler": false,
+          "bank_released": 0
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Hughes → King",
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 268,
+          "enabler": false,
+          "bank_released": 0
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "João Pedro → Walle Egeli",
+          "hit": 0,
+          "out_id": 165,
+          "in_id": 321,
+          "enabler": true,
+          "bank_released": 3.2
+        }
+      ],
+      "expected_points": 229.9,
+      "p10_points": 190.39,
+      "p90_points": 269.49,
+      "expected_rank_after_path": 2.61,
+      "prob_gain_league_place": 0.767,
+      "prob_finish_ahead_each_rival": [
+        0.298,
+        0.858,
+        0.724,
+        0.938,
+        0.583,
+        0.987,
+        0.998,
+        1.0
+      ],
+      "ending_bank": 4.0,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "utility_score": 232.44,
+      "contains_enabler": true,
+      "unlock_sequence": {
+        "enabler_gw": 7,
+        "enabler_route": "João Pedro → Walle Egeli",
+        "bank_released": 3.2,
+        "follow_up_gw": null,
+        "follow_up_route": null,
+        "completed_unlock": false
+      }
+    },
+    {
+      "actions": [
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Gabriel → Tarkowski",
+          "hit": 0,
+          "out_id": 4,
+          "in_id": 229,
+          "enabler": false,
+          "bank_released": 2.0
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Greaves → Gvardiol",
+          "hit": 0,
+          "out_id": 306,
+          "in_id": 391,
+          "enabler": false,
+          "bank_released": 0
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Hughes → King",
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 268,
+          "enabler": false,
+          "bank_released": 0
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "João Pedro → Kusi-Asare",
+          "hit": 0,
+          "out_id": 165,
+          "in_id": 272,
+          "enabler": true,
+          "bank_released": 3.2
+        }
+      ],
+      "expected_points": 229.9,
+      "p10_points": 190.39,
+      "p90_points": 269.49,
+      "expected_rank_after_path": 2.61,
+      "prob_gain_league_place": 0.767,
+      "prob_finish_ahead_each_rival": [
+        0.298,
+        0.858,
+        0.724,
+        0.938,
+        0.583,
+        0.987,
+        0.998,
+        1.0
+      ],
+      "ending_bank": 4.0,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "utility_score": 232.44,
+      "contains_enabler": true,
+      "unlock_sequence": {
+        "enabler_gw": 7,
+        "enabler_route": "João Pedro → Kusi-Asare",
+        "bank_released": 3.2,
+        "follow_up_gw": null,
+        "follow_up_route": null,
+        "completed_unlock": false
+      }
+    },
+    {
+      "actions": [
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Maguire → Tarkowski",
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 229,
+          "enabler": false,
+          "bank_released": 0
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Gabriel → Gvardiol",
+          "hit": 0,
+          "out_id": 4,
+          "in_id": 391,
+          "enabler": false,
+          "bank_released": 2.4
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "hit": 0,
+          "out_id": 496,
+          "in_id": 572,
+          "enabler": false,
+          "bank_released": 0
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "João Pedro → Walle Egeli",
+          "hit": 0,
+          "out_id": 165,
+          "in_id": 321,
+          "enabler": true,
+          "bank_released": 3.2
+        }
+      ],
+      "expected_points": 229.93,
+      "p10_points": 190.11,
+      "p90_points": 270.11,
+      "expected_rank_after_path": 2.64,
+      "prob_gain_league_place": 0.757,
+      "prob_finish_ahead_each_rival": [
+        0.292,
+        0.857,
+        0.714,
+        0.934,
+        0.583,
+        0.984,
+        0.998,
+        1.0
+      ],
+      "ending_bank": 5.8,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "utility_score": 232.308,
+      "contains_enabler": true,
+      "unlock_sequence": {
+        "enabler_gw": 7,
+        "enabler_route": "João Pedro → Walle Egeli",
+        "bank_released": 3.2,
+        "follow_up_gw": null,
+        "follow_up_route": null,
+        "completed_unlock": false
+      }
+    },
+    {
+      "actions": [
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Maguire → Tarkowski",
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 229,
+          "enabler": false,
+          "bank_released": 0
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Gabriel → Gvardiol",
+          "hit": 0,
+          "out_id": 4,
+          "in_id": 391,
+          "enabler": false,
+          "bank_released": 2.4
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "hit": 0,
+          "out_id": 496,
+          "in_id": 572,
+          "enabler": false,
+          "bank_released": 0
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "João Pedro → Kusi-Asare",
+          "hit": 0,
+          "out_id": 165,
+          "in_id": 272,
+          "enabler": true,
+          "bank_released": 3.2
+        }
+      ],
+      "expected_points": 229.93,
+      "p10_points": 190.11,
+      "p90_points": 270.11,
+      "expected_rank_after_path": 2.64,
+      "prob_gain_league_place": 0.757,
+      "prob_finish_ahead_each_rival": [
+        0.292,
+        0.857,
+        0.714,
+        0.934,
+        0.583,
+        0.984,
+        0.998,
+        1.0
+      ],
+      "ending_bank": 5.8,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "utility_score": 232.308,
+      "contains_enabler": true,
+      "unlock_sequence": {
+        "enabler_gw": 7,
+        "enabler_route": "João Pedro → Kusi-Asare",
+        "bank_released": 3.2,
         "follow_up_gw": null,
         "follow_up_route": null,
         "completed_unlock": false
