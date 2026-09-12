@@ -1,0 +1,140 @@
+{
+  "status": "SUCCESS",
+  "generated_at_utc": "2026-09-12T11:12:28.090422+00:00",
+  "version": 3,
+  "current_gw": 3,
+  "next_gw": 4,
+  "current_action": {
+    "action": "HOLD",
+    "headline": "Hold / roll",
+    "confidence": 78,
+    "reason": "The leading transfer edge is 13.1 projected points over holding and does not yet clear the full evidence hurdle with sufficient agreement on that exact route. Holding moves the bank from 1/5 to 2/5; no free transfer expires. The outgoing player has the easier immediate fixture; the move can wait unless other evidence changes.",
+    "completed_transfer": null,
+    "free_transfers_remaining": 1,
+    "free_transfer_cap": 5,
+    "free_transfer_would_expire_on_hold": false,
+    "next_transfer_hit_cost": 0
+  },
+  "robustness": {
+    "season_maturity_weight": 0.333,
+    "single_step_leader": "Greaves → Ajayi",
+    "single_step_edge_over_hold_6gw": 13.09,
+    "multi_gw_first_action": "Gabriel → Tarkowski",
+    "adaptive_rival_first_action": "Gabriel → Tarkowski",
+    "exact_route_consensus_models": 2,
+    "measured_leader_support_models": 1,
+    "same_incoming_target_consensus_models": 2,
+    "measured_target_support_models": 1,
+    "base_required_edge": 3.0,
+    "required_edge": 3.0,
+    "required_consensus_models": 2,
+    "transfer_clears_gate": false,
+    "free_transfers_before_moves": 1,
+    "free_transfers_before_decision": 1,
+    "free_transfer_cap": 5,
+    "free_transfer_headroom": 4,
+    "hold_next_week_free_transfers": 2,
+    "free_transfer_would_expire_on_hold": false,
+    "rollover_pressure": "bankable",
+    "rollover_edge_credit": 0.0,
+    "fixture_timing": {
+      "available": true,
+      "route": "Greaves → Ajayi",
+      "next_fixture_swing": -1.0,
+      "weighted_three_fixture_swing": -0.7,
+      "outgoing_difficulties": [
+        3.0,
+        3.0,
+        2.0
+      ],
+      "incoming_difficulties": [
+        4.0,
+        3.0,
+        3.0
+      ],
+      "timing": "defer_friendly",
+      "summary": "The outgoing player has the easier immediate fixture; the move can wait unless other evidence changes."
+    }
+  },
+  "forward_plan": {
+    "primary_path_first_action": {
+      "gw": 4,
+      "action": "TRANSFER",
+      "route": "Gabriel → Tarkowski",
+      "hit": 0,
+      "out_id": 4,
+      "in_id": 229
+    },
+    "adaptive_path_first_action": {
+      "gw": 4,
+      "action": "TRANSFER",
+      "route": "Gabriel → Tarkowski",
+      "hit": 0,
+      "out_id": 4,
+      "in_id": 229
+    },
+    "note": "Forward paths are planning evidence, not instructions to pre-commit future transfers. Re-optimise after each deadline and new information."
+  },
+  "chips": {
+    "action": "HOLD",
+    "reason": "Hold chips. Best visible TC uplift is 0.0 and BB uplift is 12.3, but the first-half portfolio remains comfortable with 13 slack Gameweeks. Preserve option value for stronger blank/double or squad-structure windows.",
+    "best_visible_triple_captain": {},
+    "best_visible_bench_boost": {
+      "actions": [
+        {
+          "gw": 4,
+          "action": "TRANSFER",
+          "route": "Maguire → Egan",
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 277
+        },
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Hughes → Scott",
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 69
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Dubravka → Tzolakis",
+          "hit": 0,
+          "out_id": 497,
+          "in_id": 572
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Schade → Tavernier",
+          "hit": 0,
+          "out_id": 94,
+          "in_id": 68
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 7,
+      "expected_points": 248.24,
+      "chip_incremental_expected_points": 12.26,
+      "p10_points": 209.83,
+      "p90_points": 287.13,
+      "expected_rank_after_path": 2.52,
+      "prob_finish_ahead_each_rival": [
+        0.305,
+        0.835,
+        0.725,
+        0.949,
+        0.687,
+        0.984,
+        0.998,
+        1.0
+      ],
+      "utility_score": 251.046
+    },
+    "portfolio_pressure": "comfortable",
+    "latest_safe_start_gw": 17
+  },
+  "method_note": "Authoritative decision gate. It synthesises single-step Monte Carlo, multi-GW beam search, probabilistic rival response, the five-transfer rollover ceiling, fixture timing, live transfer-hit state, season maturity and chip option value. Fixture difficulty is already priced into projected points; timing is used as context and to scale only the small credit for a transfer that would otherwise expire. A route is promoted only when it clears both magnitude and cross-model support thresholds."
+}
