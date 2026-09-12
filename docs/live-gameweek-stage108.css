@@ -27,3 +27,7 @@ html:not([data-live-review="removed"]):is([data-live-gameweek-phase="LOCKED"],[d
 .lgw-score-player.score-changed{animation:lgw-score-change 1.1s ease-out 2}
 @keyframes lgw-score-change{50%{box-shadow:0 0 0 4px rgba(52,211,153,.2),inset 0 2px #34d399}}
 @media(max-width:560px){.lgw-score-player{flex-basis:78px;min-width:78px;max-width:90px;padding:7px 6px;gap:1px 4px}.lgw-score-player.live,.lgw-score-player.complete{flex-basis:94px;min-width:94px;max-width:100px}.lgw-player-score b{font-size:20px}.lgw-score-player strong{display:-webkit-box;overflow:hidden;font-size:8.5px;line-height:1.15;white-space:normal;text-overflow:clip;overflow-wrap:anywhere;-webkit-box-orient:vertical;-webkit-line-clamp:2}.lgw-score-player small{white-space:nowrap}}
+
+/* Canonical fixture-state palette: cyan live, green finished, violet pending. */
+.lgw-fixture.live{border-color:#22d3ee;background:#102c42;color:#cffafe!important;box-shadow:0 0 0 2px rgba(34,211,238,.12)}
+.lgw-fixture.complete{border-color:#34d399;background:#10251f;color:#a7f3d0!important}
