@@ -1,7 +1,8 @@
 (()=>{
 'use strict';
-const BUILD='live-gameweek-stage108-20260912-32';
-const URL='https://raw.githubusercontent.com/tlaw77/fpl/main/data/live_gameweek.json';
+const BUILD='live-gameweek-stage108-20260912-33';
+const LIVE_URL='https://raw.githubusercontent.com/tlaw77/fpl/live-data/data/live_gameweek.json';
+const ARCHIVE_URL='https://raw.githubusercontent.com/tlaw77/fpl/main/data/live_gameweek.json';
 const LIVE_POLL_MS=30000,IDLE_POLL_MS=300000,LIVE_STALE_MS=8*60000,BETWEEN_STALE_MS=35*60000;
 let opened=false,timer=null,heartbeat=null,current=null,matrixMode='players',priorityObserver=null,priorityQueued=false,nextPollAt=0,lastCheckedAt=0,loading=false;
 const LIVE_PHASES=new Set(['LOCKED','LIVE','BETWEEN_FIXTURES']);
@@ -17,7 +18,7 @@ const netScore=m=>m?.net_gw_points!=null?n(m.net_gw_points):n(m?.live_gw_points)
 const phaseLabel=p=>({PRE_DEADLINE:'Opens at deadline',LOCKED:'Teams locked',LIVE:'Live now',BETWEEN_FIXTURES:'Between fixtures',COMPLETE:'Gameweek complete'})[p]||p;
 function statusPill(p){return `<span class="lgw-phase lgw-${String(p||'').toLowerCase()}"><i></i>${esc(phaseLabel(p))}</span>`}
 function updatedTime(d){if(!d?.generated_at_utc)return'<span class="lgw-section-refresh unknown">Update time unavailable</span>';const stamp=new Date(d.generated_at_utc);if(Number.isNaN(stamp.getTime()))return'<span class="lgw-section-refresh unknown">Update time unavailable</span>';const mins=Math.max(0,Math.floor((Date.now()-stamp.getTime())/60000)),label=mins<1?'Updated just now':`Updated ${mins}m ago`;return `<time class="lgw-section-refresh" datetime="${esc(stamp.toISOString())}" title="${esc(stamp.toLocaleString())}">${esc(label)}</time>`}
-function freshness(d){if(!d.generated_at_utc)return{tone:'unknown',label:'Refresh time unavailable'};const stamp=new Date(d.generated_at_utc),age=Math.max(0,Date.now()-stamp.getTime()),phase=String(d.phase||'').toUpperCase(),live=phase==='LIVE',staleAfter=live?LIVE_STALE_MS:BETWEEN_STALE_MS;if(Number.isNaN(stamp.getTime()))return{tone:'unknown',label:'Refresh time unavailable'};const mins=Math.floor(age/60000),ageLabel=mins<1?'just now':`${mins}m ago`;return{tone:age>staleAfter?'stale':'fresh',label:age>staleAfter?`Score data ${ageLabel} · workflow delayed`:`Score data ${ageLabel}`}}
+function freshness(d){if(!d.generated_at_utc)return{tone:'unknown',label:'Refresh time unavailable'};const stamp=new Date(d.generated_at_utc),age=Math.max(0,Date.now()-stamp.getTime()),phase=String(d.phase||'').toUpperCase(),live=phase==='LIVE',staleAfter=live?LIVE_STALE_MS:BETWEEN_STALE_MS;if(Number.isNaN(stamp.getTime()))return{tone:'unknown',label:'Refresh time unavailable'};const mins=Math.floor(age/60000),ageLabel=mins<1?'just now':`${mins}m ago`,source=d._client_source==='live-data'?'Official live session':'Snapshot fallback';return{tone:age>staleAfter?'stale':'fresh',label:age>staleAfter?`${source} · ${ageLabel} · feed delayed`:`${source} · ${ageLabel}`}}
 function refreshStatus(){
  const el=document.querySelector('[data-live-refresh-status]');if(!el||!current)return;
  const fresh=freshness(current),seconds=Math.max(0,Math.ceil((nextPollAt-Date.now())/1000)),watching=isLivePhase(current.phase);
@@ -83,7 +84,12 @@ function render(d){
  consolidateLiveDuplicates();
  schedulePriority();
 }
-async function requestData(signal){const urls=location.hostname==='localhost'||location.hostname==='127.0.0.1'?['../data/live_gameweek.json',URL]:[URL];let last;for(const url of urls){try{const response=await fetch(`${url}?v=${Date.now()}`,{cache:'no-store',signal});if(!response.ok)throw new Error(`HTTP ${response.status}`);return await response.json()}catch(error){last=error}}throw last}
+async function requestData(signal){
+ const local=location.hostname==='localhost'||location.hostname==='127.0.0.1',sources=local?[{url:'../data/live_gameweek.json',source:'local'},{url:LIVE_URL,source:'live-data'},{url:ARCHIVE_URL,source:'main'}]:[{url:LIVE_URL,source:'live-data'},{url:ARCHIVE_URL,source:'main'}];
+ const settled=await Promise.allSettled(sources.map(async item=>{const response=await fetch(`${item.url}?v=${Date.now()}`,{cache:'no-store',signal});if(!response.ok)throw new Error(`HTTP ${response.status}`);const data=await response.json();data._client_source=item.source;return data})),available=settled.filter(x=>x.status==='fulfilled').map(x=>x.value);
+ if(!available.length)throw settled.find(x=>x.status==='rejected')?.reason||new Error('No live score source available');
+ return available.sort((a,b)=>new Date(b.generated_at_utc||0)-new Date(a.generated_at_utc||0))[0];
+}
 async function load(manual=false){
  if(loading)return;loading=true;lastCheckedAt=Date.now();refreshStatus();
  try{const ctl=new AbortController(),timeout=setTimeout(()=>ctl.abort(),10000);current=await requestData(ctl.signal);clearTimeout(timeout);render(current)}catch(error){console.warn('Live Gameweek snapshot unavailable',error)}finally{loading=false;clearTimeout(timer);const delay=isLivePhase(current?.phase)?LIVE_POLL_MS:IDLE_POLL_MS;nextPollAt=Date.now()+delay;timer=setTimeout(load,delay);refreshStatus();if(manual)document.documentElement.dataset.liveManualRefresh=String(lastCheckedAt)}
