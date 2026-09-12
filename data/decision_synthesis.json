@@ -1,14 +1,14 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-09-12T14:20:35.933442+00:00",
+  "generated_at_utc": "2026-09-12T17:25:04.372357+00:00",
   "version": 3,
   "current_gw": 4,
   "next_gw": 5,
   "current_action": {
-    "action": "TRANSFER",
-    "headline": "Schade → Gakpo",
-    "confidence": 91,
-    "reason": "The leading move clears the 2.0-point robustness hurdle after hit cost and the same measured route is supported by 3/3 decision models. Holding moves the bank from 2/5 to 3/5; no free transfer expires. The incoming player has the easier immediate fixture run.",
+    "action": "HOLD",
+    "headline": "Hold / roll",
+    "confidence": 78,
+    "reason": "The leading transfer edge is 14.5 projected points over holding and does not yet clear the full evidence hurdle with sufficient agreement on that exact route. Holding moves the bank from 2/5 to 3/5; no free transfer expires. The fixture swing is broadly balanced rather than time-critical.",
     "completed_transfer": null,
     "free_transfers_remaining": 2,
     "free_transfer_cap": 5,
@@ -17,18 +17,18 @@
   },
   "robustness": {
     "season_maturity_weight": 0.4,
-    "single_step_leader": "Schade → Gakpo",
-    "single_step_edge_over_hold_6gw": 25.87,
-    "multi_gw_first_action": "Schade → Gakpo",
-    "adaptive_rival_first_action": "Schade → Gakpo",
-    "exact_route_consensus_models": 3,
-    "measured_leader_support_models": 3,
+    "single_step_leader": "Dubravka → Tzolakis",
+    "single_step_edge_over_hold_6gw": 14.49,
+    "multi_gw_first_action": "Kinsky → Tzolakis",
+    "adaptive_rival_first_action": "Kinsky → Tzolakis",
+    "exact_route_consensus_models": 2,
+    "measured_leader_support_models": 1,
     "same_incoming_target_consensus_models": 3,
     "measured_target_support_models": 3,
     "base_required_edge": 2.0,
     "required_edge": 2.0,
     "required_consensus_models": 2,
-    "transfer_clears_gate": true,
+    "transfer_clears_gate": false,
     "free_transfers_before_moves": 2,
     "free_transfers_before_decision": 2,
     "free_transfer_cap": 5,
@@ -39,99 +39,99 @@
     "rollover_edge_credit": 0.0,
     "fixture_timing": {
       "available": true,
-      "route": "Schade → Gakpo",
-      "next_fixture_swing": 1.0,
-      "weighted_three_fixture_swing": 0.7,
+      "route": "Dubravka → Tzolakis",
+      "next_fixture_swing": 0.0,
+      "weighted_three_fixture_swing": 0.15,
       "outgoing_difficulties": [
+        3.0,
         4.0,
-        4.0,
-        4.0
+        2.0
       ],
       "incoming_difficulties": [
         3.0,
-        4.0,
+        3.0,
         3.0
       ],
-      "timing": "front_loaded",
-      "summary": "The incoming player has the easier immediate fixture run."
+      "timing": "balanced",
+      "summary": "The fixture swing is broadly balanced rather than time-critical."
     }
   },
   "forward_plan": {
     "primary_path_first_action": {
       "gw": 5,
       "action": "TRANSFER",
-      "route": "Schade → Gakpo",
+      "route": "Kinsky → Tzolakis",
       "hit": 0,
-      "out_id": 94,
-      "in_id": 367
+      "out_id": 496,
+      "in_id": 572
     },
     "adaptive_path_first_action": {
       "gw": 5,
       "action": "TRANSFER",
-      "route": "Schade → Gakpo",
+      "route": "Kinsky → Tzolakis",
       "hit": 0,
-      "out_id": 94,
-      "in_id": 367
+      "out_id": 496,
+      "in_id": 572
     },
     "note": "Forward paths are planning evidence, not instructions to pre-commit future transfers. Re-optimise after each deadline and new information."
   },
   "chips": {
     "action": "HOLD",
-    "reason": "Hold chips. Best visible TC uplift is 0.0 and BB uplift is 10.2, but the first-half portfolio remains comfortable with 12 slack Gameweeks. Preserve option value for stronger blank/double or squad-structure windows.",
+    "reason": "Hold chips. Best visible TC uplift is 0.0 and BB uplift is 11.5, but the first-half portfolio remains comfortable with 12 slack Gameweeks. Preserve option value for stronger blank/double or squad-structure windows.",
     "best_visible_triple_captain": {},
     "best_visible_bench_boost": {
       "actions": [
         {
           "gw": 5,
           "action": "TRANSFER",
-          "route": "Schade → Gakpo",
+          "route": "Dubravka → Tzolakis",
           "hit": 0,
-          "out_id": 94,
-          "in_id": 367
+          "out_id": 497,
+          "in_id": 572
         },
         {
           "gw": 6,
           "action": "TRANSFER",
-          "route": "Kinsky → Tzolakis",
+          "route": "Maguire → Affengruber",
           "hit": 0,
-          "out_id": 496,
-          "in_id": 572
+          "out_id": 418,
+          "in_id": 650
         },
         {
           "gw": 7,
           "action": "TRANSFER",
-          "route": "Greaves → Mendy",
+          "route": "Hughes → Belloumi",
           "hit": 0,
-          "out_id": 306,
-          "in_id": 586
+          "out_id": 212,
+          "in_id": 286
         },
         {
           "gw": 8,
           "action": "TRANSFER",
-          "route": "Groß → Xhaka",
+          "route": "Cherki → Gakpo",
           "hit": 0,
-          "out_id": 124,
-          "in_id": 544
+          "out_id": 399,
+          "in_id": 367
         }
       ],
       "chip": "Bench Boost",
-      "chip_gw": 8,
-      "expected_points": 237.56,
-      "chip_incremental_expected_points": 10.2,
-      "p10_points": 202.13,
-      "p90_points": 275.76,
-      "expected_rank_after_path": 3.4,
+      "chip_gw": 7,
+      "expected_points": 244.91,
+      "chip_incremental_expected_points": 11.5,
+      "p10_points": 205.2,
+      "p90_points": 286.05,
+      "expected_rank_after_path": 2.59,
       "prob_finish_ahead_each_rival": [
-        0.233,
-        0.544,
-        0.537,
-        0.38,
-        0.943,
-        0.966,
-        0.995,
+        0.372,
+        0.619,
+        0.778,
+        0.682,
+        0.973,
+        0.998,
+        0.992,
         1.0
       ],
-      "utility_score": 236.301
+      "utility_score": 242.213
     },
     "portfolio_pressure": "comfortable",
     "latest_safe_start_gw": 17
