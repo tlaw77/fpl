@@ -1,9 +1,9 @@
 {
   "status": "SUCCESS",
   "version": 1,
-  "generated_at_utc": "2026-09-12T12:56:11.191540+00:00",
-  "current_gw": 3,
-  "next_gw": 4,
+  "generated_at_utc": "2026-09-12T16:14:48.890165+00:00",
+  "current_gw": 4,
+  "next_gw": 5,
   "progress": {
     "label": "Decision Twin v1",
     "completion_pct": 100,
@@ -12,20 +12,20 @@
     "state": "COMPLETE"
   },
   "decision_certificate": {
-    "certificate_id": "DT-0C1290CC03EE",
-    "action": "HOLD",
-    "headline": "Hold / roll",
-    "confidence": 78,
+    "certificate_id": "DT-5897FCFF2D48",
+    "action": "TRANSFER",
+    "headline": "Schade → Gakpo",
+    "confidence": 91,
     "objective": "Maximise mini-league winning potential while protecting downside and future flexibility.",
-    "six_gw_edge_over_hold": 13.09,
-    "probability_gain_league_place_pct": 50.2,
-    "strongest_alternative": "Maguire → Calafiori",
-    "alternative_expected_points_6gw": 328.28,
-    "rationale": "The leading transfer edge is 13.1 projected points over holding and does not yet clear the full evidence hurdle with sufficient agreement on that exact route. Holding moves the bank from 1/5 to 2/5; no free transfer expires. The outgoing player has the easier immediate fixture; the move can wait unless other evidence changes.",
+    "six_gw_edge_over_hold": 25.87,
+    "probability_gain_league_place_pct": 24.4,
+    "strongest_alternative": "Greaves → Ajayi",
+    "alternative_expected_points_6gw": 303.68,
+    "rationale": "The leading move clears the 2.0-point robustness hurdle after hit cost and the same measured route is supported by 3/3 decision models. Holding moves the bank from 2/5 to 3/5; no free transfer expires. The incoming player has the easier immediate fixture run.",
     "evidence": {
-      "newest_at_utc": "2026-09-12T11:12:44.639624+00:00",
+      "newest_at_utc": "2026-09-12T14:20:48.768372+00:00",
       "oldest_at_utc": "2026-09-11T21:44:03.276310+00:00",
-      "age_minutes": 103,
+      "age_minutes": 114,
       "sources_available": 12
     }
   },
@@ -34,8 +34,8 @@
       "agent": "Quant Analyst",
       "focus": "Magnitude and model agreement",
       "verdict": "SUPPORT",
-      "confidence": 78,
-      "argument": "The leading route is Greaves → Ajayi. Its 13.09-point six-GW edge is tested against a 3.00-point hurdle with 1/2 required model support.",
+      "confidence": 91,
+      "argument": "The leading route is Schade → Gakpo. Its 25.87-point six-GW edge is tested against a 2.00-point hurdle with 3/2 required model support.",
       "evidence": [
         "simulation",
         "path_simulation",
@@ -45,9 +45,9 @@
     {
       "agent": "Rival Strategist",
       "focus": "Mini-league consequence",
-      "verdict": "WATCH",
-      "confidence": 50,
-      "argument": "The simulated route has a 50.2% probability of gaining a league place against 8 modelled rivals; adaptive rivals prefer Gabriel → Tarkowski.",
+      "verdict": "CHALLENGE",
+      "confidence": 76,
+      "argument": "The simulated route has a 24.4% probability of gaining a league place against 8 modelled rivals; adaptive rivals prefer Schade → Gakpo.",
       "evidence": [
         "simulation",
         "adaptive_rival_simulation"
@@ -57,8 +57,8 @@
       "agent": "Evidence Scout",
       "focus": "News, role and availability",
       "verdict": "SUPPORT",
-      "confidence": 78,
-      "argument": "The evidence layer covers 180 public Scout/news items and 75 matched players. 0 current-squad players carry a press-conference signal.",
+      "confidence": 67,
+      "argument": "The evidence layer covers 125 public Scout/news items and 67 matched players. 0 current-squad players carry a press-conference signal.",
       "evidence": [
         "scout_consensus",
         "press_conference_watch"
@@ -68,8 +68,8 @@
       "agent": "Risk Officer",
       "focus": "Downside and fragility",
       "verdict": "WATCH",
-      "confidence": 77,
-      "argument": "The simulated six-GW outcome range spans 89.4 points. Action persistence is 100% across 12 effective stability runs.",
+      "confidence": 78,
+      "argument": "The simulated six-GW outcome range spans 90.8 points. Action persistence is 8% across 12 effective stability runs.",
       "evidence": [
         "simulation",
         "simulation_stability"
@@ -80,7 +80,7 @@
       "focus": "Portfolio option value",
       "verdict": "WATCH",
       "confidence": 72,
-      "argument": "Portfolio pressure is comfortable. Active watchlist: Free Hit, Triple Captain.",
+      "argument": "Portfolio pressure is comfortable. Active watchlist: Wildcard, Free Hit.",
       "evidence": [
         "chip_activation_gate"
       ]
@@ -88,9 +88,9 @@
     {
       "agent": "Decision Chair",
       "focus": "Resolved recommendation",
-      "verdict": "SUPPORT",
-      "confidence": 78,
-      "argument": "Keep the authoritative action: Hold / roll. No specialist presents enough contrary evidence to overturn it.",
+      "verdict": "CONTESTED",
+      "confidence": 91,
+      "argument": "Keep the authoritative action: Schade → Gakpo. It remains live but is challenged by Rival Strategist.",
       "evidence": [
         "decision_synthesis",
         "specialist_council"
@@ -98,27 +98,32 @@
     }
   ],
   "council_summary": {
-    "state": "ALIGNED",
-    "model_route_agreement_pct": 33,
-    "challengers": [],
-    "resolved_position": "Hold / roll",
+    "state": "CONTESTED",
+    "model_route_agreement_pct": 100,
+    "challengers": [
+      "Rival Strategist"
+    ],
+    "resolved_position": "Schade → Gakpo",
     "rule": "Specialists may challenge the authoritative synthesis but cannot silently replace it."
   },
   "change_radar": {
-    "decision_changed": false,
-    "changed_fields": [],
+    "decision_changed": true,
+    "changed_fields": [
+      "action",
+      "headline"
+    ],
     "previous_certificate_id": "DT-0C1290CC03EE",
     "decision_breakers": [
       {
         "signal": "model_consensus",
-        "state": "1/2 support",
+        "state": "3/2 support",
         "review_when": "support reaches 2 models or the leader changes",
         "priority": "high"
       },
       {
         "signal": "edge_over_hold",
-        "state": "13.09 points",
-        "review_when": "edge crosses the 3.00-point action hurdle",
+        "state": "25.87 points",
+        "review_when": "edge crosses the 2.00-point action hurdle",
         "priority": "high"
       },
       {
@@ -129,13 +134,13 @@
       },
       {
         "signal": "market_flexibility",
-        "state": "9 relevant price watches",
+        "state": "0 relevant price watches",
         "review_when": "a preferred route becomes unaffordable or an owned player loses value",
         "priority": "medium"
       },
       {
         "signal": "captaincy_separation",
-        "state": "1.29 score edge",
+        "state": "0.85 score edge",
         "review_when": "captain leader changes or the top-two gap materially widens",
         "priority": "medium"
       }
@@ -143,30 +148,30 @@
     "notification_rule": "Notify only when action/headline changes or a high-priority breaker crosses its stated review condition."
   },
   "learning_contract": {
-    "target_gw": 4,
-    "decision_certificate_id": "DT-0C1290CC03EE",
-    "recommended_action": "HOLD",
-    "recommended_route": "Greaves → Ajayi",
+    "target_gw": 5,
+    "decision_certificate_id": "DT-5897FCFF2D48",
+    "recommended_action": "TRANSFER",
+    "recommended_route": "Schade → Gakpo",
     "baseline_xi_ids": [
       496,
+      4,
       115,
       173,
-      4,
-      124,
-      399,
-      94,
       426,
-      165,
+      399,
+      124,
+      94,
       411,
+      165,
       346
     ],
-    "baseline_captain_id": 165,
+    "baseline_captain_id": 411,
     "alternative_routes": [
+      "Greaves → Ajayi",
       "Maguire → Calafiori",
-      "Dubravka → Tzolakis",
-      "Kinsky → Tzolakis"
+      "Dubravka → Tzolakis"
     ],
-    "evaluable_gameweeks": 0,
+    "evaluable_gameweeks": 1,
     "learning_stage": "collecting",
     "tuning_allowed": false,
     "rule": "Score decision quality and calibration after the target GW; do not tune from isolated outcomes."
