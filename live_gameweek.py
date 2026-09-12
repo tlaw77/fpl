@@ -82,7 +82,8 @@ def refresh_decision(phase: str, fixtures: list[dict], previous: dict | None, no
     if phase in ("LOCKED", "BETWEEN_FIXTURES"):
         if previous_phase != phase:
             return True, f"phase changed to {phase.lower()}"
-        if age is None or age >= timedelta(minutes=25):
+        refresh_after = timedelta(minutes=10 if phase == "LOCKED" else 25)
+        if age is None or age >= refresh_after:
             return True, "between-match refresh due"
         return False, "between-match snapshot still fresh"
 
