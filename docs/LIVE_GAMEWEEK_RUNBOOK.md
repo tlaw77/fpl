@@ -9,16 +9,17 @@ Give Terry one post-deadline view of every revealed mini-league squad, calculate
 1. GitHub Actions performs a lightweight fixture-state check every five minutes, offset to minutes 02, 07, 12 … 57 to avoid the busiest top-of-hour minute.
 2. The official FPL fixture state selects the full snapshot cadence automatically each gameweek:
    - **LIVE:** every five minutes while any fixture is playing.
-   - **LOCKED / BETWEEN_FIXTURES:** about every 30 minutes.
+   - **LOCKED:** about every 10 minutes while revealed squads are settling before kickoff.
+   - **BETWEEN_FIXTURES:** about every 30 minutes.
    - **COMPLETE:** a final refresh, then short bonus-settlement checks before stopping.
    - **PRE_DEADLINE / SETTLED:** no full scoring refresh.
 3. Before the official deadline it does not request or expose squads.
 4. After lock it requests the official standings, all manager picks, fixtures and event-live points when the selected cadence is due.
 5. It writes only `data/live_gameweek.json`; the heavier decision pipeline remains independent.
-6. The browser checks for a new snapshot every minute during a live fixture and every five minutes between fixtures. It also checks immediately when the page becomes visible again.
+6. The browser checks for a new snapshot every 30 seconds throughout the post-deadline live-gameweek view. It also checks immediately when the page becomes visible again and offers a manual **Check now** control.
 7. The compact freshness line says when the scores were produced. The same snapshot age is repeated on the Manager Matrix and once across the Threats/Leverage board. During live play, more than eight minutes old changes to **update delayed**; between matches the allowance is 35 minutes.
 
-The page reads the raw live JSON directly from the repository, so it does not wait for the GitHub Pages build to finish. A normal visible update is: GitHub schedule wait (0–5 minutes) + snapshot job (about 15 seconds) + browser check (0–1 minute). GitHub schedules are targets rather than guarantees, so the stale indicator is the operational source of truth.
+The page reads the raw live JSON directly from the repository, so it does not wait for the GitHub Pages build to finish. A normal visible update is: GitHub schedule wait (target 0–5 minutes) + snapshot job (about 15 seconds) + browser check (0–30 seconds). GitHub schedules are targets rather than guarantees, so the stale indicator is the operational source of truth. A successful FPL ETL completion also triggers the live workflow as a fallback.
 
 ## Workflow map
 
@@ -36,7 +37,7 @@ The page reads the raw live JSON directly from the repository, so it does not wa
 ### Cadence policy
 
 - A lightweight gate checks fixture state every five minutes; full live points run only at the phase-appropriate cadence.
-- During a live fixture, the open page checks every minute for the latest five-minute snapshot.
+- During the post-deadline live-gameweek view, the open page checks every 30 seconds for the latest snapshot.
 - Prediction workflows must not be used as the live-score clock.
 - Any future cadence change should be made in this table and the matching workflow together.
 - Prefer one authoritative upstream trigger for modelling jobs. Multiple schedules plus multiple completion triggers can create duplicate runs and cancelled deployments.

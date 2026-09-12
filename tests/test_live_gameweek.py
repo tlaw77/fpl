@@ -83,6 +83,12 @@ class LiveGameweekTests(unittest.TestCase):
         self.assertFalse(refresh_decision("BETWEEN_FIXTURES", self.fixtures, recent, self.now)[0])
         self.assertTrue(refresh_decision("BETWEEN_FIXTURES", self.fixtures, stale, self.now)[0])
 
+    def test_locked_phase_refreshes_before_first_kickoff(self):
+        recent = {"phase": "LOCKED", "generated_at_utc": (self.now - timedelta(minutes=5)).isoformat()}
+        stale = {"phase": "LOCKED", "generated_at_utc": (self.now - timedelta(minutes=11)).isoformat()}
+        self.assertFalse(refresh_decision("LOCKED", self.fixtures, recent, self.now)[0])
+        self.assertTrue(refresh_decision("LOCKED", self.fixtures, stale, self.now)[0])
+
     def test_complete_gameweek_refreshes_until_official_morning_finalisation(self):
         finished = [{**self.fixtures[0], "kickoff_time": "2026-09-05T12:00:00Z", "finished": True}]
         previous_live = {"phase": "LIVE", "generated_at_utc": (self.now - timedelta(minutes=5)).isoformat()}
