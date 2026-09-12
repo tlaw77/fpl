@@ -1,6 +1,6 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-09-12T17:25:04.372357+00:00",
+  "generated_at_utc": "2026-09-12T19:37:31.677643+00:00",
   "version": 3,
   "current_gw": 4,
   "next_gw": 5,
@@ -8,7 +8,7 @@
     "action": "HOLD",
     "headline": "Hold / roll",
     "confidence": 78,
-    "reason": "The leading transfer edge is 14.5 projected points over holding and does not yet clear the full evidence hurdle with sufficient agreement on that exact route. Holding moves the bank from 2/5 to 3/5; no free transfer expires. The fixture swing is broadly balanced rather than time-critical.",
+    "reason": "The leading transfer edge is 13.7 projected points over holding and does not yet clear the full evidence hurdle with sufficient agreement on that exact route. Holding moves the bank from 2/5 to 3/5; no free transfer expires. The fixture swing is broadly balanced rather than time-critical.",
     "completed_transfer": null,
     "free_transfers_remaining": 2,
     "free_transfer_cap": 5,
@@ -17,14 +17,14 @@
   },
   "robustness": {
     "season_maturity_weight": 0.4,
-    "single_step_leader": "Dubravka → Tzolakis",
-    "single_step_edge_over_hold_6gw": 14.49,
-    "multi_gw_first_action": "Kinsky → Tzolakis",
-    "adaptive_rival_first_action": "Kinsky → Tzolakis",
+    "single_step_leader": "Greaves → Ajayi",
+    "single_step_edge_over_hold_6gw": 13.73,
+    "multi_gw_first_action": "Hughes → Belloumi",
+    "adaptive_rival_first_action": "Hughes → Belloumi",
     "exact_route_consensus_models": 2,
     "measured_leader_support_models": 1,
-    "same_incoming_target_consensus_models": 3,
-    "measured_target_support_models": 3,
+    "same_incoming_target_consensus_models": 2,
+    "measured_target_support_models": 1,
     "base_required_edge": 2.0,
     "required_edge": 2.0,
     "required_consensus_models": 2,
@@ -39,13 +39,13 @@
     "rollover_edge_credit": 0.0,
     "fixture_timing": {
       "available": true,
-      "route": "Dubravka → Tzolakis",
+      "route": "Greaves → Ajayi",
       "next_fixture_swing": 0.0,
-      "weighted_three_fixture_swing": 0.15,
+      "weighted_three_fixture_swing": 0.0,
       "outgoing_difficulties": [
         3.0,
-        4.0,
-        2.0
+        2.0,
+        5.0
       ],
       "incoming_difficulties": [
         3.0,
@@ -60,18 +60,18 @@
     "primary_path_first_action": {
       "gw": 5,
       "action": "TRANSFER",
-      "route": "Kinsky → Tzolakis",
+      "route": "Hughes → Belloumi",
       "hit": 0,
-      "out_id": 496,
-      "in_id": 572
+      "out_id": 212,
+      "in_id": 286
     },
     "adaptive_path_first_action": {
       "gw": 5,
       "action": "TRANSFER",
-      "route": "Kinsky → Tzolakis",
+      "route": "Hughes → Belloumi",
       "hit": 0,
-      "out_id": 496,
-      "in_id": 572
+      "out_id": 212,
+      "in_id": 286
     },
     "note": "Forward paths are planning evidence, not instructions to pre-commit future transfers. Re-optimise after each deadline and new information."
   },
@@ -84,54 +84,54 @@
         {
           "gw": 5,
           "action": "TRANSFER",
-          "route": "Dubravka → Tzolakis",
-          "hit": 0,
-          "out_id": 497,
-          "in_id": 572
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Maguire → Affengruber",
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 650
-        },
-        {
-          "gw": 7,
-          "action": "TRANSFER",
           "route": "Hughes → Belloumi",
           "hit": 0,
           "out_id": 212,
           "in_id": 286
         },
         {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Gabriel → Affengruber",
+          "hit": 0,
+          "out_id": 4,
+          "in_id": 650
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Groß → Gakpo",
+          "hit": 0,
+          "out_id": 124,
+          "in_id": 367
+        },
+        {
           "gw": 8,
           "action": "TRANSFER",
-          "route": "Cherki → Gakpo",
+          "route": "Dubravka → Tzolakis",
           "hit": 0,
-          "out_id": 399,
-          "in_id": 367
+          "out_id": 497,
+          "in_id": 572
         }
       ],
       "chip": "Bench Boost",
-      "chip_gw": 7,
-      "expected_points": 244.91,
-      "chip_incremental_expected_points": 11.5,
-      "p10_points": 205.2,
-      "p90_points": 286.05,
-      "expected_rank_after_path": 2.59,
+      "chip_gw": 8,
+      "expected_points": 244.08,
+      "chip_incremental_expected_points": 11.52,
+      "p10_points": 202.21,
+      "p90_points": 285.75,
+      "expected_rank_after_path": 2.36,
       "prob_finish_ahead_each_rival": [
-        0.372,
-        0.619,
-        0.778,
-        0.682,
-        0.973,
-        0.998,
+        0.439,
+        0.689,
+        0.802,
+        0.763,
+        0.958,
+        0.994,
         0.992,
         1.0
       ],
-      "utility_score": 242.213
+      "utility_score": 237.25
     },
     "portfolio_pressure": "comfortable",
     "latest_safe_start_gw": 17
