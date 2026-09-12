@@ -1,22 +1,149 @@
 {
   "status": "SUCCESS",
   "version": 2,
-  "generated_at_utc": "2026-09-12T11:12:44.639624+00:00",
+  "generated_at_utc": "2026-09-12T14:20:48.768372+00:00",
   "finalized_gameweeks": [
     1,
-    2
+    2,
+    3
   ],
-  "evaluable_gameweeks": 0,
+  "evaluable_gameweeks": 1,
   "summary": {
-    "captain_evaluable_gameweeks": 0,
-    "transfer_evaluable_gameweeks": 0,
-    "captain_best_shortlist_rate_pct": null,
-    "average_captain_regret_points": null,
-    "average_captain_forecast_error": null,
-    "transfer_decision_best_rate_pct": null,
-    "average_transfer_decision_regret_points": null,
-    "message": "Not enough completed evidence yet. Backtest rates will populate only when a pre-Gameweek decision snapshot and the following finalized all-player outcome snapshot both exist."
+    "captain_evaluable_gameweeks": 1,
+    "transfer_evaluable_gameweeks": 1,
+    "captain_best_shortlist_rate_pct": 100.0,
+    "average_captain_regret_points": 0.0,
+    "average_captain_forecast_error": 3.44,
+    "transfer_decision_best_rate_pct": 100.0,
+    "average_transfer_decision_regret_points": 0.0,
+    "message": "Early backtest only. Treat these results as descriptive until several completed Gameweeks accumulate."
   },
-  "rows": [],
+  "rows": [
+    {
+      "decision_archive_gw": 2,
+      "evaluated_gw": 3,
+      "captaincy": {
+        "captain": "Haaland",
+        "captain_player_id": 411,
+        "captain_forecast_points": 5.56,
+        "captain_actual_points": 9.0,
+        "captain_forecast_error": 3.44,
+        "best_shortlisted_player": "Haaland",
+        "best_shortlisted_actual_points": 9.0,
+        "captain_regret_points": 0.0,
+        "captain_was_best_shortlisted": true,
+        "shortlist": [
+          {
+            "player_id": 411,
+            "player": "Haaland",
+            "forecast_points": 5.56,
+            "actual_points": 9.0,
+            "forecast_error": 3.44
+          },
+          {
+            "player_id": 399,
+            "player": "Cherki",
+            "forecast_points": 5.98,
+            "actual_points": 3.0,
+            "forecast_error": -2.98
+          },
+          {
+            "player_id": 426,
+            "player": "B.Fernandes",
+            "forecast_points": 5.24,
+            "actual_points": 2.0,
+            "forecast_error": -3.24
+          },
+          {
+            "player_id": 124,
+            "player": "Groß",
+            "forecast_points": 5.24,
+            "actual_points": 1.0,
+            "forecast_error": -4.24
+          },
+          {
+            "player_id": 94,
+            "player": "Schade",
+            "forecast_points": 5.09,
+            "actual_points": 2.0,
+            "forecast_error": -3.09
+          }
+        ],
+        "tc_review_status": "CONSIDER",
+        "tc_candidate": "Haaland",
+        "tc_candidate_actual_points": 9.0,
+        "hypothetical_extra_tc_points": 9.0
+      },
+      "transfer_decision": {
+        "authoritative_action": "HOLD",
+        "chosen_label": "HOLD",
+        "hold_realized_score": 42.0,
+        "best_transfer_route": "Greaves → Ajayi",
+        "best_transfer_realized_score": 41.0,
+        "best_transfer_delta_vs_hold": -1.0,
+        "chosen_realized_score": 42.0,
+        "decision_regret_points": 0.0,
+        "decision_was_best_available": true,
+        "routes": [
+          {
+            "route": "Greaves → Ajayi",
+            "out_player_id": 306,
+            "in_player_id": 279,
+            "hit_cost": 4.0,
+            "realized_gw_score": 41.0,
+            "realized_delta_vs_hold": -1.0,
+            "expected_points_6gw": 326.33,
+            "expected_rank_after_horizon": 3.37,
+            "incoming_starts": true
+          },
+          {
+            "route": "Dubravka → Tzolakis",
+            "out_player_id": 497,
+            "in_player_id": 572,
+            "hit_cost": 4.0,
+            "realized_gw_score": 38.0,
+            "realized_delta_vs_hold": -4.0,
+            "expected_points_6gw": 329.39,
+            "expected_rank_after_horizon": 3.22,
+            "incoming_starts": true
+          },
+          {
+            "route": "Kinsky → Tzolakis",
+            "out_player_id": 496,
+            "in_player_id": 572,
+            "hit_cost": 4.0,
+            "realized_gw_score": 38.0,
+            "realized_delta_vs_hold": -4.0,
+            "expected_points_6gw": 329.08,
+            "expected_rank_after_horizon": 3.24,
+            "incoming_starts": true
+          },
+          {
+            "route": "Maguire → Calafiori",
+            "out_player_id": 418,
+            "in_player_id": 8,
+            "hit_cost": 4.0,
+            "realized_gw_score": 38.0,
+            "realized_delta_vs_hold": -4.0,
+            "expected_points_6gw": 328.27,
+            "expected_rank_after_horizon": 3.28,
+            "incoming_starts": true
+          },
+          {
+            "route": "Hughes → M.Sangaré",
+            "out_player_id": 212,
+            "in_player_id": 565,
+            "hit_cost": 4.0,
+            "realized_gw_score": 37.0,
+            "realized_delta_vs_hold": -5.0,
+            "expected_points_6gw": 322.25,
+            "expected_rank_after_horizon": 3.58,
+            "incoming_starts": true
+          }
+        ],
+        "method_note": "Uses the XI/captain frozen in the simulation at decision time and scores those exact lineups against archived all-player outcomes. No hindsight lineup optimisation is allowed."
+      }
+    }
+  ],
   "method_note": "Backtest pairs a historical decision snapshot with the following finalized Gameweek. Captaincy uses archived shortlist forecasts. Transfer evaluation uses frozen pre/post-transfer XI and captain IDs stored by simulation engine v4 and all-player FPL outcomes, preventing hindsight lineup optimisation."
 }

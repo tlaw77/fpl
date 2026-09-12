@@ -1,59 +1,63 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-09-12T11:12:44.498892+00:00",
+  "generated_at_utc": "2026-09-12T14:20:48.631721+00:00",
   "version": 3,
-  "next_gw": 4,
+  "next_gw": 5,
   "portfolio_pressure": "comfortable",
   "latest_safe_start_gw": 17,
   "wildcard": {
-    "status": "HOLD",
-    "raw_gain_6gw": 58.31,
-    "activation_adjusted_gain_6gw": 16.99,
+    "status": "WATCH",
+    "raw_gain_6gw": 90.74,
+    "activation_adjusted_gain_6gw": 20.44,
     "transfer_hit_rescue": 0.0,
-    "activation_value_including_hit_rescue": 16.99,
+    "activation_value_including_hit_rescue": 20.44,
     "activation_adjustment": {
-      "activation_adjusted_gain_6gw": 16.99,
-      "maturity_factor": 0.62,
+      "activation_adjusted_gain_6gw": 20.44,
+      "maturity_factor": 0.658,
       "turnover_factor": 0.62,
-      "budget_factor": 0.82,
-      "persistence_factor": 0.925,
-      "wc_squad_persistence_pct": 83.3,
+      "budget_factor": 0.94,
+      "persistence_factor": 0.587,
+      "wc_squad_persistence_pct": 8.3,
       "effective_stability_runs": 12.0
     },
     "budget_confidence": "reconstructed",
-    "budget_buffer": 0.9,
-    "season_maturity_weight": 0.333,
-    "squad_overlap": 3,
-    "squad_changes": 12,
+    "budget_buffer": 4.4,
+    "season_maturity_weight": 0.4,
+    "squad_overlap": 2,
+    "squad_changes": 13,
     "structural_weak_assets": 0,
     "effective_stability_evidence": 12.0,
-    "wc_squad_persistence_pct": 83.3,
+    "wc_squad_persistence_pct": 8.3,
     "portfolio_pressure": "comfortable",
-    "deadline_phase": "final",
+    "deadline_phase": "normal",
     "positives": [
-      "Raw six-GW Wildcard scout is large (+58.3 simulation points before activation shrinkage).",
-      "The optimiser would change 12/15 players, so this is a genuinely different squad structure."
+      "Raw six-GW Wildcard scout is large (+90.7 simulation points before activation shrinkage).",
+      "Conservative activation-adjusted uplift remains material (+20.4 over six Gameweeks).",
+      "The optimiser would change 13/15 players, so this is a genuinely different squad structure.",
+      "Selling budget is reconstructed and the squad keeps £4.4m spare, giving useful protection against small reconstruction error."
     ],
-    "cautions": [],
+    "cautions": [
+      "Selling prices are reconstructed from purchase history rather than exposed directly by FPL.",
+      "The deadline is not yet close, so late injury/team-news information still has option value."
+    ],
     "blockers": [
-      "Selling prices are reconstructed rather than exact and the proposed Wildcard leaves too little budget buffer.",
-      "Only 33% of full-season evidence weight is available; a 15-player rebuild compounds early role/form uncertainty.",
+      "Only 40% of full-season evidence weight is available; a 15-player rebuild compounds early role/form uncertainty.",
       "There is still plenty of time to use the first-half chips.",
-      "The current squad is not structurally broken (0 weak availability/fixture assets in the structural check)."
+      "The current squad is not structurally broken (0 weak availability/fixture assets in the structural check).",
+      "The current Wildcard squad has only 8% weighted persistence so far; the optimiser structure has not proved stable."
     ],
-    "reason": "Selling prices are reconstructed rather than exact and the proposed Wildcard leaves too little budget buffer."
+    "reason": "Only 40% of full-season evidence weight is available; a 15-player rebuild compounds early role/form uncertainty."
   },
   "free_hit": {
     "status": "WATCH",
-    "best_visible_gw": 9,
-    "raw_gain": 14.39,
+    "best_visible_gw": 8,
+    "raw_gain": 18.92,
     "blank_team_count": 0,
     "double_team_count": 0,
     "squad_without_fixture": 0,
     "effective_stability_evidence": 12.0,
     "positives": [
-      "Best visible Free Hit squad is +14.4 modelled points in GW9.",
-      "GW9 has repeatedly appeared as the strongest visible Free Hit window."
+      "Best visible Free Hit squad is +18.9 modelled points in GW8."
     ],
     "blockers": [
       "There is no confirmed blank or double-Gameweek disruption that currently justifies spending Free Hit."
@@ -62,28 +66,30 @@
   },
   "bench_boost": {
     "status": "HOLD",
-    "best_visible_gw": 7,
-    "raw_gain": 12.26,
+    "best_visible_gw": 8,
+    "raw_gain": 10.2,
     "reason": "Keep Bench Boost available while the calendar is comfortable; use it when the full bench has an unusually strong set of fixtures or expiry pressure rises."
   },
   "triple_captain": {
-    "status": "WATCH",
-    "best_visible_gw": 4,
-    "candidate": "João Pedro",
-    "opponent": "Hull City",
+    "status": "HOLD",
+    "best_visible_gw": 5,
+    "candidate": "Haaland",
+    "opponent": "Sunderland",
     "venue": "H",
-    "raw_gain": 5.86,
-    "tier": "WATCH",
+    "raw_gain": 5.35,
+    "tier": "HOLD",
     "reasons_for_now": [
-      "Home fixture against promoted Hull City.",
+      "Favourable home fixture.",
+      "Premium/high-ceiling asset already owned.",
       "Strong current minutes/availability signal."
     ],
     "reasons_to_wait": [
+      "A stronger visible owned-player TC context currently appears in GW7.",
       "The first-half chip portfolio still has comfortable calendar slack.",
       "The visible horizon cannot yet price future double-Gameweek-quality opportunities with confidence.",
-      "Season evidence is still only 33%, so early projections remain deliberately shrunk."
+      "Season evidence is still only 40%, so early projections remain deliberately shrunk."
     ],
-    "reason": "Home fixture against promoted Hull City.",
+    "reason": "Favourable home fixture.",
     "source": "owned_squad_tc_review"
   },
   "method_note": "Decision gate over chip simulations and dedicated chip reviews. Wildcard retains the raw optimiser scout but uses a separately reported activation-adjusted uplift that discounts early-season uncertainty, high squad turnover, imperfect budget confidence and unproven Wildcard-squad persistence. WATCH means observe; CONSIDER means make an explicit chip decision now, not automatic activation."
