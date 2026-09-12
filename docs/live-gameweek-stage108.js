@@ -1,10 +1,11 @@
 (()=>{
 'use strict';
-const BUILD='live-gameweek-stage108-20260912-33';
+const BUILD='live-gameweek-stage108-20260912-34';
 const LIVE_URL='https://raw.githubusercontent.com/tlaw77/fpl/live-data/data/live_gameweek.json';
 const ARCHIVE_URL='https://raw.githubusercontent.com/tlaw77/fpl/main/data/live_gameweek.json';
 const LIVE_POLL_MS=30000,IDLE_POLL_MS=300000,LIVE_STALE_MS=8*60000,BETWEEN_STALE_MS=35*60000;
 let opened=false,timer=null,heartbeat=null,current=null,matrixMode='players',priorityObserver=null,priorityQueued=false,nextPollAt=0,lastCheckedAt=0,loading=false;
+const SCORE_TRACK_KEY='fpl-live-player-score-tracker-v1',SCORE_CHANGE_VISIBLE_MS=10*60000;
 const LIVE_PHASES=new Set(['LOCKED','LIVE','BETWEEN_FIXTURES']);
 const isLivePhase=phase=>LIVE_PHASES.has(String(phase||'').toUpperCase());
 const REVIEW_REMOVED=new URLSearchParams(location.search).get('review')==='removed';
@@ -15,6 +16,17 @@ const esc=v=>String(v??'—').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>'
 const signed=v=>`${n(v)>0?'+':''}${n(v).toFixed(n(v)%1?1:0)}`;
 const rawScore=m=>m?.raw_gw_points!=null?n(m.raw_gw_points):(m?.picks||[]).reduce((sum,p)=>sum+n(p.effective_points),0);
 const netScore=m=>m?.net_gw_points!=null?n(m.net_gw_points):n(m?.live_gw_points);
+function readScoreTracker(){try{return JSON.parse(localStorage.getItem(SCORE_TRACK_KEY)||'{}')}catch{return{}}}
+function trackPlayerScores(d){
+ const gw=n(d.gw),snapshotAt=Date.parse(d.generated_at_utc||'')||Date.now(),tracker=readScoreTracker(),sameGw=n(tracker.gw)===gw,players=sameGw&&tracker.players?tracker.players:{},changes=sameGw&&tracker.changes?tracker.changes:{};
+ if(!sameGw||snapshotAt>n(tracker.snapshotAt)){
+  for(const p of d.me?.picks||[]){const id=String(n(p.player_id)),points=n(p.live_points),previous=players[id];if(previous!=null&&n(previous)!==points)changes[id]={delta:points-n(previous),at:snapshotAt};players[id]=points}
+  for(const [id,change] of Object.entries(changes))if(snapshotAt-n(change.at)>SCORE_CHANGE_VISIBLE_MS)delete changes[id];
+  try{localStorage.setItem(SCORE_TRACK_KEY,JSON.stringify({gw,snapshotAt,players,changes}))}catch{}
+ }
+ for(const p of d.me?.picks||[]){const change=changes[String(n(p.player_id))];p._score_delta=change&&Date.now()-n(change.at)<=SCORE_CHANGE_VISIBLE_MS?n(change.delta):0;p._score_changed_at=change?.at||0}
+ return d;
+}
 const phaseLabel=p=>({PRE_DEADLINE:'Opens at deadline',LOCKED:'Teams locked',LIVE:'Live now',BETWEEN_FIXTURES:'Between fixtures',COMPLETE:'Gameweek complete'})[p]||p;
 function statusPill(p){return `<span class="lgw-phase lgw-${String(p||'').toLowerCase()}"><i></i>${esc(phaseLabel(p))}</span>`}
 function updatedTime(d){if(!d?.generated_at_utc)return'<span class="lgw-section-refresh unknown">Update time unavailable</span>';const stamp=new Date(d.generated_at_utc);if(Number.isNaN(stamp.getTime()))return'<span class="lgw-section-refresh unknown">Update time unavailable</span>';const mins=Math.max(0,Math.floor((Date.now()-stamp.getTime())/60000)),label=mins<1?'Updated just now':`Updated ${mins}m ago`;return `<time class="lgw-section-refresh" datetime="${esc(stamp.toISOString())}" title="${esc(stamp.toLocaleString())}">${esc(label)}</time>`}
@@ -43,7 +55,7 @@ function liveScoreboard(d){
  const me=d.me||{},managers=(d.managers||[]).slice().sort((a,b)=>n(a.live_rank,999)-n(b.live_rank,999)),average=n(d.league?.average_net_live_points,d.league?.average_live_points),score=netScore(me),rank=n(me.live_rank,managers.findIndex(m=>n(m.entry_id)===n(me.entry_id))+1),leader=managers[0],ahead=score-average,leaderGap=leader?n(me.live_overall_points)-n(leader.live_overall_points):0,active=n(me.players_live),remaining=n(me.players_remaining),exposure=new Map((d.exposure||[]).map(p=>[n(p.player_id),p]));
  const starters=(me.picks||[]).filter(p=>n(p.multiplier)>0).map(p=>{const meta=exposure.get(n(p.player_id))||{};return {...meta,...p,fixture:meta.fixture||p.fixture}}).sort((a,b)=>{const order={live:0,upcoming:1,complete:2};return n(order[String(a.state||'').toLowerCase()],3)-n(order[String(b.state||'').toLowerCase()],3)||n(b.effective_points)-n(a.effective_points)});
  const liveNames=starters.filter(p=>String(p.state).toLowerCase()==='live').map(p=>p.player),nextNames=starters.filter(p=>String(p.state).toLowerCase()==='upcoming').map(p=>p.player),phase=String(d.phase||'').toUpperCase(),nextPlayers=`${nextNames.slice(0,3).join(', ')}${nextNames.length>3?` +${nextNames.length-3} more`:''}`,message=active?`${active} ${active===1?'player':'players'} scoring now: ${liveNames.join(', ')}`:remaining?(phase==='LOCKED'?`Teams locked · awaiting kickoff · first points from ${nextPlayers}`:`Between fixtures · next points from ${nextPlayers}`):'All of your starters have played';
- const chip=p=>{const state=String(p.state||'unknown').toLowerCase(),pending=['upcoming','unknown'].includes(state),points=pending?'—':n(p.effective_points),badge=state==='live'?'LIVE':state==='complete'?'FT':'NEXT',captain=p.captain?(n(p.multiplier)===3?'TC':'C'):'';return `<span class="lgw-score-player ${esc(state)}${p.captain?' captain':''}" title="${esc(p.player)} · ${pending?'yet to play':`${n(p.live_points)} raw · ${n(p.effective_points)} effective`}"><small>${esc(badge)}${captain?` · ${captain}`:''}</small><strong>${esc(p.player)}</strong><b>${points}</b></span>`};
+ const chip=p=>{const state=String(p.state||'unknown').toLowerCase(),pending=['upcoming','unknown'].includes(state),raw=n(p.live_points),counted=n(p.effective_points),badge=state==='live'?'LIVE':state==='complete'?'FT':'NEXT',captain=p.captain?(n(p.multiplier)===3?'TC':'C'):'',minute=n(p.minutes,p.fixture?.minutes),delta=n(p._score_delta),changed=delta!==0&&!pending,status=`${badge}${state==='live'&&minute?` · ${minute}'`:''}${captain?` · ${captain}`:''}`,countedLabel=!pending&&n(p.multiplier)>1?`${counted} counted`:'';return `<span class="lgw-score-player ${esc(state)}${p.captain?' captain':''}${changed?' score-changed':''}" title="${esc(p.player)} · ${pending?'yet to play':`${raw} raw · ${counted} counted`}"><small>${esc(status)}</small><strong>${esc(p.player)}</strong><span class="lgw-player-score"><span><b>${pending?'—':raw}</b>${pending?'':`<em>${raw===1?'pt':'pts'}</em>`}</span>${changed?`<i class="${delta>0?'up':'down'}">${signed(delta)}</i>`:''}${countedLabel?`<small>${esc(countedLabel)}</small>`:''}</span></span>`};
  return `<section class="dc-card lgw-live-scoreboard" aria-label="Your live gameweek scoreboard"><div class="lgw-scoreboard-head"><div><p class="eyebrow">YOUR LIVE SCORE · GW${esc(d.gw)}</p><strong class="lgw-scoreboard-message"><i class="${active?'live':phase==='COMPLETE'?'done':'waiting'}"></i>${esc(message)}</strong></div>${updatedTime(d)}</div><div class="lgw-scoreboard-kpis"><span class="primary"><small>YOUR SCORE</small><strong>${score}</strong><em>${me.hit_cost?`${n(me.hit_cost)}-point hit included`:'net points'}</em></span><span><small>VS LEAGUE AVG</small><strong class="${ahead>=0?'good':'bad'}">${signed(ahead)}</strong><em>average ${average.toFixed(1)}</em></span><span><small>LIVE RANK</small><strong>#${rank||'—'}</strong><em>${leaderGap===0?'leading':`${signed(leaderGap)} to leader`}</em></span><span><small>SQUAD STATUS</small><strong><i class="lgw-active-count">${active}</i> / ${remaining}</strong><em>live / to play</em></span></div><div class="lgw-score-player-strip" aria-label="Your starting players">${starters.map(chip).join('')}</div></section>`
 }
 function removedView(el){if(el.matches?.('[data-intel-phase-mode],[data-monitor-mission],[data-monitor="heatmap"],[data-monitor="swing"],#safe-heatmap-stage12,[data-league-squad-intelligence]'))return true;const text=(el.innerText||'').trim().replace(/\s+/g,' ');return REMOVED_PATTERNS.some(pattern=>pattern.test(text))}
@@ -92,7 +104,7 @@ async function requestData(signal){
 }
 async function load(manual=false){
  if(loading)return;loading=true;lastCheckedAt=Date.now();refreshStatus();
- try{const ctl=new AbortController(),timeout=setTimeout(()=>ctl.abort(),10000);current=await requestData(ctl.signal);clearTimeout(timeout);render(current)}catch(error){console.warn('Live Gameweek snapshot unavailable',error)}finally{loading=false;clearTimeout(timer);const delay=isLivePhase(current?.phase)?LIVE_POLL_MS:IDLE_POLL_MS;nextPollAt=Date.now()+delay;timer=setTimeout(load,delay);refreshStatus();if(manual)document.documentElement.dataset.liveManualRefresh=String(lastCheckedAt)}
+ try{const ctl=new AbortController(),timeout=setTimeout(()=>ctl.abort(),10000);current=trackPlayerScores(await requestData(ctl.signal));clearTimeout(timeout);render(current)}catch(error){console.warn('Live Gameweek snapshot unavailable',error)}finally{loading=false;clearTimeout(timer);const delay=isLivePhase(current?.phase)?LIVE_POLL_MS:IDLE_POLL_MS;nextPollAt=Date.now()+delay;timer=setTimeout(load,delay);refreshStatus();if(manual)document.documentElement.dataset.liveManualRefresh=String(lastCheckedAt)}
 }
 function start(){watchPriority();clearInterval(heartbeat);heartbeat=setInterval(refreshStatus,1000);load();document.querySelectorAll('#decision-nav button[data-view]').forEach(button=>button.addEventListener('click',()=>setTimeout(prioritizeLiveScore,0),{passive:true}));window.addEventListener('fplLeagueIntelRendered',()=>{if(REVIEW_REMOVED||isLivePhase(current?.phase))setTimeout(()=>render(current),0)},{passive:true});document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')load()},{passive:true})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();

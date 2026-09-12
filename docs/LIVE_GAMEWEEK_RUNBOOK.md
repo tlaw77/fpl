@@ -18,6 +18,7 @@ Give Terry one post-deadline view of every revealed mini-league squad, calculate
 5. The live session publishes only `data/live_gameweek.json` to the dedicated `live-data` branch. This avoids rebuilding GitHub Pages for every score change; `main` remains the fallback/archive snapshot.
 6. The browser checks for a new snapshot every 30 seconds throughout the post-deadline live-gameweek view. It also checks immediately when the page becomes visible again and offers a manual **Check now** control.
 7. The compact freshness line says when the scores were produced. The same snapshot age is repeated on the Manager Matrix and once across the Threats/Leverage board. During live play, more than eight minutes old changes to **update delayed**; between matches the allowance is 35 minutes.
+8. Each live player tile shows raw points, match minutes and counted captain/chip points. A score movement is retained on that device for ten minutes as `+N` or `−N`, including official bonus corrections.
 
 The page reads the newest raw JSON from `live-data` and `main`, so it does not wait for a GitHub Pages build. During a running session the normal visible update is: official FPL fetch and branch update (target every five minutes) + browser check (0–30 seconds). `main` is used automatically if the live branch is unavailable. A successful FPL ETL completion and the normal schedule can both start a new session.
 
