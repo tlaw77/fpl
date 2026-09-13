@@ -1,4 +1,4 @@
-:root{--status-live:#22d3ee;--status-live-bg:#102c42;--status-done:#94a3b8;--status-done-bg:#182334;--status-pending:#a78bfa;--status-pending-bg:#201f46;--status-captain:#f59e0b}/* v2 final cascade */
+:root{--status-live:#22d3ee;--status-live-bg:#102c42;--status-done:#94a3b8;--status-done-bg:#182334;--status-pending:#a78bfa;--status-pending-bg:#201f46;--status-captain:#f59e0b}/* v3 final cascade */
 
 /* Fixture state is deliberately separate from performance: cyan moves, slate rests. */
 .lgw-live i,.lgw-scoreboard-message i.live{background:var(--status-live);box-shadow:0 0 0 5px rgba(34,211,238,.14);animation:lgw-pulse 1.5s infinite}
@@ -11,6 +11,11 @@
 .lgw-grid-cell.is-live,.lgw-grid-cell.is-live.captain{border:2px solid var(--status-live);box-shadow:0 0 0 2px rgba(34,211,238,.2)}
 .lgw-grid-cell.is-complete,.lgw-grid-cell.is-complete.captain{border:2px solid var(--status-done);box-shadow:none}
 .lgw-grid-legend .live{color:var(--status-live)}.lgw-grid-legend .complete{color:var(--status-done)}.lgw-grid-legend .captain{color:var(--status-captain)}
+
+/* Manager XI progress uses the same fixture-state palette as the score cells. */
+[data-live-xi-strip] [data-xi-state="live"]{background:var(--status-live)!important;border-color:#67e8f9!important;box-shadow:0 0 5px rgba(34,211,238,.65)!important;animation:lgw-pulse 1.5s infinite}
+[data-live-xi-strip] [data-xi-state="done"]{background:var(--status-done-bg)!important;border-color:var(--status-done)!important;box-shadow:none!important}
+[data-live-xi-strip] [data-xi-state="left"]{background:var(--status-pending-bg)!important;border-color:var(--status-pending)!important;box-shadow:none!important}
 
 /* The same status language applies to phase banners and active monitors. */
 .phase93-strip.live>b{color:var(--status-live)}.phase93-strip.post>b{color:var(--status-done)}
