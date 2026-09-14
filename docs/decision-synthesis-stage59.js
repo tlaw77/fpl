@@ -1,11 +1,11 @@
 (()=>{
-const BUILD='decision-synthesis-20260906-2';
+const BUILD='decision-synthesis-20260914-3';
 const CAP_URL='https://raw.githubusercontent.com/tlaw77/fpl/main/data/captaincy_review.json';
 const q=(s,r=document)=>r.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
 const txt=el=>String(el?.textContent||'').replace(/\s+/g,' ').trim();
 let capData=window.FPLCaptaincyReview||null,capLoading=null;
-function leaguePosture(){const full=txt(q('#view-intel'));return((full.match(/\b(PROTECT|BALANCED|CONTROLLED CHASE|CHASE)\b/i)||[])[1]||'BALANCED').toUpperCase()}
+function leaguePosture(){if(window.FPLStrategyPosture)return window.FPLStrategyPosture;const full=txt(q('#view-intel'));return((full.match(/\b(PROTECT|BALANCED|CONTROLLED CHASE|CHASE)\b/i)||[])[1]||'BALANCED').toUpperCase()}
 function teamSummary(){const c=capData||window.FPLCaptaincyReview;if(c?.captain?.player){const vice=c?.vice_captain?.player;return `Captain ${c.captain.player}${vice?` · Vice ${vice}`:''} · full XI in Pick Team`}return 'Captaincy loading · full XI in Pick Team'}
 async function ensureCaptaincy(){if(capData)return capData;if(window.FPLCaptaincyReview){capData=window.FPLCaptaincyReview;return capData}if(capLoading)return capLoading;capLoading=fetch(`${CAP_URL}?syn59=${Date.now()}`,{cache:'no-store'}).then(r=>r.ok?r.json():null).then(x=>{if(x){capData=x;window.FPLCaptaincyReview=x}return x}).catch(()=>null).finally(()=>{capLoading=null});return capLoading}
 function render(){
@@ -26,6 +26,6 @@ function render(){
   document.documentElement.dataset.decisionSynthesisBuild=BUILD;
 }
 function run(){[120,350,800,1500,2600].forEach(ms=>setTimeout(render,ms));ensureCaptaincy().then(()=>render())}
-function bind(){run();['fplCoreDataReady','fplSafePlanUpdated','fplCaptaincyReviewReady'].forEach(ev=>window.addEventListener(ev,e=>{if(ev==='fplCaptaincyReviewReady'&&e.detail)capData=e.detail;run()},{passive:true}));window.addEventListener('fplViewSettled',e=>{if(e.detail?.viewName==='transfer')render()},{passive:true});q('#decision-nav button[data-view="transfer"]')?.addEventListener('click',()=>setTimeout(render,120),{passive:true})}
+function bind(){run();['fplCoreDataReady','fplSafePlanUpdated','fplCaptaincyReviewReady','fplStrategyPostureReady'].forEach(ev=>window.addEventListener(ev,e=>{if(ev==='fplCaptaincyReviewReady'&&e.detail)capData=e.detail;run()},{passive:true}));window.addEventListener('fplViewSettled',e=>{if(e.detail?.viewName==='transfer')render()},{passive:true});q('#decision-nav button[data-view="transfer"]')?.addEventListener('click',()=>setTimeout(render,120),{passive:true})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind,{once:true});else bind();
 })();

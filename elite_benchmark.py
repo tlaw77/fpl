@@ -8,6 +8,7 @@ from pathlib import Path
 BASE = "https://fantasy.premierleague.com/api"
 LATEST = Path("data/latest.json")
 OUT = Path("data/elite_benchmark.json")
+HISTORY = Path("data/elite_history.json")
 DETAIL_LIMIT = 10
 
 
@@ -280,6 +281,41 @@ def main():
         "method_note": "Uses observable public FPL behaviour only. It cannot know private reasoning, planned future transfers, unpublished injury beliefs or why a manager made a move.",
     }
     OUT.write_text(json.dumps(result, indent=2, ensure_ascii=False) + "\n")
+    history = {"status": "SUCCESS", "snapshots": []}
+    if HISTORY.exists():
+        try:
+            loaded = json.loads(HISTORY.read_text())
+            if isinstance(loaded.get("snapshots"), list):
+                history = loaded
+        except (json.JSONDecodeError, OSError):
+            pass
+    snapshot = {
+        "gw": current_gw,
+        "generated_at_utc": result["generated_at_utc"],
+        "our_total_points": result["comparison_to_us"]["our_total_points"],
+        "elite_leader_points": result["elite_scores"]["leader_points"],
+        "elite_median_points": result["elite_scores"]["median_total_points"],
+        "gap_to_elite_leader": result["comparison_to_us"]["points_to_elite_leader"],
+        "gap_to_elite_median": result["comparison_to_us"]["points_to_elite_median"],
+        "managers": [
+            {
+                "entry_id": manager["entry_id"],
+                "team_name": manager["team_name"],
+                "overall_rank": manager["overall_rank"],
+                "total_points": manager["total_points"],
+                "gap_from_us": manager["total_points"] - result["comparison_to_us"]["our_total_points"],
+            }
+            for manager in valid
+        ],
+    }
+    snapshots = [row for row in history.get("snapshots", []) if int(row.get("gw") or 0) != current_gw]
+    snapshots.append(snapshot)
+    history = {
+        "status": "SUCCESS",
+        "updated_at_utc": result["generated_at_utc"],
+        "snapshots": sorted(snapshots, key=lambda row: int(row.get("gw") or 0))[-38:],
+    }
+    HISTORY.write_text(json.dumps(history, indent=2, ensure_ascii=False) + "\n")
     print(json.dumps({"status": "SUCCESS", "cohort": cohort_n, "leader": result["elite_scores"]["leader_points"], "style": style}))
 
 
