@@ -1,6 +1,6 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-09-15T01:49:40.890675+00:00",
+  "generated_at_utc": "2026-09-15T07:36:08.100343+00:00",
   "version": 3,
   "current_gw": 4,
   "next_gw": 5,
@@ -8,7 +8,7 @@
     "action": "HOLD",
     "headline": "Hold / roll",
     "confidence": 78,
-    "reason": "The leading transfer edge is 12.4 projected points over holding and does not yet clear the full evidence hurdle with sufficient agreement on that exact route. Holding moves the bank from 2/5 to 3/5; no free transfer expires. The fixture swing is broadly balanced rather than time-critical.",
+    "reason": "The leading transfer edge is 12.1 projected points over holding and does not yet clear the full evidence hurdle with sufficient agreement on that exact route. Holding moves the bank from 2/5 to 3/5; no free transfer expires. The fixture swing is broadly balanced rather than time-critical.",
     "completed_transfer": null,
     "free_transfers_remaining": 2,
     "free_transfer_cap": 5,
@@ -18,13 +18,13 @@
   "robustness": {
     "season_maturity_weight": 0.4,
     "single_step_leader": "Greaves → Bogle",
-    "single_step_edge_over_hold_6gw": 12.45,
+    "single_step_edge_over_hold_6gw": 12.06,
     "multi_gw_first_action": "Thomas → Affengruber",
-    "adaptive_rival_first_action": "Thomas → Affengruber",
-    "exact_route_consensus_models": 2,
+    "adaptive_rival_first_action": "Thomas → Bogle",
+    "exact_route_consensus_models": 1,
     "measured_leader_support_models": 1,
     "same_incoming_target_consensus_models": 2,
-    "measured_target_support_models": 1,
+    "measured_target_support_models": 2,
     "base_required_edge": 2.0,
     "required_edge": 2.0,
     "required_consensus_models": 2,
@@ -68,10 +68,10 @@
     "adaptive_path_first_action": {
       "gw": 5,
       "action": "TRANSFER",
-      "route": "Thomas → Affengruber",
+      "route": "Thomas → Bogle",
       "hit": 0,
       "out_id": 173,
-      "in_id": 650
+      "in_id": 330
     },
     "note": "Forward paths are planning evidence, not instructions to pre-commit future transfers. Re-optimise after each deadline and new information."
   },
@@ -116,22 +116,22 @@
       ],
       "chip": "Bench Boost",
       "chip_gw": 7,
-      "expected_points": 250.22,
-      "chip_incremental_expected_points": 12.76,
-      "p10_points": 210.62,
-      "p90_points": 292.04,
-      "expected_rank_after_path": 1.29,
+      "expected_points": 249.41,
+      "chip_incremental_expected_points": 12.77,
+      "p10_points": 210.63,
+      "p90_points": 290.56,
+      "expected_rank_after_path": 1.32,
       "prob_finish_ahead_each_rival": [
+        0.896,
+        0.91,
+        0.955,
         0.917,
-        0.886,
-        0.963,
-        0.943,
-        0.998,
+        0.999,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 244.0
+      "utility_score": 243.146
     },
     "portfolio_pressure": "comfortable",
     "latest_safe_start_gw": 17
