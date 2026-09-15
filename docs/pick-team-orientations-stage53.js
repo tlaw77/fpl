@@ -8,7 +8,7 @@ const norm=s=>String(s||'').trim().toLowerCase();
 let pool=null,scout=null,deadline=null,loading=null;
 function saved(){try{return JSON.parse(localStorage.getItem(KEY)||'null')}catch{return null}}
 function baseRows(){const d=window.FPLCoreData||{};return (d.current_squad_next5||d.squad_next5||d.current_squad||d.squad||[]).map(x=>({...x}))}
-function workingRows(){const rows=baseRows(),m=saved()?.moves?.[0];if(!m?.out||!m?.in)return rows;const oid=Number(m.out.player_id),on=norm(m.out.player),kept=rows.filter(p=>!(oid&&Number(p.player_id)===oid)&&norm(p.player)!==on);if(!kept.some(p=>Number(p.player_id)===Number(m.in.player_id)))kept.push({...m.in,_planned:true});return kept}
+function workingRows(){const rows=baseRows();if((window.FPLWorkingPlan?.moves(saved()).length||0)>0&&!pool)return rows;return window.FPLWorkingPlan?.apply(rows,pool?.players||[],saved())||rows}
 function fixture(p){return (p.fixtures||[])[0]||null}
 function fEase(p){const f=fixture(p);return f?6-n(f.difficulty,3):3}
 function eo(p){const d=window.FPLCoreData||{},x=(d.player_exposure||[]).find(e=>Number(e.player_id)===Number(p.player_id))||{};return n(x.effective_ownership_pct??x.ownership_pct??p.effective_ownership_pct??p.ownership_pct)}

@@ -6,7 +6,7 @@ const n=(v,d=0)=>Number.isFinite(Number(v))?Number(v):d;
 const norm=s=>String(s||'').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
 function saved(){try{return JSON.parse(localStorage.getItem(KEY)||'null')}catch{return null}}
 function starters(rows){const a=(rows||[]).filter(p=>(p.slot||99)<=11||p.starter||n(p.multiplier)>0);return (a.length>=11?a:(rows||[])).slice(0,11)}
-function applyPlan(rows){const base=(rows||[]).map(x=>({...x})),m=saved()?.moves?.[0];if(!m?.out||!m?.in)return base;const oid=Number(m.out.player_id),on=norm(m.out.player);const out=base.filter(p=>!(oid&&Number(p.player_id)===oid)&&norm(p.player)!==on);if(!out.some(p=>Number(p.player_id)===Number(m.in.player_id)))out.push({...m.in,_planned:true});return out}
+function applyPlan(rows){const base=(rows||[]).map(x=>({...x}));return window.FPLWorkingPlan?.apply(base,[],saved())||base}
 function name(p){return p?.player||p?.web_name||''}
 function score(p){return n(p?.six_gw_score??p?.decision_score??p?.score_improvement)}
 function nearest(d){const me=d?.me||{},rs=[...(d?.rivals||[])];return rs.sort((a,b)=>Math.abs(n(a.total_points)-n(me.total_points))-Math.abs(n(b.total_points)-n(me.total_points)))[0]||null}
