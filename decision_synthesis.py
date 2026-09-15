@@ -317,6 +317,30 @@ def run():
                 f'full evidence hurdle with sufficient agreement on that exact route. {rollover_sentence} {timing.get("summary")}'
             )
 
+    # One canonical signal for every consumer.  The single-step challenger remains
+    # useful evidence, but it must not be presented as the active route when a
+    # same-deadline multi-transfer plan is the action that actually cleared.
+    if action == 'TRANSFER' and multi_clears and not transfer_clears:
+        active_route = multi_route
+        active_route_type = 'multi_transfer'
+        active_edge = multi_edge
+        active_hurdle = multi_hurdle
+        active_validation_kind = 'adaptive_rival'
+        active_validation_label = 'Adaptive-rival test'
+        active_validation_clear = bool(multi_option.get('adaptive_support'))
+    else:
+        active_route = sim_route
+        active_route_type = 'single_transfer' if action == 'TRANSFER' else 'single_transfer_challenger'
+        active_edge = sim_edge
+        active_hurdle = edge_hurdle
+        active_validation_kind = 'model_agreement'
+        active_validation_label = 'Model agreement'
+        active_validation_clear = measured_leader_support >= consensus_required
+    active_gate_clear = action == 'TRANSFER' and (
+        (active_route_type == 'multi_transfer' and multi_clears)
+        or (active_route_type == 'single_transfer' and transfer_clears)
+    )
+
     best_tc = chips.get('best_triple_captain_window') or {}
     best_bb = chips.get('best_bench_boost_window') or {}
     tc_gain = n(best_tc.get('chip_incremental_expected_points'))
@@ -379,6 +403,14 @@ def run():
             'multi_transfer_count': multi_count,
             'multi_transfer_edge_over_roll': round(multi_edge, 2),
             'multi_transfer_required_edge': round(multi_hurdle, 2),
+            'active_route': active_route,
+            'active_route_type': active_route_type,
+            'active_edge_over_hold_6gw': round(active_edge, 2),
+            'active_required_edge': round(active_hurdle, 2),
+            'active_validation_kind': active_validation_kind,
+            'active_validation_label': active_validation_label,
+            'active_validation_clear': active_validation_clear,
+            'active_transfer_gate_clear': active_gate_clear,
             'free_transfers_before_moves': ft_before,
             'free_transfers_before_decision': remaining_ft,
             'free_transfer_cap': ft_cap,

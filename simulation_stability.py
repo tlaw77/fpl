@@ -53,6 +53,11 @@ def snapshot():
     fh = full.get('best_free_hit') or {}
     wc = full.get('best_wildcard') or {}
     completed = action.get('completed_transfer') or {}
+    active_route = robust.get('active_route') or robust.get('single_step_leader')
+    active_edge = robust.get('active_edge_over_hold_6gw', robust.get('single_step_edge_over_hold_6gw'))
+    active_gate = robust.get('active_transfer_gate_clear')
+    if active_gate is None:
+        active_gate = bool(robust.get('transfer_clears_gate')) or action.get('action') == 'TRANSFER'
     return {
         'captured_at_utc': datetime.now(timezone.utc).isoformat(),
         'current_gw': latest.get('current_gw'),
@@ -67,6 +72,14 @@ def snapshot():
         'single_step_edge_over_hold_6gw': robust.get('single_step_edge_over_hold_6gw'),
         'measured_leader_support_models': robust.get('measured_leader_support_models'),
         'transfer_clears_gate': robust.get('transfer_clears_gate'),
+        'active_route': active_route,
+        'active_route_type': robust.get('active_route_type') or 'single_transfer_challenger',
+        'active_edge_over_hold_6gw': active_edge,
+        'active_required_edge': robust.get('active_required_edge', robust.get('required_edge')),
+        'active_transfer_gate_clear': bool(active_gate),
+        'active_validation_kind': robust.get('active_validation_kind') or 'model_agreement',
+        'active_validation_label': robust.get('active_validation_label') or 'Model agreement',
+        'active_validation_clear': bool(robust.get('active_validation_clear', active_gate)),
         'multi_gw_first_route': first_route(path),
         'adaptive_first_route': first_route(adapt),
         'best_tc_gw': (chips.get('best_visible_triple_captain') or {}).get('chip_gw'),
@@ -88,7 +101,7 @@ def materially_duplicate(a, b):
     if not a or not b:
         return False
     keys = [
-        'next_gw','action','confidence','single_step_leader','transfer_clears_gate',
+        'next_gw','action','confidence','active_route','active_transfer_gate_clear',
         'multi_gw_first_route','adaptive_first_route','best_tc_gw','best_bb_gw',
         'best_fh_gw','deep_sim_input_signature','completed_transfer','wc_squad_signature'
     ]
@@ -106,7 +119,7 @@ def evidence_weight(prev, cur):
     if not prev:
         return 1.0, 'initial'
     material_keys = [
-        'next_gw','completed_transfer','action','single_step_leader','transfer_clears_gate',
+        'next_gw','completed_transfer','action','active_route','active_transfer_gate_clear',
         'multi_gw_first_route','adaptive_first_route','best_tc_gw','best_bb_gw','best_fh_gw','wc_squad_signature'
     ]
     if prev.get('deep_sim_input_signature') != cur.get('deep_sim_input_signature'):
@@ -152,7 +165,7 @@ def summarize(snaps):
     total_weight = round(sum(n(x.get('evidence_weight'), 1.0) for x in recent), 2)
     route, route_runs, route_weight = weighted_mode(recent, 'multi_gw_first_route')
     fh_gw, fh_runs, fh_weight = weighted_mode(recent, 'best_fh_gw')
-    leader_mode, _, _ = weighted_mode(recent, 'single_step_leader')
+    leader_mode, _, _ = weighted_mode(recent, 'active_route')
     wc_mode, wc_mode_runs, wc_mode_weight = weighted_mode(recent, 'wc_squad_signature')
     wc_latest = latest.get('wc_squad_signature')
     return {
@@ -160,15 +173,15 @@ def summarize(snaps):
         'effective_evidence_runs': total_weight,
         'action': latest.get('action'),
         'action_persistence_pct': weighted_pct(recent, lambda x: x.get('action') == latest.get('action')),
-        'leader': latest.get('single_step_leader'),
-        'leader_persistence_pct': weighted_pct(recent, lambda x: x.get('single_step_leader') == latest.get('single_step_leader')),
+        'leader': latest.get('active_route') or latest.get('single_step_leader'),
+        'leader_persistence_pct': weighted_pct(recent, lambda x: (x.get('active_route') or x.get('single_step_leader')) == (latest.get('active_route') or latest.get('single_step_leader'))),
         'most_common_leader': leader_mode,
         'most_common_forward_route': route,
         'most_common_forward_route_runs': route_runs,
         'most_common_forward_route_weight': route_weight,
-        'transfer_gate_clear_pct': weighted_pct(recent, lambda x: x.get('transfer_clears_gate') is True),
+        'transfer_gate_clear_pct': weighted_pct(recent, lambda x: x.get('active_transfer_gate_clear', x.get('transfer_clears_gate')) is True),
         'average_confidence': weighted_avg(recent, 'confidence'),
-        'average_edge_over_hold_6gw': weighted_avg(recent, 'single_step_edge_over_hold_6gw'),
+        'average_edge_over_hold_6gw': weighted_avg(recent, 'active_edge_over_hold_6gw'),
         'best_fh_gw_mode': fh_gw,
         'best_fh_gw_mode_runs': fh_runs,
         'best_fh_gw_mode_weight': fh_weight,
@@ -193,6 +206,10 @@ def main():
         x.setdefault('evidence_weight', 1.0)
         x.setdefault('evidence_reason', 'legacy')
         x.setdefault('wc_squad_signature', None)
+        x.setdefault('active_route', x.get('single_step_leader'))
+        x.setdefault('active_edge_over_hold_6gw', x.get('single_step_edge_over_hold_6gw'))
+        x.setdefault('active_required_edge', x.get('required_edge'))
+        x.setdefault('active_transfer_gate_clear', bool(x.get('transfer_clears_gate')) or x.get('action') == 'TRANSFER')
     cur = snapshot()
     if not snaps or not materially_duplicate(snaps[-1], cur):
         weight, reason = evidence_weight(snaps[-1] if snaps else None, cur)

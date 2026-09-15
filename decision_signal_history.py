@@ -45,11 +45,12 @@ def run():
 
     action = syn.get('current_action') or {}
     robust = syn.get('robustness') or {}
-    edge = n(robust.get('single_step_edge_over_hold_6gw'))
-    threshold = n(robust.get('required_edge'))
+    edge = n(robust.get('active_edge_over_hold_6gw'), n(robust.get('single_step_edge_over_hold_6gw')))
+    threshold = n(robust.get('active_required_edge'), n(robust.get('required_edge')))
     support = int(robust.get('measured_leader_support_models') or 0)
     required_support = int(robust.get('required_consensus_models') or 0)
-    clears = bool(robust.get('transfer_clears_gate'))
+    clears = bool(robust.get('active_transfer_gate_clear', robust.get('transfer_clears_gate')))
+    route = robust.get('active_route') or robust.get('single_step_leader')
     score = signal_score(edge, threshold, support, required_support, clears)
 
     snapshot = {
@@ -58,12 +59,18 @@ def run():
         'next_gw': syn.get('next_gw'),
         'action': action.get('action'),
         'headline': action.get('headline'),
-        'leader': robust.get('single_step_leader'),
+        'leader': route,
+        'active_route': route,
+        'active_route_type': robust.get('active_route_type') or 'single_transfer_challenger',
         'edge_over_hold_6gw': round(edge, 2),
         'required_edge': round(threshold, 2),
         'leader_support_models': support,
         'required_support_models': required_support,
         'transfer_clears_gate': clears,
+        'active_transfer_gate_clear': clears,
+        'active_validation_kind': robust.get('active_validation_kind') or 'model_agreement',
+        'active_validation_label': robust.get('active_validation_label') or 'Model agreement',
+        'active_validation_clear': bool(robust.get('active_validation_clear', clears)),
         'signal_score': score,
         'signal_band': band(score, clears),
         'completed_transfer_route': (action.get('completed_transfer') or {}).get('route'),

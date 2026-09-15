@@ -84,17 +84,19 @@ def build(inputs, previous=None, now=None):
     action = synthesis.get("current_action") or {}
     robustness = synthesis.get("robustness") or {}
     primary = simulation.get("recommendation") or {}
-    primary_route = str(primary.get("route") or action.get("headline") or "Hold / roll")
+    primary_route = str(robustness.get("active_route") or action.get("headline") or primary.get("route") or "Hold / roll")
     sim_routes = simulation.get("routes") or []
     alternative = next((item for item in sim_routes if str(item.get("route")) != primary_route), {})
     if not alternative and len(sim_routes) > 1:
         alternative = sim_routes[1]
 
-    edge = number(robustness.get("single_step_edge_over_hold_6gw"))
-    required_edge = number(robustness.get("required_edge"))
+    edge = number(robustness.get("active_edge_over_hold_6gw", robustness.get("single_step_edge_over_hold_6gw")))
+    required_edge = number(robustness.get("active_required_edge", robustness.get("required_edge")))
     support = int(robustness.get("measured_leader_support_models") or 0)
     required_support = int(robustness.get("required_consensus_models") or 0)
-    gate_clear = bool(robustness.get("transfer_clears_gate"))
+    gate_clear = bool(robustness.get("active_transfer_gate_clear", robustness.get("transfer_clears_gate")))
+    validation_label = str(robustness.get("active_validation_label") or "Model agreement")
+    validation_clear = bool(robustness.get("active_validation_clear", gate_clear))
     confidence = clamp(action.get("confidence") or 0)
     action_name = str(action.get("action") or "HOLD")
 
@@ -106,9 +108,14 @@ def build(inputs, previous=None, now=None):
     persistence = number(stability_summary.get("action_persistence_pct"))
     stability_runs = int(stability_summary.get("effective_evidence_runs") or stability_summary.get("window_runs") or 0)
     quant_verdict = "SUPPORT" if gate_clear or action_name in {"HOLD", "ROLL"} else "CHALLENGE"
+    validation_detail = (
+        "passed" if validation_label.lower().startswith("adaptive") and validation_clear
+        else "failed" if validation_label.lower().startswith("adaptive")
+        else f"{support}/{max(required_support, 1)}"
+    )
     quant_argument = (
-        f"The leading route is {primary_route}. Its {edge:.2f}-point six-GW edge is tested against a "
-        f"{required_edge:.2f}-point hurdle with {support}/{max(required_support, 1)} required model support."
+        f"The authoritative route is {primary_route}. Its {edge:.2f}-point edge is tested against a "
+        f"{required_edge:.2f}-point hurdle; {validation_label.lower()} is {validation_detail}."
     )
 
     rivals = simulation.get("rivals") or []
