@@ -69,7 +69,7 @@ def build_transfer_options(paths, adaptive, next_gw, remaining_ft, ft_cap):
         ('roll', 'Roll to build the bank', best(lambda r: first(r).get('action') == 'ROLL')),
         ('one_now', 'Use one free transfer now', best(lambda r: first(r).get('action') == 'TRANSFER' and transfer_count(first(r)) == 1)),
         ('multiple_now', f'Use multiple free transfers now', best(lambda r: first(r).get('action') == 'TRANSFER' and transfer_count(first(r)) >= 2)),
-        ('staged', 'Start now, complete later', best(lambda r: first(r).get('action') == 'TRANSFER' and transfer_count(first(r)) == 1 and later_transfer(r))),
+        ('staged', 'Wait, then transfer later', best(lambda r: first(r).get('action') == 'ROLL' and later_transfer(r))),
     ]
     roll_row = selected[0][2]
     roll_points = n((roll_row or {}).get('expected_points'))
