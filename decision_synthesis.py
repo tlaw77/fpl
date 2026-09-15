@@ -167,20 +167,33 @@ def completed_current_transfer(latest):
     txs = [t for t in (latest.get('current_squad_transfers') or []) if int(t.get('event') or 0) == next_gw]
     if not txs:
         return None
-    tx = txs[-1]
-    out_name = tx.get('out_name') or tx.get('element_out_name') or ''
-    in_name = tx.get('in_name') or tx.get('element_in_name') or ''
-    if not out_name or not in_name:
-        declared = latest.get('declared_transfer_overlay_applied') or []
-        if declared:
-            out_name = declared[-1].get('out_name') or out_name
-            in_name = declared[-1].get('in_name') or in_name
+    declared = latest.get('declared_transfer_overlay_applied') or []
+    declared_by_ids = {
+        (int(t.get('element_out') or 0), int(t.get('element_in') or 0)): t
+        for t in declared
+    }
+    completed_moves = []
+    for tx in txs:
+        fallback = declared_by_ids.get((int(tx.get('element_out') or 0), int(tx.get('element_in') or 0)), {})
+        out_name = tx.get('out_name') or tx.get('element_out_name') or fallback.get('out_name') or ''
+        in_name = tx.get('in_name') or tx.get('element_in_name') or fallback.get('in_name') or ''
+        completed_moves.append({
+            'out': out_name,
+            'in': in_name,
+            'route': f'{out_name} → {in_name}' if out_name and in_name else None,
+            'element_out': tx.get('element_out'),
+            'element_in': tx.get('element_in'),
+        })
+    routes = [move['route'] for move in completed_moves if move.get('route')]
+    last = completed_moves[-1]
     return {
         'event': next_gw,
-        'out': out_name,
-        'in': in_name,
-        'route': f'{out_name} → {in_name}' if out_name and in_name else None,
-        'source': tx.get('source') or tx.get('transfer_source') or latest.get('current_squad_source'),
+        'out': last.get('out'),
+        'in': last.get('in'),
+        'route': ' + '.join(routes) if routes else None,
+        'transfer_count': len(completed_moves),
+        'moves': completed_moves,
+        'source': txs[-1].get('source') or txs[-1].get('transfer_source') or latest.get('current_squad_source'),
     }
 
 

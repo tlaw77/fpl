@@ -1,7 +1,7 @@
 import unittest
 
 from declared_transfer_overlay import set_transfer_state
-from decision_synthesis import fixture_timing
+from decision_synthesis import completed_current_transfer, fixture_timing
 from fpl_etl import free_transfers_for_next_gw
 
 
@@ -68,6 +68,20 @@ class FixtureTimingTests(unittest.TestCase):
         self.assertTrue(result['available'])
         self.assertEqual(result['timing'], 'front_loaded')
         self.assertEqual(result['next_fixture_swing'], 3)
+
+    def test_completed_transfer_keeps_full_same_gameweek_route(self):
+        latest = {
+            'next_gw': 5,
+            'current_squad_source': 'declared_transfer_overlay',
+            'current_squad_transfers': [
+                {'event': 5, 'element_out': 173, 'out_name': 'Thomas', 'element_in': 650, 'in_name': 'Affengruber'},
+                {'event': 5, 'element_out': 306, 'out_name': 'Greaves', 'element_in': 330, 'in_name': 'Bogle'},
+            ],
+        }
+        completed = completed_current_transfer(latest)
+        self.assertEqual(completed['route'], 'Thomas → Affengruber + Greaves → Bogle')
+        self.assertEqual(completed['transfer_count'], 2)
+        self.assertEqual(len(completed['moves']), 2)
 
 
 if __name__ == '__main__':
