@@ -2,9 +2,28 @@ const assert = require('assert');
 const fs = require('fs');
 const vm = require('vm');
 
-const latest = JSON.parse(fs.readFileSync('data/latest.json', 'utf8'));
 const market = JSON.parse(fs.readFileSync('data/market.json', 'utf8'));
 const pool = JSON.parse(fs.readFileSync('data/player_pool.json', 'utf8'));
+const latest = {
+  current_bank: 1.4,
+  squad: [{player_id: 173, price: 4.0}, {player_id: 306, price: 4.0}],
+  decision_synthesis: {
+    current_action: {action: 'TRANSFER', headline: 'Thomas → Affengruber + Greaves → Bogle'},
+    transfer_options: [{
+      key: 'multiple_now',
+      available: true,
+      recommended_path: true,
+      first_action: {
+        action: 'TRANSFER',
+        route: 'Thomas → Affengruber + Greaves → Bogle',
+        transfers: [
+          {out_id: 173, in_id: 650, route: 'Thomas → Affengruber'},
+          {out_id: 306, in_id: 330, route: 'Greaves → Bogle'},
+        ],
+      },
+    }],
+  },
+};
 const context = {
   window: {
     FPLCoreData: latest,

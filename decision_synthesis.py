@@ -313,10 +313,15 @@ def run():
         headline = 'Transfer complete · hold' if completed else 'Hold / roll'
         confidence = min(88, int(66 + (1 - maturity) * 10 + (3 - measured_leader_support) * 3))
         if hit_cost and completed:
+            gate_detail = (
+                f'Its {sim_edge:.1f}-point projected edge clears the {edge_hurdle:.1f}-point magnitude hurdle, but the exact route is supported by only '
+                f'{measured_leader_support}/3 models, below the required {consensus_required}/3.'
+                if sim_edge >= edge_hurdle
+                else f'Its {sim_edge:.1f}-point projected edge remains below the {edge_hurdle:.1f}-point magnitude hurdle and the exact route is supported by only {measured_leader_support}/3 models.'
+            )
             reason = (
                 f'{completed.get("route") or "This week’s transfer"} is already applied. A further move costs -{hit_cost}. '
-                f'The best six-GW alternative is only {sim_edge:.1f} projected points ahead of holding, below the '
-                f'{edge_hurdle:.1f}-point early-season hurdle, and the measured leader is supported by only {measured_leader_support}/3 models. '
+                f'{gate_detail} '
                 f'{rollover_sentence} {timing.get("summary")}'
             )
         elif hit_cost:
