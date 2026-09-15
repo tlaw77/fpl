@@ -1,6 +1,6 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-09-15T23:39:22.870991+00:00",
+  "generated_at_utc": "2026-09-15T23:45:56.957469+00:00",
   "engine_version": 7,
   "planner": "bounded same-deadline multi-transfer beam search + GW-specific shared-outcome Monte Carlo + live FT state + season calibration + shared captaincy + deadline-aware sampling",
   "projection_model": "season-maturity calibrated + shared captaincy model",
@@ -16,14 +16,14 @@
   "iteration_policy": {
     "layer": "path",
     "deadline_phase": "approaching",
-    "hours_to_deadline": 65.86,
+    "hours_to_deadline": 65.75,
     "iterations": 1600,
     "policy": "lighter normal-week sampling; higher precision inside 72h/24h/6h of official FPL deadline"
   },
-  "starting_free_transfers": 2,
+  "starting_free_transfers": 0,
   "max_free_transfers": 5,
   "transfer_hit_cost": 4,
-  "next_transfer_hit_cost": 0,
+  "next_transfer_hit_cost": 4,
   "chip_portfolio_context": {
     "half": 1,
     "window": "GW1-GW19",
@@ -42,22 +42,22 @@
     "provisional_visible_plan": [
       {
         "chip": "Bench Boost",
-        "preferred_gw": 5,
-        "provisional_gw": 5,
-        "status": "strong_window",
-        "visible_score": 41.31
+        "preferred_gw": 7,
+        "provisional_gw": 7,
+        "status": "hold",
+        "visible_score": 46.41
       },
       {
         "chip": "Wildcard",
         "preferred_gw": 5,
-        "provisional_gw": 6,
+        "provisional_gw": 5,
         "status": "hold",
-        "visible_score": 2.4
+        "visible_score": 3.6
       },
       {
         "chip": "Free Hit",
-        "preferred_gw": 9,
-        "provisional_gw": 9,
+        "preferred_gw": 6,
+        "provisional_gw": 6,
         "status": "hold",
         "visible_score": 1.4
       }
@@ -133,25 +133,19 @@
       {
         "gw": 5,
         "action": "TRANSFER",
-        "route": "Thomas → Affengruber + Greaves → Bogle",
-        "transfer_count": 2,
+        "route": "Kinsky → Tzolakis",
+        "transfer_count": 1,
         "transfers": [
           {
-            "route": "Thomas → Affengruber",
-            "out_id": 173,
-            "in_id": 650,
-            "uplift": 11.82
-          },
-          {
-            "route": "Greaves → Bogle",
-            "out_id": 306,
-            "in_id": 330,
-            "uplift": 7.52
+            "route": "Kinsky → Tzolakis",
+            "out_id": 496,
+            "in_id": 572,
+            "uplift": 5.85
           }
         ],
-        "hit": 0,
-        "out_id": 173,
-        "in_id": 650
+        "hit": 4,
+        "out_id": 496,
+        "in_id": 572
       },
       {
         "gw": 6,
@@ -190,41 +184,41 @@
       {
         "gw": 8,
         "action": "TRANSFER",
-        "route": "Kinsky → Tzolakis",
+        "route": "Groß → Janelt",
         "transfer_count": 1,
         "transfers": [
           {
-            "route": "Kinsky → Tzolakis",
-            "out_id": 496,
-            "in_id": 572,
-            "uplift": 1.92
+            "route": "Groß → Janelt",
+            "out_id": 124,
+            "in_id": 98,
+            "uplift": 1.65
           }
         ],
         "hit": 0,
-        "out_id": 496,
-        "in_id": 572
+        "out_id": 124,
+        "in_id": 98
       }
     ],
-    "expected_points": 249.28,
-    "p10_points": 210.13,
-    "p90_points": 290.89,
-    "expected_rank_after_path": 1.24,
+    "expected_points": 249.8,
+    "p10_points": 211.61,
+    "p90_points": 289.32,
+    "expected_rank_after_path": 1.28,
     "prob_gain_league_place": 0.0,
     "prob_finish_ahead_each_rival": [
-      0.918,
-      0.914,
-      0.967,
-      0.961,
-      0.996,
+      0.902,
+      0.911,
+      0.962,
+      0.952,
+      0.991,
       1.0,
       1.0,
       1.0
     ],
-    "ending_bank": 0.2,
+    "ending_bank": 0.9,
     "ending_free_transfers": 1,
     "first_transfer_incoming_starts": true,
-    "first_deadline_transfer_count": 2,
-    "utility_score": 243.715
+    "first_deadline_transfer_count": 1,
+    "utility_score": 244.16
   },
   "paths": [
     {
@@ -232,25 +226,742 @@
         {
           "gw": 5,
           "action": "TRANSFER",
-          "route": "Thomas → Affengruber + Greaves → Bogle",
-          "transfer_count": 2,
+          "route": "Kinsky → Tzolakis",
+          "transfer_count": 1,
           "transfers": [
             {
-              "route": "Thomas → Affengruber",
-              "out_id": 173,
-              "in_id": 650,
-              "uplift": 11.82
-            },
+              "route": "Kinsky → Tzolakis",
+              "out_id": 496,
+              "in_id": 572,
+              "uplift": 5.85
+            }
+          ],
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Cherki → Belloumi",
+          "transfer_count": 1,
+          "transfers": [
             {
-              "route": "Greaves → Bogle",
-              "out_id": 306,
-              "in_id": 330,
-              "uplift": 7.52
+              "route": "Cherki → Belloumi",
+              "out_id": 399,
+              "in_id": 286,
+              "uplift": 4.8
             }
           ],
           "hit": 0,
-          "out_id": 173,
-          "in_id": 650
+          "out_id": 399,
+          "in_id": 286
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Hughes → Gakpo",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Hughes → Gakpo",
+              "out_id": 212,
+              "in_id": 367,
+              "uplift": 3.65
+            }
+          ],
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 367
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "Groß → Janelt",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Groß → Janelt",
+              "out_id": 124,
+              "in_id": 98,
+              "uplift": 1.65
+            }
+          ],
+          "hit": 0,
+          "out_id": 124,
+          "in_id": 98
+        }
+      ],
+      "expected_points": 249.8,
+      "p10_points": 211.61,
+      "p90_points": 289.32,
+      "expected_rank_after_path": 1.28,
+      "prob_gain_league_place": 0.0,
+      "prob_finish_ahead_each_rival": [
+        0.902,
+        0.911,
+        0.962,
+        0.952,
+        0.991,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "ending_bank": 0.9,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 1,
+      "utility_score": 244.16
+    },
+    {
+      "actions": [
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Kinsky → Tzolakis",
+              "out_id": 496,
+              "in_id": 572,
+              "uplift": 5.85
+            }
+          ],
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Cherki → Belloumi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Cherki → Belloumi",
+              "out_id": 399,
+              "in_id": 286,
+              "uplift": 4.8
+            }
+          ],
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 286
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Hughes → Gakpo",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Hughes → Gakpo",
+              "out_id": 212,
+              "in_id": 367,
+              "uplift": 3.65
+            }
+          ],
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 367
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "Gabriel → Calafiori",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Gabriel → Calafiori",
+              "out_id": 4,
+              "in_id": 8,
+              "uplift": 0.94
+            }
+          ],
+          "hit": 0,
+          "out_id": 4,
+          "in_id": 8
+        }
+      ],
+      "expected_points": 249.36,
+      "p10_points": 211.64,
+      "p90_points": 288.35,
+      "expected_rank_after_path": 1.26,
+      "prob_gain_league_place": 0.0,
+      "prob_finish_ahead_each_rival": [
+        0.91,
+        0.918,
+        0.966,
+        0.956,
+        0.993,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "ending_bank": 2.4,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 1,
+      "utility_score": 243.896
+    },
+    {
+      "actions": [
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Kinsky → Tzolakis",
+              "out_id": 496,
+              "in_id": 572,
+              "uplift": 5.85
+            }
+          ],
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Cherki → Belloumi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Cherki → Belloumi",
+              "out_id": 399,
+              "in_id": 286,
+              "uplift": 4.8
+            }
+          ],
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 286
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Hughes → Gakpo",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Hughes → Gakpo",
+              "out_id": 212,
+              "in_id": 367,
+              "uplift": 3.65
+            }
+          ],
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 367
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "De Cuyper → Egan",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "De Cuyper → Egan",
+              "out_id": 115,
+              "in_id": 277,
+              "uplift": 1.06
+            }
+          ],
+          "hit": 0,
+          "out_id": 115,
+          "in_id": 277
+        }
+      ],
+      "expected_points": 249.08,
+      "p10_points": 211.58,
+      "p90_points": 287.93,
+      "expected_rank_after_path": 1.29,
+      "prob_gain_league_place": 0.0,
+      "prob_finish_ahead_each_rival": [
+        0.901,
+        0.909,
+        0.958,
+        0.948,
+        0.993,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "ending_bank": 0.9,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 1,
+      "utility_score": 243.469
+    },
+    {
+      "actions": [
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Kinsky → Tzolakis",
+              "out_id": 496,
+              "in_id": 572,
+              "uplift": 5.85
+            }
+          ],
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Cherki → Belloumi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Cherki → Belloumi",
+              "out_id": 399,
+              "in_id": 286,
+              "uplift": 4.8
+            }
+          ],
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 286
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Hughes → Gakpo",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Hughes → Gakpo",
+              "out_id": 212,
+              "in_id": 367,
+              "uplift": 3.65
+            }
+          ],
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 367
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "Maguire → Egan",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Maguire → Egan",
+              "out_id": 418,
+              "in_id": 277,
+              "uplift": 1.06
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 277
+        }
+      ],
+      "expected_points": 249.08,
+      "p10_points": 211.58,
+      "p90_points": 287.93,
+      "expected_rank_after_path": 1.29,
+      "prob_gain_league_place": 0.0,
+      "prob_finish_ahead_each_rival": [
+        0.901,
+        0.909,
+        0.958,
+        0.948,
+        0.993,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "ending_bank": 1.0,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 1,
+      "utility_score": 243.469
+    },
+    {
+      "actions": [
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Cherki → Belloumi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Cherki → Belloumi",
+              "out_id": 399,
+              "in_id": 286,
+              "uplift": 5.72
+            }
+          ],
+          "hit": 4,
+          "out_id": 399,
+          "in_id": 286
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Dubravka → Tzolakis",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Dubravka → Tzolakis",
+              "out_id": 497,
+              "in_id": 572,
+              "uplift": 4.66
+            }
+          ],
+          "hit": 0,
+          "out_id": 497,
+          "in_id": 572
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Groß → Gakpo",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Groß → Gakpo",
+              "out_id": 124,
+              "in_id": 367,
+              "uplift": 3.21
+            }
+          ],
+          "hit": 0,
+          "out_id": 124,
+          "in_id": 367
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "Hughes → Janelt",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Hughes → Janelt",
+              "out_id": 212,
+              "in_id": 98,
+              "uplift": 1.65
+            }
+          ],
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 98
+        }
+      ],
+      "expected_points": 248.96,
+      "p10_points": 211.79,
+      "p90_points": 287.6,
+      "expected_rank_after_path": 1.29,
+      "prob_gain_league_place": 0.0,
+      "prob_finish_ahead_each_rival": [
+        0.904,
+        0.908,
+        0.963,
+        0.945,
+        0.993,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "ending_bank": 0.4,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 1,
+      "utility_score": 243.419
+    },
+    {
+      "actions": [
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Kinsky → Tzolakis",
+              "out_id": 496,
+              "in_id": 572,
+              "uplift": 5.85
+            }
+          ],
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Cherki → Belloumi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Cherki → Belloumi",
+              "out_id": 399,
+              "in_id": 286,
+              "uplift": 4.8
+            }
+          ],
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 286
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Hughes → Gakpo",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Hughes → Gakpo",
+              "out_id": 212,
+              "in_id": 367,
+              "uplift": 3.65
+            }
+          ],
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 367
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "Groß → King",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Groß → King",
+              "out_id": 124,
+              "in_id": 268,
+              "uplift": 0.98
+            }
+          ],
+          "hit": 0,
+          "out_id": 124,
+          "in_id": 268
+        }
+      ],
+      "expected_points": 249.01,
+      "p10_points": 211.44,
+      "p90_points": 286.98,
+      "expected_rank_after_path": 1.29,
+      "prob_gain_league_place": 0.0,
+      "prob_finish_ahead_each_rival": [
+        0.9,
+        0.907,
+        0.961,
+        0.953,
+        0.993,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "ending_bank": 0.4,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 1,
+      "utility_score": 243.414
+    },
+    {
+      "actions": [
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Kinsky → Tzolakis",
+              "out_id": 496,
+              "in_id": 572,
+              "uplift": 5.85
+            }
+          ],
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Cherki → Belloumi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Cherki → Belloumi",
+              "out_id": 399,
+              "in_id": 286,
+              "uplift": 4.8
+            }
+          ],
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 286
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Hughes → Gakpo",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Hughes → Gakpo",
+              "out_id": 212,
+              "in_id": 367,
+              "uplift": 3.65
+            }
+          ],
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 367
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "Haaland → Isak",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Haaland → Isak",
+              "out_id": 411,
+              "in_id": 379,
+              "uplift": 1.18
+            }
+          ],
+          "hit": 0,
+          "out_id": 411,
+          "in_id": 379
+        }
+      ],
+      "expected_points": 248.91,
+      "p10_points": 210.68,
+      "p90_points": 288.55,
+      "expected_rank_after_path": 1.28,
+      "prob_gain_league_place": 0.0,
+      "prob_finish_ahead_each_rival": [
+        0.899,
+        0.928,
+        0.959,
+        0.943,
+        0.994,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "ending_bank": 6.6,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 1,
+      "utility_score": 243.289
+    },
+    {
+      "actions": [
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Kinsky → Tzolakis",
+              "out_id": 496,
+              "in_id": 572,
+              "uplift": 5.85
+            }
+          ],
+          "hit": 4,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Cherki → Ødegaard",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Cherki → Ødegaard",
+              "out_id": 399,
+              "in_id": 15,
+              "uplift": 4.76
+            }
+          ],
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 15
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Hughes → Belloumi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Hughes → Belloumi",
+              "out_id": 212,
+              "in_id": 286,
+              "uplift": 2.74
+            }
+          ],
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 286
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "Groß → Janelt",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Groß → Janelt",
+              "out_id": 124,
+              "in_id": 98,
+              "uplift": 1.65
+            }
+          ],
+          "hit": 0,
+          "out_id": 124,
+          "in_id": 98
+        }
+      ],
+      "expected_points": 249.0,
+      "p10_points": 208.87,
+      "p90_points": 289.67,
+      "expected_rank_after_path": 1.28,
+      "prob_gain_league_place": 0.0,
+      "prob_finish_ahead_each_rival": [
+        0.912,
+        0.91,
+        0.975,
+        0.93,
+        0.993,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "ending_bank": 1.4,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 1,
+      "utility_score": 243.133
+    },
+    {
+      "actions": [
+        {
+          "gw": 5,
+          "action": "ROLL"
         },
         {
           "gw": 6,
@@ -304,88 +1015,35 @@
           "in_id": 572
         }
       ],
-      "expected_points": 249.28,
-      "p10_points": 210.13,
-      "p90_points": 290.89,
-      "expected_rank_after_path": 1.24,
+      "expected_points": 248.53,
+      "p10_points": 210.77,
+      "p90_points": 286.89,
+      "expected_rank_after_path": 1.27,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.918,
-        0.914,
-        0.967,
-        0.961,
-        0.996,
+        0.921,
+        0.915,
+        0.963,
+        0.943,
+        0.993,
         1.0,
         1.0,
         1.0
       ],
       "ending_bank": 0.2,
       "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 2,
-      "utility_score": 243.715
+      "first_transfer_incoming_starts": null,
+      "first_deadline_transfer_count": 0,
+      "utility_score": 243.024
     },
     {
       "actions": [
         {
           "gw": 5,
-          "action": "TRANSFER",
-          "route": "Maguire → Affengruber + Greaves → Bogle",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Maguire → Affengruber",
-              "out_id": 418,
-              "in_id": 650,
-              "uplift": 11.82
-            },
-            {
-              "route": "Greaves → Bogle",
-              "out_id": 306,
-              "in_id": 330,
-              "uplift": 7.52
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 650
+          "action": "ROLL"
         },
         {
           "gw": 6,
-          "action": "TRANSFER",
-          "route": "Hughes → Belloumi",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Hughes → Belloumi",
-              "out_id": 212,
-              "in_id": 286,
-              "uplift": 5.04
-            }
-          ],
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 286
-        },
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "Cherki → Gakpo",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Cherki → Gakpo",
-              "out_id": 399,
-              "in_id": 367,
-              "uplift": 3.41
-            }
-          ],
-          "hit": 0,
-          "out_id": 399,
-          "in_id": 367
-        },
-        {
-          "gw": 8,
           "action": "TRANSFER",
           "route": "Kinsky → Tzolakis",
           "transfer_count": 1,
@@ -394,76 +1052,12 @@
               "route": "Kinsky → Tzolakis",
               "out_id": 496,
               "in_id": 572,
-              "uplift": 1.92
+              "uplift": 4.66
             }
           ],
           "hit": 0,
           "out_id": 496,
           "in_id": 572
-        }
-      ],
-      "expected_points": 249.28,
-      "p10_points": 210.13,
-      "p90_points": 290.89,
-      "expected_rank_after_path": 1.24,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.918,
-        0.914,
-        0.967,
-        0.961,
-        0.996,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "ending_bank": 1.1,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 2,
-      "utility_score": 243.715
-    },
-    {
-      "actions": [
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Thomas → Affengruber + Maguire → Bogle",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Thomas → Affengruber",
-              "out_id": 173,
-              "in_id": 650,
-              "uplift": 11.82
-            },
-            {
-              "route": "Maguire → Bogle",
-              "out_id": 418,
-              "in_id": 330,
-              "uplift": 7.52
-            }
-          ],
-          "hit": 0,
-          "out_id": 173,
-          "in_id": 650
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Hughes → Belloumi",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Hughes → Belloumi",
-              "out_id": 212,
-              "in_id": 286,
-              "uplift": 5.04
-            }
-          ],
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 286
         },
         {
           "gw": 7,
@@ -475,7 +1069,7 @@
               "route": "Cherki → Gakpo",
               "out_id": 399,
               "in_id": 367,
-              "uplift": 3.41
+              "uplift": 3.67
             }
           ],
           "hit": 0,
@@ -484,6 +1078,47 @@
         },
         {
           "gw": 8,
+          "action": "TRANSFER",
+          "route": "Groß → Janelt",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Groß → Janelt",
+              "out_id": 124,
+              "in_id": 98,
+              "uplift": 1.75
+            }
+          ],
+          "hit": 0,
+          "out_id": 124,
+          "in_id": 98
+        }
+      ],
+      "expected_points": 248.37,
+      "p10_points": 210.23,
+      "p90_points": 287.13,
+      "expected_rank_after_path": 1.28,
+      "prob_gain_league_place": 0.0,
+      "prob_finish_ahead_each_rival": [
+        0.907,
+        0.906,
+        0.961,
+        0.952,
+        0.994,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "ending_bank": 1.6,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": null,
+      "first_deadline_transfer_count": 0,
+      "utility_score": 242.746
+    },
+    {
+      "actions": [
+        {
+          "gw": 5,
           "action": "TRANSFER",
           "route": "Kinsky → Tzolakis",
           "transfer_count": 1,
@@ -492,288 +1127,124 @@
               "route": "Kinsky → Tzolakis",
               "out_id": 496,
               "in_id": 572,
-              "uplift": 1.92
+              "uplift": 5.85
             }
           ],
-          "hit": 0,
+          "hit": 4,
           "out_id": 496,
           "in_id": 572
-        }
-      ],
-      "expected_points": 249.28,
-      "p10_points": 210.13,
-      "p90_points": 290.89,
-      "expected_rank_after_path": 1.24,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.918,
-        0.914,
-        0.967,
-        0.961,
-        0.996,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "ending_bank": 1.1,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 2,
-      "utility_score": 243.715
-    },
-    {
-      "actions": [
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Thomas → Affengruber + Maguire → Bogle",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Thomas → Affengruber",
-              "out_id": 173,
-              "in_id": 650,
-              "uplift": 11.82
-            },
-            {
-              "route": "Maguire → Bogle",
-              "out_id": 418,
-              "in_id": 330,
-              "uplift": 7.52
-            }
-          ],
-          "hit": 0,
-          "out_id": 173,
-          "in_id": 650
         },
         {
           "gw": 6,
           "action": "TRANSFER",
-          "route": "Hughes → Belloumi",
+          "route": "Cherki → Belloumi",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Hughes → Belloumi",
-              "out_id": 212,
+              "route": "Cherki → Belloumi",
+              "out_id": 399,
               "in_id": 286,
-              "uplift": 5.04
+              "uplift": 4.8
             }
           ],
           "hit": 0,
-          "out_id": 212,
+          "out_id": 399,
           "in_id": 286
         },
         {
           "gw": 7,
           "action": "TRANSFER",
-          "route": "Cherki → Gakpo",
+          "route": "Groß → Gakpo",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Cherki → Gakpo",
-              "out_id": 399,
+              "route": "Groß → Gakpo",
+              "out_id": 124,
               "in_id": 367,
-              "uplift": 3.41
+              "uplift": 3.21
             }
           ],
           "hit": 0,
-          "out_id": 399,
+          "out_id": 124,
           "in_id": 367
         },
         {
           "gw": 8,
           "action": "TRANSFER",
-          "route": "Dubravka → Tzolakis",
+          "route": "Haaland → Isak",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Dubravka → Tzolakis",
-              "out_id": 497,
-              "in_id": 572,
-              "uplift": 1.92
+              "route": "Haaland → Isak",
+              "out_id": 411,
+              "in_id": 379,
+              "uplift": 1.18
             }
           ],
           "hit": 0,
-          "out_id": 497,
-          "in_id": 572
+          "out_id": 411,
+          "in_id": 379
         }
       ],
-      "expected_points": 249.28,
-      "p10_points": 210.13,
-      "p90_points": 290.89,
-      "expected_rank_after_path": 1.24,
+      "expected_points": 248.33,
+      "p10_points": 210.93,
+      "p90_points": 287.79,
+      "expected_rank_after_path": 1.29,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.918,
-        0.914,
-        0.967,
-        0.961,
-        0.996,
+        0.902,
+        0.919,
+        0.962,
+        0.933,
+        0.994,
         1.0,
         1.0,
         1.0
       ],
-      "ending_bank": 0.6,
+      "ending_bank": 7.9,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 2,
-      "utility_score": 243.715
+      "first_deadline_transfer_count": 1,
+      "utility_score": 242.738
     },
     {
       "actions": [
         {
           "gw": 5,
-          "action": "TRANSFER",
-          "route": "Maguire → Affengruber + Greaves → Bogle",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Maguire → Affengruber",
-              "out_id": 418,
-              "in_id": 650,
-              "uplift": 11.82
-            },
-            {
-              "route": "Greaves → Bogle",
-              "out_id": 306,
-              "in_id": 330,
-              "uplift": 7.52
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 650
+          "action": "ROLL"
         },
         {
           "gw": 6,
           "action": "TRANSFER",
-          "route": "Hughes → Belloumi",
+          "route": "Cherki → Belloumi",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Hughes → Belloumi",
-              "out_id": 212,
+              "route": "Cherki → Belloumi",
+              "out_id": 399,
               "in_id": 286,
-              "uplift": 5.04
+              "uplift": 4.8
             }
           ],
           "hit": 0,
-          "out_id": 212,
+          "out_id": 399,
           "in_id": 286
         },
         {
           "gw": 7,
           "action": "TRANSFER",
-          "route": "Cherki → Gakpo",
+          "route": "Hughes → Gakpo",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Cherki → Gakpo",
-              "out_id": 399,
-              "in_id": 367,
-              "uplift": 3.41
-            }
-          ],
-          "hit": 0,
-          "out_id": 399,
-          "in_id": 367
-        },
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "Dubravka → Tzolakis",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Dubravka → Tzolakis",
-              "out_id": 497,
-              "in_id": 572,
-              "uplift": 1.92
-            }
-          ],
-          "hit": 0,
-          "out_id": 497,
-          "in_id": 572
-        }
-      ],
-      "expected_points": 249.28,
-      "p10_points": 210.13,
-      "p90_points": 290.89,
-      "expected_rank_after_path": 1.24,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.918,
-        0.914,
-        0.967,
-        0.961,
-        0.996,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "ending_bank": 0.6,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 2,
-      "utility_score": 243.715
-    },
-    {
-      "actions": [
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Thomas → Affengruber + Maguire → Bogle",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Thomas → Affengruber",
-              "out_id": 173,
-              "in_id": 650,
-              "uplift": 11.82
-            },
-            {
-              "route": "Maguire → Bogle",
-              "out_id": 418,
-              "in_id": 330,
-              "uplift": 7.52
-            }
-          ],
-          "hit": 0,
-          "out_id": 173,
-          "in_id": 650
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Hughes → Belloumi",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Hughes → Belloumi",
+              "route": "Hughes → Gakpo",
               "out_id": 212,
-              "in_id": 286,
-              "uplift": 5.04
+              "in_id": 367,
+              "uplift": 3.65
             }
           ],
           "hit": 0,
           "out_id": 212,
-          "in_id": 286
-        },
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "Cherki → Gakpo",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Cherki → Gakpo",
-              "out_id": 399,
-              "in_id": 367,
-              "uplift": 3.41
-            }
-          ],
-          "hit": 0,
-          "out_id": 399,
           "in_id": 367
         },
         {
@@ -794,402 +1265,17 @@
           "in_id": 98
         }
       ],
-      "expected_points": 249.0,
-      "p10_points": 211.1,
-      "p90_points": 289.5,
-      "expected_rank_after_path": 1.25,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.916,
-        0.917,
-        0.967,
-        0.956,
-        0.996,
-        0.999,
-        1.0,
-        1.0
-      ],
-      "ending_bank": 1.9,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 2,
-      "utility_score": 243.554
-    },
-    {
-      "actions": [
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Greaves → Affengruber",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Greaves → Affengruber",
-              "out_id": 306,
-              "in_id": 650,
-              "uplift": 11.82
-            }
-          ],
-          "hit": 0,
-          "out_id": 306,
-          "in_id": 650
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Hughes → Belloumi + Kinsky → Tzolakis",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Hughes → Belloumi",
-              "out_id": 212,
-              "in_id": 286,
-              "uplift": 5.39
-            },
-            {
-              "route": "Kinsky → Tzolakis",
-              "out_id": 496,
-              "in_id": 572,
-              "uplift": 4.66
-            }
-          ],
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 286
-        },
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "De Cuyper → Bogle",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "De Cuyper → Bogle",
-              "out_id": 115,
-              "in_id": 330,
-              "uplift": 3.44
-            }
-          ],
-          "hit": 0,
-          "out_id": 115,
-          "in_id": 330
-        },
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "Cherki → Gakpo",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Cherki → Gakpo",
-              "out_id": 399,
-              "in_id": 367,
-              "uplift": 2.39
-            }
-          ],
-          "hit": 0,
-          "out_id": 399,
-          "in_id": 367
-        }
-      ],
-      "expected_points": 247.18,
-      "p10_points": 208.99,
-      "p90_points": 287.3,
+      "expected_points": 247.95,
+      "p10_points": 210.22,
+      "p90_points": 286.24,
       "expected_rank_after_path": 1.3,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.892,
-        0.902,
-        0.955,
-        0.951,
-        0.995,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "ending_bank": 1.0,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 1,
-      "utility_score": 241.429
-    },
-    {
-      "actions": [
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Maguire → Bogle",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Bogle",
-              "out_id": 418,
-              "in_id": 330,
-              "uplift": 9.54
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 330
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Gabriel → Affengruber + Hughes → Saka",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Gabriel → Affengruber",
-              "out_id": 4,
-              "in_id": 650,
-              "uplift": 6.37
-            },
-            {
-              "route": "Hughes → Saka",
-              "out_id": 212,
-              "in_id": 12,
-              "uplift": 6.73
-            }
-          ],
-          "hit": 0,
-          "out_id": 4,
-          "in_id": 650
-        },
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "Cherki → Gakpo",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Cherki → Gakpo",
-              "out_id": 399,
-              "in_id": 367,
-              "uplift": 3.41
-            }
-          ],
-          "hit": 0,
-          "out_id": 399,
-          "in_id": 367
-        },
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "Kinsky → Tzolakis",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Kinsky → Tzolakis",
-              "out_id": 496,
-              "in_id": 572,
-              "uplift": 1.92
-            }
-          ],
-          "hit": 0,
-          "out_id": 496,
-          "in_id": 572
-        }
-      ],
-      "expected_points": 247.37,
-      "p10_points": 207.84,
-      "p90_points": 288.27,
-      "expected_rank_after_path": 1.31,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.896,
-        0.901,
-        0.953,
-        0.942,
+        0.907,
+        0.904,
+        0.959,
+        0.938,
         0.994,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "ending_bank": 0.7,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 1,
-      "utility_score": 241.401
-    },
-    {
-      "actions": [
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Maguire → Bogle",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Bogle",
-              "out_id": 418,
-              "in_id": 330,
-              "uplift": 9.54
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 330
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Gabriel → Affengruber + Hughes → Saka",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Gabriel → Affengruber",
-              "out_id": 4,
-              "in_id": 650,
-              "uplift": 6.37
-            },
-            {
-              "route": "Hughes → Saka",
-              "out_id": 212,
-              "in_id": 12,
-              "uplift": 6.73
-            }
-          ],
-          "hit": 0,
-          "out_id": 4,
-          "in_id": 650
-        },
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "Cherki → Gakpo",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Cherki → Gakpo",
-              "out_id": 399,
-              "in_id": 367,
-              "uplift": 3.41
-            }
-          ],
-          "hit": 0,
-          "out_id": 399,
-          "in_id": 367
-        },
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "Dubravka → Tzolakis",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Dubravka → Tzolakis",
-              "out_id": 497,
-              "in_id": 572,
-              "uplift": 1.92
-            }
-          ],
-          "hit": 0,
-          "out_id": 497,
-          "in_id": 572
-        }
-      ],
-      "expected_points": 247.37,
-      "p10_points": 207.84,
-      "p90_points": 288.27,
-      "expected_rank_after_path": 1.31,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.896,
-        0.901,
-        0.953,
-        0.942,
-        0.994,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "ending_bank": 0.2,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 1,
-      "utility_score": 241.401
-    },
-    {
-      "actions": [
-        {
-          "gw": 5,
-          "action": "ROLL"
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "De Cuyper → Affengruber",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "De Cuyper → Affengruber",
-              "out_id": 115,
-              "in_id": 650,
-              "uplift": 7.06
-            }
-          ],
-          "hit": 0,
-          "out_id": 115,
-          "in_id": 650
-        },
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "Thomas → Bogle + Cherki → Gakpo + Hughes → Belloumi",
-          "transfer_count": 3,
-          "transfers": [
-            {
-              "route": "Thomas → Bogle",
-              "out_id": 173,
-              "in_id": 330,
-              "uplift": 5.08
-            },
-            {
-              "route": "Cherki → Gakpo",
-              "out_id": 399,
-              "in_id": 367,
-              "uplift": 3.94
-            },
-            {
-              "route": "Hughes → Belloumi",
-              "out_id": 212,
-              "in_id": 286,
-              "uplift": 2.74
-            }
-          ],
-          "hit": 0,
-          "out_id": 173,
-          "in_id": 330
-        },
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "Kinsky → Tzolakis",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Kinsky → Tzolakis",
-              "out_id": 496,
-              "in_id": 572,
-              "uplift": 1.92
-            }
-          ],
-          "hit": 0,
-          "out_id": 496,
-          "in_id": 572
-        }
-      ],
-      "expected_points": 239.98,
-      "p10_points": 202.31,
-      "p90_points": 279.37,
-      "expected_rank_after_path": 1.44,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.853,
-        0.855,
-        0.944,
-        0.918,
-        0.993,
         1.0,
         1.0,
         1.0
@@ -1198,189 +1284,7 @@
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": null,
       "first_deadline_transfer_count": 0,
-      "utility_score": 233.628
-    },
-    {
-      "actions": [
-        {
-          "gw": 5,
-          "action": "ROLL"
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "De Cuyper → Affengruber",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "De Cuyper → Affengruber",
-              "out_id": 115,
-              "in_id": 650,
-              "uplift": 7.06
-            }
-          ],
-          "hit": 0,
-          "out_id": 115,
-          "in_id": 650
-        },
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "Thomas → Bogle + Cherki → Gakpo + Hughes → Belloumi",
-          "transfer_count": 3,
-          "transfers": [
-            {
-              "route": "Thomas → Bogle",
-              "out_id": 173,
-              "in_id": 330,
-              "uplift": 5.08
-            },
-            {
-              "route": "Cherki → Gakpo",
-              "out_id": 399,
-              "in_id": 367,
-              "uplift": 3.94
-            },
-            {
-              "route": "Hughes → Belloumi",
-              "out_id": 212,
-              "in_id": 286,
-              "uplift": 2.74
-            }
-          ],
-          "hit": 0,
-          "out_id": 173,
-          "in_id": 330
-        },
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "Dubravka → Tzolakis",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Dubravka → Tzolakis",
-              "out_id": 497,
-              "in_id": 572,
-              "uplift": 1.92
-            }
-          ],
-          "hit": 0,
-          "out_id": 497,
-          "in_id": 572
-        }
-      ],
-      "expected_points": 239.98,
-      "p10_points": 202.31,
-      "p90_points": 279.37,
-      "expected_rank_after_path": 1.44,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.853,
-        0.855,
-        0.944,
-        0.918,
-        0.993,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "ending_bank": 0.5,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": null,
-      "first_deadline_transfer_count": 0,
-      "utility_score": 233.628
-    },
-    {
-      "actions": [
-        {
-          "gw": 5,
-          "action": "ROLL"
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "De Cuyper → Affengruber",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "De Cuyper → Affengruber",
-              "out_id": 115,
-              "in_id": 650,
-              "uplift": 7.06
-            }
-          ],
-          "hit": 0,
-          "out_id": 115,
-          "in_id": 650
-        },
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "Thomas → Bogle + Cherki → Gakpo + Kinsky → Tzolakis",
-          "transfer_count": 3,
-          "transfers": [
-            {
-              "route": "Thomas → Bogle",
-              "out_id": 173,
-              "in_id": 330,
-              "uplift": 5.08
-            },
-            {
-              "route": "Cherki → Gakpo",
-              "out_id": 399,
-              "in_id": 367,
-              "uplift": 3.94
-            },
-            {
-              "route": "Kinsky → Tzolakis",
-              "out_id": 496,
-              "in_id": 572,
-              "uplift": 2.74
-            }
-          ],
-          "hit": 0,
-          "out_id": 173,
-          "in_id": 330
-        },
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "Groß → Janelt",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Groß → Janelt",
-              "out_id": 124,
-              "in_id": 98,
-              "uplift": 1.75
-            }
-          ],
-          "hit": 0,
-          "out_id": 124,
-          "in_id": 98
-        }
-      ],
-      "expected_points": 239.46,
-      "p10_points": 201.38,
-      "p90_points": 279.61,
-      "expected_rank_after_path": 1.46,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.844,
-        0.856,
-        0.93,
-        0.922,
-        0.992,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "ending_bank": 2.4,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": null,
-      "first_deadline_transfer_count": 0,
-      "utility_score": 232.961
+      "utility_score": 242.284
     }
   ],
   "method_note": "Each path is scored with the actual squad owned in each Gameweek. A deadline may use one, two or three transfers up to the available free-transfer bank; a no-FT state retains only a single-hit contingency. Current-deadline hits use live FT state. Early-season extremes are shrunk toward priors. Legal XI selection uses the shared captaincy model. Monte Carlo sampling is lighter midweek and increases close to the official FPL deadline without changing decision thresholds."
