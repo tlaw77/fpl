@@ -6,4 +6,5 @@ const receipt=api.buildReceipt(data,plan,'2026-09-15T23:40:55Z');
 assert.equal(receipt.route,'Thomas → Affengruber + Greaves → Bogle');assert.equal(receipt.free_transfers_remaining,0);assert.equal(receipt.hit_cost,0);
 api.applyLocal(data,pool,receipt);assert.equal(data.current_squad_next5.length,15);assert.ok(data.current_squad_next5.some(x=>x.player_id===3));assert.ok(!data.current_squad_next5.some(x=>x.player_id===1));assert.equal(data.decision_synthesis.current_action.action,'HOLD');assert.equal(data.next_transfer_hit_cost,4);
 assert.equal(api.officialApplied(data,receipt),true);
+storage.set('fplWorkingPlanV2',JSON.stringify(plan));const adopted=api.adoptOfficialPlan(data);assert.equal(adopted.status,'officially-reconciled');assert.equal(storage.has('fplWorkingPlanV2'),false);
 console.log('executed plan tests passed');

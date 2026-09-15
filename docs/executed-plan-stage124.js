@@ -1,5 +1,5 @@
 (()=>{
-const BUILD='executed-plan-stage124-20260916-1',PLAN_KEY='fplWorkingPlanV2',EXECUTED_KEY='fplExecutedPlanV1',POOL_URL='https://raw.githubusercontent.com/tlaw77/fpl/main/data/player_pool.json';
+const BUILD='executed-plan-stage124-20260916-2',PLAN_KEY='fplWorkingPlanV2',EXECUTED_KEY='fplExecutedPlanV1',POOL_URL='https://raw.githubusercontent.com/tlaw77/fpl/main/data/player_pool.json';
 const q=(s,r=document)=>r.querySelector(s),n=(v,d=0)=>Number.isFinite(Number(v))?Number(v):d;
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
 const read=(key)=>{try{return JSON.parse(localStorage.getItem(key)||'null')}catch{return null}};
@@ -32,6 +32,7 @@ function reconcile(data){
  }
  return receipt;
 }
+function adoptOfficialPlan(data){const plan=read(PLAN_KEY);if(!moves(plan).length||!officialApplied(data,plan))return null;const receipt=buildReceipt(data,plan);receipt.status='officially-reconciled';receipt.reconciled_at_utc=new Date().toISOString();write(EXECUTED_KEY,receipt);localStorage.removeItem(PLAN_KEY);return receipt}
 let pool=null,loading=null;
 function loadPool(){if(pool)return Promise.resolve(pool);if(window.FPLPlayerPoolData){pool=window.FPLPlayerPoolData;return Promise.resolve(pool)}if(loading)return loading;loading=fetch(`${POOL_URL}?ep124=${Date.now()}`,{cache:'no-store'}).then(r=>r.ok?r.json():null).catch(()=>null).then(x=>{pool=x;if(x)window.FPLPlayerPoolData=x;return x}).finally(()=>loading=null);return loading}
 function confirmPlan(){
@@ -43,7 +44,7 @@ function confirmPlan(){
 function clearLocal(){if(!window.confirm('Remove only the app confirmation? This cannot undo transfers already made in FPL.'))return;localStorage.removeItem(EXECUTED_KEY);location.reload()}
 function render(){
  const view=q('#view-transfer'),host=q('#dc-transfer-view',view);if(!view||!host)return;q('[data-executed-plan]',view)?.remove();
- const data=window.FPLCoreData||{},receipt=reconcile(data),plan=read(PLAN_KEY),ms=moves(plan);if(!receipt&&!ms.length)return;
+ const data=window.FPLCoreData||{};let receipt=reconcile(data)||adoptOfficialPlan(data);const plan=read(PLAN_KEY),ms=moves(plan);if(!receipt&&!ms.length)return;
  const sec=document.createElement('section');sec.className=`dc-card ep124 ${receipt?'confirmed':'ready'}`;sec.dataset.executedPlan='1';
  if(receipt){const synced=receipt.status==='officially-reconciled';sec.innerHTML=`<div class="ep124-head"><div><p class="eyebrow">TRANSFER RECEIPT · GW${esc(receipt.event)}</p><h3>${synced?'Transfers confirmed by FPL':'Transfers registered in this app'}</h3></div><span>${synced?'SYNCED ✓':'APPLIED LOCALLY ✓'}</span></div><strong class="ep124-route">${esc(receipt.route)}</strong><p>${synced?'The official squad now contains these moves. The temporary working plan has been cleared.':'Your effective squad, transfer bank and completed-plan state update immediately on this device. The scheduled data refresh will reconcile it with FPL automatically.'}</p><div class="ep124-stats"><span><b>${receipt.moves.length}</b> made</span><span><b>${receipt.free_transfers_remaining}</b> FT left</span><span><b>${receipt.hit_cost?`−${receipt.hit_cost}`:'0'}</b> hit</span></div>${synced?'':`<button type="button" data-ep-correct>Correct this confirmation</button>`}`}
  else sec.innerHTML=`<div class="ep124-head"><div><p class="eyebrow">READY TO RECORD</p><h3>Made these transfers in FPL?</h3></div><span>${ms.length} MOVE${ms.length===1?'':'S'}</span></div><strong class="ep124-route">${esc(route(plan))}</strong><p>Confirm only after completing the moves in the official FPL app. This locks the full route as completed here and starts planning from the new squad immediately.</p><button type="button" data-ep-confirm>Confirm transfers made</button>`;
@@ -52,6 +53,6 @@ function render(){
 function hydrate(){const data=window.FPLCoreData;if(!data)return;const receipt=reconcile(data);if(receipt&&receipt.status!=='officially-reconciled')loadPool().then(p=>{applyLocal(data,p,receipt);render();window.dispatchEvent(new CustomEvent('fplSafePlanUpdated',{detail:receipt}))});else render()}
 function run(){[80,300,800].forEach(ms=>setTimeout(hydrate,ms))}
 function bind(){run();window.addEventListener('fplCoreDataReady',run,{passive:true});window.addEventListener('fplSafePlanUpdated',()=>setTimeout(render,40),{passive:true});q('#decision-nav button[data-view="transfer"]')?.addEventListener('click',()=>setTimeout(render,80),{passive:true})}
-window.FPLExecutedPlan={PLAN_KEY,EXECUTED_KEY,buildReceipt,officialApplied,applyLocal,reconcile};
+window.FPLExecutedPlan={PLAN_KEY,EXECUTED_KEY,buildReceipt,officialApplied,applyLocal,reconcile,adoptOfficialPlan};
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind,{once:true});else bind();
 })();
