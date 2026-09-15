@@ -16,13 +16,32 @@ if OUT is None:
     from pathlib import Path
     OUT = Path('data/adaptive_rival_simulation.json')
 
-MAX_PATHS = 8
+MAX_PATHS = 12
 POLICY_VARIANTS = 14
 MOVE_THRESHOLD = 0.45
 
 
 def action_key(actions):
     return tuple((a.get('gw'), a.get('action'), a.get('route')) for a in actions)
+
+
+def diverse_path_rows(rows, limit):
+    selected, seen = [], set()
+    def bucket(row):
+        action = ((row.get('actions') or [{}])[0])
+        if action.get('action') != 'TRANSFER':
+            return 'roll'
+        return 'multiple' if int(action.get('transfer_count') or 1) >= 2 else 'one'
+    for name in ('roll', 'one', 'multiple'):
+        match = next((x for x in rows if bucket(x) == name), None)
+        if match:
+            selected.append(match); seen.add(id(match))
+    for row in rows:
+        if len(selected) >= limit:
+            break
+        if id(row) not in seen:
+            selected.append(row); seen.add(id(row))
+    return selected
 
 
 def lineup_snapshots(squad_by_gw, gws, exp):
@@ -40,15 +59,17 @@ def reconstruct_my_path(base_squad, actions, gws, by_id, starting_bank):
     for gw in gws:
         action = next((a for a in actions if int(a.get('gw') or -1) == gw), {'action': 'ROLL'})
         if action.get('action') == 'TRANSFER':
-            out_id = int(action.get('out_id') or 0)
-            in_id = int(action.get('in_id') or 0)
-            out_p = next((x for x in squad if p.pid(x) == out_id), None)
-            in_p = by_id.get(in_id)
-            if out_p and in_p:
-                new = p.replace_player(squad, out_p, in_p)
-                if new:
-                    bank = round(bank + p.price(out_p) - p.price(in_p), 2)
-                    squad = new
+            transfers = action.get('transfers') or [{'out_id': action.get('out_id'), 'in_id': action.get('in_id')}]
+            for transfer in transfers:
+                out_id = int(transfer.get('out_id') or 0)
+                in_id = int(transfer.get('in_id') or 0)
+                out_p = next((x for x in squad if p.pid(x) == out_id), None)
+                in_p = by_id.get(in_id)
+                if out_p and in_p:
+                    new = p.replace_player(squad, out_p, in_p)
+                    if new:
+                        bank = round(bank + p.price(out_p) - p.price(in_p), 2)
+                        squad = new
         snapshots[gw] = deepcopy(squad)
     return snapshots
 
@@ -146,7 +167,7 @@ def run():
     )
     exp = p.expected_table(pool_rows, gws, lo, hi, scout_maps, market_maps)
 
-    candidate_rows = (path_data.get('paths') or [])[:MAX_PATHS]
+    candidate_rows = diverse_path_rows(path_data.get('paths') or [], MAX_PATHS)
     starting_bank = s.n(latest.get('current_bank', (latest.get('me') or {}).get('bank')))
     my_paths = []
     for row in candidate_rows:

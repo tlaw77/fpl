@@ -90,27 +90,23 @@ def enhanced_expand_state(state, gw, gws, pool_rows, exp):
     roll['search_score'] = roll['det_points'] + p.horizon_value(roll['squad'], remaining[1:], exp) + .45 * roll['ft']
     children.append(roll)
 
-    for m in enhanced_transfer_candidates(state, remaining, pool_rows, exp):
+    for sequence in p.deadline_transfer_sequences(state, remaining, pool_rows, exp):
+        moves = sequence['moves']
+        transfer_count = len(moves)
         child = deepcopy(state)
-        child['squad'] = m['squad']
-        child['bank'] = m['bank']
-        hit = 0 if state['ft'] >= 1 else 4
-        ft_after = max(0, state['ft'] - 1)
+        child['squad'] = sequence['squad']
+        child['bank'] = sequence['bank']
+        hit = max(0, transfer_count - int(state.get('ft') or 0)) * 4
+        ft_after = max(0, int(state.get('ft') or 0) - transfer_count)
         child['ft'] = min(p.MAX_FT, ft_after + 1)
-        child['actions'] = state['actions'] + [{
-            'gw': gw,
-            'action': 'TRANSFER',
-            'route': m['label'],
-            'hit': hit,
-            'out_id': p.pid(m['out']),
-            'in_id': p.pid(m['in']),
-            'enabler': bool(m.get('enabler')),
-            'bank_released': m.get('bank_released', 0),
-        }]
+        action = p.transfer_action(gw, moves, hit)
+        action['enabler'] = any(m.get('enabler') for m in moves)
+        action['bank_released'] = round(sum(p.n(m.get('bank_released')) for m in moves), 2)
+        child['actions'] = state['actions'] + [action]
         p.record_snapshot(child, gw)
         gw_score, _, _ = p.lineup_expected(child['squad'], gw, exp)
         child['det_points'] = state['det_points'] + gw_score - hit
-        keep_alive_bonus = min(2.5, p.n(m.get('bank_released')) * .75) if m.get('enabler') else 0
+        keep_alive_bonus = min(2.5, action['bank_released'] * .75) if action['enabler'] else 0
         child['search_score'] = child['det_points'] + p.horizon_value(child['squad'], remaining[1:], exp) + .45 * child['ft'] - hit + keep_alive_bonus
         children.append(child)
     return children

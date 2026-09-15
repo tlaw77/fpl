@@ -45,6 +45,67 @@ def incoming_of(action):
     return route
 
 
+def transfer_count(action):
+    if not action or action.get('action') != 'TRANSFER':
+        return 0
+    return max(1, int(action.get('transfer_count') or len(action.get('transfers') or []) or 1))
+
+
+def build_transfer_options(paths, adaptive, next_gw, remaining_ft, ft_cap):
+    """Expose distinct timing/quantity choices from the simulated path set."""
+    rows = paths.get('paths') or []
+    adaptive_actions = (adaptive.get('recommendation') or {}).get('actions') or []
+
+    def first(row):
+        return first_action(row) or {'gw': next_gw, 'action': 'ROLL'}
+
+    def later_transfer(row):
+        return next((a for a in (row.get('actions') or [])[1:] if a.get('action') == 'TRANSFER'), None)
+
+    def best(predicate):
+        return max((row for row in rows if predicate(row)), key=lambda x: n(x.get('utility_score'), -9999), default=None)
+
+    selected = [
+        ('roll', 'Roll to build the bank', best(lambda r: first(r).get('action') == 'ROLL')),
+        ('one_now', 'Use one free transfer now', best(lambda r: first(r).get('action') == 'TRANSFER' and transfer_count(first(r)) == 1)),
+        ('multiple_now', f'Use multiple free transfers now', best(lambda r: first(r).get('action') == 'TRANSFER' and transfer_count(first(r)) >= 2)),
+        ('staged', 'Start now, complete later', best(lambda r: first(r).get('action') == 'TRANSFER' and transfer_count(first(r)) == 1 and later_transfer(r))),
+    ]
+    roll_row = selected[0][2]
+    roll_points = n((roll_row or {}).get('expected_points'))
+    recommendation_actions = (paths.get('recommendation') or {}).get('actions') or []
+    output = []
+    for key, label, row in selected:
+        if not row:
+            output.append({'key': key, 'label': label, 'available': False})
+            continue
+        action = first(row)
+        later = later_transfer(row)
+        count_now = transfer_count(action)
+        hit = int(action.get('hit') or 0)
+        output.append({
+            'key': key,
+            'label': label,
+            'available': True,
+            'recommended_path': (row.get('actions') or []) == recommendation_actions,
+            'adaptive_support': (row.get('actions') or []) == adaptive_actions,
+            'first_action': action,
+            'later_action': later,
+            'transfer_count_now': count_now,
+            'free_transfers_before': remaining_ft,
+            'free_transfers_after_deadline': min(ft_cap, max(0, remaining_ft - count_now) + 1),
+            'hit_cost': hit,
+            'expected_points': row.get('expected_points'),
+            'p10_points': row.get('p10_points'),
+            'p90_points': row.get('p90_points'),
+            'edge_vs_roll': round(n(row.get('expected_points')) - roll_points, 2) if roll_row else None,
+            'ending_bank': row.get('ending_bank'),
+            'ending_free_transfers': row.get('ending_free_transfers'),
+            'actions': row.get('actions') or [],
+        })
+    return output
+
+
 def normalise_name(value):
     text = unicodedata.normalize('NFKD', str(value or ''))
     return ''.join(c for c in text if not unicodedata.combining(c)).lower().strip()
@@ -162,6 +223,7 @@ def run():
     remaining_ft = int(latest.get('free_transfers_remaining_next_gw') if latest.get('free_transfers_remaining_next_gw') is not None else ft_before)
     completed = completed_current_transfer(latest)
     timing = fixture_timing(sim_route, latest, player_pool)
+    transfer_options = build_transfer_options(paths, adaptive, int(latest.get('next_gw') or 0), remaining_ft, ft_cap)
 
     if hit_cost:
         edge_hurdle = 8.0 if maturity < .35 else 6.0 if maturity < .55 else 4.5
@@ -200,8 +262,31 @@ def run():
         and sim_edge >= edge_hurdle
         and measured_leader_support >= consensus_required
     )
+    multi_option = next((x for x in transfer_options if x.get('key') == 'multiple_now' and x.get('available')), {})
+    multi_action = multi_option.get('first_action') or {}
+    multi_route = route_of(multi_action)
+    multi_count = transfer_count(multi_action)
+    multi_edge = n(multi_option.get('edge_vs_roll'))
+    multi_hurdle = edge_hurdle + 1.5
+    multi_clears = (
+        multi_option.get('recommended_path')
+        and multi_option.get('adaptive_support')
+        and multi_count >= 2
+        and multi_count <= remaining_ft
+        and int(multi_option.get('hit_cost') or 0) == 0
+        and multi_edge >= multi_hurdle
+    )
 
-    if transfer_clears:
+    if multi_clears and not transfer_clears:
+        action = 'TRANSFER'
+        headline = multi_route
+        confidence = min(89, int(64 + min(14, multi_edge * 1.5) + maturity * 7))
+        reason = (
+            f'The best path uses {multi_count} free transfers together and is {multi_edge:.1f} projected points ahead of '
+            f'rolling now across the path horizon. It clears the higher {multi_hurdle:.1f}-point multi-transfer hurdle, '
+            f'has adaptive-rival support and costs no hit. {rollover_sentence}'
+        )
+    elif transfer_clears:
         action = 'TRANSFER'
         headline = sim_route
         confidence = min(91, int(62 + min(16, sim_edge * 1.8) + measured_leader_support * 4 + maturity * 8))
@@ -260,7 +345,7 @@ def run():
     output = {
         'status': 'SUCCESS',
         'generated_at_utc': datetime.now(timezone.utc).isoformat(),
-        'version': 3,
+        'version': 4,
         'current_gw': latest.get('current_gw'),
         'next_gw': latest.get('next_gw'),
         'current_action': {
@@ -273,6 +358,7 @@ def run():
             'free_transfer_cap': ft_cap,
             'free_transfer_would_expire_on_hold': ft_would_expire,
             'next_transfer_hit_cost': hit_cost,
+            'transfer_count': multi_count if multi_clears and not transfer_clears else (1 if action == 'TRANSFER' else 0),
         },
         'robustness': {
             'season_maturity_weight': round(maturity, 3),
@@ -288,6 +374,11 @@ def run():
             'required_edge': edge_hurdle,
             'required_consensus_models': consensus_required,
             'transfer_clears_gate': transfer_clears,
+            'multi_transfer_clears_gate': multi_clears,
+            'multi_transfer_route': multi_route if multi_option else None,
+            'multi_transfer_count': multi_count,
+            'multi_transfer_edge_over_roll': round(multi_edge, 2),
+            'multi_transfer_required_edge': round(multi_hurdle, 2),
             'free_transfers_before_moves': ft_before,
             'free_transfers_before_decision': remaining_ft,
             'free_transfer_cap': ft_cap,
@@ -303,6 +394,7 @@ def run():
             'adaptive_path_first_action': adaptive_plan,
             'note': 'Forward paths are planning evidence, not instructions to pre-commit future transfers. Re-optimise after each deadline and new information.',
         },
+        'transfer_options': transfer_options,
         'chips': {
             'action': chip_action,
             'reason': chip_reason,
@@ -311,7 +403,7 @@ def run():
             'portfolio_pressure': pressure,
             'latest_safe_start_gw': portfolio.get('latest_safe_start_gw'),
         },
-        'method_note': 'Authoritative decision gate. It synthesises single-step Monte Carlo, multi-GW beam search, probabilistic rival response, the five-transfer rollover ceiling, fixture timing, live transfer-hit state, season maturity and chip option value. Fixture difficulty is already priced into projected points; timing is used as context and to scale only the small credit for a transfer that would otherwise expire. A route is promoted only when it clears both magnitude and cross-model support thresholds.',
+        'method_note': 'Authoritative decision gate. It synthesises single-step Monte Carlo, same-deadline one/two/three-transfer routes, multi-GW staged paths, probabilistic rival response, the five-transfer rollover ceiling, fixture timing, live transfer-hit state, season maturity and chip option value. Multiple transfers are promoted only when they fit inside the live free-transfer bank, beat rolling by the higher multi-transfer hurdle and retain adaptive-rival support. Fixture difficulty is already priced into projected points; timing is used as context and to scale only the small credit for a transfer that would otherwise expire.',
     }
 
     latest['decision_synthesis'] = output

@@ -31,12 +31,14 @@ on:
       - "simulation_engine_v2.py"
       - "path_simulation.py"
       - "path_simulation_v3.py"
+      - "path_simulation_v4.py"
       - "adaptive_rival_simulation.py"
       - "adaptive_rival_simulation_v2.py"
       - "chip_path_simulation.py"
       - "chip_path_simulation_v2.py"
       - "decision_synthesis.py"
       - "tests/test_free_transfer_logic.py"
+      - "tests/test_multi_transfer_planning.py"
       - "tests/test_rules_edges.py"
       - "decision_twin.py"
       - "tests/test_decision_twin.py"
@@ -108,7 +110,7 @@ jobs:
       - name: Synthesize authoritative decision
         run: python decision_synthesis.py
       - name: Test rule, transfer and fixture-timing logic
-        run: python -m unittest tests.test_free_transfer_logic tests.test_rules_edges
+        run: python -m unittest tests.test_free_transfer_logic tests.test_multi_transfer_planning tests.test_rules_edges
       - name: Refresh history index
         run: |
           python - <<'PY'
@@ -196,6 +198,14 @@ jobs:
           assert str(path_sim.get('projection_model', '')).startswith('season-maturity calibrated')
           assert path_sim['iterations'] >= 1000 and len(path_sim.get('paths', [])) >= 1 and path_sim.get('recommendation') is not None
           assert path_sim.get('starting_free_transfers') == data.get('free_transfers_remaining_next_gw')
+          for path in path_sim.get('paths', []):
+              for action in path.get('actions', []):
+                  if action.get('action') != 'TRANSFER': continue
+                  count = int(action.get('transfer_count') or 1)
+                  transfers = action.get('transfers') or []
+                  if count > 1:
+                      assert len(transfers) == count
+                      assert int(action.get('hit') or 0) == 0, 'Bounded multi-transfer routes must fit inside the free-transfer bank'
 
           assert adaptive_sim['status'] == 'SUCCESS' and adaptive_sim.get('engine_version', 0) >= 3
           assert str(adaptive_sim.get('projection_model', '')).startswith('season-maturity calibrated')
@@ -220,8 +230,15 @@ jobs:
               assert max(clubs.values()) <= 3
               assert candidate.get('cost', 999) <= full_chip.get('budget', 0) + 1e-6
 
-          assert synthesis['status'] == 'SUCCESS' and synthesis.get('version', 0) >= 2
+          assert synthesis['status'] == 'SUCCESS' and synthesis.get('version', 0) >= 4
           assert synthesis.get('current_action', {}).get('action') in ('HOLD', 'TRANSFER')
+          transfer_options = synthesis.get('transfer_options') or []
+          assert {x.get('key') for x in transfer_options} == {'roll','one_now','multiple_now','staged'}
+          for option in transfer_options:
+              if not option.get('available'): continue
+              assert int(option.get('hit_cost') or 0) in (0, 4)
+              if option.get('key') == 'multiple_now':
+                  assert int(option.get('transfer_count_now') or 0) >= 2
           assert data.get('decision_synthesis', {}).get('version') == synthesis.get('version')
           assert synthesis.get('chips', {}).get('action') in ('HOLD', 'CONSIDER')
 

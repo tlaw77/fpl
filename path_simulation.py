@@ -19,11 +19,13 @@ CHIPS = Path('data/chip_window.json')
 OUT = Path('data/path_simulation.json')
 
 DEPTH = 4
-BEAM_WIDTH = 14
+BEAM_WIDTH = 18
 INCOMING_PER_POSITION = 8
-FINALISTS = 8
+FINALISTS = 12
 ITERATIONS = 1800
 MAX_FT = 5
+MAX_TRANSFERS_PER_DEADLINE = 3
+SAME_DEADLINE_BRANCH_WIDTH = 8
 
 
 def pid(p):
@@ -106,6 +108,72 @@ def transfer_candidates(state, remaining_gws, pool_rows, exp, limit=10):
     return moves[:limit]
 
 
+def deadline_transfer_sequences(state, remaining_gws, pool_rows, exp):
+    """Build bounded one-, two- and three-transfer routes for one deadline.
+
+    Multiple moves are explored only up to the available free-transfer bank.
+    When no free transfer remains, the existing single-hit contingency is kept,
+    but the planner never manufactures a multi-hit route.
+    """
+    free_transfers = max(0, int(state.get('ft') or 0))
+    max_count = 1 if free_transfers == 0 else min(MAX_TRANSFERS_PER_DEADLINE, free_transfers)
+    partials = [{
+        'squad': state['squad'],
+        'bank': state['bank'],
+        'moves': [],
+        'uplift': 0.0,
+        'bought_ids': set(),
+        'sold_ids': set(),
+    }]
+    sequences = []
+    for _ in range(max_count):
+        expanded = []
+        for partial in partials:
+            interim = {'squad': partial['squad'], 'bank': partial['bank']}
+            for move in transfer_candidates(interim, remaining_gws, pool_rows, exp, limit=6):
+                out_id, in_id = pid(move['out']), pid(move['in'])
+                if not out_id or not in_id or out_id in partial['bought_ids'] or in_id in partial['sold_ids']:
+                    continue
+                expanded.append({
+                    'squad': move['squad'],
+                    'bank': move['bank'],
+                    'moves': partial['moves'] + [move],
+                    'uplift': partial['uplift'] + n(move.get('uplift')),
+                    'bought_ids': partial['bought_ids'] | {in_id},
+                    'sold_ids': partial['sold_ids'] | {out_id},
+                })
+        dedup = {}
+        for row in expanded:
+            key = (tuple(sorted(pid(x) for x in row['squad'])), round(row['bank'], 1))
+            if key not in dedup or row['uplift'] > dedup[key]['uplift']:
+                dedup[key] = row
+        partials = sorted(dedup.values(), key=lambda x: x['uplift'], reverse=True)[:SAME_DEADLINE_BRANCH_WIDTH]
+        sequences.extend(partials)
+        if not partials:
+            break
+    return sequences
+
+
+def transfer_action(gw, moves, hit):
+    transfers = [{
+        'route': m['label'],
+        'out_id': pid(m['out']),
+        'in_id': pid(m['in']),
+        'uplift': round(n(m.get('uplift')), 2),
+    } for m in moves]
+    return {
+        'gw': gw,
+        'action': 'TRANSFER',
+        'route': ' + '.join(x['route'] for x in transfers),
+        'transfer_count': len(transfers),
+        'transfers': transfers,
+        'hit': hit,
+        # Retain the first IDs for older downstream consumers.
+        'out_id': transfers[0]['out_id'],
+        'in_id': transfers[0]['in_id'],
+    }
+
+
 def record_snapshot(state, gw):
     state['squad_by_gw'] = dict(state.get('squad_by_gw') or {})
     state['squad_by_gw'][int(gw)] = deepcopy(state['squad'])
@@ -124,27 +192,52 @@ def expand_state(state, gw, gws, pool_rows, exp):
     roll['search_score'] = roll['det_points'] + horizon_value(roll['squad'], remaining[1:], exp) + .45 * roll['ft']
     children.append(roll)
 
-    for m in transfer_candidates(state, remaining, pool_rows, exp):
+    for sequence in deadline_transfer_sequences(state, remaining, pool_rows, exp):
+        moves = sequence['moves']
+        transfer_count = len(moves)
         child = deepcopy(state)
-        child['squad'] = m['squad']
-        child['bank'] = m['bank']
-        hit = 0 if state['ft'] >= 1 else 4
-        ft_after = max(0, state['ft'] - 1)
+        child['squad'] = sequence['squad']
+        child['bank'] = sequence['bank']
+        hit = max(0, transfer_count - int(state.get('ft') or 0)) * 4
+        ft_after = max(0, int(state.get('ft') or 0) - transfer_count)
         child['ft'] = min(MAX_FT, ft_after + 1)
-        child['actions'] = state['actions'] + [{
-            'gw': gw,
-            'action': 'TRANSFER',
-            'route': m['label'],
-            'hit': hit,
-            'out_id': pid(m['out']),
-            'in_id': pid(m['in']),
-        }]
+        child['actions'] = state['actions'] + [transfer_action(gw, moves, hit)]
         record_snapshot(child, gw)
         gw_score, _, _ = lineup_expected(child['squad'], gw, exp)
         child['det_points'] = state['det_points'] + gw_score - hit
         child['search_score'] = child['det_points'] + horizon_value(child['squad'], remaining[1:], exp) + .45 * child['ft'] - hit
         children.append(child)
     return children
+
+
+def first_deadline_bucket(state):
+    action = (state.get('actions') or [{}])[0]
+    if action.get('action') != 'TRANSFER':
+        return 'roll'
+    return 'multiple' if int(action.get('transfer_count') or 1) >= 2 else 'one'
+
+
+def diverse_states(states, limit):
+    """Keep roll, one-now and multiple-now branches alive in the bounded beam."""
+    ranked = sorted(states, key=lambda x: x['search_score'], reverse=True)
+    selected, seen = [], set()
+    per_bucket = max(1, limit // 4)
+    for bucket in ('roll', 'one', 'multiple'):
+        for row in (x for x in ranked if first_deadline_bucket(x) == bucket):
+            marker = id(row)
+            if marker in seen:
+                continue
+            selected.append(row)
+            seen.add(marker)
+            if sum(1 for x in selected if first_deadline_bucket(x) == bucket) >= per_bucket:
+                break
+    for row in ranked:
+        if len(selected) >= limit:
+            break
+        if id(row) not in seen:
+            selected.append(row)
+            seen.add(id(row))
+    return selected[:limit]
 
 
 def beam_search(base_squad, bank, start_ft, gws, pool_rows, exp):
@@ -167,8 +260,8 @@ def beam_search(base_squad, bank, start_ft, gws, pool_rows, exp):
             key = (squad_sig, s['ft'], round(s['bank'], 1))
             if key not in dedup or s['search_score'] > dedup[key]['search_score']:
                 dedup[key] = s
-        beam = sorted(dedup.values(), key=lambda x: x['search_score'], reverse=True)[:BEAM_WIDTH]
-    return sorted(beam, key=lambda x: x['search_score'], reverse=True)[:FINALISTS]
+        beam = diverse_states(dedup.values(), BEAM_WIDTH)
+    return diverse_states(beam, FINALISTS)
 
 
 def rival_lineups(rivals, gws, exp):
@@ -257,7 +350,10 @@ def simulate_paths(paths, rivals, gws, exp, latest):
         incoming_starts = None
         if first_action and first_action.get('action') == 'TRANSFER' and first_gw:
             _, xi, _ = lineup_expected(first_snapshot, first_gw, exp)
-            incoming_starts = int(first_action.get('in_id') or 0) in set(xi)
+            incoming_ids = [int(x.get('in_id') or 0) for x in (first_action.get('transfers') or [])]
+            if not incoming_ids:
+                incoming_ids = [int(first_action.get('in_id') or 0)]
+            incoming_starts = all(x in set(xi) for x in incoming_ids if x)
         results.append({
             'actions': s['actions'],
             'expected_points': round(mean, 2),
@@ -269,6 +365,7 @@ def simulate_paths(paths, rivals, gws, exp, latest):
             'ending_bank': s['bank'],
             'ending_free_transfers': s['ft'],
             'first_transfer_incoming_starts': incoming_starts,
+            'first_deadline_transfer_count': int((first_action or {}).get('transfer_count') or (1 if (first_action or {}).get('action') == 'TRANSFER' else 0)),
             'utility_score': round(utility, 3),
         })
     results.sort(key=lambda x: x['utility_score'], reverse=True)
