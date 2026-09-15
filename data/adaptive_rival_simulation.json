@@ -1,12 +1,12 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-09-15T07:35:58.394294+00:00",
+  "generated_at_utc": "2026-09-15T11:38:22.405383+00:00",
   "engine_version": 3,
   "iterations": 1200,
   "iteration_policy": {
     "layer": "adaptive",
     "deadline_phase": "normal",
-    "hours_to_deadline": 81.91,
+    "hours_to_deadline": 77.88,
     "iterations": 1200,
     "policy": "lighter normal-week sampling; higher precision inside 72h/24h/6h of official FPL deadline"
   },
@@ -22,21 +22,21 @@
   "policy_variants_per_rival": 14,
   "rival_behaviour": [
     {
-      "entry_id": 7711703,
-      "team_name": "Shamrock Sheilas",
-      "rank": 2,
-      "observed_transfer_events": 1,
-      "observed_transfers": 4,
-      "action_probability": 0.381,
-      "hit_probability": 0.2
-    },
-    {
       "entry_id": 6324266,
       "team_name": "Ballon Dorgu",
-      "rank": 3,
+      "rank": 2,
       "observed_transfer_events": 3,
       "observed_transfers": 11,
       "action_probability": 0.619,
+      "hit_probability": 0.2
+    },
+    {
+      "entry_id": 7711703,
+      "team_name": "Shamrock Sheilas",
+      "rank": 3,
+      "observed_transfer_events": 1,
+      "observed_transfers": 4,
+      "action_probability": 0.381,
       "hit_probability": 0.2
     },
     {
@@ -99,54 +99,96 @@
       {
         "gw": 5,
         "action": "TRANSFER",
-        "route": "Thomas → Bogle",
+        "route": "Maguire → Affengruber + Dubravka → Tzolakis",
+        "transfer_count": 2,
+        "transfers": [
+          {
+            "route": "Maguire → Affengruber",
+            "out_id": 418,
+            "in_id": 650,
+            "uplift": 11.82
+          },
+          {
+            "route": "Dubravka → Tzolakis",
+            "out_id": 497,
+            "in_id": 572,
+            "uplift": 7.54
+          }
+        ],
         "hit": 0,
-        "out_id": 173,
-        "in_id": 330
+        "out_id": 418,
+        "in_id": 650
       },
       {
         "gw": 6,
         "action": "TRANSFER",
-        "route": "Greaves → Affengruber",
+        "route": "Hughes → Belloumi",
+        "transfer_count": 1,
+        "transfers": [
+          {
+            "route": "Hughes → Belloumi",
+            "out_id": 212,
+            "in_id": 286,
+            "uplift": 5.63
+          }
+        ],
         "hit": 0,
-        "out_id": 306,
-        "in_id": 650
+        "out_id": 212,
+        "in_id": 286
       },
       {
         "gw": 7,
         "action": "TRANSFER",
-        "route": "Cherki → Gakpo",
+        "route": "Greaves → Bogle",
+        "transfer_count": 1,
+        "transfers": [
+          {
+            "route": "Greaves → Bogle",
+            "out_id": 306,
+            "in_id": 330,
+            "uplift": 3.59
+          }
+        ],
         "hit": 0,
-        "out_id": 399,
-        "in_id": 367
+        "out_id": 306,
+        "in_id": 330
       },
       {
         "gw": 8,
         "action": "TRANSFER",
-        "route": "Dubravka → Tzolakis",
+        "route": "Cherki → Gakpo",
+        "transfer_count": 1,
+        "transfers": [
+          {
+            "route": "Cherki → Gakpo",
+            "out_id": 399,
+            "in_id": 367,
+            "uplift": 2.39
+          }
+        ],
         "hit": 0,
-        "out_id": 497,
-        "in_id": 572
+        "out_id": 399,
+        "in_id": 367
       }
     ],
-    "expected_points": 238.47,
-    "p10_points": 200.43,
-    "p90_points": 278.9,
-    "expected_rank_after_path": 1.68,
+    "expected_points": 244.77,
+    "p10_points": 204.54,
+    "p90_points": 287.28,
+    "expected_rank_after_path": 1.45,
     "prob_gain_league_place": 0.0,
     "prob_finish_ahead_each_rival": [
-      0.834,
-      0.782,
-      0.891,
-      0.814,
-      0.998,
-      0.998,
+      0.857,
+      0.877,
+      0.941,
+      0.896,
+      0.984,
+      1.0,
       1.0,
       1.0
     ],
-    "static_rival_expected_rank": 1.41,
-    "probabilistic_rival_rank_penalty": 0.27,
-    "utility_score": 230.5
+    "static_rival_expected_rank": 1.31,
+    "probabilistic_rival_rank_penalty": 0.14,
+    "utility_score": 237.709
   },
   "paths": [
     {
@@ -154,123 +196,615 @@
         {
           "gw": 5,
           "action": "TRANSFER",
+          "route": "Maguire → Affengruber + Dubravka → Tzolakis",
+          "transfer_count": 2,
+          "transfers": [
+            {
+              "route": "Maguire → Affengruber",
+              "out_id": 418,
+              "in_id": 650,
+              "uplift": 11.82
+            },
+            {
+              "route": "Dubravka → Tzolakis",
+              "out_id": 497,
+              "in_id": 572,
+              "uplift": 7.54
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 650
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Hughes → Belloumi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Hughes → Belloumi",
+              "out_id": 212,
+              "in_id": 286,
+              "uplift": 5.63
+            }
+          ],
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 286
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Greaves → Bogle",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Greaves → Bogle",
+              "out_id": 306,
+              "in_id": 330,
+              "uplift": 3.59
+            }
+          ],
+          "hit": 0,
+          "out_id": 306,
+          "in_id": 330
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "Cherki → Gakpo",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Cherki → Gakpo",
+              "out_id": 399,
+              "in_id": 367,
+              "uplift": 2.39
+            }
+          ],
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 367
+        }
+      ],
+      "expected_points": 244.77,
+      "p10_points": 204.54,
+      "p90_points": 287.28,
+      "expected_rank_after_path": 1.45,
+      "prob_gain_league_place": 0.0,
+      "prob_finish_ahead_each_rival": [
+        0.857,
+        0.877,
+        0.941,
+        0.896,
+        0.984,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "static_rival_expected_rank": 1.31,
+      "probabilistic_rival_rank_penalty": 0.14,
+      "utility_score": 237.709
+    },
+    {
+      "actions": [
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Thomas → Affengruber + Kinsky → Tzolakis",
+          "transfer_count": 2,
+          "transfers": [
+            {
+              "route": "Thomas → Affengruber",
+              "out_id": 173,
+              "in_id": 650,
+              "uplift": 11.82
+            },
+            {
+              "route": "Kinsky → Tzolakis",
+              "out_id": 496,
+              "in_id": 572,
+              "uplift": 7.54
+            }
+          ],
+          "hit": 0,
+          "out_id": 173,
+          "in_id": 650
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Hughes → Belloumi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Hughes → Belloumi",
+              "out_id": 212,
+              "in_id": 286,
+              "uplift": 5.63
+            }
+          ],
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 286
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Maguire → Bogle",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Maguire → Bogle",
+              "out_id": 418,
+              "in_id": 330,
+              "uplift": 3.59
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 330
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "Cherki → Gakpo",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Cherki → Gakpo",
+              "out_id": 399,
+              "in_id": 367,
+              "uplift": 2.39
+            }
+          ],
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 367
+        }
+      ],
+      "expected_points": 244.77,
+      "p10_points": 204.54,
+      "p90_points": 287.28,
+      "expected_rank_after_path": 1.45,
+      "prob_gain_league_place": 0.0,
+      "prob_finish_ahead_each_rival": [
+        0.857,
+        0.877,
+        0.941,
+        0.896,
+        0.984,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "static_rival_expected_rank": 1.31,
+      "probabilistic_rival_rank_penalty": 0.14,
+      "utility_score": 237.709
+    },
+    {
+      "actions": [
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Maguire → Affengruber + Dubravka → Tzolakis",
+          "transfer_count": 2,
+          "transfers": [
+            {
+              "route": "Maguire → Affengruber",
+              "out_id": 418,
+              "in_id": 650,
+              "uplift": 11.82
+            },
+            {
+              "route": "Dubravka → Tzolakis",
+              "out_id": 497,
+              "in_id": 572,
+              "uplift": 7.54
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 650
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Hughes → Belloumi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Hughes → Belloumi",
+              "out_id": 212,
+              "in_id": 286,
+              "uplift": 5.63
+            }
+          ],
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 286
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
           "route": "Thomas → Bogle",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Thomas → Bogle",
+              "out_id": 173,
+              "in_id": 330,
+              "uplift": 3.59
+            }
+          ],
           "hit": 0,
           "out_id": 173,
           "in_id": 330
         },
         {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "Cherki → Gakpo",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Cherki → Gakpo",
+              "out_id": 399,
+              "in_id": 367,
+              "uplift": 2.39
+            }
+          ],
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 367
+        }
+      ],
+      "expected_points": 244.77,
+      "p10_points": 204.54,
+      "p90_points": 287.28,
+      "expected_rank_after_path": 1.45,
+      "prob_gain_league_place": 0.0,
+      "prob_finish_ahead_each_rival": [
+        0.857,
+        0.877,
+        0.941,
+        0.896,
+        0.984,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "static_rival_expected_rank": 1.31,
+      "probabilistic_rival_rank_penalty": 0.14,
+      "utility_score": 237.709
+    },
+    {
+      "actions": [
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Maguire → Affengruber + Kinsky → Tzolakis",
+          "transfer_count": 2,
+          "transfers": [
+            {
+              "route": "Maguire → Affengruber",
+              "out_id": 418,
+              "in_id": 650,
+              "uplift": 11.82
+            },
+            {
+              "route": "Kinsky → Tzolakis",
+              "out_id": 496,
+              "in_id": 572,
+              "uplift": 7.54
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 650
+        },
+        {
           "gw": 6,
+          "action": "TRANSFER",
+          "route": "Hughes → Belloumi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Hughes → Belloumi",
+              "out_id": 212,
+              "in_id": 286,
+              "uplift": 5.63
+            }
+          ],
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 286
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Greaves → Bogle",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Greaves → Bogle",
+              "out_id": 306,
+              "in_id": 330,
+              "uplift": 3.59
+            }
+          ],
+          "hit": 0,
+          "out_id": 306,
+          "in_id": 330
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "Cherki → Gakpo",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Cherki → Gakpo",
+              "out_id": 399,
+              "in_id": 367,
+              "uplift": 2.39
+            }
+          ],
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 367
+        }
+      ],
+      "expected_points": 244.77,
+      "p10_points": 204.54,
+      "p90_points": 287.28,
+      "expected_rank_after_path": 1.45,
+      "prob_gain_league_place": 0.0,
+      "prob_finish_ahead_each_rival": [
+        0.857,
+        0.877,
+        0.941,
+        0.896,
+        0.984,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "static_rival_expected_rank": 1.31,
+      "probabilistic_rival_rank_penalty": 0.14,
+      "utility_score": 237.709
+    },
+    {
+      "actions": [
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Maguire → Affengruber + Greaves → Bogle",
+          "transfer_count": 2,
+          "transfers": [
+            {
+              "route": "Maguire → Affengruber",
+              "out_id": 418,
+              "in_id": 650,
+              "uplift": 11.82
+            },
+            {
+              "route": "Greaves → Bogle",
+              "out_id": 306,
+              "in_id": 330,
+              "uplift": 7.61
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 650
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Dubravka → Tzolakis",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Dubravka → Tzolakis",
+              "out_id": 497,
+              "in_id": 572,
+              "uplift": 5.9
+            }
+          ],
+          "hit": 0,
+          "out_id": 497,
+          "in_id": 572
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Cherki → Gakpo",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Cherki → Gakpo",
+              "out_id": 399,
+              "in_id": 367,
+              "uplift": 3.67
+            }
+          ],
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 367
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "Groß → Belloumi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Groß → Belloumi",
+              "out_id": 124,
+              "in_id": 286,
+              "uplift": 1.59
+            }
+          ],
+          "hit": 0,
+          "out_id": 124,
+          "in_id": 286
+        }
+      ],
+      "expected_points": 243.68,
+      "p10_points": 204.25,
+      "p90_points": 283.42,
+      "expected_rank_after_path": 1.49,
+      "prob_gain_league_place": 0.0,
+      "prob_finish_ahead_each_rival": [
+        0.829,
+        0.874,
+        0.936,
+        0.882,
+        0.984,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "static_rival_expected_rank": 1.3,
+      "probabilistic_rival_rank_penalty": 0.19,
+      "utility_score": 236.476
+    },
+    {
+      "actions": [
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Thomas → Affengruber + Maguire → Bogle",
+          "transfer_count": 2,
+          "transfers": [
+            {
+              "route": "Thomas → Affengruber",
+              "out_id": 173,
+              "in_id": 650,
+              "uplift": 11.82
+            },
+            {
+              "route": "Maguire → Bogle",
+              "out_id": 418,
+              "in_id": 330,
+              "uplift": 7.61
+            }
+          ],
+          "hit": 0,
+          "out_id": 173,
+          "in_id": 650
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Kinsky → Tzolakis",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Kinsky → Tzolakis",
+              "out_id": 496,
+              "in_id": 572,
+              "uplift": 5.9
+            }
+          ],
+          "hit": 0,
+          "out_id": 496,
+          "in_id": 572
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Cherki → Gakpo",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Cherki → Gakpo",
+              "out_id": 399,
+              "in_id": 367,
+              "uplift": 3.67
+            }
+          ],
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 367
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "Groß → Belloumi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Groß → Belloumi",
+              "out_id": 124,
+              "in_id": 286,
+              "uplift": 1.59
+            }
+          ],
+          "hit": 0,
+          "out_id": 124,
+          "in_id": 286
+        }
+      ],
+      "expected_points": 243.68,
+      "p10_points": 204.25,
+      "p90_points": 283.42,
+      "expected_rank_after_path": 1.49,
+      "prob_gain_league_place": 0.0,
+      "prob_finish_ahead_each_rival": [
+        0.829,
+        0.874,
+        0.936,
+        0.882,
+        0.984,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "static_rival_expected_rank": 1.3,
+      "probabilistic_rival_rank_penalty": 0.19,
+      "utility_score": 236.476
+    },
+    {
+      "actions": [
+        {
+          "gw": 5,
           "action": "TRANSFER",
           "route": "Greaves → Affengruber",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Greaves → Affengruber",
+              "out_id": 306,
+              "in_id": 650,
+              "uplift": 11.82
+            }
+          ],
           "hit": 0,
           "out_id": 306,
           "in_id": 650
         },
         {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "Cherki → Gakpo",
-          "hit": 0,
-          "out_id": 399,
-          "in_id": 367
-        },
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "Dubravka → Tzolakis",
-          "hit": 0,
-          "out_id": 497,
-          "in_id": 572
-        }
-      ],
-      "expected_points": 238.47,
-      "p10_points": 200.43,
-      "p90_points": 278.9,
-      "expected_rank_after_path": 1.68,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.834,
-        0.782,
-        0.891,
-        0.814,
-        0.998,
-        0.998,
-        1.0,
-        1.0
-      ],
-      "static_rival_expected_rank": 1.41,
-      "probabilistic_rival_rank_penalty": 0.27,
-      "utility_score": 230.5
-    },
-    {
-      "actions": [
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Thomas → Affengruber",
-          "hit": 0,
-          "out_id": 173,
-          "in_id": 650
-        },
-        {
           "gw": 6,
           "action": "TRANSFER",
-          "route": "Kinsky → Tzolakis",
-          "hit": 0,
-          "out_id": 496,
-          "in_id": 572
-        },
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "Maguire → Bogle",
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 330
-        },
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "Cherki → Gakpo",
-          "hit": 0,
-          "out_id": 399,
-          "in_id": 367
-        }
-      ],
-      "expected_points": 238.41,
-      "p10_points": 199.53,
-      "p90_points": 278.11,
-      "expected_rank_after_path": 1.68,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.834,
-        0.776,
-        0.88,
-        0.831,
-        0.998,
-        0.998,
-        1.0,
-        1.0
-      ],
-      "static_rival_expected_rank": 1.41,
-      "probabilistic_rival_rank_penalty": 0.27,
-      "utility_score": 230.327
-    },
-    {
-      "actions": [
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Thomas → Affengruber",
-          "hit": 0,
-          "out_id": 173,
-          "in_id": 650
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Dubravka → Tzolakis",
+          "route": "Dubravka → Tzolakis + Cherki → Belloumi",
+          "transfer_count": 2,
+          "transfers": [
+            {
+              "route": "Dubravka → Tzolakis",
+              "out_id": 497,
+              "in_id": 572,
+              "uplift": 5.9
+            },
+            {
+              "route": "Cherki → Belloumi",
+              "out_id": 399,
+              "in_id": 286,
+              "uplift": 5.15
+            }
+          ],
           "hit": 0,
           "out_id": 497,
           "in_id": 572
@@ -278,269 +812,95 @@
         {
           "gw": 7,
           "action": "TRANSFER",
-          "route": "Maguire → Bogle",
+          "route": "Hughes → Gakpo",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Hughes → Gakpo",
+              "out_id": 212,
+              "in_id": 367,
+              "uplift": 3.89
+            }
+          ],
           "hit": 0,
-          "out_id": 418,
-          "in_id": 330
-        },
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "Cherki → Gakpo",
-          "hit": 0,
-          "out_id": 399,
-          "in_id": 367
-        }
-      ],
-      "expected_points": 238.41,
-      "p10_points": 199.53,
-      "p90_points": 278.11,
-      "expected_rank_after_path": 1.68,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.834,
-        0.776,
-        0.88,
-        0.831,
-        0.998,
-        0.998,
-        1.0,
-        1.0
-      ],
-      "static_rival_expected_rank": 1.41,
-      "probabilistic_rival_rank_penalty": 0.27,
-      "utility_score": 230.327
-    },
-    {
-      "actions": [
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Thomas → Affengruber",
-          "hit": 0,
-          "out_id": 173,
-          "in_id": 650
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Kinsky → Tzolakis",
-          "hit": 0,
-          "out_id": 496,
-          "in_id": 572
-        },
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "Greaves → Bogle",
-          "hit": 0,
-          "out_id": 306,
-          "in_id": 330
-        },
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "Cherki → Gakpo",
-          "hit": 0,
-          "out_id": 399,
-          "in_id": 367
-        }
-      ],
-      "expected_points": 238.41,
-      "p10_points": 199.53,
-      "p90_points": 278.11,
-      "expected_rank_after_path": 1.68,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.834,
-        0.776,
-        0.88,
-        0.831,
-        0.998,
-        0.998,
-        1.0,
-        1.0
-      ],
-      "static_rival_expected_rank": 1.41,
-      "probabilistic_rival_rank_penalty": 0.27,
-      "utility_score": 230.327
-    },
-    {
-      "actions": [
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Maguire → Affengruber",
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 650
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Kinsky → Tzolakis",
-          "hit": 0,
-          "out_id": 496,
-          "in_id": 572
-        },
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "Greaves → Bogle",
-          "hit": 0,
-          "out_id": 306,
-          "in_id": 330
-        },
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "Cherki → Gakpo",
-          "hit": 0,
-          "out_id": 399,
-          "in_id": 367
-        }
-      ],
-      "expected_points": 238.41,
-      "p10_points": 199.53,
-      "p90_points": 278.11,
-      "expected_rank_after_path": 1.68,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.834,
-        0.776,
-        0.88,
-        0.831,
-        0.998,
-        0.998,
-        1.0,
-        1.0
-      ],
-      "static_rival_expected_rank": 1.41,
-      "probabilistic_rival_rank_penalty": 0.27,
-      "utility_score": 230.327
-    },
-    {
-      "actions": [
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Maguire → Affengruber",
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 650
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Dubravka → Tzolakis",
-          "hit": 0,
-          "out_id": 497,
-          "in_id": 572
-        },
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "Greaves → Bogle",
-          "hit": 0,
-          "out_id": 306,
-          "in_id": 330
-        },
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "Cherki → Gakpo",
-          "hit": 0,
-          "out_id": 399,
-          "in_id": 367
-        }
-      ],
-      "expected_points": 238.41,
-      "p10_points": 199.53,
-      "p90_points": 278.11,
-      "expected_rank_after_path": 1.68,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.834,
-        0.776,
-        0.88,
-        0.831,
-        0.998,
-        0.998,
-        1.0,
-        1.0
-      ],
-      "static_rival_expected_rank": 1.41,
-      "probabilistic_rival_rank_penalty": 0.27,
-      "utility_score": 230.327
-    },
-    {
-      "actions": [
-        {
-          "gw": 5,
-          "action": "TRANSFER",
-          "route": "Thomas → Affengruber",
-          "hit": 0,
-          "out_id": 173,
-          "in_id": 650
-        },
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Kinsky → Tzolakis",
-          "hit": 0,
-          "out_id": 496,
-          "in_id": 572
-        },
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "Cherki → Gakpo",
-          "hit": 0,
-          "out_id": 399,
+          "out_id": 212,
           "in_id": 367
         },
         {
           "gw": 8,
           "action": "TRANSFER",
           "route": "De Cuyper → Bogle",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "De Cuyper → Bogle",
+              "out_id": 115,
+              "in_id": 330,
+              "uplift": 2.22
+            }
+          ],
           "hit": 0,
           "out_id": 115,
           "in_id": 330
         }
       ],
-      "expected_points": 237.23,
-      "p10_points": 198.82,
-      "p90_points": 276.61,
-      "expected_rank_after_path": 1.7,
+      "expected_points": 242.35,
+      "p10_points": 203.32,
+      "p90_points": 282.91,
+      "expected_rank_after_path": 1.5,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.825,
-        0.767,
-        0.883,
-        0.827,
-        0.998,
-        0.998,
+        0.84,
+        0.866,
+        0.932,
+        0.873,
+        0.983,
+        1.0,
         1.0,
         1.0
       ],
-      "static_rival_expected_rank": 1.39,
-      "probabilistic_rival_rank_penalty": 0.31,
-      "utility_score": 229.116
+      "static_rival_expected_rank": 1.32,
+      "probabilistic_rival_rank_penalty": 0.18,
+      "utility_score": 235.138
     },
     {
       "actions": [
         {
           "gw": 5,
           "action": "TRANSFER",
-          "route": "Thomas → Affengruber",
+          "route": "Greaves → Affengruber",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Greaves → Affengruber",
+              "out_id": 306,
+              "in_id": 650,
+              "uplift": 11.82
+            }
+          ],
           "hit": 0,
-          "out_id": 173,
+          "out_id": 306,
           "in_id": 650
         },
         {
           "gw": 6,
           "action": "TRANSFER",
-          "route": "Dubravka → Tzolakis",
+          "route": "Dubravka → Tzolakis + Cherki → Belloumi",
+          "transfer_count": 2,
+          "transfers": [
+            {
+              "route": "Dubravka → Tzolakis",
+              "out_id": 497,
+              "in_id": 572,
+              "uplift": 5.9
+            },
+            {
+              "route": "Cherki → Belloumi",
+              "out_id": 399,
+              "in_id": 286,
+              "uplift": 5.15
+            }
+          ],
           "hit": 0,
           "out_id": 497,
           "in_id": 572
@@ -548,38 +908,419 @@
         {
           "gw": 7,
           "action": "TRANSFER",
-          "route": "Cherki → Gakpo",
+          "route": "De Cuyper → Bogle",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "De Cuyper → Bogle",
+              "out_id": 115,
+              "in_id": 330,
+              "uplift": 3.44
+            }
+          ],
           "hit": 0,
-          "out_id": 399,
-          "in_id": 367
+          "out_id": 115,
+          "in_id": 330
         },
         {
           "gw": 8,
           "action": "TRANSFER",
-          "route": "De Cuyper → Bogle",
+          "route": "Groß → Gakpo",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Groß → Gakpo",
+              "out_id": 124,
+              "in_id": 367,
+              "uplift": 2.39
+            }
+          ],
           "hit": 0,
-          "out_id": 115,
-          "in_id": 330
+          "out_id": 124,
+          "in_id": 367
         }
       ],
-      "expected_points": 237.23,
-      "p10_points": 198.82,
-      "p90_points": 276.61,
-      "expected_rank_after_path": 1.7,
+      "expected_points": 241.84,
+      "p10_points": 201.74,
+      "p90_points": 283.03,
+      "expected_rank_after_path": 1.55,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.825,
-        0.767,
-        0.883,
-        0.827,
-        0.998,
+        0.818,
+        0.861,
+        0.922,
+        0.865,
+        0.98,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "static_rival_expected_rank": 1.34,
+      "probabilistic_rival_rank_penalty": 0.21,
+      "utility_score": 234.259
+    },
+    {
+      "actions": [
+        {
+          "gw": 5,
+          "action": "TRANSFER",
+          "route": "Greaves → Affengruber",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Greaves → Affengruber",
+              "out_id": 306,
+              "in_id": 650,
+              "uplift": 11.82
+            }
+          ],
+          "hit": 0,
+          "out_id": 306,
+          "in_id": 650
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Dubravka → Tzolakis + Cherki → Belloumi",
+          "transfer_count": 2,
+          "transfers": [
+            {
+              "route": "Dubravka → Tzolakis",
+              "out_id": 497,
+              "in_id": 572,
+              "uplift": 5.9
+            },
+            {
+              "route": "Cherki → Belloumi",
+              "out_id": 399,
+              "in_id": 286,
+              "uplift": 5.15
+            }
+          ],
+          "hit": 0,
+          "out_id": 497,
+          "in_id": 572
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Thomas → Bogle",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Thomas → Bogle",
+              "out_id": 173,
+              "in_id": 330,
+              "uplift": 3.82
+            }
+          ],
+          "hit": 0,
+          "out_id": 173,
+          "in_id": 330
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "Schade → Gakpo",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Schade → Gakpo",
+              "out_id": 94,
+              "in_id": 367,
+              "uplift": 1.68
+            }
+          ],
+          "hit": 0,
+          "out_id": 94,
+          "in_id": 367
+        }
+      ],
+      "expected_points": 241.69,
+      "p10_points": 201.97,
+      "p90_points": 282.93,
+      "expected_rank_after_path": 1.54,
+      "prob_gain_league_place": 0.0,
+      "prob_finish_ahead_each_rival": [
+        0.819,
+        0.861,
+        0.928,
+        0.866,
+        0.983,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "static_rival_expected_rank": 1.33,
+      "probabilistic_rival_rank_penalty": 0.21,
+      "utility_score": 234.214
+    },
+    {
+      "actions": [
+        {
+          "gw": 5,
+          "action": "ROLL"
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "De Cuyper → Affengruber",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "De Cuyper → Affengruber",
+              "out_id": 115,
+              "in_id": 650,
+              "uplift": 7.06
+            }
+          ],
+          "hit": 0,
+          "out_id": 115,
+          "in_id": 650
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Maguire → Bogle + Cherki → Gakpo + Dubravka → Tzolakis",
+          "transfer_count": 3,
+          "transfers": [
+            {
+              "route": "Maguire → Bogle",
+              "out_id": 418,
+              "in_id": 330,
+              "uplift": 5.08
+            },
+            {
+              "route": "Cherki → Gakpo",
+              "out_id": 399,
+              "in_id": 367,
+              "uplift": 3.94
+            },
+            {
+              "route": "Dubravka → Tzolakis",
+              "out_id": 497,
+              "in_id": 572,
+              "uplift": 3.6
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 330
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "Groß → Belloumi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Groß → Belloumi",
+              "out_id": 124,
+              "in_id": 286,
+              "uplift": 1.59
+            }
+          ],
+          "hit": 0,
+          "out_id": 124,
+          "in_id": 286
+        }
+      ],
+      "expected_points": 234.49,
+      "p10_points": 196.94,
+      "p90_points": 275.45,
+      "expected_rank_after_path": 1.83,
+      "prob_gain_league_place": 0.0,
+      "prob_finish_ahead_each_rival": [
+        0.733,
+        0.783,
+        0.888,
+        0.787,
+        0.979,
         0.998,
         1.0,
         1.0
       ],
-      "static_rival_expected_rank": 1.39,
-      "probabilistic_rival_rank_penalty": 0.31,
-      "utility_score": 229.116
+      "static_rival_expected_rank": 1.51,
+      "probabilistic_rival_rank_penalty": 0.32,
+      "utility_score": 225.831
+    },
+    {
+      "actions": [
+        {
+          "gw": 5,
+          "action": "ROLL"
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "De Cuyper → Affengruber",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "De Cuyper → Affengruber",
+              "out_id": 115,
+              "in_id": 650,
+              "uplift": 7.06
+            }
+          ],
+          "hit": 0,
+          "out_id": 115,
+          "in_id": 650
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Maguire → Bogle + Cherki → Gakpo + Dubravka → Tzolakis",
+          "transfer_count": 3,
+          "transfers": [
+            {
+              "route": "Maguire → Bogle",
+              "out_id": 418,
+              "in_id": 330,
+              "uplift": 5.08
+            },
+            {
+              "route": "Cherki → Gakpo",
+              "out_id": 399,
+              "in_id": 367,
+              "uplift": 3.94
+            },
+            {
+              "route": "Dubravka → Tzolakis",
+              "out_id": 497,
+              "in_id": 572,
+              "uplift": 3.6
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 330
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "Hughes → Belloumi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Hughes → Belloumi",
+              "out_id": 212,
+              "in_id": 286,
+              "uplift": 1.59
+            }
+          ],
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 286
+        }
+      ],
+      "expected_points": 234.49,
+      "p10_points": 196.94,
+      "p90_points": 275.45,
+      "expected_rank_after_path": 1.83,
+      "prob_gain_league_place": 0.0,
+      "prob_finish_ahead_each_rival": [
+        0.733,
+        0.783,
+        0.888,
+        0.787,
+        0.979,
+        0.998,
+        1.0,
+        1.0
+      ],
+      "static_rival_expected_rank": 1.51,
+      "probabilistic_rival_rank_penalty": 0.32,
+      "utility_score": 225.831
+    },
+    {
+      "actions": [
+        {
+          "gw": 5,
+          "action": "ROLL"
+        },
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "De Cuyper → Affengruber",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "De Cuyper → Affengruber",
+              "out_id": 115,
+              "in_id": 650,
+              "uplift": 7.06
+            }
+          ],
+          "hit": 0,
+          "out_id": 115,
+          "in_id": 650
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Greaves → Bogle + Cherki → Gakpo + Kinsky → Tzolakis",
+          "transfer_count": 3,
+          "transfers": [
+            {
+              "route": "Greaves → Bogle",
+              "out_id": 306,
+              "in_id": 330,
+              "uplift": 5.08
+            },
+            {
+              "route": "Cherki → Gakpo",
+              "out_id": 399,
+              "in_id": 367,
+              "uplift": 3.94
+            },
+            {
+              "route": "Kinsky → Tzolakis",
+              "out_id": 496,
+              "in_id": 572,
+              "uplift": 3.6
+            }
+          ],
+          "hit": 0,
+          "out_id": 306,
+          "in_id": 330
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "Groß → Belloumi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Groß → Belloumi",
+              "out_id": 124,
+              "in_id": 286,
+              "uplift": 1.59
+            }
+          ],
+          "hit": 0,
+          "out_id": 124,
+          "in_id": 286
+        }
+      ],
+      "expected_points": 234.49,
+      "p10_points": 196.94,
+      "p90_points": 275.45,
+      "expected_rank_after_path": 1.83,
+      "prob_gain_league_place": 0.0,
+      "prob_finish_ahead_each_rival": [
+        0.733,
+        0.783,
+        0.888,
+        0.787,
+        0.979,
+        0.998,
+        1.0,
+        1.0
+      ],
+      "static_rival_expected_rank": 1.51,
+      "probabilistic_rival_rank_penalty": 0.32,
+      "utility_score": 225.831
     }
   ],
   "method_note": "Challenger model. Rivals are not assumed to optimise perfectly every deadline. Each rival receives multiple plausible roll/transfer paths, with action probability shrunk toward a population prior using observed transfer history. Candidate moves remain rational but noisy. Sampling precision increases as the official FPL deadline approaches."
