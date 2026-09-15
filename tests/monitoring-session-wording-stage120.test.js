@@ -28,4 +28,13 @@ assert.equal(result.items[2][1], 'Wait before executing');
 assert.ok(!JSON.stringify(result).includes('signal pts'));
 assert.ok(!JSON.stringify(result).includes('projected pts'));
 
+const resetTrend = context.window.FPLMonitoringSessionTest.trendHtml(
+  {leader: 'Thomas → Affengruber + Greaves → Bogle', route_type: 'multi_transfer'},
+  {leader: 'Greaves → Bogle', route_type: 'single_transfer_challenger', saved_at: new Date(Date.now() - 6 * 3600e3).toISOString()},
+);
+assert.ok(resetTrend.includes('New baseline started'));
+assert.ok(resetTrend.includes('Waiting for same-route history'));
+assert.ok(!resetTrend.includes('Pressure rising'));
+assert.ok(!resetTrend.includes('signal pts'));
+
 console.log('monitoring session wording tests passed');
