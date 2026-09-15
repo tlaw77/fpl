@@ -1,7 +1,7 @@
 {
   "status": "SUCCESS",
   "version": 1,
-  "generated_at_utc": "2026-09-15T15:05:38.137649+00:00",
+  "generated_at_utc": "2026-09-15T18:58:00.609659+00:00",
   "current_gw": 4,
   "next_gw": 5,
   "progress": {
@@ -12,20 +12,20 @@
     "state": "COMPLETE"
   },
   "decision_certificate": {
-    "certificate_id": "DT-D90864B17E58",
-    "action": "HOLD",
-    "headline": "Hold / roll",
-    "confidence": 78,
+    "certificate_id": "DT-678553F67364",
+    "action": "TRANSFER",
+    "headline": "Maguire → Affengruber + Dubravka → Tzolakis",
+    "confidence": 80,
     "objective": "Maximise mini-league winning potential while protecting downside and future flexibility.",
-    "six_gw_edge_over_hold": 12.04,
+    "six_gw_edge_over_hold": 12.16,
     "probability_gain_league_place_pct": 0.0,
     "strongest_alternative": "Maguire → Bogle",
-    "alternative_expected_points_6gw": 317.87,
-    "rationale": "The leading transfer edge is 12.0 projected points over holding and does not yet clear the full evidence hurdle with sufficient agreement on that exact route. Holding moves the bank from 2/5 to 3/5; no free transfer expires. The fixture swing is broadly balanced rather than time-critical.",
+    "alternative_expected_points_6gw": 316.62,
+    "rationale": "The best path uses 2 free transfers together and is 9.7 projected points ahead of rolling now across the path horizon. It clears the higher 3.5-point multi-transfer hurdle, has adaptive-rival support and costs no hit. Holding moves the bank from 2/5 to 3/5; no free transfer expires.",
     "evidence": {
-      "newest_at_utc": "2026-09-15T13:28:24.399846+00:00",
+      "newest_at_utc": "2026-09-15T17:45:47.577943+00:00",
       "oldest_at_utc": "2026-09-11T21:44:03.276310+00:00",
-      "age_minutes": 97,
+      "age_minutes": 72,
       "sources_available": 12
     }
   },
@@ -33,9 +33,9 @@
     {
       "agent": "Quant Analyst",
       "focus": "Magnitude and model agreement",
-      "verdict": "SUPPORT",
-      "confidence": 78,
-      "argument": "The leading route is Greaves → Bogle. Its 12.04-point six-GW edge is tested against a 2.00-point hurdle with 1/2 required model support.",
+      "verdict": "CHALLENGE",
+      "confidence": 80,
+      "argument": "The leading route is Greaves → Bogle. Its 12.16-point six-GW edge is tested against a 2.00-point hurdle with 1/2 required model support.",
       "evidence": [
         "simulation",
         "path_simulation",
@@ -57,8 +57,8 @@
       "agent": "Evidence Scout",
       "focus": "News, role and availability",
       "verdict": "SUPPORT",
-      "confidence": 46,
-      "argument": "The evidence layer covers 21 public Scout/news items and 32 matched players. 0 current-squad players carry a press-conference signal.",
+      "confidence": 63,
+      "argument": "The evidence layer covers 104 public Scout/news items and 65 matched players. 0 current-squad players carry a press-conference signal.",
       "evidence": [
         "scout_consensus",
         "press_conference_watch"
@@ -67,9 +67,9 @@
     {
       "agent": "Risk Officer",
       "focus": "Downside and fragility",
-      "verdict": "WATCH",
+      "verdict": "CHALLENGE",
       "confidence": 78,
-      "argument": "The simulated six-GW outcome range spans 92.3 points. Action persistence is 90% across 10 effective stability runs.",
+      "argument": "The simulated six-GW outcome range spans 91.1 points. Action persistence is 19% across 10 effective stability runs.",
       "evidence": [
         "simulation",
         "simulation_stability"
@@ -89,8 +89,8 @@
       "agent": "Decision Chair",
       "focus": "Resolved recommendation",
       "verdict": "CONTESTED",
-      "confidence": 78,
-      "argument": "Keep the authoritative action: Hold / roll. It remains live but is challenged by Rival Strategist.",
+      "confidence": 80,
+      "argument": "Keep the authoritative action: Maguire → Affengruber + Dubravka → Tzolakis. It remains live but is challenged by Quant Analyst, Rival Strategist, Risk Officer.",
       "evidence": [
         "decision_synthesis",
         "specialist_council"
@@ -101,14 +101,19 @@
     "state": "CONTESTED",
     "model_route_agreement_pct": 33,
     "challengers": [
-      "Rival Strategist"
+      "Quant Analyst",
+      "Rival Strategist",
+      "Risk Officer"
     ],
-    "resolved_position": "Hold / roll",
+    "resolved_position": "Maguire → Affengruber + Dubravka → Tzolakis",
     "rule": "Specialists may challenge the authoritative synthesis but cannot silently replace it."
   },
   "change_radar": {
-    "decision_changed": false,
-    "changed_fields": [],
+    "decision_changed": true,
+    "changed_fields": [
+      "action",
+      "headline"
+    ],
     "previous_certificate_id": "DT-D90864B17E58",
     "decision_breakers": [
       {
@@ -119,7 +124,7 @@
       },
       {
         "signal": "edge_over_hold",
-        "state": "12.04 points",
+        "state": "12.16 points",
         "review_when": "edge crosses the 2.00-point action hurdle",
         "priority": "high"
       },
@@ -131,7 +136,7 @@
       },
       {
         "signal": "market_flexibility",
-        "state": "4 relevant price watches",
+        "state": "5 relevant price watches",
         "review_when": "a preferred route becomes unaffordable or an owned player loses value",
         "priority": "medium"
       },
@@ -146,8 +151,8 @@
   },
   "learning_contract": {
     "target_gw": 5,
-    "decision_certificate_id": "DT-D90864B17E58",
-    "recommended_action": "HOLD",
+    "decision_certificate_id": "DT-678553F67364",
+    "recommended_action": "TRANSFER",
     "recommended_route": "Greaves → Bogle",
     "baseline_xi_ids": [
       496,
