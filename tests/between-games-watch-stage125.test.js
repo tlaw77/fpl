@@ -1,0 +1,13 @@
+const assert=require('assert'),fs=require('fs'),vm=require('vm');
+const context={window:{addEventListener(){}},document:{readyState:'loading',addEventListener(){},querySelector(){return null}},setTimeout(){},clearTimeout(){},fetch:async()=>({ok:true,json:async()=>({})})};
+vm.createContext(context);vm.runInContext(fs.readFileSync('docs/between-games-watch-stage125.js','utf8'),context);
+const t=context.window.FPLBetweenGamesWatchTest;
+const app={date:'2026-09-17T19:45:00Z',minutes:90,started:true,rating:8.2,goals:1,assists:1};
+const p={player_id:1,player:'Example',club:'Test',news:'',fixtures:[{kickoff_time:'2026-09-20T13:00:00Z'}]};
+assert.equal(Math.round(t.recovery(app,p)),65);
+assert.equal(t.recoveryState(t.recovery(app,p)).tone,'risk');
+assert.equal(t.playerSignal(p,app).label,'RECOVERY RISK');
+assert.equal(t.playerSignal({...p,news:'Hamstring assessment'},app).label,'CHECK NEWS');
+const rows=t.build({current_squad_next5:[{player_id:1}]},{players:[p]},{players:{'1':[app]}},{transfer_options:[]});
+assert.equal(rows.length,1);assert.equal(rows[0].app.rating,8.2);assert.equal(rows[0].signal.tone,'risk');
+console.log('between games watch tests passed');
