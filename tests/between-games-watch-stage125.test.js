@@ -10,4 +10,7 @@ assert.equal(t.playerSignal(p,app).label,'RECOVERY RISK');
 assert.equal(t.playerSignal({...p,news:'Hamstring assessment'},app).label,'CHECK NEWS');
 const rows=t.build({current_squad_next5:[{player_id:1}]},{players:[p]},{players:{'1':[app]}},{transfer_options:[]});
 assert.equal(rows.length,1);assert.equal(rows[0].app.rating,8.2);assert.equal(rows[0].signal.tone,'risk');
+const source=fs.readFileSync('docs/between-games-watch-stage125.js','utf8');
+assert.ok(source.includes('new MutationObserver'));
+assert.ok(source.includes("host.querySelector('[data-between-games-watch]')"));
 console.log('between games watch tests passed');
