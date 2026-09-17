@@ -28,7 +28,7 @@ jobs:
     if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Select fixture-aware cadence
         id: cadence
         run: python3 live_gameweek.py --gate >> "$GITHUB_OUTPUT"
@@ -38,7 +38,7 @@ jobs:
           echo "- Phase: ${{ steps.cadence.outputs.phase }}" >> "$GITHUB_STEP_SUMMARY"
           echo "- Full refresh: ${{ steps.cadence.outputs.run }}" >> "$GITHUB_STEP_SUMMARY"
           echo "- Reason: ${{ steps.cadence.outputs.reason }}" >> "$GITHUB_STEP_SUMMARY"
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         if: github.event_name == 'workflow_dispatch' || steps.cadence.outputs.run == 'true'
         with:
           python-version: "3.12"
