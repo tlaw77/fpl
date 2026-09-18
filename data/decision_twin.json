@@ -1,9 +1,9 @@
 {
   "status": "SUCCESS",
   "version": 1,
-  "generated_at_utc": "2026-09-18T19:05:30.724695+00:00",
-  "current_gw": 4,
-  "next_gw": 5,
+  "generated_at_utc": "2026-09-18T21:39:07.729266+00:00",
+  "current_gw": 5,
+  "next_gw": 6,
   "progress": {
     "label": "Decision Twin v1",
     "completion_pct": 100,
@@ -12,20 +12,20 @@
     "state": "COMPLETE"
   },
   "decision_certificate": {
-    "certificate_id": "DT-302F93970430",
-    "action": "HOLD",
-    "headline": "Transfer complete · hold",
-    "confidence": 78,
+    "certificate_id": "DT-F768860E14A1",
+    "action": "TRANSFER",
+    "headline": "Kinsky → Tzolakis",
+    "confidence": 91,
     "objective": "Maximise mini-league winning potential while protecting downside and future flexibility.",
-    "six_gw_edge_over_hold": 6.21,
+    "six_gw_edge_over_hold": 8.87,
     "probability_gain_league_place_pct": 0.0,
     "strongest_alternative": "Maguire → Ajayi",
-    "alternative_expected_points_6gw": 342.64,
-    "rationale": "Thomas → Affengruber + Greaves → Bogle is already applied. A further move costs -4. Its 6.2-point projected edge clears the 6.0-point magnitude hurdle, but the exact route is supported by only 1/3 models, below the required 2/3. Holding moves the bank from 0/5 to 1/5; no free transfer expires. The outgoing player has the easier immediate fixture; the move can wait unless other evidence changes.",
+    "alternative_expected_points_6gw": 381.98,
+    "rationale": "The leading move clears the 2.0-point robustness hurdle after hit cost and the same measured route is supported by 3/3 decision models. Holding moves the bank from 1/5 to 2/5; no free transfer expires. The incoming player has the easier immediate fixture run.",
     "evidence": {
-      "newest_at_utc": "2026-09-18T16:41:38.180783+00:00",
-      "oldest_at_utc": "2026-09-18T16:22:36.187163+00:00",
-      "age_minutes": 144,
+      "newest_at_utc": "2026-09-18T19:31:24.451088+00:00",
+      "oldest_at_utc": "2026-09-18T19:06:09.422551+00:00",
+      "age_minutes": 128,
       "sources_available": 12
     }
   },
@@ -34,8 +34,8 @@
       "agent": "Quant Analyst",
       "focus": "Magnitude and model agreement",
       "verdict": "SUPPORT",
-      "confidence": 78,
-      "argument": "The authoritative route is Cherki → Gakpo. Its 6.21-point edge is tested against a 6.00-point hurdle; model agreement is 1/2.",
+      "confidence": 91,
+      "argument": "The authoritative route is Kinsky → Tzolakis. Its 8.87-point edge is tested against a 2.00-point hurdle; model agreement is 3/2.",
       "evidence": [
         "simulation",
         "path_simulation",
@@ -57,8 +57,8 @@
       "agent": "Evidence Scout",
       "focus": "News, role and availability",
       "verdict": "WATCH",
-      "confidence": 86,
-      "argument": "The evidence layer covers 226 public Scout/news items and 80 matched players. 1 current-squad players carry a press-conference signal.",
+      "confidence": 70,
+      "argument": "The evidence layer covers 139 public Scout/news items and 78 matched players. 1 current-squad players carry a press-conference signal.",
       "evidence": [
         "scout_consensus",
         "press_conference_watch"
@@ -68,8 +68,8 @@
       "agent": "Risk Officer",
       "focus": "Downside and fragility",
       "verdict": "WATCH",
-      "confidence": 79,
-      "argument": "The simulated six-GW outcome range spans 95.5 points. Action persistence is 100% across 9 effective stability runs.",
+      "confidence": 82,
+      "argument": "The simulated six-GW outcome range spans 106.4 points. Action persistence is 10% across 9 effective stability runs.",
       "evidence": [
         "simulation",
         "simulation_stability"
@@ -80,7 +80,7 @@
       "focus": "Portfolio option value",
       "verdict": "WATCH",
       "confidence": 72,
-      "argument": "Portfolio pressure is comfortable. Active watchlist: Free Hit.",
+      "argument": "Portfolio pressure is comfortable. Active watchlist: Free Hit, Triple Captain.",
       "evidence": [
         "chip_activation_gate"
       ]
@@ -89,8 +89,8 @@
       "agent": "Decision Chair",
       "focus": "Resolved recommendation",
       "verdict": "CONTESTED",
-      "confidence": 78,
-      "argument": "Keep the authoritative action: Transfer complete · hold. It remains live but is challenged by Rival Strategist.",
+      "confidence": 91,
+      "argument": "Keep the authoritative action: Kinsky → Tzolakis. It remains live but is challenged by Rival Strategist.",
       "evidence": [
         "decision_synthesis",
         "specialist_council"
@@ -99,28 +99,31 @@
   ],
   "council_summary": {
     "state": "CONTESTED",
-    "model_route_agreement_pct": 33,
+    "model_route_agreement_pct": 100,
     "challengers": [
       "Rival Strategist"
     ],
-    "resolved_position": "Transfer complete · hold",
+    "resolved_position": "Kinsky → Tzolakis",
     "rule": "Specialists may challenge the authoritative synthesis but cannot silently replace it."
   },
   "change_radar": {
-    "decision_changed": false,
-    "changed_fields": [],
+    "decision_changed": true,
+    "changed_fields": [
+      "action",
+      "headline"
+    ],
     "previous_certificate_id": "DT-302F93970430",
     "decision_breakers": [
       {
         "signal": "model_consensus",
-        "state": "1/2 support",
+        "state": "3/2 support",
         "review_when": "support reaches 2 models or the leader changes",
         "priority": "high"
       },
       {
         "signal": "edge_over_hold",
-        "state": "6.21 points",
-        "review_when": "edge crosses the 6.00-point action hurdle",
+        "state": "8.87 points",
+        "review_when": "edge crosses the 2.00-point action hurdle",
         "priority": "high"
       },
       {
@@ -131,13 +134,13 @@
       },
       {
         "signal": "market_flexibility",
-        "state": "8 relevant price watches",
+        "state": "0 relevant price watches",
         "review_when": "a preferred route becomes unaffordable or an owned player loses value",
         "priority": "medium"
       },
       {
         "signal": "captaincy_separation",
-        "state": "1.42 score edge",
+        "state": "0.55 score edge",
         "review_when": "captain leader changes or the top-two gap materially widens",
         "priority": "medium"
       }
@@ -145,30 +148,30 @@
     "notification_rule": "Notify only when action/headline changes or a high-priority breaker crosses its stated review condition."
   },
   "learning_contract": {
-    "target_gw": 5,
-    "decision_certificate_id": "DT-302F93970430",
-    "recommended_action": "HOLD",
-    "recommended_route": "Cherki → Gakpo",
+    "target_gw": 6,
+    "decision_certificate_id": "DT-F768860E14A1",
+    "recommended_action": "TRANSFER",
+    "recommended_route": "Kinsky → Tzolakis",
     "baseline_xi_ids": [
       496,
-      330,
       650,
-      115,
       4,
-      94,
+      115,
+      330,
+      124,
       426,
       399,
+      94,
       411,
-      346,
       165
     ],
-    "baseline_captain_id": 411,
+    "baseline_captain_id": 426,
     "alternative_routes": [
       "Maguire → Ajayi",
-      "Kinsky → Tzolakis",
-      "Roll / no transfer"
+      "Cherki → Gakpo",
+      "Gabriel → Gvardiol"
     ],
-    "evaluable_gameweeks": 1,
+    "evaluable_gameweeks": 2,
     "learning_stage": "collecting",
     "tuning_allowed": false,
     "rule": "Score decision quality and calibration after the target GW; do not tune from isolated outcomes."
