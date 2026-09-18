@@ -1,6 +1,6 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-09-18T01:26:00.851212+00:00",
+  "generated_at_utc": "2026-09-18T06:31:57.515604+00:00",
   "version": 4,
   "current_gw": 4,
   "next_gw": 5,
@@ -8,7 +8,7 @@
     "action": "HOLD",
     "headline": "Transfer complete · hold",
     "confidence": 78,
-    "reason": "Thomas → Affengruber + Greaves → Bogle is already applied. A further move costs -4. Its 5.9-point projected edge remains below the 6.0-point magnitude hurdle and the exact route is supported by only 1/3 models. Holding moves the bank from 0/5 to 1/5; no free transfer expires. The outgoing player has the easier immediate fixture; the move can wait unless other evidence changes.",
+    "reason": "Thomas → Affengruber + Greaves → Bogle is already applied. A further move costs -4. Its 5.7-point projected edge remains below the 6.0-point magnitude hurdle and the exact route is supported by only 1/3 models. Holding moves the bank from 0/5 to 1/5; no free transfer expires. The outgoing player has the easier immediate fixture; the move can wait unless other evidence changes.",
     "completed_transfer": {
       "event": 5,
       "out": "Greaves",
@@ -42,12 +42,12 @@
   "robustness": {
     "season_maturity_weight": 0.4,
     "single_step_leader": "Cherki → Gakpo",
-    "single_step_edge_over_hold_6gw": 5.9,
-    "multi_gw_first_action": "Kinsky → Tzolakis",
+    "single_step_edge_over_hold_6gw": 5.69,
+    "multi_gw_first_action": "ROLL",
     "adaptive_rival_first_action": "Kinsky → Tzolakis",
-    "exact_route_consensus_models": 2,
+    "exact_route_consensus_models": 1,
     "measured_leader_support_models": 1,
-    "same_incoming_target_consensus_models": 2,
+    "same_incoming_target_consensus_models": 1,
     "measured_target_support_models": 1,
     "base_required_edge": 6.0,
     "required_edge": 6.0,
@@ -60,7 +60,7 @@
     "multi_transfer_required_edge": 7.5,
     "active_route": "Cherki → Gakpo",
     "active_route_type": "single_transfer_challenger",
-    "active_edge_over_hold_6gw": 5.9,
+    "active_edge_over_hold_6gw": 5.69,
     "active_required_edge": 6.0,
     "active_validation_kind": "model_agreement",
     "active_validation_label": "Model agreement",
@@ -96,20 +96,7 @@
   "forward_plan": {
     "primary_path_first_action": {
       "gw": 5,
-      "action": "TRANSFER",
-      "route": "Kinsky → Tzolakis",
-      "transfer_count": 1,
-      "transfers": [
-        {
-          "route": "Kinsky → Tzolakis",
-          "out_id": 496,
-          "in_id": 572,
-          "uplift": 5.85
-        }
-      ],
-      "hit": 4,
-      "out_id": 496,
-      "in_id": 572
+      "action": "ROLL"
     },
     "adaptive_path_first_action": {
       "gw": 5,
@@ -135,7 +122,7 @@
       "key": "roll",
       "label": "Roll to build the bank",
       "available": true,
-      "recommended_path": false,
+      "recommended_path": true,
       "adaptive_support": false,
       "first_action": {
         "gw": 5,
@@ -162,9 +149,9 @@
       "free_transfers_before": 0,
       "free_transfers_after_deadline": 1,
       "hit_cost": 0,
-      "expected_points": 251.72,
-      "p10_points": 211.19,
-      "p90_points": 294.09,
+      "expected_points": 249.37,
+      "p10_points": 211.33,
+      "p90_points": 289.89,
       "edge_vs_roll": 0.0,
       "ending_bank": 1.5,
       "ending_free_transfers": 1,
@@ -230,8 +217,8 @@
       "key": "one_now",
       "label": "Use one free transfer now",
       "available": true,
-      "recommended_path": true,
-      "adaptive_support": false,
+      "recommended_path": false,
+      "adaptive_support": true,
       "first_action": {
         "gw": 5,
         "action": "TRANSFER",
@@ -270,11 +257,11 @@
       "free_transfers_before": 0,
       "free_transfers_after_deadline": 1,
       "hit_cost": 4,
-      "expected_points": 251.82,
-      "p10_points": 212.44,
-      "p90_points": 292.67,
-      "edge_vs_roll": 0.1,
-      "ending_bank": 8.0,
+      "expected_points": 249.53,
+      "p10_points": 210.27,
+      "p90_points": 289.67,
+      "edge_vs_roll": 0.16,
+      "ending_bank": 0.9,
       "ending_free_transfers": 1,
       "actions": [
         {
@@ -314,36 +301,36 @@
         {
           "gw": 7,
           "action": "TRANSFER",
-          "route": "Groß → Gakpo",
+          "route": "Hughes → Gakpo",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Groß → Gakpo",
-              "out_id": 124,
+              "route": "Hughes → Gakpo",
+              "out_id": 212,
               "in_id": 367,
-              "uplift": 3.09
+              "uplift": 3.15
             }
           ],
           "hit": 0,
-          "out_id": 124,
+          "out_id": 212,
           "in_id": 367
         },
         {
           "gw": 8,
           "action": "TRANSFER",
-          "route": "Haaland → Isak",
+          "route": "Groß → Janelt",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Haaland → Isak",
-              "out_id": 411,
-              "in_id": 379,
-              "uplift": 0.66
+              "route": "Groß → Janelt",
+              "out_id": 124,
+              "in_id": 98,
+              "uplift": 1.21
             }
           ],
           "hit": 0,
-          "out_id": 411,
-          "in_id": 379
+          "out_id": 124,
+          "in_id": 98
         }
       ]
     },
@@ -356,7 +343,7 @@
       "key": "staged",
       "label": "Wait, then transfer later",
       "available": true,
-      "recommended_path": false,
+      "recommended_path": true,
       "adaptive_support": false,
       "first_action": {
         "gw": 5,
@@ -383,9 +370,9 @@
       "free_transfers_before": 0,
       "free_transfers_after_deadline": 1,
       "hit_cost": 0,
-      "expected_points": 251.72,
-      "p10_points": 211.19,
-      "p90_points": 294.09,
+      "expected_points": 249.37,
+      "p10_points": 211.33,
+      "p90_points": 289.89,
       "edge_vs_roll": 0.0,
       "ending_bank": 1.5,
       "ending_free_transfers": 1,
@@ -450,7 +437,7 @@
   ],
   "chips": {
     "action": "HOLD",
-    "reason": "Hold chips. Best visible TC uplift is 0.0 and BB uplift is 13.4, but the first-half portfolio remains comfortable with 12 slack Gameweeks. Preserve option value for stronger blank/double or squad-structure windows.",
+    "reason": "Hold chips. Best visible TC uplift is 0.0 and BB uplift is 13.1, but the first-half portfolio remains comfortable with 12 slack Gameweeks. Preserve option value for stronger blank/double or squad-structure windows.",
     "best_visible_triple_captain": {},
     "best_visible_bench_boost": {
       "actions": [
@@ -515,7 +502,7 @@
               "route": "Groß → Janelt",
               "out_id": 124,
               "in_id": 98,
-              "uplift": 1.13
+              "uplift": 1.21
             }
           ],
           "hit": 0,
@@ -525,22 +512,22 @@
       ],
       "chip": "Bench Boost",
       "chip_gw": 7,
-      "expected_points": 264.4,
-      "chip_incremental_expected_points": 13.4,
-      "p10_points": 224.19,
-      "p90_points": 308.55,
-      "expected_rank_after_path": 1.18,
+      "expected_points": 264.24,
+      "chip_incremental_expected_points": 13.06,
+      "p10_points": 225.28,
+      "p90_points": 305.96,
+      "expected_rank_after_path": 1.22,
       "prob_finish_ahead_each_rival": [
-        0.935,
-        0.939,
-        0.98,
-        0.97,
-        0.994,
+        0.926,
+        0.931,
+        0.966,
+        0.968,
+        0.988,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 258.67
+      "utility_score": 258.463
     },
     "portfolio_pressure": "comfortable",
     "latest_safe_start_gw": 17
