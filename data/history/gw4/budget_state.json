@@ -1,12 +1,12 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-09-18T19:30:05.885308+00:00",
+  "generated_at_utc": "2026-09-18T16:40:01.697376+00:00",
   "entry_id": 5332809,
-  "next_gw": 6,
+  "next_gw": 5,
   "bank": 0.4,
   "current_squad_market_value": 100.8,
-  "estimated_squad_liquidation_value": 100.0,
-  "spendable_budget": 100.4,
+  "estimated_squad_liquidation_value": 100.1,
+  "spendable_budget": 100.5,
   "budget_method": "purchase_ledger_fpl_sell_rule",
   "budget_confidence": "reconstructed",
   "public_pick_keys": [
@@ -20,8 +20,11 @@
   "exact_selling_prices_found": 0,
   "reconstructed_selling_prices_found": 15,
   "purchase_ledger_coverage": 15,
-  "pending_history_player_ids": [],
-  "public_transfer_count": 4,
+  "pending_history_player_ids": [
+    650,
+    330
+  ],
+  "public_transfer_count": 2,
   "players": [
     {
       "player_id": 496,
@@ -48,20 +51,12 @@
       "purchase_basis": "transfer_history"
     },
     {
-      "player_id": 330,
-      "player": "Bogle",
-      "current_price": 4.6,
-      "purchase_price": 4.5,
-      "selling_price": 4.5,
-      "purchase_basis": "transfer_history"
-    },
-    {
       "player_id": 650,
       "player": "Affengruber",
       "current_price": 4.5,
       "purchase_price": 4.5,
       "selling_price": 4.5,
-      "purchase_basis": "transfer_history"
+      "purchase_basis": "current_price_pending_history"
     },
     {
       "player_id": 426,
@@ -78,6 +73,14 @@
       "purchase_price": 7.6,
       "selling_price": 7.7,
       "purchase_basis": "transfer_history"
+    },
+    {
+      "player_id": 124,
+      "player": "Groß",
+      "current_price": 5.7,
+      "purchase_price": 5.5,
+      "selling_price": 5.6,
+      "purchase_basis": "gw1_archive"
     },
     {
       "player_id": 94,
@@ -120,14 +123,6 @@
       "purchase_basis": "gw1_archive"
     },
     {
-      "player_id": 124,
-      "player": "Groß",
-      "current_price": 5.7,
-      "purchase_price": 5.5,
-      "selling_price": 5.6,
-      "purchase_basis": "gw1_archive"
-    },
-    {
       "player_id": 418,
       "player": "Maguire",
       "current_price": 4.9,
@@ -142,6 +137,14 @@
       "purchase_price": 4.5,
       "selling_price": 4.4,
       "purchase_basis": "gw1_archive"
+    },
+    {
+      "player_id": 330,
+      "player": "Bogle",
+      "current_price": 4.6,
+      "purchase_price": 4.6,
+      "selling_price": 4.6,
+      "purchase_basis": "current_price_pending_history"
     }
   ],
   "method_note": "Wildcard and Free Hit searches use the best available spendable budget. Exact public selling values are preferred. Otherwise purchase prices are reconstructed from the archived GW1 squad plus public transfer costs and the FPL half-profit selling rule. Any newly declared transfer not yet visible in public history uses current price as its temporary acquisition basis and is listed explicitly. Only if reconstruction is unavailable does the engine fall back to current market value."
