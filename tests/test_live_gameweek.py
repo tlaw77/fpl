@@ -137,6 +137,15 @@ class LiveGameweekTests(unittest.TestCase):
         self.assertEqual(picks[9]["multiplier"], 1)
         self.assertEqual(picks[12]["multiplier"], 0)
 
+    def test_confirmed_dnp_reserves_upcoming_first_sub_without_awarding_points(self):
+        picks = self.autosub_picks()
+        picks[12].update({"minutes": 0, "state": "upcoming", "live_points": 0})
+        apply_projected_autosubs(picks)
+        self.assertEqual(picks[9]["autosub_status"], "projected_out")
+        self.assertEqual(picks[12]["autosub_status"], "projected_in_pending")
+        self.assertEqual(picks[12]["multiplier"], 1)
+        self.assertEqual(picks[12]["effective_points"], 0)
+
     def test_formation_rule_skips_ineligible_first_sub(self):
         picks = self.autosub_picks()
         picks[3].update({"state": "complete", "minutes": 0})  # third and final starting defender

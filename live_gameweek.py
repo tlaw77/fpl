@@ -161,7 +161,7 @@ def apply_projected_autosubs(picks: list[dict], active_chip: str | None = None) 
         candidates = [
             pick for pick in bench
             if int(pick["player_id"]) not in used
-            and int(pick.get("minutes") or 0) > 0
+            and not pick["confirmed_dnp"]
             and ((outgoing_position == 1 and int(pick.get("position_id") or 0) == 1)
                  or (outgoing_position != 1 and int(pick.get("position_id") or 0) != 1))
         ]
@@ -173,7 +173,7 @@ def apply_projected_autosubs(picks: list[dict], active_chip: str | None = None) 
                 outgoing["autosub_status"] = "projected_out"
                 outgoing["autosub_player_id"] = incoming["player_id"]
                 outgoing["autosub_player"] = incoming["player"]
-                incoming["autosub_status"] = "projected_in"
+                incoming["autosub_status"] = "projected_in" if int(incoming.get("minutes") or 0) > 0 else "projected_in_pending"
                 incoming["autosub_player_id"] = outgoing["player_id"]
                 incoming["autosub_player"] = outgoing["player"]
                 used.add(int(incoming["player_id"]))
@@ -307,7 +307,7 @@ def build_snapshot(
             "effective_captain": next((item["player"] for item in picks if int(item["multiplier"]) > 1), None),
             "projected_autosubs": [
                 {"out": item["autosub_player"], "in": item["player"], "points_added": item["effective_points"]}
-                for item in picks if item.get("autosub_status") == "projected_in"
+                for item in picks if str(item.get("autosub_status") or "").startswith("projected_in")
             ],
             "picks": picks,
         })
