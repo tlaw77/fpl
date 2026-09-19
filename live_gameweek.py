@@ -121,6 +121,81 @@ def player_state(team_id: int | None, fixtures_by_team: dict[int, list[dict]]) -
     return "unknown"
 
 
+def _legal_outfield_formation(picks: list[dict]) -> bool:
+    active = [pick for pick in picks if int(pick.get("multiplier") or 0) > 0]
+    counts = Counter(int(pick.get("position_id") or 0) for pick in active)
+    return (
+        len(active) == 11
+        and counts[1] == 1
+        and 3 <= counts[2] <= 5
+        and 2 <= counts[3] <= 5
+        and 1 <= counts[4] <= 3
+    )
+
+
+def apply_projected_autosubs(picks: list[dict], active_chip: str | None = None) -> list[dict]:
+    """Apply only autosubs already implied by completed fixtures and appearances.
+
+    The picks endpoint keeps the submitted multipliers during the gameweek. This
+    forward-looking layer projects the eventual FPL autosub without guessing that
+    an upcoming player will miss out.
+    """
+    for pick in picks:
+        original = int(pick.get("multiplier") or 0)
+        pick["original_multiplier"] = original
+        pick["confirmed_dnp"] = pick.get("state") == "complete" and int(pick.get("minutes") or 0) == 0
+        pick["autosub_status"] = None
+
+    if active_chip == "bboost":
+        return picks
+
+    starters = [pick for pick in picks if int(pick["original_multiplier"]) > 0]
+    bench = sorted(
+        (pick for pick in picks if int(pick["original_multiplier"]) == 0),
+        key=lambda pick: int(pick.get("slot") or 99),
+    )
+    used: set[int] = set()
+
+    for outgoing in sorted((pick for pick in starters if pick["confirmed_dnp"]), key=lambda pick: int(pick["slot"])):
+        outgoing_position = int(outgoing.get("position_id") or 0)
+        candidates = [
+            pick for pick in bench
+            if int(pick["player_id"]) not in used
+            and int(pick.get("minutes") or 0) > 0
+            and ((outgoing_position == 1 and int(pick.get("position_id") or 0) == 1)
+                 or (outgoing_position != 1 and int(pick.get("position_id") or 0) != 1))
+        ]
+        for incoming in candidates:
+            outgoing_multiplier = int(outgoing.get("multiplier") or 0)
+            outgoing["multiplier"] = 0
+            incoming["multiplier"] = 1
+            if outgoing_position == 1 or _legal_outfield_formation(picks):
+                outgoing["autosub_status"] = "projected_out"
+                outgoing["autosub_player_id"] = incoming["player_id"]
+                outgoing["autosub_player"] = incoming["player"]
+                incoming["autosub_status"] = "projected_in"
+                incoming["autosub_player_id"] = outgoing["player_id"]
+                incoming["autosub_player"] = outgoing["player"]
+                used.add(int(incoming["player_id"]))
+                break
+            outgoing["multiplier"] = outgoing_multiplier
+            incoming["multiplier"] = 0
+
+    submitted_captain = next((pick for pick in picks if pick.get("captain")), None)
+    vice = next((pick for pick in picks if pick.get("vice_captain")), None)
+    captain_multiplier = int((submitted_captain or {}).get("original_multiplier") or 2)
+    if submitted_captain and submitted_captain["confirmed_dnp"]:
+        submitted_captain["multiplier"] = 0
+        if vice and int(vice.get("minutes") or 0) > 0 and int(vice.get("multiplier") or 0) > 0:
+            vice["multiplier"] = captain_multiplier
+            vice["projected_captain"] = True
+
+    for pick in picks:
+        pick["starter"] = int(pick.get("multiplier") or 0) > 0
+        pick["effective_points"] = int(pick.get("live_points") or 0) * int(pick.get("multiplier") or 0)
+    return picks
+
+
 def build_snapshot(
     *,
     event: dict,
@@ -194,14 +269,18 @@ def build_snapshot(
                 "vice_captain": bool(pick.get("is_vice_captain")),
                 "starter": multiplier > 0,
                 "live_points": points,
+                "minutes": int(live_stats.get(player_id, {}).get("minutes") or 0),
                 "effective_points": points * multiplier,
                 "state": player_state(raw.get("team"), fixtures_by_team),
             }
             picks.append(item)
             ownership[player_id] += 1
-            multiplier_totals[player_id] += multiplier
             if item["captain"]:
                 captaincy[player_id] += 1
+        active_chip = picks_data.get("active_chip")
+        apply_projected_autosubs(picks, active_chip)
+        for item in picks:
+            multiplier_totals[item["player_id"]] += int(item["multiplier"])
         history = picks_data.get("entry_history") or {}
         hit_cost = int(history.get("event_transfers_cost") or 0)
         raw_score = sum(item["effective_points"] for item in picks)
@@ -215,7 +294,7 @@ def build_snapshot(
             "official_rank": standing.get("rank"),
             "team_name": standing.get("entry_name"),
             "manager": standing.get("player_name"),
-            "active_chip": picks_data.get("active_chip"),
+            "active_chip": active_chip,
             "hit_cost": hit_cost,
             "raw_gw_points": raw_score,
             "net_gw_points": live_score,
@@ -225,6 +304,11 @@ def build_snapshot(
             "players_live": sum(item["state"] == "live" for item in active),
             "players_remaining": sum(item["state"] in ("live", "upcoming", "unknown") for item in active),
             "captain": next((item["player"] for item in picks if item["captain"]), None),
+            "effective_captain": next((item["player"] for item in picks if int(item["multiplier"]) > 1), None),
+            "projected_autosubs": [
+                {"out": item["autosub_player"], "in": item["player"], "points_added": item["effective_points"]}
+                for item in picks if item.get("autosub_status") == "projected_in"
+            ],
             "picks": picks,
         })
 
@@ -298,7 +382,7 @@ def build_snapshot(
     avg_raw = round(sum(manager["raw_gw_points"] for manager in managers) / max(1, len(managers)), 2)
     return {
         "status": "SUCCESS" if not failures else "PARTIAL",
-        "version": 2,
+        "version": 3,
         "generated_at_utc": now.isoformat(),
         "gw": int(event["id"]),
         "phase": phase,
@@ -319,11 +403,12 @@ def build_snapshot(
         "exposure": exposures,
         "failures": failures,
         "methodology": {
-            "raw_score": "Sum of official live player points × FPL multiplier.",
+            "raw_score": "Expected final score: official live points × projected multiplier after confirmed-DNP autosubs.",
             "live_score": "Raw score minus transfer hit cost; this net score drives live rank.",
             "live_overall": "Official total minus official GW total, plus calculated live GW score.",
             "damage_per_point": "League-average multiplier minus your multiplier, floored at zero.",
-            "remaining": "Active picks whose club fixture is live, upcoming or awaiting status; multipliers follow the official revealed squad.",
+            "remaining": "Expected counting picks whose club fixture is live, upcoming or awaiting status. Autosubs project only after a starter's full GW schedule is complete on zero minutes and an eligible bench player has appeared.",
+            "autosubs": "Provisional FPL bench-order and legal-formation projection; official scores may update later.",
             "fixture_context": "Each tracked player carries their live or next GW fixture, kickoff, opponent, minutes, GW points and realised EO-adjusted impact.",
         },
     }

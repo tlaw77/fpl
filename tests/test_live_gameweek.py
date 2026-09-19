@@ -1,7 +1,7 @@
 import unittest
 from datetime import datetime, timedelta, timezone
 
-from live_gameweek import build_snapshot, phase_for, refresh_decision, score_finalisation_utc
+from live_gameweek import apply_projected_autosubs, build_snapshot, phase_for, refresh_decision, score_finalisation_utc
 
 
 class LiveGameweekTests(unittest.TestCase):
@@ -101,6 +101,62 @@ class LiveGameweekTests(unittest.TestCase):
     def test_finalisation_respects_uk_summer_time(self):
         finished = [{**self.fixtures[0], "kickoff_time": "2026-09-05T14:00:00Z", "finished": True}]
         self.assertEqual(score_finalisation_utc(finished), datetime(2026, 9, 6, 8, 0, tzinfo=timezone.utc))
+
+    @staticmethod
+    def autosub_picks():
+        positions = [1, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 1, 3, 2, 4]
+        return [
+            {
+                "slot": slot,
+                "player_id": slot,
+                "player": f"P{slot}",
+                "position_id": position,
+                "multiplier": 2 if slot == 9 else (1 if slot <= 11 else 0),
+                "captain": slot == 9,
+                "vice_captain": slot == 8,
+                "live_points": 6 if slot == 13 else 2,
+                "minutes": 0 if slot == 10 else (90 if slot == 13 else 0),
+                "state": "complete" if slot in (10, 13) else "upcoming",
+            }
+            for slot, position in enumerate(positions, 1)
+        ]
+
+    def test_confirmed_dnp_promotes_first_eligible_bench_player(self):
+        picks = apply_projected_autosubs(self.autosub_picks())
+        outgoing = picks[9]
+        incoming = picks[12]
+        self.assertEqual(outgoing["autosub_status"], "projected_out")
+        self.assertEqual(outgoing["multiplier"], 0)
+        self.assertEqual(incoming["autosub_status"], "projected_in")
+        self.assertEqual(incoming["effective_points"], 6)
+
+    def test_upcoming_zero_minutes_does_not_trigger_autosub(self):
+        picks = self.autosub_picks()
+        picks[9]["state"] = "upcoming"
+        apply_projected_autosubs(picks)
+        self.assertEqual(picks[9]["multiplier"], 1)
+        self.assertEqual(picks[12]["multiplier"], 0)
+
+    def test_formation_rule_skips_ineligible_first_sub(self):
+        picks = self.autosub_picks()
+        picks[3].update({"state": "complete", "minutes": 0})  # third and final starting defender
+        picks[9].update({"state": "upcoming"})
+        picks[12].update({"position_id": 3, "minutes": 90, "state": "complete"})
+        picks[13].update({"position_id": 2, "minutes": 90, "state": "complete", "live_points": 4})
+        apply_projected_autosubs(picks)
+        self.assertEqual(picks[12]["multiplier"], 0)
+        self.assertEqual(picks[13]["multiplier"], 1)
+        self.assertEqual(picks[13]["autosub_player"], "P4")
+
+    def test_dnp_captain_hands_multiplier_to_playing_vice(self):
+        picks = self.autosub_picks()
+        picks[8].update({"state": "complete", "minutes": 0, "live_points": 0})
+        picks[7].update({"state": "complete", "minutes": 90, "live_points": 7})
+        apply_projected_autosubs(picks)
+        self.assertEqual(picks[8]["multiplier"], 0)
+        self.assertEqual(picks[7]["multiplier"], 2)
+        self.assertTrue(picks[7]["projected_captain"])
+        self.assertEqual(picks[7]["effective_points"], 14)
 
 
 if __name__ == "__main__":
