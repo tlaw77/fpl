@@ -12,6 +12,12 @@
 .lgw-grid-cell.is-complete,.lgw-grid-cell.is-complete.captain{border:2px solid var(--status-done);box-shadow:none}
 .lgw-grid-legend .live{color:var(--status-live)}.lgw-grid-legend .complete{color:var(--status-done)}.lgw-grid-legend .captain{color:var(--status-captain)}
 
+/* Threats & Leverage uses the same cyan live surface as the Manager Matrix. */
+.lgw-tracker-row.live .lgw-live-stats,
+.lgw-tracker-row.live .lgw-compact-stats{background:var(--status-live-bg);border-color:var(--status-live);box-shadow:0 0 0 2px rgba(34,211,238,.16)}
+.lgw-tracker-row.live .lgw-live-stats>span{border-left-color:rgba(34,211,238,.28)}
+.lgw-tracker-row.live .lgw-compact-stats{border-left:2px solid var(--status-live);padding-right:5px}
+
 /* Manager XI progress uses the same fixture-state palette as the score cells. */
 [data-live-xi-strip] [data-xi-state="live"]{background:var(--status-live)!important;border-color:#67e8f9!important;box-shadow:0 0 5px rgba(34,211,238,.65)!important;animation:lgw-pulse 1.5s infinite}
 [data-live-xi-strip] [data-xi-state="done"]{background:var(--status-done)!important;border-color:#cbd5e1!important;box-shadow:none!important;opacity:1!important}
