@@ -1,6 +1,6 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-09-20T00:03:28.224222+00:00",
+  "generated_at_utc": "2026-09-20T05:19:17.767608+00:00",
   "engine_version": 7,
   "planner": "bounded same-deadline multi-transfer beam search + GW-specific shared-outcome Monte Carlo + live FT state + season calibration + shared captaincy + deadline-aware sampling + enabling-downgrade retention",
   "projection_model": "season-maturity calibrated + shared captaincy model",
@@ -16,7 +16,7 @@
   "iteration_policy": {
     "layer": "path",
     "deadline_phase": "normal",
-    "hours_to_deadline": 489.96,
+    "hours_to_deadline": 484.7,
     "iterations": 1200,
     "policy": "lighter normal-week sampling; higher precision inside 72h/24h/6h of official FPL deadline"
   },
@@ -207,18 +207,18 @@
         "bank_released": 6.0
       }
     ],
-    "expected_points": 278.0,
-    "p10_points": 235.44,
-    "p90_points": 324.49,
-    "expected_rank_after_path": 1.3,
+    "expected_points": 279.9,
+    "p10_points": 234.1,
+    "p90_points": 328.93,
+    "expected_rank_after_path": 1.31,
     "prob_gain_league_place": 0.0,
     "prob_finish_ahead_each_rival": [
-      0.919,
-      0.958,
-      0.968,
-      0.854,
+      0.917,
+      0.941,
+      0.964,
+      0.87,
       0.998,
-      0.998,
+      1.0,
       1.0,
       1.0
     ],
@@ -226,7 +226,7 @@
     "ending_free_transfers": 1,
     "first_transfer_incoming_starts": true,
     "first_deadline_transfer_count": 1,
-    "utility_score": 271.72,
+    "utility_score": 273.212,
     "contains_enabler": true,
     "unlock_sequence": {
       "enabler_gw": 9,
@@ -317,18 +317,18 @@
           "bank_released": 6.0
         }
       ],
-      "expected_points": 278.0,
-      "p10_points": 235.44,
-      "p90_points": 324.49,
-      "expected_rank_after_path": 1.3,
+      "expected_points": 279.9,
+      "p10_points": 234.1,
+      "p90_points": 328.93,
+      "expected_rank_after_path": 1.31,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.919,
-        0.958,
-        0.968,
-        0.854,
+        0.917,
+        0.941,
+        0.964,
+        0.87,
         0.998,
-        0.998,
+        1.0,
         1.0,
         1.0
       ],
@@ -336,7 +336,7 @@
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
       "first_deadline_transfer_count": 1,
-      "utility_score": 271.72,
+      "utility_score": 273.212,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 9,
@@ -371,128 +371,19 @@
         {
           "gw": 7,
           "action": "TRANSFER",
-          "route": "Hughes → Scott",
+          "route": "Hughes → Tavernier",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Hughes → Scott",
+              "route": "Hughes → Tavernier",
               "out_id": 212,
-              "in_id": 69,
-              "uplift": 4.67
+              "in_id": 68,
+              "uplift": 4.57
             }
           ],
           "hit": 0,
           "out_id": 212,
-          "in_id": 69,
-          "enabler": false,
-          "bank_released": 0.0
-        },
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "Maguire → Schuster",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Schuster",
-              "out_id": 418,
-              "in_id": 93,
-              "uplift": 2.32
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 93,
-          "enabler": false,
-          "bank_released": 0.4
-        },
-        {
-          "gw": 9,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Stach",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "B.Fernandes → Stach",
-              "out_id": 426,
-              "in_id": 335,
-              "uplift": 0.09
-            }
-          ],
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 335,
-          "enabler": true,
-          "bank_released": 6.0
-        }
-      ],
-      "expected_points": 277.67,
-      "p10_points": 236.87,
-      "p90_points": 320.53,
-      "expected_rank_after_path": 1.33,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.914,
-        0.934,
-        0.969,
-        0.855,
-        0.998,
-        0.998,
-        1.0,
-        1.0
-      ],
-      "ending_bank": 6.9,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 1,
-      "utility_score": 271.474,
-      "contains_enabler": true,
-      "unlock_sequence": {
-        "enabler_gw": 9,
-        "enabler_route": "B.Fernandes → Stach",
-        "bank_released": 6.0,
-        "follow_up_gw": null,
-        "follow_up_route": null,
-        "completed_unlock": false
-      }
-    },
-    {
-      "actions": [
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Gabriel → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Gabriel → Tarkowski",
-              "out_id": 4,
-              "in_id": 229,
-              "uplift": 5.86
-            }
-          ],
-          "hit": 4,
-          "out_id": 4,
-          "in_id": 229,
-          "enabler": false,
-          "bank_released": 1.9
-        },
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "Hughes → Scott",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Hughes → Scott",
-              "out_id": 212,
-              "in_id": 69,
-              "uplift": 4.67
-            }
-          ],
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 69,
+          "in_id": 68,
           "enabler": false,
           "bank_released": 0.0
         },
@@ -535,26 +426,26 @@
           "bank_released": 6.0
         }
       ],
-      "expected_points": 277.69,
-      "p10_points": 236.73,
-      "p90_points": 320.75,
+      "expected_points": 279.73,
+      "p10_points": 235.58,
+      "p90_points": 327.58,
       "expected_rank_after_path": 1.33,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.909,
-        0.938,
-        0.968,
-        0.858,
+        0.922,
+        0.928,
+        0.969,
+        0.854,
         0.998,
-        0.998,
-        0.999,
+        1.0,
+        1.0,
         1.0
       ],
       "ending_bank": 6.9,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
       "first_deadline_transfer_count": 1,
-      "utility_score": 271.459,
+      "utility_score": 273.137,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 9,
@@ -589,40 +480,40 @@
         {
           "gw": 7,
           "action": "TRANSFER",
-          "route": "Maguire → Gvardiol",
+          "route": "Hughes → Tavernier",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Maguire → Gvardiol",
-              "out_id": 418,
-              "in_id": 391,
-              "uplift": 4.85
+              "route": "Hughes → Tavernier",
+              "out_id": 212,
+              "in_id": 68,
+              "uplift": 4.57
             }
           ],
           "hit": 0,
-          "out_id": 418,
-          "in_id": 391,
+          "out_id": 212,
+          "in_id": 68,
           "enabler": false,
           "bank_released": 0.0
         },
         {
           "gw": 8,
           "action": "TRANSFER",
-          "route": "De Cuyper → Mfuni",
+          "route": "Maguire → Schuster",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "De Cuyper → Mfuni",
-              "out_id": 115,
-              "in_id": 656,
-              "uplift": 1.69
+              "route": "Maguire → Schuster",
+              "out_id": 418,
+              "in_id": 93,
+              "uplift": 2.32
             }
           ],
           "hit": 0,
-          "out_id": 115,
-          "in_id": 656,
+          "out_id": 418,
+          "in_id": 93,
           "enabler": false,
-          "bank_released": 0.9
+          "bank_released": 0.4
         },
         {
           "gw": 9,
@@ -644,26 +535,26 @@
           "bank_released": 6.0
         }
       ],
-      "expected_points": 277.48,
-      "p10_points": 235.62,
-      "p90_points": 325.11,
-      "expected_rank_after_path": 1.31,
+      "expected_points": 279.56,
+      "p10_points": 235.28,
+      "p90_points": 328.21,
+      "expected_rank_after_path": 1.34,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
+        0.923,
         0.927,
-        0.952,
-        0.964,
-        0.854,
-        0.998,
-        0.998,
+        0.963,
+        0.846,
         0.999,
+        1.0,
+        1.0,
         1.0
       ],
-      "ending_bank": 8.3,
+      "ending_bank": 6.9,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
       "first_deadline_transfer_count": 1,
-      "utility_score": 271.268,
+      "utility_score": 272.897,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 9,
@@ -753,18 +644,18 @@
           "bank_released": 6.0
         }
       ],
-      "expected_points": 277.67,
-      "p10_points": 234.94,
-      "p90_points": 325.53,
-      "expected_rank_after_path": 1.33,
+      "expected_points": 279.51,
+      "p10_points": 231.55,
+      "p90_points": 327.04,
+      "expected_rank_after_path": 1.32,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.921,
-        0.942,
-        0.964,
-        0.847,
-        0.998,
-        0.998,
+        0.918,
+        0.937,
+        0.961,
+        0.865,
+        0.999,
+        0.999,
         1.0,
         1.0
       ],
@@ -772,101 +663,7 @@
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
       "first_deadline_transfer_count": 1,
-      "utility_score": 271.242,
-      "contains_enabler": true,
-      "unlock_sequence": {
-        "enabler_gw": 9,
-        "enabler_route": "B.Fernandes → Stach",
-        "bank_released": 6.0,
-        "follow_up_gw": null,
-        "follow_up_route": null,
-        "completed_unlock": false
-      }
-    },
-    {
-      "actions": [
-        {
-          "gw": 6,
-          "action": "ROLL"
-        },
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "Gabriel → Gvardiol",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Gabriel → Gvardiol",
-              "out_id": 4,
-              "in_id": 391,
-              "uplift": 5.06
-            }
-          ],
-          "hit": 0,
-          "out_id": 4,
-          "in_id": 391,
-          "enabler": false,
-          "bank_released": 2.3
-        },
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "Maguire → Schuster",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Schuster",
-              "out_id": 418,
-              "in_id": 93,
-              "uplift": 2.8
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 93,
-          "enabler": false,
-          "bank_released": 0.4
-        },
-        {
-          "gw": 9,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Stach",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "B.Fernandes → Stach",
-              "out_id": 426,
-              "in_id": 335,
-              "uplift": 0.09
-            }
-          ],
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 335,
-          "enabler": true,
-          "bank_released": 6.0
-        }
-      ],
-      "expected_points": 277.34,
-      "p10_points": 234.65,
-      "p90_points": 322.86,
-      "expected_rank_after_path": 1.27,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.932,
-        0.967,
-        0.966,
-        0.865,
-        0.999,
-        0.998,
-        0.999,
-        1.0
-      ],
-      "ending_bank": 9.0,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": null,
-      "first_deadline_transfer_count": 0,
-      "utility_score": 271.191,
+      "utility_score": 272.499,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 9,
@@ -901,128 +698,19 @@
         {
           "gw": 7,
           "action": "TRANSFER",
-          "route": "Hughes → Tavernier",
+          "route": "Hughes → Scott",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Hughes → Tavernier",
+              "route": "Hughes → Scott",
               "out_id": 212,
-              "in_id": 68,
-              "uplift": 4.57
+              "in_id": 69,
+              "uplift": 4.67
             }
           ],
           "hit": 0,
           "out_id": 212,
-          "in_id": 68,
-          "enabler": false,
-          "bank_released": 0.0
-        },
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "Maguire → Schuster",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Schuster",
-              "out_id": 418,
-              "in_id": 93,
-              "uplift": 2.32
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 93,
-          "enabler": false,
-          "bank_released": 0.4
-        },
-        {
-          "gw": 9,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Stach",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "B.Fernandes → Stach",
-              "out_id": 426,
-              "in_id": 335,
-              "uplift": 0.09
-            }
-          ],
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 335,
-          "enabler": true,
-          "bank_released": 6.0
-        }
-      ],
-      "expected_points": 277.59,
-      "p10_points": 234.74,
-      "p90_points": 322.42,
-      "expected_rank_after_path": 1.33,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.919,
-        0.937,
-        0.967,
-        0.851,
-        0.999,
-        0.998,
-        1.0,
-        1.0
-      ],
-      "ending_bank": 6.9,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 1,
-      "utility_score": 271.152,
-      "contains_enabler": true,
-      "unlock_sequence": {
-        "enabler_gw": 9,
-        "enabler_route": "B.Fernandes → Stach",
-        "bank_released": 6.0,
-        "follow_up_gw": null,
-        "follow_up_route": null,
-        "completed_unlock": false
-      }
-    },
-    {
-      "actions": [
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Gabriel → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Gabriel → Tarkowski",
-              "out_id": 4,
-              "in_id": 229,
-              "uplift": 5.86
-            }
-          ],
-          "hit": 4,
-          "out_id": 4,
-          "in_id": 229,
-          "enabler": false,
-          "bank_released": 1.9
-        },
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "Hughes → Tavernier",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Hughes → Tavernier",
-              "out_id": 212,
-              "in_id": 68,
-              "uplift": 4.57
-            }
-          ],
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 68,
+          "in_id": 69,
           "enabler": false,
           "bank_released": 0.0
         },
@@ -1065,26 +753,26 @@
           "bank_released": 6.0
         }
       ],
-      "expected_points": 277.6,
-      "p10_points": 234.22,
-      "p90_points": 322.28,
-      "expected_rank_after_path": 1.33,
+      "expected_points": 279.11,
+      "p10_points": 234.54,
+      "p90_points": 328.94,
+      "expected_rank_after_path": 1.35,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.917,
-        0.94,
-        0.968,
-        0.851,
+        0.919,
+        0.926,
+        0.967,
+        0.839,
         0.998,
-        0.998,
-        0.999,
+        1.0,
+        1.0,
         1.0
       ],
       "ending_bank": 6.9,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
       "first_deadline_transfer_count": 1,
-      "utility_score": 271.103,
+      "utility_score": 272.357,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 9,
@@ -1099,141 +787,62 @@
       "actions": [
         {
           "gw": 6,
-          "action": "ROLL"
+          "action": "TRANSFER",
+          "route": "Gabriel → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Gabriel → Tarkowski",
+              "out_id": 4,
+              "in_id": 229,
+              "uplift": 5.86
+            }
+          ],
+          "hit": 4,
+          "out_id": 4,
+          "in_id": 229,
+          "enabler": false,
+          "bank_released": 1.9
         },
         {
           "gw": 7,
           "action": "TRANSFER",
-          "route": "Gabriel → Gvardiol",
+          "route": "Maguire → Gvardiol",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Gabriel → Gvardiol",
-              "out_id": 4,
+              "route": "Maguire → Gvardiol",
+              "out_id": 418,
               "in_id": 391,
-              "uplift": 5.06
+              "uplift": 4.85
             }
           ],
           "hit": 0,
-          "out_id": 4,
+          "out_id": 418,
           "in_id": 391,
-          "enabler": false,
-          "bank_released": 2.3
-        },
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "De Cuyper → Schuster",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "De Cuyper → Schuster",
-              "out_id": 115,
-              "in_id": 93,
-              "uplift": 2.67
-            }
-          ],
-          "hit": 0,
-          "out_id": 115,
-          "in_id": 93,
-          "enabler": false,
-          "bank_released": 0.4
-        },
-        {
-          "gw": 9,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Stach",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "B.Fernandes → Stach",
-              "out_id": 426,
-              "in_id": 335,
-              "uplift": 0.09
-            }
-          ],
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 335,
-          "enabler": true,
-          "bank_released": 6.0
-        }
-      ],
-      "expected_points": 277.28,
-      "p10_points": 234.36,
-      "p90_points": 322.61,
-      "expected_rank_after_path": 1.28,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.927,
-        0.967,
-        0.964,
-        0.865,
-        0.998,
-        0.998,
-        0.999,
-        1.0
-      ],
-      "ending_bank": 9.0,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": null,
-      "first_deadline_transfer_count": 0,
-      "utility_score": 271.068,
-      "contains_enabler": true,
-      "unlock_sequence": {
-        "enabler_gw": 9,
-        "enabler_route": "B.Fernandes → Stach",
-        "bank_released": 6.0,
-        "follow_up_gw": null,
-        "follow_up_route": null,
-        "completed_unlock": false
-      }
-    },
-    {
-      "actions": [
-        {
-          "gw": 6,
-          "action": "ROLL"
-        },
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "Gabriel → Gvardiol",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Gabriel → Gvardiol",
-              "out_id": 4,
-              "in_id": 391,
-              "uplift": 5.06
-            }
-          ],
-          "hit": 0,
-          "out_id": 4,
-          "in_id": 391,
-          "enabler": false,
-          "bank_released": 2.3
-        },
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "Hughes → Scott",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Hughes → Scott",
-              "out_id": 212,
-              "in_id": 69,
-              "uplift": 2.7
-            }
-          ],
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 69,
           "enabler": false,
           "bank_released": 0.0
         },
         {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "De Cuyper → Mfuni",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "De Cuyper → Mfuni",
+              "out_id": 115,
+              "in_id": 656,
+              "uplift": 1.69
+            }
+          ],
+          "hit": 0,
+          "out_id": 115,
+          "in_id": 656,
+          "enabler": false,
+          "bank_released": 0.9
+        },
+        {
           "gw": 9,
           "action": "TRANSFER",
           "route": "B.Fernandes → Stach",
@@ -1253,26 +862,26 @@
           "bank_released": 6.0
         }
       ],
-      "expected_points": 277.45,
-      "p10_points": 233.17,
-      "p90_points": 322.95,
-      "expected_rank_after_path": 1.28,
+      "expected_points": 278.94,
+      "p10_points": 233.75,
+      "p90_points": 326.76,
+      "expected_rank_after_path": 1.31,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.926,
+        0.92,
+        0.935,
         0.963,
-        0.965,
-        0.867,
-        0.999,
+        0.87,
         0.998,
-        0.999,
+        1.0,
+        1.0,
         1.0
       ],
-      "ending_bank": 6.9,
+      "ending_bank": 8.3,
       "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": null,
-      "first_deadline_transfer_count": 0,
-      "utility_score": 271.066,
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 1,
+      "utility_score": 272.298,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 9,
@@ -1362,26 +971,417 @@
           "bank_released": 6.0
         }
       ],
-      "expected_points": 277.46,
-      "p10_points": 234.31,
-      "p90_points": 324.3,
-      "expected_rank_after_path": 1.33,
+      "expected_points": 279.03,
+      "p10_points": 232.93,
+      "p90_points": 328.12,
+      "expected_rank_after_path": 1.31,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.913,
-        0.951,
-        0.959,
-        0.848,
+        0.919,
+        0.94,
+        0.961,
+        0.868,
         0.998,
-        0.998,
-        0.999,
+        1.0,
+        1.0,
         1.0
       ],
       "ending_bank": 8.2,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
       "first_deadline_transfer_count": 1,
-      "utility_score": 270.971,
+      "utility_score": 272.276,
+      "contains_enabler": true,
+      "unlock_sequence": {
+        "enabler_gw": 9,
+        "enabler_route": "B.Fernandes → Stach",
+        "bank_released": 6.0,
+        "follow_up_gw": null,
+        "follow_up_route": null,
+        "completed_unlock": false
+      }
+    },
+    {
+      "actions": [
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Gabriel → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Gabriel → Tarkowski",
+              "out_id": 4,
+              "in_id": 229,
+              "uplift": 5.86
+            }
+          ],
+          "hit": 4,
+          "out_id": 4,
+          "in_id": 229,
+          "enabler": false,
+          "bank_released": 1.9
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Hughes → Scott",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Hughes → Scott",
+              "out_id": 212,
+              "in_id": 69,
+              "uplift": 4.67
+            }
+          ],
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 69,
+          "enabler": false,
+          "bank_released": 0.0
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "Maguire → Schuster",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Maguire → Schuster",
+              "out_id": 418,
+              "in_id": 93,
+              "uplift": 2.32
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 93,
+          "enabler": false,
+          "bank_released": 0.4
+        },
+        {
+          "gw": 9,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Stach",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "B.Fernandes → Stach",
+              "out_id": 426,
+              "in_id": 335,
+              "uplift": 0.09
+            }
+          ],
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 335,
+          "enabler": true,
+          "bank_released": 6.0
+        }
+      ],
+      "expected_points": 278.95,
+      "p10_points": 233.75,
+      "p90_points": 328.15,
+      "expected_rank_after_path": 1.36,
+      "prob_gain_league_place": 0.0,
+      "prob_finish_ahead_each_rival": [
+        0.92,
+        0.924,
+        0.965,
+        0.833,
+        0.998,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "ending_bank": 6.9,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 1,
+      "utility_score": 272.078,
+      "contains_enabler": true,
+      "unlock_sequence": {
+        "enabler_gw": 9,
+        "enabler_route": "B.Fernandes → Stach",
+        "bank_released": 6.0,
+        "follow_up_gw": null,
+        "follow_up_route": null,
+        "completed_unlock": false
+      }
+    },
+    {
+      "actions": [
+        {
+          "gw": 6,
+          "action": "ROLL"
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Gabriel → Gvardiol",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Gabriel → Gvardiol",
+              "out_id": 4,
+              "in_id": 391,
+              "uplift": 5.06
+            }
+          ],
+          "hit": 0,
+          "out_id": 4,
+          "in_id": 391,
+          "enabler": false,
+          "bank_released": 2.3
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "Maguire → Schuster",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Maguire → Schuster",
+              "out_id": 418,
+              "in_id": 93,
+              "uplift": 2.8
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 93,
+          "enabler": false,
+          "bank_released": 0.4
+        },
+        {
+          "gw": 9,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Stach",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "B.Fernandes → Stach",
+              "out_id": 426,
+              "in_id": 335,
+              "uplift": 0.09
+            }
+          ],
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 335,
+          "enabler": true,
+          "bank_released": 6.0
+        }
+      ],
+      "expected_points": 278.92,
+      "p10_points": 230.79,
+      "p90_points": 326.81,
+      "expected_rank_after_path": 1.32,
+      "prob_gain_league_place": 0.0,
+      "prob_finish_ahead_each_rival": [
+        0.917,
+        0.944,
+        0.965,
+        0.863,
+        0.998,
+        0.998,
+        0.999,
+        1.0
+      ],
+      "ending_bank": 9.0,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": null,
+      "first_deadline_transfer_count": 0,
+      "utility_score": 271.918,
+      "contains_enabler": true,
+      "unlock_sequence": {
+        "enabler_gw": 9,
+        "enabler_route": "B.Fernandes → Stach",
+        "bank_released": 6.0,
+        "follow_up_gw": null,
+        "follow_up_route": null,
+        "completed_unlock": false
+      }
+    },
+    {
+      "actions": [
+        {
+          "gw": 6,
+          "action": "ROLL"
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Gabriel → Gvardiol",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Gabriel → Gvardiol",
+              "out_id": 4,
+              "in_id": 391,
+              "uplift": 5.06
+            }
+          ],
+          "hit": 0,
+          "out_id": 4,
+          "in_id": 391,
+          "enabler": false,
+          "bank_released": 2.3
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "De Cuyper → Schuster",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "De Cuyper → Schuster",
+              "out_id": 115,
+              "in_id": 93,
+              "uplift": 2.67
+            }
+          ],
+          "hit": 0,
+          "out_id": 115,
+          "in_id": 93,
+          "enabler": false,
+          "bank_released": 0.4
+        },
+        {
+          "gw": 9,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Stach",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "B.Fernandes → Stach",
+              "out_id": 426,
+              "in_id": 335,
+              "uplift": 0.09
+            }
+          ],
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 335,
+          "enabler": true,
+          "bank_released": 6.0
+        }
+      ],
+      "expected_points": 278.81,
+      "p10_points": 231.29,
+      "p90_points": 327.89,
+      "expected_rank_after_path": 1.33,
+      "prob_gain_league_place": 0.0,
+      "prob_finish_ahead_each_rival": [
+        0.912,
+        0.942,
+        0.962,
+        0.863,
+        0.998,
+        0.998,
+        0.999,
+        1.0
+      ],
+      "ending_bank": 9.0,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": null,
+      "first_deadline_transfer_count": 0,
+      "utility_score": 271.823,
+      "contains_enabler": true,
+      "unlock_sequence": {
+        "enabler_gw": 9,
+        "enabler_route": "B.Fernandes → Stach",
+        "bank_released": 6.0,
+        "follow_up_gw": null,
+        "follow_up_route": null,
+        "completed_unlock": false
+      }
+    },
+    {
+      "actions": [
+        {
+          "gw": 6,
+          "action": "ROLL"
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Gabriel → Gvardiol",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Gabriel → Gvardiol",
+              "out_id": 4,
+              "in_id": 391,
+              "uplift": 5.06
+            }
+          ],
+          "hit": 0,
+          "out_id": 4,
+          "in_id": 391,
+          "enabler": false,
+          "bank_released": 2.3
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "Hughes → Scott",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Hughes → Scott",
+              "out_id": 212,
+              "in_id": 69,
+              "uplift": 2.7
+            }
+          ],
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 69,
+          "enabler": false,
+          "bank_released": 0.0
+        },
+        {
+          "gw": 9,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Stach",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "B.Fernandes → Stach",
+              "out_id": 426,
+              "in_id": 335,
+              "uplift": 0.09
+            }
+          ],
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 335,
+          "enabler": true,
+          "bank_released": 6.0
+        }
+      ],
+      "expected_points": 278.53,
+      "p10_points": 232.35,
+      "p90_points": 328.13,
+      "expected_rank_after_path": 1.31,
+      "prob_gain_league_place": 0.0,
+      "prob_finish_ahead_each_rival": [
+        0.911,
+        0.942,
+        0.966,
+        0.873,
+        0.998,
+        0.998,
+        1.0,
+        1.0
+      ],
+      "ending_bank": 6.9,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": null,
+      "first_deadline_transfer_count": 0,
+      "utility_score": 271.778,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 9,
@@ -1471,26 +1471,26 @@
           "bank_released": 6.0
         }
       ],
-      "expected_points": 277.16,
-      "p10_points": 235.38,
-      "p90_points": 321.12,
-      "expected_rank_after_path": 1.34,
+      "expected_points": 277.98,
+      "p10_points": 233.75,
+      "p90_points": 325.72,
+      "expected_rank_after_path": 1.36,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.918,
-        0.928,
+        0.916,
+        0.922,
         0.965,
-        0.85,
-        0.998,
-        0.998,
-        0.998,
+        0.835,
+        0.999,
+        0.999,
+        1.0,
         1.0
       ],
       "ending_bank": 7.4,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
       "first_deadline_transfer_count": 1,
-      "utility_score": 270.775,
+      "utility_score": 271.206,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 9,
