@@ -1,14 +1,14 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-09-25T15:29:22.722588+00:00",
+  "generated_at_utc": "2026-09-25T19:30:39.967694+00:00",
   "version": 4,
   "current_gw": 5,
   "next_gw": 6,
   "current_action": {
-    "action": "HOLD",
-    "headline": "Transfer complete · hold",
-    "confidence": 71,
-    "reason": "Kinsky → Tzolakis is already applied. A further move costs -4. Its 5.8-point projected edge remains below the 6.0-point magnitude hurdle and the exact route is supported by only 3/3 models. Holding moves the bank from 0/5 to 1/5; no free transfer expires. The incoming player has the easier immediate fixture run.",
+    "action": "TRANSFER",
+    "headline": "Gabriel → Tarkowski",
+    "confidence": 88,
+    "reason": "The leading move clears the 6.0-point robustness hurdle after hit cost and the same measured route is supported by 3/3 decision models. Holding moves the bank from 0/5 to 1/5; no free transfer expires. The incoming player has the easier immediate fixture run.",
     "completed_transfer": {
       "event": 6,
       "out": "Kinsky",
@@ -30,12 +30,12 @@
     "free_transfer_cap": 5,
     "free_transfer_would_expire_on_hold": false,
     "next_transfer_hit_cost": 4,
-    "transfer_count": 0
+    "transfer_count": 1
   },
   "robustness": {
     "season_maturity_weight": 0.455,
     "single_step_leader": "Gabriel → Tarkowski",
-    "single_step_edge_over_hold_6gw": 5.81,
+    "single_step_edge_over_hold_6gw": 6.06,
     "multi_gw_first_action": "Gabriel → Tarkowski",
     "adaptive_rival_first_action": "Gabriel → Tarkowski",
     "exact_route_consensus_models": 3,
@@ -45,20 +45,20 @@
     "base_required_edge": 6.0,
     "required_edge": 6.0,
     "required_consensus_models": 2,
-    "transfer_clears_gate": false,
+    "transfer_clears_gate": true,
     "multi_transfer_clears_gate": null,
     "multi_transfer_route": null,
     "multi_transfer_count": 0,
     "multi_transfer_edge_over_roll": 0.0,
     "multi_transfer_required_edge": 7.5,
     "active_route": "Gabriel → Tarkowski",
-    "active_route_type": "single_transfer_challenger",
-    "active_edge_over_hold_6gw": 5.81,
+    "active_route_type": "single_transfer",
+    "active_edge_over_hold_6gw": 6.06,
     "active_required_edge": 6.0,
     "active_validation_kind": "model_agreement",
     "active_validation_label": "Model agreement",
     "active_validation_clear": true,
-    "active_transfer_gate_clear": false,
+    "active_transfer_gate_clear": true,
     "free_transfers_before_moves": 1,
     "free_transfers_before_decision": 0,
     "free_transfer_cap": 5,
@@ -155,9 +155,9 @@
       "free_transfers_before": 0,
       "free_transfers_after_deadline": 1,
       "hit_cost": 0,
-      "expected_points": 269.9,
-      "p10_points": 226.45,
-      "p90_points": 316.02,
+      "expected_points": 270.96,
+      "p10_points": 227.24,
+      "p90_points": 313.79,
       "edge_vs_roll": 0.0,
       "ending_bank": 1.5,
       "ending_free_transfers": 1,
@@ -245,29 +245,29 @@
       "later_action": {
         "gw": 7,
         "action": "TRANSFER",
-        "route": "Hughes → Belloumi",
+        "route": "Maguire → Gvardiol",
         "transfer_count": 1,
         "transfers": [
           {
-            "route": "Hughes → Belloumi",
-            "out_id": 212,
-            "in_id": 286,
-            "uplift": 3.16
+            "route": "Maguire → Gvardiol",
+            "out_id": 418,
+            "in_id": 391,
+            "uplift": 3.53
           }
         ],
         "hit": 0,
-        "out_id": 212,
-        "in_id": 286
+        "out_id": 418,
+        "in_id": 391
       },
       "transfer_count_now": 1,
       "free_transfers_before": 0,
       "free_transfers_after_deadline": 1,
       "hit_cost": 4,
-      "expected_points": 271.62,
-      "p10_points": 228.64,
-      "p90_points": 319.05,
-      "edge_vs_roll": 1.72,
-      "ending_bank": 7.9,
+      "expected_points": 272.62,
+      "p10_points": 227.84,
+      "p90_points": 317.36,
+      "edge_vs_roll": 1.66,
+      "ending_bank": 6.6,
       "ending_free_transfers": 1,
       "actions": [
         {
@@ -290,6 +290,23 @@
         {
           "gw": 7,
           "action": "TRANSFER",
+          "route": "Maguire → Gvardiol",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Maguire → Gvardiol",
+              "out_id": 418,
+              "in_id": 391,
+              "uplift": 3.53
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 391
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
           "route": "Hughes → Belloumi",
           "transfer_count": 1,
           "transfers": [
@@ -297,29 +314,12 @@
               "route": "Hughes → Belloumi",
               "out_id": 212,
               "in_id": 286,
-              "uplift": 3.16
+              "uplift": 2.31
             }
           ],
           "hit": 0,
           "out_id": 212,
           "in_id": 286
-        },
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "De Cuyper → Schuster",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "De Cuyper → Schuster",
-              "out_id": 115,
-              "in_id": 93,
-              "uplift": 2.53
-            }
-          ],
-          "hit": 0,
-          "out_id": 115,
-          "in_id": 93
         },
         {
           "gw": 9,
@@ -376,9 +376,9 @@
       "free_transfers_before": 0,
       "free_transfers_after_deadline": 1,
       "hit_cost": 0,
-      "expected_points": 269.9,
-      "p10_points": 226.45,
-      "p90_points": 316.02,
+      "expected_points": 270.96,
+      "p10_points": 227.24,
+      "p90_points": 313.79,
       "edge_vs_roll": 0.0,
       "ending_bank": 1.5,
       "ending_free_transfers": 1,
@@ -443,7 +443,7 @@
   ],
   "chips": {
     "action": "HOLD",
-    "reason": "Hold chips. Best visible TC uplift is 0.0 and BB uplift is 15.6, but the first-half portfolio remains comfortable with 11 slack Gameweeks. Preserve option value for stronger blank/double or squad-structure windows.",
+    "reason": "Hold chips. Best visible TC uplift is 0.0 and BB uplift is 15.7, but the first-half portfolio remains comfortable with 11 slack Gameweeks. Preserve option value for stronger blank/double or squad-structure windows.",
     "best_visible_triple_captain": {},
     "best_visible_bench_boost": {
       "actions": [
@@ -518,22 +518,22 @@
       ],
       "chip": "Bench Boost",
       "chip_gw": 8,
-      "expected_points": 286.73,
-      "chip_incremental_expected_points": 15.64,
-      "p10_points": 241.54,
-      "p90_points": 334.1,
-      "expected_rank_after_path": 1.03,
+      "expected_points": 286.94,
+      "chip_incremental_expected_points": 15.66,
+      "p10_points": 241.78,
+      "p90_points": 332.61,
+      "expected_rank_after_path": 1.04,
       "prob_finish_ahead_each_rival": [
-        0.995,
-        0.992,
-        0.994,
-        0.993,
-        1.0,
+        0.991,
+        0.989,
+        0.996,
+        0.989,
+        0.999,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 281.173
+      "utility_score": 281.34
     },
     "portfolio_pressure": "comfortable",
     "latest_safe_start_gw": 17
