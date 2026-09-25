@@ -45,6 +45,7 @@ silently resolved by an implementing LLM.
 | [Acceptance catalogue](testing/acceptance-catalogue.md) | Baseline drafted | Requirement IDs and Given/When/Then tests |
 | [Golden scenarios](testing/golden-scenarios.md) | Baseline drafted | Deterministic scenarios for calculation and UI verification |
 | [LLM delivery manifest](delivery/llm-build-manifest.md) | Baseline drafted | Ordered, bounded implementation slices |
+| [Rebuild delivery status](delivery/rebuild-status.md) | Active | Slice progress and verification evidence |
 | [Operations runbook](operations/runbook.md) | Baseline drafted | Setup, schedules, deployment and recovery |
 | [Traceability matrix](delivery/traceability-matrix.md) | Baseline drafted | Requirement to data, UI, code and test mapping |
 

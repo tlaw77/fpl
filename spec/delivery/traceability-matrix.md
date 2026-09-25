@@ -21,6 +21,12 @@ slices land.
 | BTW-001–005 | page contracts, source register | change/watch selectors | Between-Games composition | ACC-BTW-001–002, ACC-PLY-002 |
 | OPS-001–009 | target architecture, runbook | manifests and validation | freshness/health | ACC-OPS-001–003 |
 
+## Rebuild implementation mapping
+
+| Slice | Requirement coverage | Target code | Automated evidence |
+|---|---|---|---|
+| 01 | Shell foundation; mobile/reduced-motion quality foundations | `app/src/shell`, `app/src/styles`, `app/src/app.ts` | `app/src/shell/model.test.ts`, `app/tests/mobile-shell.spec.ts`, `.github/workflows/rebuild-quality.yml` |
+
 ## Existing baseline evidence
 
 | Area | Current evidence | Migration use |

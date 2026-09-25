@@ -1,0 +1,256 @@
+.skip-link {
+  position: fixed;
+  z-index: 100;
+  top: 8px;
+  left: 8px;
+  transform: translateY(-150%);
+  border-radius: var(--radius-sm);
+  background: var(--text);
+  color: var(--canvas);
+  padding: 10px 14px;
+  font-weight: 800;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.app-shell {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 28px 0 48px;
+}
+
+.app-header,
+.hero-card {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.app-header {
+  margin-bottom: 18px;
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+  color: var(--state-live);
+  font-size: 0.72rem;
+  font-weight: 850;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 6px;
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  letter-spacing: -0.045em;
+}
+
+h2 {
+  margin-bottom: 8px;
+  font-size: clamp(1.55rem, 4vw, 2.4rem);
+  letter-spacing: -0.035em;
+}
+
+h3 {
+  margin-bottom: 8px;
+  font-size: 1.08rem;
+}
+
+.freshness,
+.hero-card p,
+.content-card p {
+  margin-bottom: 0;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+.phase-stack {
+  display: grid;
+  justify-items: end;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+
+.phase-stack strong {
+  font-size: 0.9rem;
+}
+
+.phase-pill,
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  border: 1px solid var(--state-live);
+  border-radius: 999px;
+  background: var(--state-live-bg);
+  color: #cffafe;
+  padding: 6px 10px;
+  font-size: 0.7rem;
+  font-weight: 850;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.kpi-card,
+.hero-card,
+.content-card {
+  border: 1px solid var(--border);
+  background: linear-gradient(145deg, var(--surface-2), var(--surface-1));
+  box-shadow: var(--shadow);
+}
+
+.kpi-card {
+  min-width: 0;
+  border-radius: var(--radius-md);
+  padding: 14px;
+}
+
+.kpi-card span,
+.kpi-card small {
+  display: block;
+  overflow: hidden;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.kpi-card strong {
+  display: block;
+  margin: 5px 0;
+  font-size: 1.65rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.primary-nav {
+  display: flex;
+  gap: 7px;
+  overflow-x: auto;
+  margin-bottom: 14px;
+  padding: 2px 2px 8px;
+  scrollbar-width: thin;
+}
+
+.primary-nav button {
+  min-height: 44px;
+  flex: 0 0 auto;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface-1);
+  color: var(--text-muted);
+  padding: 8px 14px;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 750;
+}
+
+.primary-nav button[aria-current="page"] {
+  border-color: var(--state-live);
+  background: var(--state-live-bg);
+  color: #cffafe;
+}
+
+.hero-card {
+  min-height: 190px;
+  align-items: center;
+  border-color: var(--border-strong);
+  border-radius: var(--radius-lg);
+  padding: clamp(20px, 4vw, 36px);
+}
+
+.hero-card > div {
+  max-width: 700px;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.content-card {
+  min-width: 0;
+  border-radius: var(--radius-md);
+  padding: 20px;
+}
+
+@media (max-width: 600px) {
+  .app-shell {
+    width: min(100% - 20px, 1180px);
+    padding-top: 18px;
+  }
+
+  .app-header,
+  .hero-card {
+    gap: 14px;
+  }
+
+  .phase-pill {
+    max-width: 120px;
+    text-align: center;
+  }
+
+  .kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hero-card {
+    min-height: 220px;
+    align-items: flex-start;
+  }
+
+  .status-badge {
+    flex: 0 0 auto;
+  }
+
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 390px) {
+  .app-header {
+    align-items: flex-start;
+  }
+
+  .phase-stack {
+    max-width: 115px;
+  }
+
+  .hero-card {
+    display: grid;
+  }
+
+  .status-badge {
+    justify-self: start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
