@@ -1,0 +1,147 @@
+{
+  "schema": "fpl.golden-live-scoring",
+  "schema_version": 1,
+  "rules_version": "2026-27-baseline",
+  "scenarios": [
+    {
+      "id": "GOLD-LIVE-001",
+      "description": "Captain scores five points and manager has a four-point hit",
+      "input": {
+        "official_total_before_gw": 100,
+        "submitted_hit": 4,
+        "picks": [
+          {"player_id": 1, "raw_player_points": 5, "submitted_multiplier": 2, "projected_rule_multiplier": 2}
+        ]
+      },
+      "expected": {
+        "calculated_live_raw": 10,
+        "calculated_live_net": 6,
+        "calculated_live_overall": 106,
+        "projected_rule_raw": 10,
+        "projected_rule_net": 6,
+        "projected_rule_overall": 106
+      }
+    },
+    {
+      "id": "GOLD-LIVE-002",
+      "description": "Zero minutes before fixture does not trigger an autosub",
+      "input": {
+        "starter": {"player_id": 10, "fixture_state": "upcoming", "minutes": 0, "submitted_multiplier": 1},
+        "first_sub": {"player_id": 13, "fixture_state": "complete", "minutes": 90, "raw_player_points": 6, "submitted_multiplier": 0}
+      },
+      "expected": {
+        "starter_projected_rule_multiplier": 1,
+        "starter_autosub_state": "none",
+        "first_sub_projected_rule_multiplier": 0,
+        "first_sub_autosub_state": "none"
+      }
+    },
+    {
+      "id": "GOLD-LIVE-003",
+      "description": "Confirmed DNP is replaced by the first legal bench player who appeared",
+      "input": {
+        "starter": {"player_id": 10, "position_id": 4, "fixture_state": "complete", "minutes": 0, "submitted_multiplier": 1},
+        "first_sub": {"player_id": 13, "position_id": 3, "fixture_state": "complete", "minutes": 90, "raw_player_points": 6, "submitted_multiplier": 0},
+        "formation_after_sub": {"gkp": 1, "def": 3, "mid": 4, "fwd": 3}
+      },
+      "expected": {
+        "starter_projected_rule_multiplier": 0,
+        "starter_autosub_state": "projected_out",
+        "first_sub_projected_rule_multiplier": 1,
+        "first_sub_autosub_state": "projected_in",
+        "first_sub_projected_rule_counted_points": 6
+      }
+    },
+    {
+      "id": "GOLD-LIVE-004",
+      "description": "Upcoming first sub retains priority without current points",
+      "input": {
+        "starter": {"player_id": 10, "position_id": 4, "fixture_state": "complete", "minutes": 0, "submitted_multiplier": 1},
+        "first_sub": {"player_id": 13, "position_id": 3, "fixture_state": "upcoming", "minutes": 0, "raw_player_points": 0, "submitted_multiplier": 0},
+        "second_sub": {"player_id": 14, "position_id": 2, "fixture_state": "complete", "minutes": 90, "raw_player_points": 8, "submitted_multiplier": 0},
+        "formation_after_first_sub": {"gkp": 1, "def": 3, "mid": 4, "fwd": 3}
+      },
+      "expected": {
+        "first_sub_projected_rule_multiplier": 1,
+        "first_sub_autosub_state": "projected_in_pending",
+        "first_sub_projected_rule_counted_points": 0,
+        "second_sub_projected_rule_multiplier": 0
+      }
+    },
+    {
+      "id": "GOLD-LIVE-005",
+      "description": "Formation rule skips a midfielder and selects the next defender",
+      "input": {
+        "starter": {"player_id": 4, "position_id": 2, "fixture_state": "complete", "minutes": 0, "submitted_multiplier": 1},
+        "first_sub": {"player_id": 13, "position_id": 3, "fixture_state": "complete", "minutes": 90, "raw_player_points": 6, "submitted_multiplier": 0},
+        "second_sub": {"player_id": 14, "position_id": 2, "fixture_state": "complete", "minutes": 90, "raw_player_points": 4, "submitted_multiplier": 0},
+        "starting_formation": {"gkp": 1, "def": 3, "mid": 4, "fwd": 3}
+      },
+      "expected": {
+        "first_sub_projected_rule_multiplier": 0,
+        "second_sub_projected_rule_multiplier": 1,
+        "second_sub_autosub_state": "projected_in",
+        "second_sub_projected_rule_counted_points": 4
+      }
+    },
+    {
+      "id": "GOLD-LIVE-007",
+      "description": "Confirmed-DNP captain hands multiplier to an active vice-captain",
+      "input": {
+        "captain": {"player_id": 9, "fixture_state": "complete", "minutes": 0, "raw_player_points": 0, "submitted_multiplier": 2},
+        "vice": {"player_id": 8, "fixture_state": "complete", "minutes": 90, "raw_player_points": 7, "submitted_multiplier": 1}
+      },
+      "expected": {
+        "captain_projected_rule_multiplier": 0,
+        "captain_captaincy_state": "projected_captain_out",
+        "vice_projected_rule_multiplier": 2,
+        "vice_captaincy_state": "projected_vice_promoted",
+        "vice_projected_rule_counted_points": 14
+      }
+    },
+    {
+      "id": "GOLD-LIVE-008",
+      "description": "Upcoming vice-captain is not promoted prematurely",
+      "input": {
+        "captain": {"player_id": 9, "fixture_state": "complete", "minutes": 0, "raw_player_points": 0, "submitted_multiplier": 2},
+        "vice": {"player_id": 8, "fixture_state": "upcoming", "minutes": 0, "raw_player_points": 0, "submitted_multiplier": 1}
+      },
+      "expected": {
+        "captain_projected_rule_multiplier": 0,
+        "vice_projected_rule_multiplier": 1,
+        "vice_captaincy_state": "submitted_vice",
+        "vice_projected_rule_counted_points": 0
+      }
+    },
+    {
+      "id": "GOLD-LIVE-010",
+      "description": "A double-gameweek player is not a DNP while another fixture remains",
+      "input": {
+        "player_id": 20,
+        "minutes": 0,
+        "fixtures": [
+          {"fixture_id": 1, "state": "complete"},
+          {"fixture_id": 2, "state": "upcoming"}
+        ]
+      },
+      "expected": {
+        "player_fixture_state": "upcoming",
+        "confirmed_dnp": false
+      }
+    },
+    {
+      "id": "GOLD-LIVE-012",
+      "description": "Old live snapshot cannot update a new gameweek",
+      "input": {
+        "lifecycle_target_gw": 5,
+        "live_snapshot_target_gw": 4,
+        "live_snapshot_status": "success"
+      },
+      "expected": {
+        "applicable": false,
+        "reason": "target_gw_mismatch",
+        "may_update_current_kpis": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tlaw77.github.io/fpl/spec/schemas/live-gameweek.schema.json",
+  "title": "FPL Live Gameweek",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "schema_version", "status", "target_gw", "truth_state", "source_captured_at_utc", "generated_at_utc", "coverage", "data"],
+  "properties": {
+    "schema": {"const": "fpl.live-gameweek"},
+    "schema_version": {"type": "integer", "minimum": 1},
+    "status": {"enum": ["success", "partial", "degraded", "failed"]},
+    "target_gw": {"type": "integer", "minimum": 1, "maximum": 38},
+    "truth_state": {"const": "derived_current"},
+    "source_captured_at_utc": {"type": "string", "format": "date-time"},
+    "generated_at_utc": {"type": "string", "format": "date-time"},
+    "provisional": {"type": "boolean"},
+    "coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["expected_managers", "visible_managers", "complete_managers"],
+      "properties": {
+        "expected_managers": {"type": "integer", "minimum": 0},
+        "visible_managers": {"type": "integer", "minimum": 0},
+        "complete_managers": {"type": "integer", "minimum": 0},
+        "missing_entry_ids": {"type": "array", "items": {"type": "integer", "minimum": 1}}
+      }
+    },
+    "warnings": {"type": "array", "items": {"type": "string"}},
+    "data": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["phase", "fixtures", "managers"],
+      "properties": {
+        "phase": {"enum": ["LOCKED_AWAITING_REVEAL", "LIVE", "BETWEEN_FIXTURES", "FIXTURES_COMPLETE_SETTLING", "FINALISED", "UNKNOWN_DEGRADED"]},
+        "fixtures": {"type": "array", "items": {"$ref": "#/$defs/fixture"}},
+        "managers": {"type": "array", "items": {"$ref": "#/$defs/manager"}}
+      }
+    }
+  },
+  "$defs": {
+    "fixture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fixture_id", "gw", "home_club_id", "away_club_id", "state"],
+      "properties": {
+        "fixture_id": {"type": "integer", "minimum": 1},
+        "gw": {"type": "integer", "minimum": 1, "maximum": 38},
+        "home_club_id": {"type": "integer", "minimum": 1},
+        "away_club_id": {"type": "integer", "minimum": 1},
+        "kickoff_utc": {"type": ["string", "null"], "format": "date-time"},
+        "state": {"enum": ["upcoming", "live", "complete", "unknown"]},
+        "minutes": {"type": "integer", "minimum": 0},
+        "finished_provisional": {"type": "boolean"}
+      }
+    },
+    "pick": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["slot", "player_id", "position_id", "fixture_state", "minutes", "raw_player_points", "submitted_multiplier", "projected_rule_multiplier", "calculated_live_counted_points", "projected_rule_counted_points", "autosub_state", "captaincy_state"],
+      "properties": {
+        "slot": {"type": "integer", "minimum": 1, "maximum": 15},
+        "player_id": {"type": "integer", "minimum": 1},
+        "position_id": {"type": "integer", "minimum": 1, "maximum": 4},
+        "fixture_state": {"enum": ["upcoming", "live", "complete", "unknown"]},
+        "minutes": {"type": "integer", "minimum": 0},
+        "raw_player_points": {"type": "integer"},
+        "submitted_multiplier": {"type": "integer", "minimum": 0, "maximum": 3},
+        "projected_rule_multiplier": {"type": "integer", "minimum": 0, "maximum": 3},
+        "official_final_multiplier": {"type": ["integer", "null"], "minimum": 0, "maximum": 3},
+        "calculated_live_counted_points": {"type": "integer"},
+        "projected_rule_counted_points": {"type": "integer"},
+        "autosub_state": {"enum": ["none", "projected_out", "projected_in", "projected_in_pending", "official_out", "official_in"]},
+        "autosub_counterpart_player_id": {"type": ["integer", "null"], "minimum": 1},
+        "captaincy_state": {"enum": ["none", "submitted_captain", "submitted_vice", "projected_captain_out", "projected_vice_promoted", "official_captain"]}
+      }
+    },
+    "manager": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["entry_id", "submitted_hit", "official_gw_points", "calculated_live_raw", "calculated_live_net", "projected_rule_raw", "projected_rule_net", "official_total_before_gw", "calculated_live_overall", "projected_rule_overall", "picks"],
+      "properties": {
+        "entry_id": {"type": "integer", "minimum": 1},
+        "submitted_hit": {"type": "integer", "minimum": 0, "multipleOf": 4},
+        "official_gw_points": {"type": "integer"},
+        "calculated_live_raw": {"type": "integer"},
+        "calculated_live_net": {"type": "integer"},
+        "projected_rule_raw": {"type": "integer"},
+        "projected_rule_net": {"type": "integer"},
+        "official_total_before_gw": {"type": "integer"},
+        "calculated_live_overall": {"type": "integer"},
+        "projected_rule_overall": {"type": "integer"},
+        "official_rank": {"type": ["integer", "null"], "minimum": 1},
+        "calculated_live_rank": {"type": ["integer", "null"], "minimum": 1},
+        "projected_rule_rank": {"type": ["integer", "null"], "minimum": 1},
+        "picks": {"type": "array", "minItems": 15, "maxItems": 15, "items": {"$ref": "#/$defs/pick"}}
+      }
+    }
+  }
+}

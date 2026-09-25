@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tlaw77.github.io/fpl/spec/schemas/action-ledger.schema.json",
+  "title": "FPL Action Ledger",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "schema_version", "entry_id", "actions"],
+  "properties": {
+    "schema": {"const": "fpl.action-ledger"},
+    "schema_version": {"type": "integer", "minimum": 1},
+    "entry_id": {"type": "integer", "minimum": 1},
+    "updated_at_utc": {"type": ["string", "null"], "format": "date-time"},
+    "actions": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/action"}
+    }
+  },
+  "$defs": {
+    "move": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["out_player_id", "in_player_id"],
+      "properties": {
+        "out_player_id": {"type": "integer", "minimum": 1},
+        "in_player_id": {"type": "integer", "minimum": 1},
+        "out_cost_tenths": {"type": ["integer", "null"], "minimum": 0},
+        "in_cost_tenths": {"type": ["integer", "null"], "minimum": 0}
+      }
+    },
+    "action": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["action_id", "entry_id", "target_gw", "action_type", "state", "moves", "source", "declared_at_utc"],
+      "properties": {
+        "action_id": {"type": "string", "minLength": 1},
+        "entry_id": {"type": "integer", "minimum": 1},
+        "target_gw": {"type": "integer", "minimum": 1, "maximum": 38},
+        "action_type": {"enum": ["hold", "roll", "transfer_route", "chip", "team_selection"]},
+        "state": {"enum": ["working_plan", "declared_executed", "official_confirmed", "superseded", "cancelled"]},
+        "moves": {"type": "array", "items": {"$ref": "#/$defs/move"}},
+        "source": {"enum": ["explicit_user_command", "official_fpl_api", "migration"]},
+        "declared_at_utc": {"type": "string", "format": "date-time"},
+        "officially_reconciled_at_utc": {"type": ["string", "null"], "format": "date-time"},
+        "supersedes_action_id": {"type": ["string", "null"]},
+        "note": {"type": ["string", "null"]}
+      }
+    }
+  }
+}
