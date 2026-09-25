@@ -1,14 +1,14 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-09-24T23:51:00.561680+00:00",
+  "generated_at_utc": "2026-09-25T04:40:29.572478+00:00",
   "version": 4,
   "current_gw": 5,
   "next_gw": 6,
   "current_action": {
-    "action": "TRANSFER",
-    "headline": "Gabriel → Tarkowski",
-    "confidence": 84,
-    "reason": "The leading move clears the 6.0-point robustness hurdle after hit cost and the same measured route is supported by 2/3 decision models. Holding moves the bank from 0/5 to 1/5; no free transfer expires. The fixture swing is broadly balanced rather than time-critical.",
+    "action": "HOLD",
+    "headline": "Transfer complete · hold",
+    "confidence": 71,
+    "reason": "Kinsky → Tzolakis is already applied. A further move costs -4. Its 5.1-point projected edge remains below the 6.0-point magnitude hurdle and the exact route is supported by only 3/3 models. Holding moves the bank from 0/5 to 1/5; no free transfer expires. The fixture swing is broadly balanced rather than time-critical.",
     "completed_transfer": {
       "event": 6,
       "out": "Kinsky",
@@ -30,35 +30,35 @@
     "free_transfer_cap": 5,
     "free_transfer_would_expire_on_hold": false,
     "next_transfer_hit_cost": 4,
-    "transfer_count": 1
+    "transfer_count": 0
   },
   "robustness": {
     "season_maturity_weight": 0.455,
     "single_step_leader": "Gabriel → Tarkowski",
-    "single_step_edge_over_hold_6gw": 6.04,
+    "single_step_edge_over_hold_6gw": 5.1,
     "multi_gw_first_action": "Gabriel → Tarkowski",
-    "adaptive_rival_first_action": "ROLL",
-    "exact_route_consensus_models": 2,
-    "measured_leader_support_models": 2,
-    "same_incoming_target_consensus_models": 2,
-    "measured_target_support_models": 2,
+    "adaptive_rival_first_action": "Gabriel → Tarkowski",
+    "exact_route_consensus_models": 3,
+    "measured_leader_support_models": 3,
+    "same_incoming_target_consensus_models": 3,
+    "measured_target_support_models": 3,
     "base_required_edge": 6.0,
     "required_edge": 6.0,
     "required_consensus_models": 2,
-    "transfer_clears_gate": true,
+    "transfer_clears_gate": false,
     "multi_transfer_clears_gate": null,
     "multi_transfer_route": null,
     "multi_transfer_count": 0,
     "multi_transfer_edge_over_roll": 0.0,
     "multi_transfer_required_edge": 7.5,
     "active_route": "Gabriel → Tarkowski",
-    "active_route_type": "single_transfer",
-    "active_edge_over_hold_6gw": 6.04,
+    "active_route_type": "single_transfer_challenger",
+    "active_edge_over_hold_6gw": 5.1,
     "active_required_edge": 6.0,
     "active_validation_kind": "model_agreement",
     "active_validation_label": "Model agreement",
     "active_validation_clear": true,
-    "active_transfer_gate_clear": true,
+    "active_transfer_gate_clear": false,
     "free_transfers_before_moves": 1,
     "free_transfers_before_decision": 0,
     "free_transfer_cap": 5,
@@ -106,7 +106,20 @@
     },
     "adaptive_path_first_action": {
       "gw": 6,
-      "action": "ROLL"
+      "action": "TRANSFER",
+      "route": "Gabriel → Tarkowski",
+      "transfer_count": 1,
+      "transfers": [
+        {
+          "route": "Gabriel → Tarkowski",
+          "out_id": 4,
+          "in_id": 229,
+          "uplift": 5.52
+        }
+      ],
+      "hit": 4,
+      "out_id": 4,
+      "in_id": 229
     },
     "note": "Forward paths are planning evidence, not instructions to pre-commit future transfers. Re-optimise after each deadline and new information."
   },
@@ -116,7 +129,7 @@
       "label": "Roll to build the bank",
       "available": true,
       "recommended_path": false,
-      "adaptive_support": true,
+      "adaptive_support": false,
       "first_action": {
         "gw": 6,
         "action": "ROLL"
@@ -142,9 +155,9 @@
       "free_transfers_before": 0,
       "free_transfers_after_deadline": 1,
       "hit_cost": 0,
-      "expected_points": 269.09,
-      "p10_points": 223.87,
-      "p90_points": 315.1,
+      "expected_points": 270.02,
+      "p10_points": 226.55,
+      "p90_points": 315.66,
       "edge_vs_roll": 0.0,
       "ending_bank": 1.4,
       "ending_free_transfers": 1,
@@ -232,29 +245,29 @@
       "later_action": {
         "gw": 7,
         "action": "TRANSFER",
-        "route": "Hughes → Belloumi",
+        "route": "Maguire → Gvardiol",
         "transfer_count": 1,
         "transfers": [
           {
-            "route": "Hughes → Belloumi",
-            "out_id": 212,
-            "in_id": 286,
-            "uplift": 3.25
+            "route": "Maguire → Gvardiol",
+            "out_id": 418,
+            "in_id": 391,
+            "uplift": 3.62
           }
         ],
         "hit": 0,
-        "out_id": 212,
-        "in_id": 286
+        "out_id": 418,
+        "in_id": 391
       },
       "transfer_count_now": 1,
       "free_transfers_before": 0,
       "free_transfers_after_deadline": 1,
       "hit_cost": 4,
-      "expected_points": 269.9,
-      "p10_points": 224.51,
-      "p90_points": 316.2,
-      "edge_vs_roll": 0.81,
-      "ending_bank": 7.8,
+      "expected_points": 270.57,
+      "p10_points": 227.54,
+      "p90_points": 317.7,
+      "edge_vs_roll": 0.55,
+      "ending_bank": 7.7,
       "ending_free_transfers": 1,
       "actions": [
         {
@@ -277,35 +290,35 @@
         {
           "gw": 7,
           "action": "TRANSFER",
-          "route": "Hughes → Belloumi",
+          "route": "Maguire → Gvardiol",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Hughes → Belloumi",
-              "out_id": 212,
-              "in_id": 286,
-              "uplift": 3.25
-            }
-          ],
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 286
-        },
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "Maguire → Schuster",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Schuster",
+              "route": "Maguire → Gvardiol",
               "out_id": 418,
-              "in_id": 93,
-              "uplift": 2.7
+              "in_id": 391,
+              "uplift": 3.62
             }
           ],
           "hit": 0,
           "out_id": 418,
+          "in_id": 391
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "De Cuyper → Schuster",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "De Cuyper → Schuster",
+              "out_id": 115,
+              "in_id": 93,
+              "uplift": 2.64
+            }
+          ],
+          "hit": 0,
+          "out_id": 115,
           "in_id": 93
         },
         {
@@ -337,7 +350,7 @@
       "label": "Wait, then transfer later",
       "available": true,
       "recommended_path": false,
-      "adaptive_support": true,
+      "adaptive_support": false,
       "first_action": {
         "gw": 6,
         "action": "ROLL"
@@ -363,9 +376,9 @@
       "free_transfers_before": 0,
       "free_transfers_after_deadline": 1,
       "hit_cost": 0,
-      "expected_points": 269.09,
-      "p10_points": 223.87,
-      "p90_points": 315.1,
+      "expected_points": 270.02,
+      "p10_points": 226.55,
+      "p90_points": 315.66,
       "edge_vs_roll": 0.0,
       "ending_bank": 1.4,
       "ending_free_transfers": 1,
@@ -454,6 +467,23 @@
         {
           "gw": 7,
           "action": "TRANSFER",
+          "route": "Maguire → Gvardiol",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Maguire → Gvardiol",
+              "out_id": 418,
+              "in_id": 391,
+              "uplift": 3.62
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 391
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
           "route": "Hughes → Belloumi",
           "transfer_count": 1,
           "transfers": [
@@ -461,29 +491,12 @@
               "route": "Hughes → Belloumi",
               "out_id": 212,
               "in_id": 286,
-              "uplift": 3.25
+              "uplift": 2.48
             }
           ],
           "hit": 0,
           "out_id": 212,
           "in_id": 286
-        },
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "Maguire → Schuster",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Schuster",
-              "out_id": 418,
-              "in_id": 93,
-              "uplift": 2.7
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 93
         },
         {
           "gw": 9,
@@ -505,22 +518,22 @@
       ],
       "chip": "Bench Boost",
       "chip_gw": 8,
-      "expected_points": 287.77,
-      "chip_incremental_expected_points": 15.31,
-      "p10_points": 245.51,
-      "p90_points": 334.5,
+      "expected_points": 286.04,
+      "chip_incremental_expected_points": 15.35,
+      "p10_points": 241.26,
+      "p90_points": 334.29,
       "expected_rank_after_path": 1.05,
       "prob_finish_ahead_each_rival": [
-        0.984,
-        0.985,
-        0.997,
+        0.991,
         0.987,
-        0.999,
+        0.993,
+        0.983,
+        1.0,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 282.455
+      "utility_score": 280.435
     },
     "portfolio_pressure": "comfortable",
     "latest_safe_start_gw": 17
