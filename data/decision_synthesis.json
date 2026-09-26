@@ -1,14 +1,14 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-09-26T01:25:59.214370+00:00",
+  "generated_at_utc": "2026-09-26T06:34:55.072693+00:00",
   "version": 4,
   "current_gw": 5,
   "next_gw": 6,
   "current_action": {
-    "action": "HOLD",
-    "headline": "Transfer complete · hold",
-    "confidence": 71,
-    "reason": "Kinsky → Tzolakis is already applied. A further move costs -4. Its 5.5-point projected edge remains below the 6.0-point magnitude hurdle and the exact route is supported by only 3/3 models. Holding moves the bank from 0/5 to 1/5; no free transfer expires. The incoming player has the easier immediate fixture run.",
+    "action": "TRANSFER",
+    "headline": "Gabriel → Tarkowski",
+    "confidence": 89,
+    "reason": "The leading move clears the 6.0-point robustness hurdle after hit cost and the same measured route is supported by 3/3 decision models. Holding moves the bank from 0/5 to 1/5; no free transfer expires. The incoming player has the easier immediate fixture run.",
     "completed_transfer": {
       "event": 6,
       "out": "Kinsky",
@@ -30,12 +30,12 @@
     "free_transfer_cap": 5,
     "free_transfer_would_expire_on_hold": false,
     "next_transfer_hit_cost": 4,
-    "transfer_count": 0
+    "transfer_count": 1
   },
   "robustness": {
     "season_maturity_weight": 0.455,
     "single_step_leader": "Gabriel → Tarkowski",
-    "single_step_edge_over_hold_6gw": 5.51,
+    "single_step_edge_over_hold_6gw": 6.42,
     "multi_gw_first_action": "Gabriel → Tarkowski",
     "adaptive_rival_first_action": "Gabriel → Tarkowski",
     "exact_route_consensus_models": 3,
@@ -45,20 +45,20 @@
     "base_required_edge": 6.0,
     "required_edge": 6.0,
     "required_consensus_models": 2,
-    "transfer_clears_gate": false,
+    "transfer_clears_gate": true,
     "multi_transfer_clears_gate": null,
     "multi_transfer_route": null,
     "multi_transfer_count": 0,
     "multi_transfer_edge_over_roll": 0.0,
     "multi_transfer_required_edge": 7.5,
     "active_route": "Gabriel → Tarkowski",
-    "active_route_type": "single_transfer_challenger",
-    "active_edge_over_hold_6gw": 5.51,
+    "active_route_type": "single_transfer",
+    "active_edge_over_hold_6gw": 6.42,
     "active_required_edge": 6.0,
     "active_validation_kind": "model_agreement",
     "active_validation_label": "Model agreement",
     "active_validation_clear": true,
-    "active_transfer_gate_clear": false,
+    "active_transfer_gate_clear": true,
     "free_transfers_before_moves": 1,
     "free_transfers_before_decision": 0,
     "free_transfer_cap": 5,
@@ -155,9 +155,9 @@
       "free_transfers_before": 0,
       "free_transfers_after_deadline": 1,
       "hit_cost": 0,
-      "expected_points": 271.13,
-      "p10_points": 227.91,
-      "p90_points": 318.57,
+      "expected_points": 270.76,
+      "p10_points": 226.58,
+      "p90_points": 317.1,
       "edge_vs_roll": 0.0,
       "ending_bank": 1.6,
       "ending_free_transfers": 1,
@@ -224,7 +224,7 @@
       "label": "Use one free transfer now",
       "available": true,
       "recommended_path": true,
-      "adaptive_support": false,
+      "adaptive_support": true,
       "first_action": {
         "gw": 6,
         "action": "TRANSFER",
@@ -263,10 +263,10 @@
       "free_transfers_before": 0,
       "free_transfers_after_deadline": 1,
       "hit_cost": 4,
-      "expected_points": 272.29,
-      "p10_points": 229.98,
-      "p90_points": 320.01,
-      "edge_vs_roll": 1.16,
+      "expected_points": 272.17,
+      "p10_points": 228.02,
+      "p90_points": 319.66,
+      "edge_vs_roll": 1.41,
       "ending_bank": 6.6,
       "ending_free_transfers": 1,
       "actions": [
@@ -376,9 +376,9 @@
       "free_transfers_before": 0,
       "free_transfers_after_deadline": 1,
       "hit_cost": 0,
-      "expected_points": 271.13,
-      "p10_points": 227.91,
-      "p90_points": 318.57,
+      "expected_points": 270.76,
+      "p10_points": 226.58,
+      "p90_points": 317.1,
       "edge_vs_roll": 0.0,
       "ending_bank": 1.6,
       "ending_free_transfers": 1,
@@ -443,7 +443,7 @@
   ],
   "chips": {
     "action": "HOLD",
-    "reason": "Hold chips. Best visible TC uplift is 0.0 and BB uplift is 15.8, but the first-half portfolio remains comfortable with 11 slack Gameweeks. Preserve option value for stronger blank/double or squad-structure windows.",
+    "reason": "Hold chips. Best visible TC uplift is 0.0 and BB uplift is 15.7, but the first-half portfolio remains comfortable with 11 slack Gameweeks. Preserve option value for stronger blank/double or squad-structure windows.",
     "best_visible_triple_captain": {},
     "best_visible_bench_boost": {
       "actions": [
@@ -467,23 +467,6 @@
         {
           "gw": 7,
           "action": "TRANSFER",
-          "route": "Maguire → Gvardiol",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Gvardiol",
-              "out_id": 418,
-              "in_id": 391,
-              "uplift": 3.53
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 391
-        },
-        {
-          "gw": 8,
-          "action": "TRANSFER",
           "route": "Hughes → Belloumi",
           "transfer_count": 1,
           "transfers": [
@@ -491,12 +474,29 @@
               "route": "Hughes → Belloumi",
               "out_id": 212,
               "in_id": 286,
-              "uplift": 2.31
+              "uplift": 3.16
             }
           ],
           "hit": 0,
           "out_id": 212,
           "in_id": 286
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "Maguire → Schuster",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Maguire → Schuster",
+              "out_id": 418,
+              "in_id": 93,
+              "uplift": 2.53
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 93
         },
         {
           "gw": 9,
@@ -518,22 +518,22 @@
       ],
       "chip": "Bench Boost",
       "chip_gw": 8,
-      "expected_points": 288.38,
-      "chip_incremental_expected_points": 15.81,
-      "p10_points": 241.48,
-      "p90_points": 341.64,
+      "expected_points": 287.12,
+      "chip_incremental_expected_points": 15.67,
+      "p10_points": 243.99,
+      "p90_points": 332.03,
       "expected_rank_after_path": 1.03,
       "prob_finish_ahead_each_rival": [
-        0.993,
-        0.991,
+        0.989,
         0.995,
-        0.988,
+        0.998,
+        0.987,
         1.0,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 282.586
+      "utility_score": 281.788
     },
     "portfolio_pressure": "comfortable",
     "latest_safe_start_gw": 17
