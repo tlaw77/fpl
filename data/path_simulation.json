@@ -1,6 +1,6 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-10-04T18:19:14.090660+00:00",
+  "generated_at_utc": "2026-10-04T21:51:42.381675+00:00",
   "engine_version": 7,
   "planner": "bounded same-deadline multi-transfer beam search + GW-specific shared-outcome Monte Carlo + live FT state + season calibration + shared captaincy + deadline-aware sampling",
   "projection_model": "season-maturity calibrated + shared captaincy model",
@@ -16,7 +16,7 @@
   "iteration_policy": {
     "layer": "path",
     "deadline_phase": "normal",
-    "hours_to_deadline": 135.69,
+    "hours_to_deadline": 132.15,
     "iterations": 1200,
     "policy": "lighter normal-week sampling; higher precision inside 72h/24h/6h of official FPL deadline"
   },
@@ -174,7 +174,7 @@
             "route": "De Cuyper → Schuster",
             "out_id": 115,
             "in_id": 93,
-            "uplift": 2.57
+            "uplift": 2.56
           }
         ],
         "hit": 0,
@@ -199,17 +199,17 @@
         "in_id": 53
       }
     ],
-    "expected_points": 273.56,
-    "p10_points": 231.78,
-    "p90_points": 321.5,
-    "expected_rank_after_path": 1.05,
+    "expected_points": 272.78,
+    "p10_points": 228.24,
+    "p90_points": 322.02,
+    "expected_rank_after_path": 1.04,
     "prob_gain_league_place": 0.0,
     "prob_finish_ahead_each_rival": [
-      0.983,
+      0.992,
       0.988,
+      0.99,
       0.989,
-      0.987,
-      1.0,
+      0.999,
       1.0,
       1.0,
       1.0
@@ -218,7 +218,7 @@
     "ending_free_transfers": 1,
     "first_transfer_incoming_starts": true,
     "first_deadline_transfer_count": 1,
-    "utility_score": 268.628
+    "utility_score": 267.581
   },
   "paths": [
     {
@@ -267,7 +267,7 @@
               "route": "De Cuyper → Schuster",
               "out_id": 115,
               "in_id": 93,
-              "uplift": 2.57
+              "uplift": 2.56
             }
           ],
           "hit": 0,
@@ -292,17 +292,17 @@
           "in_id": 53
         }
       ],
-      "expected_points": 273.56,
-      "p10_points": 231.78,
-      "p90_points": 321.5,
-      "expected_rank_after_path": 1.05,
+      "expected_points": 272.78,
+      "p10_points": 228.24,
+      "p90_points": 322.02,
+      "expected_rank_after_path": 1.04,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.983,
+        0.992,
         0.988,
+        0.99,
         0.989,
-        0.987,
-        1.0,
+        0.999,
         1.0,
         1.0,
         1.0
@@ -311,7 +311,7 @@
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
       "first_deadline_transfer_count": 1,
-      "utility_score": 268.628
+      "utility_score": 267.581
     },
     {
       "actions": [
@@ -359,7 +359,7 @@
               "route": "De Cuyper → Schuster",
               "out_id": 115,
               "in_id": 93,
-              "uplift": 2.57
+              "uplift": 2.56
             }
           ],
           "hit": 0,
@@ -384,17 +384,17 @@
           "in_id": 53
         }
       ],
-      "expected_points": 273.56,
-      "p10_points": 231.78,
-      "p90_points": 321.5,
-      "expected_rank_after_path": 1.05,
+      "expected_points": 272.78,
+      "p10_points": 228.24,
+      "p90_points": 322.02,
+      "expected_rank_after_path": 1.04,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.983,
+        0.992,
         0.988,
+        0.99,
         0.989,
-        0.987,
-        1.0,
+        0.999,
         1.0,
         1.0,
         1.0
@@ -403,7 +403,191 @@
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
       "first_deadline_transfer_count": 1,
-      "utility_score": 268.628
+      "utility_score": 267.581
+    },
+    {
+      "actions": [
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Gabriel → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Gabriel → Tarkowski",
+              "out_id": 4,
+              "in_id": 229,
+              "uplift": 5.99
+            }
+          ],
+          "hit": 4,
+          "out_id": 4,
+          "in_id": 229
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Maguire → Gvardiol",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Maguire → Gvardiol",
+              "out_id": 418,
+              "in_id": 391,
+              "uplift": 3.53
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 391
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "De Cuyper → Schuster",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "De Cuyper → Schuster",
+              "out_id": 115,
+              "in_id": 93,
+              "uplift": 2.56
+            }
+          ],
+          "hit": 0,
+          "out_id": 115,
+          "in_id": 93
+        },
+        {
+          "gw": 9,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Belloumi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "B.Fernandes → Belloumi",
+              "out_id": 426,
+              "in_id": 286,
+              "uplift": 1.56
+            }
+          ],
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 286
+        }
+      ],
+      "expected_points": 272.65,
+      "p10_points": 229.09,
+      "p90_points": 319.44,
+      "expected_rank_after_path": 1.05,
+      "prob_gain_league_place": 0.0,
+      "prob_finish_ahead_each_rival": [
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.998,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "ending_bank": 8.5,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 1,
+      "utility_score": 267.519
+    },
+    {
+      "actions": [
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Gabriel → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Gabriel → Tarkowski",
+              "out_id": 4,
+              "in_id": 229,
+              "uplift": 5.99
+            }
+          ],
+          "hit": 4,
+          "out_id": 4,
+          "in_id": 229
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Maguire → Gvardiol",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Maguire → Gvardiol",
+              "out_id": 418,
+              "in_id": 391,
+              "uplift": 3.53
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 391
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "De Cuyper → Schuster",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "De Cuyper → Schuster",
+              "out_id": 115,
+              "in_id": 93,
+              "uplift": 2.56
+            }
+          ],
+          "hit": 0,
+          "out_id": 115,
+          "in_id": 93
+        },
+        {
+          "gw": 9,
+          "action": "TRANSFER",
+          "route": "Hughes → Belloumi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Hughes → Belloumi",
+              "out_id": 212,
+              "in_id": 286,
+              "uplift": 1.56
+            }
+          ],
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 286
+        }
+      ],
+      "expected_points": 272.65,
+      "p10_points": 229.09,
+      "p90_points": 319.44,
+      "expected_rank_after_path": 1.05,
+      "prob_gain_league_place": 0.0,
+      "prob_finish_ahead_each_rival": [
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.998,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "ending_bank": 1.0,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 1,
+      "utility_score": 267.519
     },
     {
       "actions": [
@@ -476,17 +660,17 @@
           "in_id": 53
         }
       ],
-      "expected_points": 273.28,
-      "p10_points": 229.25,
-      "p90_points": 321.95,
-      "expected_rank_after_path": 1.05,
+      "expected_points": 272.45,
+      "p10_points": 228.94,
+      "p90_points": 318.79,
+      "expected_rank_after_path": 1.04,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.987,
         0.992,
-        0.987,
-        0.986,
-        0.999,
+        0.988,
+        0.991,
+        0.988,
+        0.998,
         1.0,
         1.0,
         1.0
@@ -495,7 +679,191 @@
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
       "first_deadline_transfer_count": 1,
-      "utility_score": 268.094
+      "utility_score": 267.364
+    },
+    {
+      "actions": [
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Gabriel → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Gabriel → Tarkowski",
+              "out_id": 4,
+              "in_id": 229,
+              "uplift": 5.99
+            }
+          ],
+          "hit": 4,
+          "out_id": 4,
+          "in_id": 229
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Maguire → Gvardiol",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Maguire → Gvardiol",
+              "out_id": 418,
+              "in_id": 391,
+              "uplift": 3.53
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 391
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "De Cuyper → Mendy",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "De Cuyper → Mendy",
+              "out_id": 115,
+              "in_id": 586,
+              "uplift": 1.92
+            }
+          ],
+          "hit": 0,
+          "out_id": 115,
+          "in_id": 586
+        },
+        {
+          "gw": 9,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Manzambi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "B.Fernandes → Manzambi",
+              "out_id": 426,
+              "in_id": 53,
+              "uplift": 1.81
+            }
+          ],
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 53
+        }
+      ],
+      "expected_points": 272.26,
+      "p10_points": 228.78,
+      "p90_points": 319.28,
+      "expected_rank_after_path": 1.04,
+      "prob_gain_league_place": 0.0,
+      "prob_finish_ahead_each_rival": [
+        0.991,
+        0.988,
+        0.992,
+        0.99,
+        0.998,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "ending_bank": 8.1,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 1,
+      "utility_score": 267.182
+    },
+    {
+      "actions": [
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Gabriel → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Gabriel → Tarkowski",
+              "out_id": 4,
+              "in_id": 229,
+              "uplift": 5.99
+            }
+          ],
+          "hit": 4,
+          "out_id": 4,
+          "in_id": 229
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Maguire → Gvardiol",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Maguire → Gvardiol",
+              "out_id": 418,
+              "in_id": 391,
+              "uplift": 3.53
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 391
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "De Cuyper → Mendy",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "De Cuyper → Mendy",
+              "out_id": 115,
+              "in_id": 586,
+              "uplift": 1.92
+            }
+          ],
+          "hit": 0,
+          "out_id": 115,
+          "in_id": 586
+        },
+        {
+          "gw": 9,
+          "action": "TRANSFER",
+          "route": "Hughes → Manzambi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Hughes → Manzambi",
+              "out_id": 212,
+              "in_id": 53,
+              "uplift": 1.81
+            }
+          ],
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 53
+        }
+      ],
+      "expected_points": 272.26,
+      "p10_points": 228.78,
+      "p90_points": 319.28,
+      "expected_rank_after_path": 1.04,
+      "prob_gain_league_place": 0.0,
+      "prob_finish_ahead_each_rival": [
+        0.991,
+        0.988,
+        0.992,
+        0.99,
+        0.998,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "ending_bank": 0.6,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 1,
+      "utility_score": 267.182
     },
     {
       "actions": [
@@ -543,7 +911,7 @@
               "route": "De Cuyper → Schuster",
               "out_id": 115,
               "in_id": 93,
-              "uplift": 2.57
+              "uplift": 2.56
             }
           ],
           "hit": 0,
@@ -568,16 +936,16 @@
           "in_id": 53
         }
       ],
-      "expected_points": 273.19,
-      "p10_points": 229.64,
-      "p90_points": 319.73,
-      "expected_rank_after_path": 1.05,
+      "expected_points": 272.16,
+      "p10_points": 227.28,
+      "p90_points": 319.52,
+      "expected_rank_after_path": 1.06,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.983,
-        0.992,
-        0.992,
-        0.979,
+        0.984,
+        0.99,
+        0.984,
+        0.986,
         1.0,
         1.0,
         1.0,
@@ -587,7 +955,7 @@
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
       "first_deadline_transfer_count": 1,
-      "utility_score": 268.043
+      "utility_score": 266.843
     },
     {
       "actions": [
@@ -635,7 +1003,7 @@
               "route": "Maguire → Schuster",
               "out_id": 418,
               "in_id": 93,
-              "uplift": 2.57
+              "uplift": 2.56
             }
           ],
           "hit": 0,
@@ -660,16 +1028,16 @@
           "in_id": 53
         }
       ],
-      "expected_points": 273.19,
-      "p10_points": 229.64,
-      "p90_points": 319.73,
-      "expected_rank_after_path": 1.05,
+      "expected_points": 272.16,
+      "p10_points": 227.28,
+      "p90_points": 319.52,
+      "expected_rank_after_path": 1.06,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.983,
-        0.992,
-        0.992,
-        0.979,
+        0.984,
+        0.99,
+        0.984,
+        0.986,
         1.0,
         1.0,
         1.0,
@@ -679,533 +1047,7 @@
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
       "first_deadline_transfer_count": 1,
-      "utility_score": 268.043
-    },
-    {
-      "actions": [
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Gabriel → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Gabriel → Tarkowski",
-              "out_id": 4,
-              "in_id": 229,
-              "uplift": 5.99
-            }
-          ],
-          "hit": 4,
-          "out_id": 4,
-          "in_id": 229
-        },
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "Maguire → Gvardiol",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Gvardiol",
-              "out_id": 418,
-              "in_id": 391,
-              "uplift": 3.53
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 391
-        },
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "De Cuyper → Schuster",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "De Cuyper → Schuster",
-              "out_id": 115,
-              "in_id": 93,
-              "uplift": 2.57
-            }
-          ],
-          "hit": 0,
-          "out_id": 115,
-          "in_id": 93
-        },
-        {
-          "gw": 9,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Belloumi",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "B.Fernandes → Belloumi",
-              "out_id": 426,
-              "in_id": 286,
-              "uplift": 1.56
-            }
-          ],
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 286
-        }
-      ],
-      "expected_points": 273.06,
-      "p10_points": 230.28,
-      "p90_points": 319.69,
-      "expected_rank_after_path": 1.05,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.987,
-        0.988,
-        0.988,
-        0.985,
-        0.999,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "ending_bank": 8.5,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 1,
-      "utility_score": 268.014
-    },
-    {
-      "actions": [
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Gabriel → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Gabriel → Tarkowski",
-              "out_id": 4,
-              "in_id": 229,
-              "uplift": 5.99
-            }
-          ],
-          "hit": 4,
-          "out_id": 4,
-          "in_id": 229
-        },
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "Maguire → Gvardiol",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Gvardiol",
-              "out_id": 418,
-              "in_id": 391,
-              "uplift": 3.53
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 391
-        },
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "De Cuyper → Schuster",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "De Cuyper → Schuster",
-              "out_id": 115,
-              "in_id": 93,
-              "uplift": 2.57
-            }
-          ],
-          "hit": 0,
-          "out_id": 115,
-          "in_id": 93
-        },
-        {
-          "gw": 9,
-          "action": "TRANSFER",
-          "route": "Hughes → Belloumi",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Hughes → Belloumi",
-              "out_id": 212,
-              "in_id": 286,
-              "uplift": 1.56
-            }
-          ],
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 286
-        }
-      ],
-      "expected_points": 273.06,
-      "p10_points": 230.28,
-      "p90_points": 319.69,
-      "expected_rank_after_path": 1.05,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.987,
-        0.988,
-        0.988,
-        0.985,
-        0.999,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "ending_bank": 1.0,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 1,
-      "utility_score": 268.014
-    },
-    {
-      "actions": [
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Gabriel → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Gabriel → Tarkowski",
-              "out_id": 4,
-              "in_id": 229,
-              "uplift": 5.99
-            }
-          ],
-          "hit": 4,
-          "out_id": 4,
-          "in_id": 229
-        },
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "Maguire → Gvardiol",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Gvardiol",
-              "out_id": 418,
-              "in_id": 391,
-              "uplift": 3.53
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 391
-        },
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "De Cuyper → Mendy",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "De Cuyper → Mendy",
-              "out_id": 115,
-              "in_id": 586,
-              "uplift": 1.91
-            }
-          ],
-          "hit": 0,
-          "out_id": 115,
-          "in_id": 586
-        },
-        {
-          "gw": 9,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Manzambi",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "B.Fernandes → Manzambi",
-              "out_id": 426,
-              "in_id": 53,
-              "uplift": 1.81
-            }
-          ],
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 53
-        }
-      ],
-      "expected_points": 272.72,
-      "p10_points": 228.73,
-      "p90_points": 319.94,
-      "expected_rank_after_path": 1.05,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.985,
-        0.99,
-        0.988,
-        0.984,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "ending_bank": 8.1,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 1,
-      "utility_score": 267.532
-    },
-    {
-      "actions": [
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Gabriel → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Gabriel → Tarkowski",
-              "out_id": 4,
-              "in_id": 229,
-              "uplift": 5.99
-            }
-          ],
-          "hit": 4,
-          "out_id": 4,
-          "in_id": 229
-        },
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "Maguire → Gvardiol",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Gvardiol",
-              "out_id": 418,
-              "in_id": 391,
-              "uplift": 3.53
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 391
-        },
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "De Cuyper → Mendy",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "De Cuyper → Mendy",
-              "out_id": 115,
-              "in_id": 586,
-              "uplift": 1.91
-            }
-          ],
-          "hit": 0,
-          "out_id": 115,
-          "in_id": 586
-        },
-        {
-          "gw": 9,
-          "action": "TRANSFER",
-          "route": "Hughes → Manzambi",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Hughes → Manzambi",
-              "out_id": 212,
-              "in_id": 53,
-              "uplift": 1.81
-            }
-          ],
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 53
-        }
-      ],
-      "expected_points": 272.72,
-      "p10_points": 228.73,
-      "p90_points": 319.94,
-      "expected_rank_after_path": 1.05,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.985,
-        0.99,
-        0.988,
-        0.984,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "ending_bank": 0.6,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 1,
-      "utility_score": 267.532
-    },
-    {
-      "actions": [
-        {
-          "gw": 6,
-          "action": "ROLL"
-        },
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "Gabriel → Gvardiol",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Gabriel → Gvardiol",
-              "out_id": 4,
-              "in_id": 391,
-              "uplift": 3.89
-            }
-          ],
-          "hit": 0,
-          "out_id": 4,
-          "in_id": 391
-        },
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "De Cuyper → Schuster",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "De Cuyper → Schuster",
-              "out_id": 115,
-              "in_id": 93,
-              "uplift": 2.67
-            }
-          ],
-          "hit": 0,
-          "out_id": 115,
-          "in_id": 93
-        },
-        {
-          "gw": 9,
-          "action": "TRANSFER",
-          "route": "Hughes → Manzambi",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Hughes → Manzambi",
-              "out_id": 212,
-              "in_id": 53,
-              "uplift": 2.03
-            }
-          ],
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 53
-        }
-      ],
-      "expected_points": 271.99,
-      "p10_points": 229.4,
-      "p90_points": 317.31,
-      "expected_rank_after_path": 1.04,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.99,
-        0.992,
-        0.99,
-        0.988,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "ending_bank": 1.6,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": null,
-      "first_deadline_transfer_count": 0,
-      "utility_score": 267.024
-    },
-    {
-      "actions": [
-        {
-          "gw": 6,
-          "action": "ROLL"
-        },
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "Gabriel → Gvardiol",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Gabriel → Gvardiol",
-              "out_id": 4,
-              "in_id": 391,
-              "uplift": 3.89
-            }
-          ],
-          "hit": 0,
-          "out_id": 4,
-          "in_id": 391
-        },
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "Maguire → Schuster",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Schuster",
-              "out_id": 418,
-              "in_id": 93,
-              "uplift": 2.67
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 93
-        },
-        {
-          "gw": 9,
-          "action": "TRANSFER",
-          "route": "Hughes → Manzambi",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Hughes → Manzambi",
-              "out_id": 212,
-              "in_id": 53,
-              "uplift": 2.03
-            }
-          ],
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 53
-        }
-      ],
-      "expected_points": 271.99,
-      "p10_points": 229.4,
-      "p90_points": 317.31,
-      "expected_rank_after_path": 1.04,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.99,
-        0.992,
-        0.99,
-        0.988,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "ending_bank": 1.4,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": null,
-      "first_deadline_transfer_count": 0,
-      "utility_score": 267.024
+      "utility_score": 266.843
     },
     {
       "actions": [
@@ -1265,17 +1107,17 @@
           "in_id": 229
         }
       ],
-      "expected_points": 271.9,
-      "p10_points": 229.57,
-      "p90_points": 317.36,
+      "expected_points": 271.68,
+      "p10_points": 229.85,
+      "p90_points": 318.4,
       "expected_rank_after_path": 1.04,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.989,
+        0.993,
+        0.985,
         0.991,
-        0.988,
-        0.988,
-        0.999,
+        0.991,
+        1.0,
         1.0,
         1.0,
         1.0
@@ -1284,7 +1126,165 @@
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": null,
       "first_deadline_transfer_count": 0,
-      "utility_score": 266.945
+      "utility_score": 266.81
+    },
+    {
+      "actions": [
+        {
+          "gw": 6,
+          "action": "ROLL"
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Gabriel → Gvardiol",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Gabriel → Gvardiol",
+              "out_id": 4,
+              "in_id": 391,
+              "uplift": 3.89
+            }
+          ],
+          "hit": 0,
+          "out_id": 4,
+          "in_id": 391
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "De Cuyper → Schuster",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "De Cuyper → Schuster",
+              "out_id": 115,
+              "in_id": 93,
+              "uplift": 2.67
+            }
+          ],
+          "hit": 0,
+          "out_id": 115,
+          "in_id": 93
+        },
+        {
+          "gw": 9,
+          "action": "TRANSFER",
+          "route": "Hughes → Manzambi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Hughes → Manzambi",
+              "out_id": 212,
+              "in_id": 53,
+              "uplift": 2.03
+            }
+          ],
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 53
+        }
+      ],
+      "expected_points": 271.63,
+      "p10_points": 228.55,
+      "p90_points": 319.05,
+      "expected_rank_after_path": 1.04,
+      "prob_gain_league_place": 0.0,
+      "prob_finish_ahead_each_rival": [
+        0.993,
+        0.985,
+        0.99,
+        0.993,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "ending_bank": 1.6,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": null,
+      "first_deadline_transfer_count": 0,
+      "utility_score": 266.614
+    },
+    {
+      "actions": [
+        {
+          "gw": 6,
+          "action": "ROLL"
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Gabriel → Gvardiol",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Gabriel → Gvardiol",
+              "out_id": 4,
+              "in_id": 391,
+              "uplift": 3.89
+            }
+          ],
+          "hit": 0,
+          "out_id": 4,
+          "in_id": 391
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "Maguire → Schuster",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Maguire → Schuster",
+              "out_id": 418,
+              "in_id": 93,
+              "uplift": 2.67
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 93
+        },
+        {
+          "gw": 9,
+          "action": "TRANSFER",
+          "route": "Hughes → Manzambi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Hughes → Manzambi",
+              "out_id": 212,
+              "in_id": 53,
+              "uplift": 2.03
+            }
+          ],
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 53
+        }
+      ],
+      "expected_points": 271.63,
+      "p10_points": 228.55,
+      "p90_points": 319.05,
+      "expected_rank_after_path": 1.04,
+      "prob_gain_league_place": 0.0,
+      "prob_finish_ahead_each_rival": [
+        0.993,
+        0.985,
+        0.99,
+        0.993,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "ending_bank": 1.4,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": null,
+      "first_deadline_transfer_count": 0,
+      "utility_score": 266.614
     }
   ],
   "method_note": "Each path is scored with the actual squad owned in each Gameweek. A deadline may use one, two or three transfers up to the available free-transfer bank; a no-FT state retains only a single-hit contingency. Current-deadline hits use live FT state. Early-season extremes are shrunk toward priors. Legal XI selection uses the shared captaincy model. Monte Carlo sampling is lighter midweek and increases close to the official FPL deadline without changing decision thresholds."
