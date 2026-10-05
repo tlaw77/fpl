@@ -1,12 +1,12 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-10-05T00:42:15.983544+00:00",
+  "generated_at_utc": "2026-10-05T06:49:45.155503+00:00",
   "engine_version": 3,
   "iterations": 1200,
   "iteration_policy": {
     "layer": "chip",
     "deadline_phase": "normal",
-    "hours_to_deadline": 129.31,
+    "hours_to_deadline": 123.19,
     "iterations": 1200,
     "policy": "lighter normal-week sampling; higher precision inside 72h/24h/6h of official FPL deadline"
   },
@@ -66,6 +66,79 @@
       {
         "gw": 8,
         "action": "TRANSFER",
+        "route": "De Cuyper → Schuster",
+        "transfer_count": 1,
+        "transfers": [
+          {
+            "route": "De Cuyper → Schuster",
+            "out_id": 115,
+            "in_id": 93,
+            "uplift": 2.56
+          }
+        ],
+        "hit": 0,
+        "out_id": 115,
+        "in_id": 93
+      },
+      {
+        "gw": 9,
+        "action": "TRANSFER",
+        "route": "Hughes → Manzambi",
+        "transfer_count": 1,
+        "transfers": [
+          {
+            "route": "Hughes → Manzambi",
+            "out_id": 212,
+            "in_id": 53,
+            "uplift": 1.81
+          }
+        ],
+        "hit": 0,
+        "out_id": 212,
+        "in_id": 53
+      }
+    ],
+    "chip": "Bench Boost",
+    "chip_gw": 9,
+    "expected_points": 289.11,
+    "chip_incremental_expected_points": 15.17,
+    "p10_points": 243.21,
+    "p90_points": 339.1,
+    "expected_rank_after_path": 1.01,
+    "prob_finish_ahead_each_rival": [
+      0.996,
+      0.998,
+      0.998,
+      0.995,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "utility_score": 283.537
+  },
+  "best_no_chip_path": {
+    "actions": [
+      {
+        "gw": 6,
+        "action": "TRANSFER",
+        "route": "Gabriel → Tarkowski",
+        "transfer_count": 1,
+        "transfers": [
+          {
+            "route": "Gabriel → Tarkowski",
+            "out_id": 4,
+            "in_id": 229,
+            "uplift": 5.99
+          }
+        ],
+        "hit": 4,
+        "out_id": 4,
+        "in_id": 229
+      },
+      {
+        "gw": 7,
+        "action": "TRANSFER",
         "route": "Hughes → Belloumi",
         "transfer_count": 1,
         "transfers": [
@@ -73,12 +146,29 @@
             "route": "Hughes → Belloumi",
             "out_id": 212,
             "in_id": 286,
-            "uplift": 2.34
+            "uplift": 3.16
           }
         ],
         "hit": 0,
         "out_id": 212,
         "in_id": 286
+      },
+      {
+        "gw": 8,
+        "action": "TRANSFER",
+        "route": "De Cuyper → Schuster",
+        "transfer_count": 1,
+        "transfers": [
+          {
+            "route": "De Cuyper → Schuster",
+            "out_id": 115,
+            "in_id": 93,
+            "uplift": 2.56
+          }
+        ],
+        "hit": 0,
+        "out_id": 115,
+        "in_id": 93
       },
       {
         "gw": 9,
@@ -98,26 +188,27 @@
         "in_id": 53
       }
     ],
-    "chip": "Bench Boost",
-    "chip_gw": 8,
-    "expected_points": 288.55,
-    "chip_incremental_expected_points": 15.4,
-    "p10_points": 242.69,
-    "p90_points": 336.37,
-    "expected_rank_after_path": 1.02,
+    "chip": null,
+    "chip_gw": null,
+    "expected_points": 274.02,
+    "chip_incremental_expected_points": 0.0,
+    "p10_points": 229.29,
+    "p90_points": 320.43,
+    "expected_rank_after_path": 1.07,
     "prob_finish_ahead_each_rival": [
-      0.991,
-      0.996,
-      0.998,
-      0.997,
-      0.999,
+      0.973,
+      0.988,
+      0.988,
+      0.983,
+      1.0,
       1.0,
       1.0,
       1.0
     ],
-    "utility_score": 282.947
+    "utility_score": 268.31
   },
-  "best_no_chip_path": {
+  "best_triple_captain_window": null,
+  "best_bench_boost_window": {
     "actions": [
       {
         "gw": 6,
@@ -173,130 +264,39 @@
       {
         "gw": 9,
         "action": "TRANSFER",
-        "route": "B.Fernandes → Manzambi",
+        "route": "Hughes → Manzambi",
         "transfer_count": 1,
         "transfers": [
           {
-            "route": "B.Fernandes → Manzambi",
-            "out_id": 426,
+            "route": "Hughes → Manzambi",
+            "out_id": 212,
             "in_id": 53,
             "uplift": 1.81
-          }
-        ],
-        "hit": 0,
-        "out_id": 426,
-        "in_id": 53
-      }
-    ],
-    "chip": null,
-    "chip_gw": null,
-    "expected_points": 273.3,
-    "chip_incremental_expected_points": 0.0,
-    "p10_points": 229.63,
-    "p90_points": 320.11,
-    "expected_rank_after_path": 1.07,
-    "prob_finish_ahead_each_rival": [
-      0.971,
-      0.987,
-      0.988,
-      0.984,
-      0.998,
-      1.0,
-      1.0,
-      1.0
-    ],
-    "utility_score": 267.691
-  },
-  "best_triple_captain_window": null,
-  "best_bench_boost_window": {
-    "actions": [
-      {
-        "gw": 6,
-        "action": "TRANSFER",
-        "route": "Gabriel → Tarkowski",
-        "transfer_count": 1,
-        "transfers": [
-          {
-            "route": "Gabriel → Tarkowski",
-            "out_id": 4,
-            "in_id": 229,
-            "uplift": 5.99
-          }
-        ],
-        "hit": 4,
-        "out_id": 4,
-        "in_id": 229
-      },
-      {
-        "gw": 7,
-        "action": "TRANSFER",
-        "route": "Maguire → Gvardiol",
-        "transfer_count": 1,
-        "transfers": [
-          {
-            "route": "Maguire → Gvardiol",
-            "out_id": 418,
-            "in_id": 391,
-            "uplift": 3.53
-          }
-        ],
-        "hit": 0,
-        "out_id": 418,
-        "in_id": 391
-      },
-      {
-        "gw": 8,
-        "action": "TRANSFER",
-        "route": "Hughes → Belloumi",
-        "transfer_count": 1,
-        "transfers": [
-          {
-            "route": "Hughes → Belloumi",
-            "out_id": 212,
-            "in_id": 286,
-            "uplift": 2.34
           }
         ],
         "hit": 0,
         "out_id": 212,
-        "in_id": 286
-      },
-      {
-        "gw": 9,
-        "action": "TRANSFER",
-        "route": "B.Fernandes → Manzambi",
-        "transfer_count": 1,
-        "transfers": [
-          {
-            "route": "B.Fernandes → Manzambi",
-            "out_id": 426,
-            "in_id": 53,
-            "uplift": 1.81
-          }
-        ],
-        "hit": 0,
-        "out_id": 426,
         "in_id": 53
       }
     ],
     "chip": "Bench Boost",
-    "chip_gw": 8,
-    "expected_points": 288.55,
-    "chip_incremental_expected_points": 15.4,
-    "p10_points": 242.69,
-    "p90_points": 336.37,
-    "expected_rank_after_path": 1.02,
+    "chip_gw": 9,
+    "expected_points": 289.11,
+    "chip_incremental_expected_points": 15.17,
+    "p10_points": 243.21,
+    "p90_points": 339.1,
+    "expected_rank_after_path": 1.01,
     "prob_finish_ahead_each_rival": [
-      0.991,
       0.996,
       0.998,
-      0.997,
-      0.999,
+      0.998,
+      0.995,
+      1.0,
       1.0,
       1.0,
       1.0
     ],
-    "utility_score": 282.947
+    "utility_score": 283.537
   },
   "rival_behaviour": [
     {
@@ -404,56 +404,56 @@
         {
           "gw": 8,
           "action": "TRANSFER",
-          "route": "Hughes → Belloumi",
+          "route": "De Cuyper → Schuster",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Hughes → Belloumi",
-              "out_id": 212,
-              "in_id": 286,
-              "uplift": 2.34
+              "route": "De Cuyper → Schuster",
+              "out_id": 115,
+              "in_id": 93,
+              "uplift": 2.56
             }
           ],
           "hit": 0,
-          "out_id": 212,
-          "in_id": 286
+          "out_id": 115,
+          "in_id": 93
         },
         {
           "gw": 9,
           "action": "TRANSFER",
-          "route": "B.Fernandes → Manzambi",
+          "route": "Hughes → Manzambi",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "B.Fernandes → Manzambi",
-              "out_id": 426,
+              "route": "Hughes → Manzambi",
+              "out_id": 212,
               "in_id": 53,
               "uplift": 1.81
             }
           ],
           "hit": 0,
-          "out_id": 426,
+          "out_id": 212,
           "in_id": 53
         }
       ],
       "chip": "Bench Boost",
-      "chip_gw": 8,
-      "expected_points": 288.55,
-      "chip_incremental_expected_points": 15.4,
-      "p10_points": 242.69,
-      "p90_points": 336.37,
-      "expected_rank_after_path": 1.02,
+      "chip_gw": 9,
+      "expected_points": 289.11,
+      "chip_incremental_expected_points": 15.17,
+      "p10_points": 243.21,
+      "p90_points": 339.1,
+      "expected_rank_after_path": 1.01,
       "prob_finish_ahead_each_rival": [
-        0.991,
         0.996,
         0.998,
-        0.997,
-        0.999,
+        0.998,
+        0.995,
+        1.0,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 282.947
+      "utility_score": 283.537
     },
     {
       "actions": [
@@ -511,39 +511,129 @@
         {
           "gw": 9,
           "action": "TRANSFER",
-          "route": "Hughes → Manzambi",
+          "route": "Hughes → Belloumi",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Hughes → Manzambi",
+              "route": "Hughes → Belloumi",
               "out_id": 212,
+              "in_id": 286,
+              "uplift": 1.56
+            }
+          ],
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 286
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 9,
+      "expected_points": 289.01,
+      "chip_incremental_expected_points": 15.17,
+      "p10_points": 243.33,
+      "p90_points": 338.07,
+      "expected_rank_after_path": 1.01,
+      "prob_finish_ahead_each_rival": [
+        0.998,
+        0.998,
+        0.998,
+        0.996,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "utility_score": 283.474
+    },
+    {
+      "actions": [
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Gabriel → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Gabriel → Tarkowski",
+              "out_id": 4,
+              "in_id": 229,
+              "uplift": 5.99
+            }
+          ],
+          "hit": 4,
+          "out_id": 4,
+          "in_id": 229
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Hughes → Belloumi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Hughes → Belloumi",
+              "out_id": 212,
+              "in_id": 286,
+              "uplift": 3.16
+            }
+          ],
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 286
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "De Cuyper → Schuster",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "De Cuyper → Schuster",
+              "out_id": 115,
+              "in_id": 93,
+              "uplift": 2.56
+            }
+          ],
+          "hit": 0,
+          "out_id": 115,
+          "in_id": 93
+        },
+        {
+          "gw": 9,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Manzambi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "B.Fernandes → Manzambi",
+              "out_id": 426,
               "in_id": 53,
               "uplift": 1.81
             }
           ],
           "hit": 0,
-          "out_id": 212,
+          "out_id": 426,
           "in_id": 53
         }
       ],
       "chip": "Bench Boost",
-      "chip_gw": 9,
-      "expected_points": 288.27,
-      "chip_incremental_expected_points": 14.97,
-      "p10_points": 244.42,
-      "p90_points": 335.24,
+      "chip_gw": 8,
+      "expected_points": 287.65,
+      "chip_incremental_expected_points": 13.63,
+      "p10_points": 243.03,
+      "p90_points": 335.16,
       "expected_rank_after_path": 1.02,
       "prob_finish_ahead_each_rival": [
-        0.993,
         0.992,
-        0.999,
-        0.996,
-        0.999,
+        0.998,
+        0.995,
+        0.993,
+        1.0,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 282.901
+      "utility_score": 282.181
     },
     {
       "actions": [
@@ -584,56 +674,56 @@
         {
           "gw": 8,
           "action": "TRANSFER",
-          "route": "Hughes → Belloumi",
+          "route": "De Cuyper → Schuster",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Hughes → Belloumi",
-              "out_id": 212,
-              "in_id": 286,
-              "uplift": 2.34
+              "route": "De Cuyper → Schuster",
+              "out_id": 115,
+              "in_id": 93,
+              "uplift": 2.56
             }
           ],
           "hit": 0,
-          "out_id": 212,
-          "in_id": 286
+          "out_id": 115,
+          "in_id": 93
         },
         {
           "gw": 9,
           "action": "TRANSFER",
-          "route": "B.Fernandes → Manzambi",
+          "route": "B.Fernandes → Belloumi",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "B.Fernandes → Manzambi",
+              "route": "B.Fernandes → Belloumi",
               "out_id": 426,
-              "in_id": 53,
-              "uplift": 1.81
+              "in_id": 286,
+              "uplift": 1.56
             }
           ],
           "hit": 0,
           "out_id": 426,
-          "in_id": 53
+          "in_id": 286
         }
       ],
       "chip": "Bench Boost",
-      "chip_gw": 9,
-      "expected_points": 287.97,
-      "chip_incremental_expected_points": 14.82,
-      "p10_points": 242.7,
-      "p90_points": 334.54,
+      "chip_gw": 8,
+      "expected_points": 287.58,
+      "chip_incremental_expected_points": 13.74,
+      "p10_points": 243.22,
+      "p90_points": 337.47,
       "expected_rank_after_path": 1.02,
       "prob_finish_ahead_each_rival": [
-        0.992,
+        0.996,
+        0.998,
+        0.994,
         0.993,
-        0.998,
-        0.998,
-        0.999,
+        1.0,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 282.431
+      "utility_score": 282.162
     },
     {
       "actions": [
@@ -707,23 +797,23 @@
         }
       ],
       "chip": "Bench Boost",
-      "chip_gw": 9,
-      "expected_points": 287.75,
-      "chip_incremental_expected_points": 14.97,
-      "p10_points": 244.05,
-      "p90_points": 333.19,
+      "chip_gw": 8,
+      "expected_points": 287.58,
+      "chip_incremental_expected_points": 13.74,
+      "p10_points": 243.22,
+      "p90_points": 337.47,
       "expected_rank_after_path": 1.02,
       "prob_finish_ahead_each_rival": [
-        0.993,
-        0.993,
-        0.998,
         0.996,
+        0.998,
+        0.994,
+        0.993,
         1.0,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 282.403
+      "utility_score": 282.162
     },
     {
       "actions": [
@@ -798,22 +888,22 @@
       ],
       "chip": "Bench Boost",
       "chip_gw": 8,
-      "expected_points": 286.74,
-      "chip_incremental_expected_points": 13.45,
-      "p10_points": 242.34,
-      "p90_points": 335.19,
-      "expected_rank_after_path": 1.03,
+      "expected_points": 287.68,
+      "chip_incremental_expected_points": 13.74,
+      "p10_points": 241.8,
+      "p90_points": 335.2,
+      "expected_rank_after_path": 1.02,
       "prob_finish_ahead_each_rival": [
-        0.987,
-        0.993,
+        0.994,
         0.998,
         0.997,
-        0.999,
+        0.993,
+        1.0,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 281.282
+      "utility_score": 282.082
     },
     {
       "actions": [
@@ -888,22 +978,202 @@
       ],
       "chip": "Bench Boost",
       "chip_gw": 8,
-      "expected_points": 286.74,
-      "chip_incremental_expected_points": 13.45,
-      "p10_points": 242.34,
-      "p90_points": 335.19,
-      "expected_rank_after_path": 1.03,
+      "expected_points": 287.68,
+      "chip_incremental_expected_points": 13.74,
+      "p10_points": 241.8,
+      "p90_points": 335.2,
+      "expected_rank_after_path": 1.02,
       "prob_finish_ahead_each_rival": [
-        0.987,
-        0.993,
+        0.994,
         0.998,
         0.997,
-        0.999,
+        0.993,
+        1.0,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 281.282
+      "utility_score": 282.082
+    },
+    {
+      "actions": [
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Gabriel → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Gabriel → Tarkowski",
+              "out_id": 4,
+              "in_id": 229,
+              "uplift": 5.99
+            }
+          ],
+          "hit": 4,
+          "out_id": 4,
+          "in_id": 229
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Hughes → Belloumi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Hughes → Belloumi",
+              "out_id": 212,
+              "in_id": 286,
+              "uplift": 3.16
+            }
+          ],
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 286
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "De Cuyper → Schuster",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "De Cuyper → Schuster",
+              "out_id": 115,
+              "in_id": 93,
+              "uplift": 2.56
+            }
+          ],
+          "hit": 0,
+          "out_id": 115,
+          "in_id": 93
+        },
+        {
+          "gw": 9,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Manzambi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "B.Fernandes → Manzambi",
+              "out_id": 426,
+              "in_id": 53,
+              "uplift": 1.81
+            }
+          ],
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 53
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 7,
+      "expected_points": 287.25,
+      "chip_incremental_expected_points": 13.24,
+      "p10_points": 241.64,
+      "p90_points": 335.44,
+      "expected_rank_after_path": 1.02,
+      "prob_finish_ahead_each_rival": [
+        0.993,
+        0.998,
+        0.995,
+        0.993,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "utility_score": 281.673
+    },
+    {
+      "actions": [
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Gabriel → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Gabriel → Tarkowski",
+              "out_id": 4,
+              "in_id": 229,
+              "uplift": 5.99
+            }
+          ],
+          "hit": 4,
+          "out_id": 4,
+          "in_id": 229
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Maguire → Gvardiol",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Maguire → Gvardiol",
+              "out_id": 418,
+              "in_id": 391,
+              "uplift": 3.53
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 391
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "De Cuyper → Schuster",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "De Cuyper → Schuster",
+              "out_id": 115,
+              "in_id": 93,
+              "uplift": 2.56
+            }
+          ],
+          "hit": 0,
+          "out_id": 115,
+          "in_id": 93
+        },
+        {
+          "gw": 9,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Belloumi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "B.Fernandes → Belloumi",
+              "out_id": 426,
+              "in_id": 286,
+              "uplift": 1.56
+            }
+          ],
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 286
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 9,
+      "expected_points": 287.11,
+      "chip_incremental_expected_points": 13.27,
+      "p10_points": 241.34,
+      "p90_points": 336.76,
+      "expected_rank_after_path": 1.01,
+      "prob_finish_ahead_each_rival": [
+        0.998,
+        0.998,
+        0.996,
+        0.994,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "utility_score": 281.539
     },
     {
       "actions": [
@@ -978,22 +1248,562 @@
       ],
       "chip": "Bench Boost",
       "chip_gw": 9,
-      "expected_points": 286.57,
+      "expected_points": 287.21,
       "chip_incremental_expected_points": 13.27,
-      "p10_points": 243.56,
-      "p90_points": 332.23,
+      "p10_points": 240.48,
+      "p90_points": 336.99,
+      "expected_rank_after_path": 1.02,
+      "prob_finish_ahead_each_rival": [
+        0.995,
+        0.998,
+        0.997,
+        0.994,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "utility_score": 281.518
+    },
+    {
+      "actions": [
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Gabriel → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Gabriel → Tarkowski",
+              "out_id": 4,
+              "in_id": 229,
+              "uplift": 5.99
+            }
+          ],
+          "hit": 4,
+          "out_id": 4,
+          "in_id": 229
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Hughes → Belloumi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Hughes → Belloumi",
+              "out_id": 212,
+              "in_id": 286,
+              "uplift": 3.16
+            }
+          ],
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 286
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "De Cuyper → Schuster",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "De Cuyper → Schuster",
+              "out_id": 115,
+              "in_id": 93,
+              "uplift": 2.56
+            }
+          ],
+          "hit": 0,
+          "out_id": 115,
+          "in_id": 93
+        },
+        {
+          "gw": 9,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Manzambi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "B.Fernandes → Manzambi",
+              "out_id": 426,
+              "in_id": 53,
+              "uplift": 1.81
+            }
+          ],
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 53
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 9,
+      "expected_points": 287.09,
+      "chip_incremental_expected_points": 13.07,
+      "p10_points": 240.97,
+      "p90_points": 334.29,
+      "expected_rank_after_path": 1.02,
+      "prob_finish_ahead_each_rival": [
+        0.994,
+        0.998,
+        0.994,
+        0.993,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "utility_score": 281.444
+    },
+    {
+      "actions": [
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Gabriel → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Gabriel → Tarkowski",
+              "out_id": 4,
+              "in_id": 229,
+              "uplift": 5.99
+            }
+          ],
+          "hit": 4,
+          "out_id": 4,
+          "in_id": 229
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Maguire → Gvardiol",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Maguire → Gvardiol",
+              "out_id": 418,
+              "in_id": 391,
+              "uplift": 3.53
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 391
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "De Cuyper → Schuster",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "De Cuyper → Schuster",
+              "out_id": 115,
+              "in_id": 93,
+              "uplift": 2.56
+            }
+          ],
+          "hit": 0,
+          "out_id": 115,
+          "in_id": 93
+        },
+        {
+          "gw": 9,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Manzambi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "B.Fernandes → Manzambi",
+              "out_id": 426,
+              "in_id": 53,
+              "uplift": 1.81
+            }
+          ],
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 53
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 7,
+      "expected_points": 286.84,
+      "chip_incremental_expected_points": 12.9,
+      "p10_points": 240.09,
+      "p90_points": 336.13,
+      "expected_rank_after_path": 1.01,
+      "prob_finish_ahead_each_rival": [
+        0.995,
+        0.999,
+        0.997,
+        0.995,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "utility_score": 281.162
+    },
+    {
+      "actions": [
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Gabriel → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Gabriel → Tarkowski",
+              "out_id": 4,
+              "in_id": 229,
+              "uplift": 5.99
+            }
+          ],
+          "hit": 4,
+          "out_id": 4,
+          "in_id": 229
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Maguire → Gvardiol",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Maguire → Gvardiol",
+              "out_id": 418,
+              "in_id": 391,
+              "uplift": 3.53
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 391
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "De Cuyper → Schuster",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "De Cuyper → Schuster",
+              "out_id": 115,
+              "in_id": 93,
+              "uplift": 2.56
+            }
+          ],
+          "hit": 0,
+          "out_id": 115,
+          "in_id": 93
+        },
+        {
+          "gw": 9,
+          "action": "TRANSFER",
+          "route": "Hughes → Manzambi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Hughes → Manzambi",
+              "out_id": 212,
+              "in_id": 53,
+              "uplift": 1.81
+            }
+          ],
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 53
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 7,
+      "expected_points": 286.84,
+      "chip_incremental_expected_points": 12.9,
+      "p10_points": 240.09,
+      "p90_points": 336.13,
+      "expected_rank_after_path": 1.01,
+      "prob_finish_ahead_each_rival": [
+        0.995,
+        0.999,
+        0.997,
+        0.995,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "utility_score": 281.162
+    },
+    {
+      "actions": [
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Gabriel → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Gabriel → Tarkowski",
+              "out_id": 4,
+              "in_id": 229,
+              "uplift": 5.99
+            }
+          ],
+          "hit": 4,
+          "out_id": 4,
+          "in_id": 229
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Maguire → Gvardiol",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Maguire → Gvardiol",
+              "out_id": 418,
+              "in_id": 391,
+              "uplift": 3.53
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 391
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "De Cuyper → Schuster",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "De Cuyper → Schuster",
+              "out_id": 115,
+              "in_id": 93,
+              "uplift": 2.56
+            }
+          ],
+          "hit": 0,
+          "out_id": 115,
+          "in_id": 93
+        },
+        {
+          "gw": 9,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Belloumi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "B.Fernandes → Belloumi",
+              "out_id": 426,
+              "in_id": 286,
+              "uplift": 1.56
+            }
+          ],
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 286
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 7,
+      "expected_points": 286.74,
+      "chip_incremental_expected_points": 12.9,
+      "p10_points": 240.86,
+      "p90_points": 334.57,
+      "expected_rank_after_path": 1.02,
+      "prob_finish_ahead_each_rival": [
+        0.995,
+        0.998,
+        0.994,
+        0.995,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "utility_score": 281.146
+    },
+    {
+      "actions": [
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Gabriel → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Gabriel → Tarkowski",
+              "out_id": 4,
+              "in_id": 229,
+              "uplift": 5.99
+            }
+          ],
+          "hit": 4,
+          "out_id": 4,
+          "in_id": 229
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Maguire → Gvardiol",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Maguire → Gvardiol",
+              "out_id": 418,
+              "in_id": 391,
+              "uplift": 3.53
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 391
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "De Cuyper → Schuster",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "De Cuyper → Schuster",
+              "out_id": 115,
+              "in_id": 93,
+              "uplift": 2.56
+            }
+          ],
+          "hit": 0,
+          "out_id": 115,
+          "in_id": 93
+        },
+        {
+          "gw": 9,
+          "action": "TRANSFER",
+          "route": "Hughes → Belloumi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Hughes → Belloumi",
+              "out_id": 212,
+              "in_id": 286,
+              "uplift": 1.56
+            }
+          ],
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 286
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 7,
+      "expected_points": 286.74,
+      "chip_incremental_expected_points": 12.9,
+      "p10_points": 240.86,
+      "p90_points": 334.57,
+      "expected_rank_after_path": 1.02,
+      "prob_finish_ahead_each_rival": [
+        0.995,
+        0.998,
+        0.994,
+        0.995,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "utility_score": 281.146
+    },
+    {
+      "actions": [
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Gabriel → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Gabriel → Tarkowski",
+              "out_id": 4,
+              "in_id": 229,
+              "uplift": 5.99
+            }
+          ],
+          "hit": 4,
+          "out_id": 4,
+          "in_id": 229
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Hughes → Belloumi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Hughes → Belloumi",
+              "out_id": 212,
+              "in_id": 286,
+              "uplift": 3.16
+            }
+          ],
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 286
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "De Cuyper → Schuster",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "De Cuyper → Schuster",
+              "out_id": 115,
+              "in_id": 93,
+              "uplift": 2.56
+            }
+          ],
+          "hit": 0,
+          "out_id": 115,
+          "in_id": 93
+        },
+        {
+          "gw": 9,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Manzambi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "B.Fernandes → Manzambi",
+              "out_id": 426,
+              "in_id": 53,
+              "uplift": 1.81
+            }
+          ],
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 53
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 6,
+      "expected_points": 284.81,
+      "chip_incremental_expected_points": 10.8,
+      "p10_points": 239.75,
+      "p90_points": 331.84,
       "expected_rank_after_path": 1.03,
       "prob_finish_ahead_each_rival": [
-        0.989,
+        0.99,
+        0.997,
+        0.995,
         0.991,
-        0.998,
-        0.995,
-        0.999,
+        1.0,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 281.272
+      "utility_score": 279.267
     },
     {
       "actions": [
@@ -1067,23 +1877,23 @@
         }
       ],
       "chip": "Bench Boost",
-      "chip_gw": 8,
-      "expected_points": 286.22,
-      "chip_incremental_expected_points": 13.45,
-      "p10_points": 242.6,
-      "p90_points": 333.02,
-      "expected_rank_after_path": 1.03,
+      "chip_gw": 6,
+      "expected_points": 284.63,
+      "chip_incremental_expected_points": 10.8,
+      "p10_points": 240.14,
+      "p90_points": 332.01,
+      "expected_rank_after_path": 1.02,
       "prob_finish_ahead_each_rival": [
-        0.988,
         0.993,
-        0.996,
+        0.997,
         0.995,
-        0.999,
+        0.992,
+        1.0,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 280.844
+      "utility_score": 279.178
     },
     {
       "actions": [
@@ -1157,563 +1967,23 @@
         }
       ],
       "chip": "Bench Boost",
-      "chip_gw": 8,
-      "expected_points": 286.22,
-      "chip_incremental_expected_points": 13.45,
-      "p10_points": 242.6,
-      "p90_points": 333.02,
-      "expected_rank_after_path": 1.03,
-      "prob_finish_ahead_each_rival": [
-        0.988,
-        0.993,
-        0.996,
-        0.995,
-        0.999,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "utility_score": 280.844
-    },
-    {
-      "actions": [
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Gabriel → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Gabriel → Tarkowski",
-              "out_id": 4,
-              "in_id": 229,
-              "uplift": 5.99
-            }
-          ],
-          "hit": 4,
-          "out_id": 4,
-          "in_id": 229
-        },
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "Maguire → Gvardiol",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Gvardiol",
-              "out_id": 418,
-              "in_id": 391,
-              "uplift": 3.53
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 391
-        },
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "De Cuyper → Schuster",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "De Cuyper → Schuster",
-              "out_id": 115,
-              "in_id": 93,
-              "uplift": 2.56
-            }
-          ],
-          "hit": 0,
-          "out_id": 115,
-          "in_id": 93
-        },
-        {
-          "gw": 9,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Manzambi",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "B.Fernandes → Manzambi",
-              "out_id": 426,
-              "in_id": 53,
-              "uplift": 1.81
-            }
-          ],
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 53
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 7,
-      "expected_points": 286.14,
-      "chip_incremental_expected_points": 12.84,
-      "p10_points": 242.3,
-      "p90_points": 333.27,
-      "expected_rank_after_path": 1.02,
-      "prob_finish_ahead_each_rival": [
-        0.989,
-        0.994,
-        0.998,
-        0.997,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "utility_score": 280.768
-    },
-    {
-      "actions": [
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Gabriel → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Gabriel → Tarkowski",
-              "out_id": 4,
-              "in_id": 229,
-              "uplift": 5.99
-            }
-          ],
-          "hit": 4,
-          "out_id": 4,
-          "in_id": 229
-        },
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "Maguire → Gvardiol",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Gvardiol",
-              "out_id": 418,
-              "in_id": 391,
-              "uplift": 3.53
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 391
-        },
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "De Cuyper → Schuster",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "De Cuyper → Schuster",
-              "out_id": 115,
-              "in_id": 93,
-              "uplift": 2.56
-            }
-          ],
-          "hit": 0,
-          "out_id": 115,
-          "in_id": 93
-        },
-        {
-          "gw": 9,
-          "action": "TRANSFER",
-          "route": "Hughes → Manzambi",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Hughes → Manzambi",
-              "out_id": 212,
-              "in_id": 53,
-              "uplift": 1.81
-            }
-          ],
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 53
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 7,
-      "expected_points": 286.14,
-      "chip_incremental_expected_points": 12.84,
-      "p10_points": 242.3,
-      "p90_points": 333.27,
-      "expected_rank_after_path": 1.02,
-      "prob_finish_ahead_each_rival": [
-        0.989,
-        0.994,
-        0.998,
-        0.997,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "utility_score": 280.768
-    },
-    {
-      "actions": [
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Gabriel → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Gabriel → Tarkowski",
-              "out_id": 4,
-              "in_id": 229,
-              "uplift": 5.99
-            }
-          ],
-          "hit": 4,
-          "out_id": 4,
-          "in_id": 229
-        },
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "Maguire → Gvardiol",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Gvardiol",
-              "out_id": 418,
-              "in_id": 391,
-              "uplift": 3.53
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 391
-        },
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "De Cuyper → Schuster",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "De Cuyper → Schuster",
-              "out_id": 115,
-              "in_id": 93,
-              "uplift": 2.56
-            }
-          ],
-          "hit": 0,
-          "out_id": 115,
-          "in_id": 93
-        },
-        {
-          "gw": 9,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Belloumi",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "B.Fernandes → Belloumi",
-              "out_id": 426,
-              "in_id": 286,
-              "uplift": 1.56
-            }
-          ],
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 286
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 9,
-      "expected_points": 286.05,
-      "chip_incremental_expected_points": 13.27,
-      "p10_points": 242.33,
-      "p90_points": 330.91,
-      "expected_rank_after_path": 1.03,
-      "prob_finish_ahead_each_rival": [
-        0.988,
-        0.993,
-        0.995,
-        0.995,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "utility_score": 280.658
-    },
-    {
-      "actions": [
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Gabriel → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Gabriel → Tarkowski",
-              "out_id": 4,
-              "in_id": 229,
-              "uplift": 5.99
-            }
-          ],
-          "hit": 4,
-          "out_id": 4,
-          "in_id": 229
-        },
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "Maguire → Gvardiol",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Gvardiol",
-              "out_id": 418,
-              "in_id": 391,
-              "uplift": 3.53
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 391
-        },
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "Hughes → Belloumi",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Hughes → Belloumi",
-              "out_id": 212,
-              "in_id": 286,
-              "uplift": 2.34
-            }
-          ],
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 286
-        },
-        {
-          "gw": 9,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Manzambi",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "B.Fernandes → Manzambi",
-              "out_id": 426,
-              "in_id": 53,
-              "uplift": 1.81
-            }
-          ],
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 53
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 7,
-      "expected_points": 285.98,
-      "chip_incremental_expected_points": 12.84,
-      "p10_points": 241.01,
-      "p90_points": 333.7,
+      "chip_gw": 6,
+      "expected_points": 284.63,
+      "chip_incremental_expected_points": 10.8,
+      "p10_points": 240.14,
+      "p90_points": 332.01,
       "expected_rank_after_path": 1.02,
       "prob_finish_ahead_each_rival": [
         0.993,
-        0.994,
-        0.998,
         0.997,
-        0.999,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "utility_score": 280.495
-    },
-    {
-      "actions": [
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Gabriel → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Gabriel → Tarkowski",
-              "out_id": 4,
-              "in_id": 229,
-              "uplift": 5.99
-            }
-          ],
-          "hit": 4,
-          "out_id": 4,
-          "in_id": 229
-        },
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "Maguire → Gvardiol",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Gvardiol",
-              "out_id": 418,
-              "in_id": 391,
-              "uplift": 3.53
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 391
-        },
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "De Cuyper → Schuster",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "De Cuyper → Schuster",
-              "out_id": 115,
-              "in_id": 93,
-              "uplift": 2.56
-            }
-          ],
-          "hit": 0,
-          "out_id": 115,
-          "in_id": 93
-        },
-        {
-          "gw": 9,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Belloumi",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "B.Fernandes → Belloumi",
-              "out_id": 426,
-              "in_id": 286,
-              "uplift": 1.56
-            }
-          ],
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 286
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 7,
-      "expected_points": 285.62,
-      "chip_incremental_expected_points": 12.84,
-      "p10_points": 241.47,
-      "p90_points": 332.12,
-      "expected_rank_after_path": 1.02,
-      "prob_finish_ahead_each_rival": [
-        0.99,
         0.995,
-        0.996,
-        0.997,
-        0.999,
+        0.992,
         1.0,
-        1.0,
-        1.0
-      ],
-      "utility_score": 280.203
-    },
-    {
-      "actions": [
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Gabriel → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Gabriel → Tarkowski",
-              "out_id": 4,
-              "in_id": 229,
-              "uplift": 5.99
-            }
-          ],
-          "hit": 4,
-          "out_id": 4,
-          "in_id": 229
-        },
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "Maguire → Gvardiol",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Gvardiol",
-              "out_id": 418,
-              "in_id": 391,
-              "uplift": 3.53
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 391
-        },
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "De Cuyper → Schuster",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "De Cuyper → Schuster",
-              "out_id": 115,
-              "in_id": 93,
-              "uplift": 2.56
-            }
-          ],
-          "hit": 0,
-          "out_id": 115,
-          "in_id": 93
-        },
-        {
-          "gw": 9,
-          "action": "TRANSFER",
-          "route": "Hughes → Belloumi",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Hughes → Belloumi",
-              "out_id": 212,
-              "in_id": 286,
-              "uplift": 1.56
-            }
-          ],
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 286
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 7,
-      "expected_points": 285.62,
-      "chip_incremental_expected_points": 12.84,
-      "p10_points": 241.47,
-      "p90_points": 332.12,
-      "expected_rank_after_path": 1.02,
-      "prob_finish_ahead_each_rival": [
-        0.99,
-        0.995,
-        0.996,
-        0.997,
-        0.999,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 280.203
+      "utility_score": 279.178
     },
     {
       "actions": [
@@ -1788,22 +2058,22 @@
       ],
       "chip": "Bench Boost",
       "chip_gw": 6,
-      "expected_points": 284.05,
-      "chip_incremental_expected_points": 10.75,
-      "p10_points": 239.78,
-      "p90_points": 330.36,
-      "expected_rank_after_path": 1.03,
+      "expected_points": 284.74,
+      "chip_incremental_expected_points": 10.8,
+      "p10_points": 238.83,
+      "p90_points": 332.61,
+      "expected_rank_after_path": 1.02,
       "prob_finish_ahead_each_rival": [
-        0.988,
-        0.99,
+        0.993,
         0.997,
-        0.994,
-        0.999,
+        0.996,
+        0.993,
+        1.0,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 278.579
+      "utility_score": 279.124
     },
     {
       "actions": [
@@ -1878,22 +2148,22 @@
       ],
       "chip": "Bench Boost",
       "chip_gw": 6,
-      "expected_points": 284.05,
-      "chip_incremental_expected_points": 10.75,
-      "p10_points": 239.78,
-      "p90_points": 330.36,
-      "expected_rank_after_path": 1.03,
+      "expected_points": 284.74,
+      "chip_incremental_expected_points": 10.8,
+      "p10_points": 238.83,
+      "p90_points": 332.61,
+      "expected_rank_after_path": 1.02,
       "prob_finish_ahead_each_rival": [
-        0.988,
-        0.99,
+        0.993,
         0.997,
-        0.994,
-        0.999,
+        0.996,
+        0.993,
+        1.0,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 278.579
+      "utility_score": 279.124
     },
     {
       "actions": [
@@ -1916,23 +2186,6 @@
         },
         {
           "gw": 7,
-          "action": "TRANSFER",
-          "route": "Maguire → Gvardiol",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Gvardiol",
-              "out_id": 418,
-              "in_id": 391,
-              "uplift": 3.53
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 391
-        },
-        {
-          "gw": 8,
           "action": "TRANSFER",
           "route": "Hughes → Belloumi",
           "transfer_count": 1,
@@ -1941,265 +2194,12 @@
               "route": "Hughes → Belloumi",
               "out_id": 212,
               "in_id": 286,
-              "uplift": 2.34
+              "uplift": 3.16
             }
           ],
           "hit": 0,
           "out_id": 212,
           "in_id": 286
-        },
-        {
-          "gw": 9,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Manzambi",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "B.Fernandes → Manzambi",
-              "out_id": 426,
-              "in_id": 53,
-              "uplift": 1.81
-            }
-          ],
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 53
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 6,
-      "expected_points": 283.9,
-      "chip_incremental_expected_points": 10.75,
-      "p10_points": 238.2,
-      "p90_points": 330.47,
-      "expected_rank_after_path": 1.03,
-      "prob_finish_ahead_each_rival": [
-        0.987,
-        0.993,
-        0.997,
-        0.993,
-        0.999,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "utility_score": 278.253
-    },
-    {
-      "actions": [
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Gabriel → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Gabriel → Tarkowski",
-              "out_id": 4,
-              "in_id": 229,
-              "uplift": 5.99
-            }
-          ],
-          "hit": 4,
-          "out_id": 4,
-          "in_id": 229
-        },
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "Maguire → Gvardiol",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Gvardiol",
-              "out_id": 418,
-              "in_id": 391,
-              "uplift": 3.53
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 391
-        },
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "De Cuyper → Schuster",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "De Cuyper → Schuster",
-              "out_id": 115,
-              "in_id": 93,
-              "uplift": 2.56
-            }
-          ],
-          "hit": 0,
-          "out_id": 115,
-          "in_id": 93
-        },
-        {
-          "gw": 9,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Belloumi",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "B.Fernandes → Belloumi",
-              "out_id": 426,
-              "in_id": 286,
-              "uplift": 1.56
-            }
-          ],
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 286
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 6,
-      "expected_points": 283.53,
-      "chip_incremental_expected_points": 10.75,
-      "p10_points": 239.79,
-      "p90_points": 329.4,
-      "expected_rank_after_path": 1.04,
-      "prob_finish_ahead_each_rival": [
-        0.985,
-        0.99,
-        0.995,
-        0.995,
-        0.999,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "utility_score": 278.106
-    },
-    {
-      "actions": [
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Gabriel → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Gabriel → Tarkowski",
-              "out_id": 4,
-              "in_id": 229,
-              "uplift": 5.99
-            }
-          ],
-          "hit": 4,
-          "out_id": 4,
-          "in_id": 229
-        },
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "Maguire → Gvardiol",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Gvardiol",
-              "out_id": 418,
-              "in_id": 391,
-              "uplift": 3.53
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 391
-        },
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "De Cuyper → Schuster",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "De Cuyper → Schuster",
-              "out_id": 115,
-              "in_id": 93,
-              "uplift": 2.56
-            }
-          ],
-          "hit": 0,
-          "out_id": 115,
-          "in_id": 93
-        },
-        {
-          "gw": 9,
-          "action": "TRANSFER",
-          "route": "Hughes → Belloumi",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Hughes → Belloumi",
-              "out_id": 212,
-              "in_id": 286,
-              "uplift": 1.56
-            }
-          ],
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 286
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 6,
-      "expected_points": 283.53,
-      "chip_incremental_expected_points": 10.75,
-      "p10_points": 239.79,
-      "p90_points": 329.4,
-      "expected_rank_after_path": 1.04,
-      "prob_finish_ahead_each_rival": [
-        0.985,
-        0.99,
-        0.995,
-        0.995,
-        0.999,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "utility_score": 278.106
-    },
-    {
-      "actions": [
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Gabriel → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Gabriel → Tarkowski",
-              "out_id": 4,
-              "in_id": 229,
-              "uplift": 5.99
-            }
-          ],
-          "hit": 4,
-          "out_id": 4,
-          "in_id": 229
-        },
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "Maguire → Gvardiol",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Gvardiol",
-              "out_id": 418,
-              "in_id": 391,
-              "uplift": 3.53
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 391
         },
         {
           "gw": 8,
@@ -2238,202 +2238,202 @@
       ],
       "chip": null,
       "chip_gw": null,
-      "expected_points": 273.3,
+      "expected_points": 274.02,
       "chip_incremental_expected_points": 0.0,
-      "p10_points": 229.63,
-      "p90_points": 320.11,
+      "p10_points": 229.29,
+      "p90_points": 320.43,
       "expected_rank_after_path": 1.07,
-      "prob_finish_ahead_each_rival": [
-        0.971,
-        0.987,
-        0.988,
-        0.984,
-        0.998,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "utility_score": 267.691
-    },
-    {
-      "actions": [
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Gabriel → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Gabriel → Tarkowski",
-              "out_id": 4,
-              "in_id": 229,
-              "uplift": 5.99
-            }
-          ],
-          "hit": 4,
-          "out_id": 4,
-          "in_id": 229
-        },
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "Maguire → Gvardiol",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Gvardiol",
-              "out_id": 418,
-              "in_id": 391,
-              "uplift": 3.53
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 391
-        },
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "De Cuyper → Schuster",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "De Cuyper → Schuster",
-              "out_id": 115,
-              "in_id": 93,
-              "uplift": 2.56
-            }
-          ],
-          "hit": 0,
-          "out_id": 115,
-          "in_id": 93
-        },
-        {
-          "gw": 9,
-          "action": "TRANSFER",
-          "route": "Hughes → Manzambi",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Hughes → Manzambi",
-              "out_id": 212,
-              "in_id": 53,
-              "uplift": 1.81
-            }
-          ],
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 53
-        }
-      ],
-      "chip": null,
-      "chip_gw": null,
-      "expected_points": 273.3,
-      "chip_incremental_expected_points": 0.0,
-      "p10_points": 229.63,
-      "p90_points": 320.11,
-      "expected_rank_after_path": 1.07,
-      "prob_finish_ahead_each_rival": [
-        0.971,
-        0.987,
-        0.988,
-        0.984,
-        0.998,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "utility_score": 267.691
-    },
-    {
-      "actions": [
-        {
-          "gw": 6,
-          "action": "TRANSFER",
-          "route": "Gabriel → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Gabriel → Tarkowski",
-              "out_id": 4,
-              "in_id": 229,
-              "uplift": 5.99
-            }
-          ],
-          "hit": 4,
-          "out_id": 4,
-          "in_id": 229
-        },
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "Maguire → Gvardiol",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Gvardiol",
-              "out_id": 418,
-              "in_id": 391,
-              "uplift": 3.53
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 391
-        },
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "Hughes → Belloumi",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Hughes → Belloumi",
-              "out_id": 212,
-              "in_id": 286,
-              "uplift": 2.34
-            }
-          ],
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 286
-        },
-        {
-          "gw": 9,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Manzambi",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "B.Fernandes → Manzambi",
-              "out_id": 426,
-              "in_id": 53,
-              "uplift": 1.81
-            }
-          ],
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 53
-        }
-      ],
-      "chip": null,
-      "chip_gw": null,
-      "expected_points": 273.14,
-      "chip_incremental_expected_points": 0.0,
-      "p10_points": 228.46,
-      "p90_points": 319.82,
-      "expected_rank_after_path": 1.08,
       "prob_finish_ahead_each_rival": [
         0.973,
-        0.986,
-        0.986,
+        0.988,
+        0.988,
+        0.983,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "utility_score": 268.31
+    },
+    {
+      "actions": [
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Gabriel → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Gabriel → Tarkowski",
+              "out_id": 4,
+              "in_id": 229,
+              "uplift": 5.99
+            }
+          ],
+          "hit": 4,
+          "out_id": 4,
+          "in_id": 229
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Maguire → Gvardiol",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Maguire → Gvardiol",
+              "out_id": 418,
+              "in_id": 391,
+              "uplift": 3.53
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 391
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "De Cuyper → Schuster",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "De Cuyper → Schuster",
+              "out_id": 115,
+              "in_id": 93,
+              "uplift": 2.56
+            }
+          ],
+          "hit": 0,
+          "out_id": 115,
+          "in_id": 93
+        },
+        {
+          "gw": 9,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Manzambi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "B.Fernandes → Manzambi",
+              "out_id": 426,
+              "in_id": 53,
+              "uplift": 1.81
+            }
+          ],
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 53
+        }
+      ],
+      "chip": null,
+      "chip_gw": null,
+      "expected_points": 273.94,
+      "chip_incremental_expected_points": 0.0,
+      "p10_points": 228.7,
+      "p90_points": 321.89,
+      "expected_rank_after_path": 1.05,
+      "prob_finish_ahead_each_rival": [
         0.98,
-        0.996,
+        0.991,
+        0.988,
+        0.987,
+        1.0,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 267.387
+      "utility_score": 268.242
+    },
+    {
+      "actions": [
+        {
+          "gw": 6,
+          "action": "TRANSFER",
+          "route": "Gabriel → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Gabriel → Tarkowski",
+              "out_id": 4,
+              "in_id": 229,
+              "uplift": 5.99
+            }
+          ],
+          "hit": 4,
+          "out_id": 4,
+          "in_id": 229
+        },
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Maguire → Gvardiol",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Maguire → Gvardiol",
+              "out_id": 418,
+              "in_id": 391,
+              "uplift": 3.53
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 391
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "De Cuyper → Schuster",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "De Cuyper → Schuster",
+              "out_id": 115,
+              "in_id": 93,
+              "uplift": 2.56
+            }
+          ],
+          "hit": 0,
+          "out_id": 115,
+          "in_id": 93
+        },
+        {
+          "gw": 9,
+          "action": "TRANSFER",
+          "route": "Hughes → Manzambi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Hughes → Manzambi",
+              "out_id": 212,
+              "in_id": 53,
+              "uplift": 1.81
+            }
+          ],
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 53
+        }
+      ],
+      "chip": null,
+      "chip_gw": null,
+      "expected_points": 273.94,
+      "chip_incremental_expected_points": 0.0,
+      "p10_points": 228.7,
+      "p90_points": 321.89,
+      "expected_rank_after_path": 1.05,
+      "prob_finish_ahead_each_rival": [
+        0.98,
+        0.991,
+        0.988,
+        0.987,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "utility_score": 268.242
     },
     {
       "actions": [
@@ -2508,22 +2508,22 @@
       ],
       "chip": null,
       "chip_gw": null,
-      "expected_points": 272.78,
+      "expected_points": 273.84,
       "chip_incremental_expected_points": 0.0,
-      "p10_points": 228.99,
-      "p90_points": 319.51,
-      "expected_rank_after_path": 1.08,
+      "p10_points": 229.89,
+      "p90_points": 322.58,
+      "expected_rank_after_path": 1.06,
       "prob_finish_ahead_each_rival": [
-        0.973,
-        0.984,
-        0.984,
-        0.981,
-        0.998,
+        0.979,
+        0.988,
+        0.988,
+        0.98,
+        1.0,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 267.12
+      "utility_score": 268.239
     },
     {
       "actions": [
@@ -2598,22 +2598,22 @@
       ],
       "chip": null,
       "chip_gw": null,
-      "expected_points": 272.78,
+      "expected_points": 273.84,
       "chip_incremental_expected_points": 0.0,
-      "p10_points": 228.99,
-      "p90_points": 319.51,
-      "expected_rank_after_path": 1.08,
+      "p10_points": 229.89,
+      "p90_points": 322.58,
+      "expected_rank_after_path": 1.06,
       "prob_finish_ahead_each_rival": [
-        0.973,
-        0.984,
-        0.984,
-        0.981,
-        0.998,
+        0.979,
+        0.988,
+        0.988,
+        0.98,
+        1.0,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 267.12
+      "utility_score": 268.239
     }
   ],
   "method_note": "Triple Captain and Bench Boost are scored exactly on calibrated transfer paths against probabilistic rival behaviour. Values are opportunity windows, not automatic play recommendations. Sampling precision increases as the official FPL deadline approaches. Wildcard and Free Hit are handled by the separate legal full-squad optimiser and activation gate."
