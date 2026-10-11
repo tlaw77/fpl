@@ -1,6 +1,6 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-10-11T18:47:49.510563+00:00",
+  "generated_at_utc": "2026-10-11T22:47:07.603952+00:00",
   "engine_version": 7,
   "planner": "bounded same-deadline multi-transfer beam search + GW-specific shared-outcome Monte Carlo + live FT state + season calibration + shared captaincy + deadline-aware sampling + enabling-downgrade retention",
   "projection_model": "season-maturity calibrated + shared captaincy model",
@@ -16,7 +16,7 @@
   "iteration_policy": {
     "layer": "path",
     "deadline_phase": "normal",
-    "hours_to_deadline": 135.22,
+    "hours_to_deadline": 131.23,
     "iterations": 1200,
     "policy": "lighter normal-week sampling; higher precision inside 72h/24h/6h of official FPL deadline"
   },
@@ -152,21 +152,21 @@
       {
         "gw": 8,
         "action": "TRANSFER",
-        "route": "Maguire → Hall",
+        "route": "Maguire → Mfuni",
         "transfer_count": 1,
         "transfers": [
           {
-            "route": "Maguire → Hall",
+            "route": "Maguire → Mfuni",
             "out_id": 418,
-            "in_id": 449,
-            "uplift": 3.42
+            "in_id": 656,
+            "uplift": 2.91
           }
         ],
         "hit": 0,
         "out_id": 418,
-        "in_id": 449,
+        "in_id": 656,
         "enabler": false,
-        "bank_released": 0.0
+        "bank_released": 0.8
       },
       {
         "gw": 9,
@@ -190,45 +190,52 @@
       {
         "gw": 10,
         "action": "TRANSFER",
-        "route": "Tzolakis → Raya",
+        "route": "B.Fernandes → Ødegaard",
         "transfer_count": 1,
         "transfers": [
           {
-            "route": "Tzolakis → Raya",
-            "out_id": 572,
-            "in_id": 1,
-            "uplift": 1.38
+            "route": "B.Fernandes → Ødegaard",
+            "out_id": 426,
+            "in_id": 15,
+            "uplift": 0.14
           }
         ],
         "hit": 0,
-        "out_id": 572,
-        "in_id": 1,
-        "enabler": false,
-        "bank_released": 0.0
+        "out_id": 426,
+        "in_id": 15,
+        "enabler": true,
+        "bank_released": 5.1
       }
     ],
-    "expected_points": 267.22,
-    "p10_points": 225.16,
-    "p90_points": 314.95,
-    "expected_rank_after_path": 1.05,
+    "expected_points": 266.02,
+    "p10_points": 224.35,
+    "p90_points": 308.13,
+    "expected_rank_after_path": 1.03,
     "prob_gain_league_place": 0.0,
     "prob_finish_ahead_each_rival": [
       0.989,
-      0.997,
-      0.974,
-      0.992,
+      0.998,
+      0.987,
+      0.993,
       1.0,
       1.0,
       1.0,
       1.0
     ],
-    "ending_bank": 1.4,
+    "ending_bank": 9.2,
     "ending_free_transfers": 1,
     "first_transfer_incoming_starts": true,
     "first_deadline_transfer_count": 1,
-    "utility_score": 262.286,
-    "contains_enabler": false,
-    "unlock_sequence": null
+    "utility_score": 261.201,
+    "contains_enabler": true,
+    "unlock_sequence": {
+      "enabler_gw": 10,
+      "enabler_route": "B.Fernandes → Ødegaard",
+      "bank_released": 5.1,
+      "follow_up_gw": null,
+      "follow_up_route": null,
+      "completed_unlock": false
+    }
   },
   "paths": [
     {
@@ -255,122 +262,21 @@
         {
           "gw": 8,
           "action": "TRANSFER",
-          "route": "Maguire → Hall",
+          "route": "Maguire → Mfuni",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Maguire → Hall",
+              "route": "Maguire → Mfuni",
               "out_id": 418,
-              "in_id": 449,
-              "uplift": 3.42
+              "in_id": 656,
+              "uplift": 2.91
             }
           ],
           "hit": 0,
           "out_id": 418,
-          "in_id": 449,
+          "in_id": 656,
           "enabler": false,
-          "bank_released": 0.0
-        },
-        {
-          "gw": 9,
-          "action": "TRANSFER",
-          "route": "Gabriel → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Gabriel → Tarkowski",
-              "out_id": 4,
-              "in_id": 229,
-              "uplift": 3.99
-            }
-          ],
-          "hit": 0,
-          "out_id": 4,
-          "in_id": 229,
-          "enabler": false,
-          "bank_released": 1.7
-        },
-        {
-          "gw": 10,
-          "action": "TRANSFER",
-          "route": "Tzolakis → Raya",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Tzolakis → Raya",
-              "out_id": 572,
-              "in_id": 1,
-              "uplift": 1.38
-            }
-          ],
-          "hit": 0,
-          "out_id": 572,
-          "in_id": 1,
-          "enabler": false,
-          "bank_released": 0.0
-        }
-      ],
-      "expected_points": 267.22,
-      "p10_points": 225.16,
-      "p90_points": 314.95,
-      "expected_rank_after_path": 1.05,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.989,
-        0.997,
-        0.974,
-        0.992,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "ending_bank": 1.4,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 1,
-      "utility_score": 262.286,
-      "contains_enabler": false
-    },
-    {
-      "actions": [
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "Schade → Henderson",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Schade → Henderson",
-              "out_id": 94,
-              "in_id": 101,
-              "uplift": 15.78
-            }
-          ],
-          "hit": 0,
-          "out_id": 94,
-          "in_id": 101,
-          "enabler": false,
-          "bank_released": 1.3
-        },
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "De Cuyper → Hall",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "De Cuyper → Hall",
-              "out_id": 115,
-              "in_id": 449,
-              "uplift": 3.19
-            }
-          ],
-          "hit": 0,
-          "out_id": 115,
-          "in_id": 449,
-          "enabler": false,
-          "bank_released": 0.0
+          "bank_released": 0.8
         },
         {
           "gw": 9,
@@ -411,26 +317,26 @@
           "bank_released": 5.1
         }
       ],
-      "expected_points": 266.36,
-      "p10_points": 222.73,
-      "p90_points": 314.85,
-      "expected_rank_after_path": 1.04,
+      "expected_points": 266.02,
+      "p10_points": 224.35,
+      "p90_points": 308.13,
+      "expected_rank_after_path": 1.03,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
         0.989,
-        0.997,
-        0.978,
-        0.991,
+        0.998,
+        0.987,
+        0.993,
         1.0,
         1.0,
         1.0,
         1.0
       ],
-      "ending_bank": 8.1,
+      "ending_bank": 9.2,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
       "first_deadline_transfer_count": 1,
-      "utility_score": 261.245,
+      "utility_score": 261.201,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 10,
@@ -472,7 +378,7 @@
               "route": "Maguire → Hall",
               "out_id": 418,
               "in_id": 449,
-              "uplift": 3.42
+              "uplift": 3.05
             }
           ],
           "hit": 0,
@@ -520,16 +426,16 @@
           "bank_released": 5.1
         }
       ],
-      "expected_points": 266.28,
-      "p10_points": 222.68,
-      "p90_points": 313.66,
-      "expected_rank_after_path": 1.05,
+      "expected_points": 265.9,
+      "p10_points": 222.88,
+      "p90_points": 308.9,
+      "expected_rank_after_path": 1.03,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
         0.991,
+        0.997,
+        0.984,
         0.994,
-        0.975,
-        0.992,
         1.0,
         1.0,
         1.0,
@@ -539,7 +445,7 @@
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
       "first_deadline_transfer_count": 1,
-      "utility_score": 261.155,
+      "utility_score": 260.92,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 10,
@@ -573,6 +479,25 @@
         },
         {
           "gw": 8,
+          "action": "TRANSFER",
+          "route": "Maguire → Mfuni",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Maguire → Mfuni",
+              "out_id": 418,
+              "in_id": 656,
+              "uplift": 2.91
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 656,
+          "enabler": false,
+          "bank_released": 0.8
+        },
+        {
+          "gw": 9,
           "action": "TRANSFER",
           "route": "De Cuyper → Tarkowski",
           "transfer_count": 1,
@@ -581,7 +506,7 @@
               "route": "De Cuyper → Tarkowski",
               "out_id": 115,
               "in_id": 229,
-              "uplift": 4.64
+              "uplift": 3.76
             }
           ],
           "hit": 0,
@@ -591,25 +516,6 @@
           "bank_released": 0.0
         },
         {
-          "gw": 9,
-          "action": "TRANSFER",
-          "route": "Gabriel → Maitland-Niles",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Gabriel → Maitland-Niles",
-              "out_id": 4,
-              "in_id": 649,
-              "uplift": 1.66
-            }
-          ],
-          "hit": 0,
-          "out_id": 4,
-          "in_id": 649,
-          "enabler": false,
-          "bank_released": 3.4
-        },
-        {
           "gw": 10,
           "action": "TRANSFER",
           "route": "B.Fernandes → Ødegaard",
@@ -629,244 +535,26 @@
           "bank_released": 5.1
         }
       ],
-      "expected_points": 265.17,
-      "p10_points": 221.98,
-      "p90_points": 311.42,
-      "expected_rank_after_path": 1.06,
+      "expected_points": 265.64,
+      "p10_points": 222.84,
+      "p90_points": 308.24,
+      "expected_rank_after_path": 1.03,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.989,
-        0.992,
-        0.975,
-        0.988,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "ending_bank": 8.9,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 1,
-      "utility_score": 260.056,
-      "contains_enabler": true,
-      "unlock_sequence": {
-        "enabler_gw": 10,
-        "enabler_route": "B.Fernandes → Ødegaard",
-        "bank_released": 5.1,
-        "follow_up_gw": null,
-        "follow_up_route": null,
-        "completed_unlock": false
-      }
-    },
-    {
-      "actions": [
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "Schade → Henderson",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Schade → Henderson",
-              "out_id": 94,
-              "in_id": 101,
-              "uplift": 15.78
-            }
-          ],
-          "hit": 0,
-          "out_id": 94,
-          "in_id": 101,
-          "enabler": false,
-          "bank_released": 1.3
-        },
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "Maguire → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Tarkowski",
-              "out_id": 418,
-              "in_id": 229,
-              "uplift": 4.87
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 229,
-          "enabler": false,
-          "bank_released": 0.0
-        },
-        {
-          "gw": 9,
-          "action": "TRANSFER",
-          "route": "Gabriel → Maitland-Niles",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Gabriel → Maitland-Niles",
-              "out_id": 4,
-              "in_id": 649,
-              "uplift": 1.66
-            }
-          ],
-          "hit": 0,
-          "out_id": 4,
-          "in_id": 649,
-          "enabler": false,
-          "bank_released": 3.4
-        },
-        {
-          "gw": 10,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Ødegaard",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "B.Fernandes → Ødegaard",
-              "out_id": 426,
-              "in_id": 15,
-              "uplift": 0.14
-            }
-          ],
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 15,
-          "enabler": true,
-          "bank_released": 5.1
-        }
-      ],
-      "expected_points": 265.1,
-      "p10_points": 222.25,
-      "p90_points": 311.58,
-      "expected_rank_after_path": 1.06,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.988,
-        0.991,
-        0.973,
-        0.988,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "ending_bank": 8.7,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 1,
-      "utility_score": 260.006,
-      "contains_enabler": true,
-      "unlock_sequence": {
-        "enabler_gw": 10,
-        "enabler_route": "B.Fernandes → Ødegaard",
-        "bank_released": 5.1,
-        "follow_up_gw": null,
-        "follow_up_route": null,
-        "completed_unlock": false
-      }
-    },
-    {
-      "actions": [
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "Schade → Henderson",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Schade → Henderson",
-              "out_id": 94,
-              "in_id": 101,
-              "uplift": 15.78
-            }
-          ],
-          "hit": 0,
-          "out_id": 94,
-          "in_id": 101,
-          "enabler": false,
-          "bank_released": 1.3
-        },
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "Maguire → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Tarkowski",
-              "out_id": 418,
-              "in_id": 229,
-              "uplift": 4.87
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 229,
-          "enabler": false,
-          "bank_released": 0.0
-        },
-        {
-          "gw": 9,
-          "action": "TRANSFER",
-          "route": "Gabriel → Mendy",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Gabriel → Mendy",
-              "out_id": 4,
-              "in_id": 586,
-              "uplift": 1.39
-            }
-          ],
-          "hit": 0,
-          "out_id": 4,
-          "in_id": 586,
-          "enabler": false,
-          "bank_released": 3.8
-        },
-        {
-          "gw": 10,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Ødegaard",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "B.Fernandes → Ødegaard",
-              "out_id": 426,
-              "in_id": 15,
-              "uplift": 0.14
-            }
-          ],
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 15,
-          "enabler": true,
-          "bank_released": 5.1
-        }
-      ],
-      "expected_points": 265.05,
-      "p10_points": 222.15,
-      "p90_points": 311.6,
-      "expected_rank_after_path": 1.06,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.988,
-        0.992,
-        0.973,
         0.99,
+        0.998,
+        0.988,
+        0.994,
         1.0,
         1.0,
         1.0,
         1.0
       ],
-      "ending_bank": 9.1,
+      "ending_bank": 6.3,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
       "first_deadline_transfer_count": 1,
-      "utility_score": 259.971,
+      "utility_score": 260.708,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 10,
@@ -901,86 +589,86 @@
         {
           "gw": 8,
           "action": "TRANSFER",
-          "route": "Maguire → Tarkowski",
+          "route": "Maguire → Mfuni",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Maguire → Tarkowski",
+              "route": "Maguire → Mfuni",
               "out_id": 418,
-              "in_id": 229,
-              "uplift": 4.87
+              "in_id": 656,
+              "uplift": 2.91
             }
           ],
           "hit": 0,
           "out_id": 418,
+          "in_id": 656,
+          "enabler": false,
+          "bank_released": 0.8
+        },
+        {
+          "gw": 9,
+          "action": "TRANSFER",
+          "route": "Affengruber → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Affengruber → Tarkowski",
+              "out_id": 650,
+              "in_id": 229,
+              "uplift": 3.36
+            }
+          ],
+          "hit": 0,
+          "out_id": 650,
           "in_id": 229,
           "enabler": false,
           "bank_released": 0.0
         },
         {
-          "gw": 9,
-          "action": "TRANSFER",
-          "route": "De Cuyper → Maitland-Niles",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "De Cuyper → Maitland-Niles",
-              "out_id": 115,
-              "in_id": 649,
-              "uplift": 1.55
-            }
-          ],
-          "hit": 0,
-          "out_id": 115,
-          "in_id": 649,
-          "enabler": false,
-          "bank_released": 0.5
-        },
-        {
           "gw": 10,
           "action": "TRANSFER",
-          "route": "Gabriel → Mfuni",
+          "route": "B.Fernandes → Ødegaard",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Gabriel → Mfuni",
-              "out_id": 4,
-              "in_id": 656,
-              "uplift": 0.15
+              "route": "B.Fernandes → Ødegaard",
+              "out_id": 426,
+              "in_id": 15,
+              "uplift": 0.14
             }
           ],
           "hit": 0,
-          "out_id": 4,
-          "in_id": 656,
+          "out_id": 426,
+          "in_id": 15,
           "enabler": true,
-          "bank_released": 3.9
+          "bank_released": 5.1
         }
       ],
-      "expected_points": 265.0,
-      "p10_points": 222.53,
-      "p90_points": 310.73,
-      "expected_rank_after_path": 1.07,
+      "expected_points": 265.33,
+      "p10_points": 224.48,
+      "p90_points": 307.39,
+      "expected_rank_after_path": 1.03,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.986,
         0.991,
-        0.968,
+        0.998,
         0.988,
+        0.993,
         1.0,
         1.0,
         1.0,
         1.0
       ],
-      "ending_bank": 4.6,
+      "ending_bank": 5.8,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
       "first_deadline_transfer_count": 1,
-      "utility_score": 259.913,
+      "utility_score": 260.628,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 10,
-        "enabler_route": "Gabriel → Mfuni",
-        "bank_released": 3.9,
+        "enabler_route": "B.Fernandes → Ødegaard",
+        "bank_released": 5.1,
         "follow_up_gw": null,
         "follow_up_route": null,
         "completed_unlock": false
@@ -1017,7 +705,7 @@
               "route": "Gabriel → Tarkowski",
               "out_id": 4,
               "in_id": 229,
-              "uplift": 4.62
+              "uplift": 4.55
             }
           ],
           "hit": 0,
@@ -1065,16 +753,16 @@
           "bank_released": 5.1
         }
       ],
-      "expected_points": 264.92,
-      "p10_points": 221.46,
-      "p90_points": 312.22,
-      "expected_rank_after_path": 1.07,
+      "expected_points": 265.43,
+      "p10_points": 222.79,
+      "p90_points": 309.25,
+      "expected_rank_after_path": 1.04,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.987,
         0.991,
-        0.971,
-        0.986,
+        0.997,
+        0.983,
+        0.993,
         1.0,
         1.0,
         1.0,
@@ -1084,7 +772,116 @@
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
       "first_deadline_transfer_count": 1,
-      "utility_score": 259.726,
+      "utility_score": 260.481,
+      "contains_enabler": true,
+      "unlock_sequence": {
+        "enabler_gw": 10,
+        "enabler_route": "B.Fernandes → Ødegaard",
+        "bank_released": 5.1,
+        "follow_up_gw": null,
+        "follow_up_route": null,
+        "completed_unlock": false
+      }
+    },
+    {
+      "actions": [
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Schade → Henderson",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Schade → Henderson",
+              "out_id": 94,
+              "in_id": 101,
+              "uplift": 15.78
+            }
+          ],
+          "hit": 0,
+          "out_id": 94,
+          "in_id": 101,
+          "enabler": false,
+          "bank_released": 1.3
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "De Cuyper → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "De Cuyper → Tarkowski",
+              "out_id": 115,
+              "in_id": 229,
+              "uplift": 4.34
+            }
+          ],
+          "hit": 0,
+          "out_id": 115,
+          "in_id": 229,
+          "enabler": false,
+          "bank_released": 0.0
+        },
+        {
+          "gw": 9,
+          "action": "TRANSFER",
+          "route": "Gabriel → Hall",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Gabriel → Hall",
+              "out_id": 4,
+              "in_id": 449,
+              "uplift": 1.84
+            }
+          ],
+          "hit": 0,
+          "out_id": 4,
+          "in_id": 449,
+          "enabler": false,
+          "bank_released": 2.6
+        },
+        {
+          "gw": 10,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Ødegaard",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "B.Fernandes → Ødegaard",
+              "out_id": 426,
+              "in_id": 15,
+              "uplift": 0.14
+            }
+          ],
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 15,
+          "enabler": true,
+          "bank_released": 5.1
+        }
+      ],
+      "expected_points": 265.26,
+      "p10_points": 223.0,
+      "p90_points": 308.02,
+      "expected_rank_after_path": 1.04,
+      "prob_gain_league_place": 0.0,
+      "prob_finish_ahead_each_rival": [
+        0.989,
+        0.996,
+        0.987,
+        0.993,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "ending_bank": 8.1,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 1,
+      "utility_score": 260.359,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 10,
@@ -1126,7 +923,7 @@
               "route": "Maguire → Tarkowski",
               "out_id": 418,
               "in_id": 229,
-              "uplift": 4.87
+              "uplift": 4.69
             }
           ],
           "hit": 0,
@@ -1138,112 +935,21 @@
         {
           "gw": 9,
           "action": "TRANSFER",
-          "route": "B.Fernandes → Dewsbury-Hall",
+          "route": "Gabriel → Maitland-Niles",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "B.Fernandes → Dewsbury-Hall",
-              "out_id": 426,
-              "in_id": 236,
-              "uplift": 1.37
-            }
-          ],
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 236,
-          "enabler": false,
-          "bank_released": 5.3
-        },
-        {
-          "gw": 10,
-          "action": "TRANSFER",
-          "route": "Gabriel → Mfuni",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Gabriel → Mfuni",
+              "route": "Gabriel → Maitland-Niles",
               "out_id": 4,
-              "in_id": 656,
-              "uplift": 0.15
+              "in_id": 649,
+              "uplift": 1.66
             }
           ],
           "hit": 0,
           "out_id": 4,
-          "in_id": 656,
-          "enabler": true,
-          "bank_released": 3.9
-        }
-      ],
-      "expected_points": 264.56,
-      "p10_points": 222.83,
-      "p90_points": 310.89,
-      "expected_rank_after_path": 1.07,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.986,
-        0.991,
-        0.969,
-        0.983,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "ending_bank": 9.4,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 1,
-      "utility_score": 259.543,
-      "contains_enabler": true,
-      "unlock_sequence": {
-        "enabler_gw": 10,
-        "enabler_route": "Gabriel → Mfuni",
-        "bank_released": 3.9,
-        "follow_up_gw": null,
-        "follow_up_route": null,
-        "completed_unlock": false
-      }
-    },
-    {
-      "actions": [
-        {
-          "gw": 7,
-          "action": "ROLL"
-        },
-        {
-          "gw": 8,
-          "action": "ROLL"
-        },
-        {
-          "gw": 9,
-          "action": "TRANSFER",
-          "route": "Gabriel → Tarkowski + Hughes → Henderson + De Cuyper → Hall",
-          "transfer_count": 3,
-          "transfers": [
-            {
-              "route": "Gabriel → Tarkowski",
-              "out_id": 4,
-              "in_id": 229,
-              "uplift": 4.26
-            },
-            {
-              "route": "Hughes → Henderson",
-              "out_id": 212,
-              "in_id": 101,
-              "uplift": 6.52
-            },
-            {
-              "route": "De Cuyper → Hall",
-              "out_id": 115,
-              "in_id": 449,
-              "uplift": 1.72
-            }
-          ],
-          "hit": 0,
-          "out_id": 4,
-          "in_id": 229,
+          "in_id": 649,
           "enabler": false,
-          "bank_released": 1.7
+          "bank_released": 3.4
         },
         {
           "gw": 10,
@@ -1265,31 +971,249 @@
           "bank_released": 5.1
         }
       ],
-      "expected_points": 255.03,
-      "p10_points": 212.84,
-      "p90_points": 300.39,
+      "expected_points": 265.28,
+      "p10_points": 222.86,
+      "p90_points": 308.43,
       "expected_rank_after_path": 1.04,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.993,
+        0.988,
         0.996,
-        0.978,
+        0.985,
+        0.991,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "ending_bank": 8.7,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 1,
+      "utility_score": 260.341,
+      "contains_enabler": true,
+      "unlock_sequence": {
+        "enabler_gw": 10,
+        "enabler_route": "B.Fernandes → Ødegaard",
+        "bank_released": 5.1,
+        "follow_up_gw": null,
+        "follow_up_route": null,
+        "completed_unlock": false
+      }
+    },
+    {
+      "actions": [
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Schade → Henderson",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Schade → Henderson",
+              "out_id": 94,
+              "in_id": 101,
+              "uplift": 15.78
+            }
+          ],
+          "hit": 0,
+          "out_id": 94,
+          "in_id": 101,
+          "enabler": false,
+          "bank_released": 1.3
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "Maguire → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Maguire → Tarkowski",
+              "out_id": 418,
+              "in_id": 229,
+              "uplift": 4.69
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 229,
+          "enabler": false,
+          "bank_released": 0.0
+        },
+        {
+          "gw": 9,
+          "action": "TRANSFER",
+          "route": "Gabriel → Mendy",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Gabriel → Mendy",
+              "out_id": 4,
+              "in_id": 586,
+              "uplift": 1.39
+            }
+          ],
+          "hit": 0,
+          "out_id": 4,
+          "in_id": 586,
+          "enabler": false,
+          "bank_released": 3.8
+        },
+        {
+          "gw": 10,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Ødegaard",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "B.Fernandes → Ødegaard",
+              "out_id": 426,
+              "in_id": 15,
+              "uplift": 0.14
+            }
+          ],
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 15,
+          "enabler": true,
+          "bank_released": 5.1
+        }
+      ],
+      "expected_points": 264.92,
+      "p10_points": 223.48,
+      "p90_points": 306.63,
+      "expected_rank_after_path": 1.04,
+      "prob_gain_league_place": 0.0,
+      "prob_finish_ahead_each_rival": [
+        0.988,
+        0.996,
+        0.985,
         0.992,
         1.0,
         1.0,
         1.0,
         1.0
       ],
-      "ending_bank": 6.3,
+      "ending_bank": 9.1,
       "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": null,
-      "first_deadline_transfer_count": 0,
-      "utility_score": 250.101,
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 1,
+      "utility_score": 260.099,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 10,
         "enabler_route": "B.Fernandes → Ødegaard",
         "bank_released": 5.1,
+        "follow_up_gw": null,
+        "follow_up_route": null,
+        "completed_unlock": false
+      }
+    },
+    {
+      "actions": [
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Schade → Henderson",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Schade → Henderson",
+              "out_id": 94,
+              "in_id": 101,
+              "uplift": 15.78
+            }
+          ],
+          "hit": 0,
+          "out_id": 94,
+          "in_id": 101,
+          "enabler": false,
+          "bank_released": 1.3
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "Maguire → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Maguire → Tarkowski",
+              "out_id": 418,
+              "in_id": 229,
+              "uplift": 4.69
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 229,
+          "enabler": false,
+          "bank_released": 0.0
+        },
+        {
+          "gw": 9,
+          "action": "TRANSFER",
+          "route": "De Cuyper → Maitland-Niles",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "De Cuyper → Maitland-Niles",
+              "out_id": 115,
+              "in_id": 649,
+              "uplift": 1.42
+            }
+          ],
+          "hit": 0,
+          "out_id": 115,
+          "in_id": 649,
+          "enabler": false,
+          "bank_released": 0.5
+        },
+        {
+          "gw": 10,
+          "action": "TRANSFER",
+          "route": "Gabriel → Mfuni",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Gabriel → Mfuni",
+              "out_id": 4,
+              "in_id": 656,
+              "uplift": 0.15
+            }
+          ],
+          "hit": 0,
+          "out_id": 4,
+          "in_id": 656,
+          "enabler": true,
+          "bank_released": 3.9
+        }
+      ],
+      "expected_points": 264.94,
+      "p10_points": 221.5,
+      "p90_points": 309.0,
+      "expected_rank_after_path": 1.04,
+      "prob_gain_league_place": 0.0,
+      "prob_finish_ahead_each_rival": [
+        0.989,
+        0.997,
+        0.983,
+        0.994,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "ending_bank": 4.6,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 1,
+      "utility_score": 259.894,
+      "contains_enabler": true,
+      "unlock_sequence": {
+        "enabler_gw": 10,
+        "enabler_route": "Gabriel → Mfuni",
+        "bank_released": 3.9,
         "follow_up_gw": null,
         "follow_up_route": null,
         "completed_unlock": false
@@ -1315,7 +1239,7 @@
               "route": "Gabriel → Tarkowski",
               "out_id": 4,
               "in_id": 229,
-              "uplift": 4.26
+              "uplift": 4.19
             },
             {
               "route": "Hughes → Henderson",
@@ -1327,7 +1251,7 @@
               "route": "Maguire → Hall",
               "out_id": 418,
               "in_id": 449,
-              "uplift": 1.95
+              "uplift": 1.82
             }
           ],
           "hit": 0,
@@ -1356,16 +1280,16 @@
           "bank_released": 5.1
         }
       ],
-      "expected_points": 254.95,
-      "p10_points": 212.01,
-      "p90_points": 299.31,
-      "expected_rank_after_path": 1.05,
+      "expected_points": 255.81,
+      "p10_points": 214.43,
+      "p90_points": 298.13,
+      "expected_rank_after_path": 1.04,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.991,
-        0.994,
-        0.978,
         0.99,
+        0.997,
+        0.978,
+        0.992,
         1.0,
         1.0,
         1.0,
@@ -1375,7 +1299,98 @@
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": null,
       "first_deadline_transfer_count": 0,
-      "utility_score": 249.91,
+      "utility_score": 250.981,
+      "contains_enabler": true,
+      "unlock_sequence": {
+        "enabler_gw": 10,
+        "enabler_route": "B.Fernandes → Ødegaard",
+        "bank_released": 5.1,
+        "follow_up_gw": null,
+        "follow_up_route": null,
+        "completed_unlock": false
+      }
+    },
+    {
+      "actions": [
+        {
+          "gw": 7,
+          "action": "ROLL"
+        },
+        {
+          "gw": 8,
+          "action": "ROLL"
+        },
+        {
+          "gw": 9,
+          "action": "TRANSFER",
+          "route": "Gabriel → Tarkowski + Hughes → Henderson + De Cuyper → Hall",
+          "transfer_count": 3,
+          "transfers": [
+            {
+              "route": "Gabriel → Tarkowski",
+              "out_id": 4,
+              "in_id": 229,
+              "uplift": 4.19
+            },
+            {
+              "route": "Hughes → Henderson",
+              "out_id": 212,
+              "in_id": 101,
+              "uplift": 6.52
+            },
+            {
+              "route": "De Cuyper → Hall",
+              "out_id": 115,
+              "in_id": 449,
+              "uplift": 1.47
+            }
+          ],
+          "hit": 0,
+          "out_id": 4,
+          "in_id": 229,
+          "enabler": false,
+          "bank_released": 1.7
+        },
+        {
+          "gw": 10,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Ødegaard",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "B.Fernandes → Ødegaard",
+              "out_id": 426,
+              "in_id": 15,
+              "uplift": 0.14
+            }
+          ],
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 15,
+          "enabler": true,
+          "bank_released": 5.1
+        }
+      ],
+      "expected_points": 255.33,
+      "p10_points": 215.33,
+      "p90_points": 297.84,
+      "expected_rank_after_path": 1.04,
+      "prob_gain_league_place": 0.0,
+      "prob_finish_ahead_each_rival": [
+        0.986,
+        0.998,
+        0.979,
+        0.993,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "ending_bank": 6.3,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": null,
+      "first_deadline_transfer_count": 0,
+      "utility_score": 250.657,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 10,
@@ -1406,7 +1421,7 @@
               "route": "Gabriel → Tarkowski",
               "out_id": 4,
               "in_id": 229,
-              "uplift": 4.26
+              "uplift": 4.19
             },
             {
               "route": "Hughes → Henderson",
@@ -1447,16 +1462,16 @@
           "bank_released": 5.1
         }
       ],
-      "expected_points": 254.46,
-      "p10_points": 212.21,
-      "p90_points": 298.13,
-      "expected_rank_after_path": 1.06,
+      "expected_points": 255.35,
+      "p10_points": 214.94,
+      "p90_points": 297.89,
+      "expected_rank_after_path": 1.05,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.987,
-        0.995,
-        0.971,
-        0.988,
+        0.99,
+        0.994,
+        0.974,
+        0.989,
         1.0,
         1.0,
         1.0,
@@ -1466,7 +1481,7 @@
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": null,
       "first_deadline_transfer_count": 0,
-      "utility_score": 249.436,
+      "utility_score": 250.588,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 10,
