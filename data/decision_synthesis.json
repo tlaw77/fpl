@@ -1,6 +1,6 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-10-13T01:58:09.947714+00:00",
+  "generated_at_utc": "2026-10-13T09:18:32.265264+00:00",
   "version": 4,
   "current_gw": 6,
   "next_gw": 7,
@@ -8,7 +8,7 @@
     "action": "HOLD",
     "headline": "Hold / roll",
     "confidence": 77,
-    "reason": "The leading transfer edge is 17.0 projected points over holding and does not yet clear the full evidence hurdle with sufficient agreement on that exact route. Holding moves the bank from 1/5 to 2/5; no free transfer expires. The outgoing player has the easier immediate fixture; the move can wait unless other evidence changes.",
+    "reason": "The leading transfer edge is 15.4 projected points over holding and does not yet clear the full evidence hurdle with sufficient agreement on that exact route. Holding moves the bank from 1/5 to 2/5; no free transfer expires. The outgoing player has the easier immediate fixture; the move can wait unless other evidence changes.",
     "completed_transfer": null,
     "free_transfers_remaining": 1,
     "free_transfer_cap": 5,
@@ -19,7 +19,7 @@
   "robustness": {
     "season_maturity_weight": 0.5,
     "single_step_leader": "Cherki → Henderson",
-    "single_step_edge_over_hold_6gw": 17.04,
+    "single_step_edge_over_hold_6gw": 15.42,
     "multi_gw_first_action": "Schade → Henderson",
     "adaptive_rival_first_action": "Schade → Henderson",
     "exact_route_consensus_models": 2,
@@ -37,7 +37,7 @@
     "multi_transfer_required_edge": 3.5,
     "active_route": "Cherki → Henderson",
     "active_route_type": "single_transfer_challenger",
-    "active_edge_over_hold_6gw": 17.04,
+    "active_edge_over_hold_6gw": 15.42,
     "active_required_edge": 2.0,
     "active_validation_kind": "model_agreement",
     "active_validation_label": "Model agreement",
@@ -81,7 +81,7 @@
           "route": "Schade → Henderson",
           "out_id": 94,
           "in_id": 101,
-          "uplift": 15.65
+          "uplift": 13.7
         }
       ],
       "hit": 0,
@@ -98,7 +98,7 @@
           "route": "Schade → Henderson",
           "out_id": 94,
           "in_id": 101,
-          "uplift": 15.65
+          "uplift": 13.7
         }
       ],
       "hit": 0,
@@ -121,41 +121,29 @@
       "later_action": {
         "gw": 9,
         "action": "TRANSFER",
-        "route": "Gabriel → Tarkowski + Hughes → Henderson + Calvert-Lewin → Cherif",
-        "transfer_count": 3,
+        "route": "Schade → Henderson",
+        "transfer_count": 1,
         "transfers": [
           {
-            "route": "Gabriel → Tarkowski",
-            "out_id": 4,
-            "in_id": 229,
-            "uplift": 4.49
-          },
-          {
-            "route": "Hughes → Henderson",
-            "out_id": 212,
+            "route": "Schade → Henderson",
+            "out_id": 94,
             "in_id": 101,
-            "uplift": 6.2
-          },
-          {
-            "route": "Calvert-Lewin → Cherif",
-            "out_id": 346,
-            "in_id": 599,
-            "uplift": 2.09
+            "uplift": 5.89
           }
         ],
         "hit": 0,
-        "out_id": 4,
-        "in_id": 229
+        "out_id": 94,
+        "in_id": 101
       },
       "transfer_count_now": 0,
       "free_transfers_before": 1,
       "free_transfers_after_deadline": 2,
       "hit_cost": 0,
-      "expected_points": 257.66,
-      "p10_points": 218.3,
-      "p90_points": 299.01,
+      "expected_points": 256.49,
+      "p10_points": 214.89,
+      "p90_points": 300.12,
       "edge_vs_roll": 0.0,
-      "ending_bank": 2.2,
+      "ending_bank": 3.1,
       "ending_free_transfers": 1,
       "actions": [
         {
@@ -169,48 +157,48 @@
         {
           "gw": 9,
           "action": "TRANSFER",
-          "route": "Gabriel → Tarkowski + Hughes → Henderson + Calvert-Lewin → Cherif",
+          "route": "Schade → Henderson",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Schade → Henderson",
+              "out_id": 94,
+              "in_id": 101,
+              "uplift": 5.89
+            }
+          ],
+          "hit": 0,
+          "out_id": 94,
+          "in_id": 101
+        },
+        {
+          "gw": 10,
+          "action": "TRANSFER",
+          "route": "Gabriel → Tarkowski + Tzolakis → Raya + Cherki → Dewsbury-Hall",
           "transfer_count": 3,
           "transfers": [
             {
               "route": "Gabriel → Tarkowski",
               "out_id": 4,
               "in_id": 229,
-              "uplift": 4.49
+              "uplift": 2.15
             },
             {
-              "route": "Hughes → Henderson",
-              "out_id": 212,
-              "in_id": 101,
-              "uplift": 6.2
+              "route": "Tzolakis → Raya",
+              "out_id": 572,
+              "in_id": 1,
+              "uplift": 1.34
             },
             {
-              "route": "Calvert-Lewin → Cherif",
-              "out_id": 346,
-              "in_id": 599,
-              "uplift": 2.09
+              "route": "Cherki → Dewsbury-Hall",
+              "out_id": 399,
+              "in_id": 236,
+              "uplift": 0.93
             }
           ],
           "hit": 0,
           "out_id": 4,
           "in_id": 229
-        },
-        {
-          "gw": 10,
-          "action": "TRANSFER",
-          "route": "Tzolakis → Trafford",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Tzolakis → Trafford",
-              "out_id": 572,
-              "in_id": 385,
-              "uplift": 1.1
-            }
-          ],
-          "hit": 0,
-          "out_id": 572,
-          "in_id": 385
         }
       ]
     },
@@ -230,7 +218,7 @@
             "route": "Schade → Henderson",
             "out_id": 94,
             "in_id": 101,
-            "uplift": 15.65
+            "uplift": 13.7
           }
         ],
         "hit": 0,
@@ -258,11 +246,11 @@
       "free_transfers_before": 1,
       "free_transfers_after_deadline": 1,
       "hit_cost": 0,
-      "expected_points": 268.29,
-      "p10_points": 227.25,
-      "p90_points": 311.17,
-      "edge_vs_roll": 10.63,
-      "ending_bank": 4.0,
+      "expected_points": 269.32,
+      "p10_points": 224.84,
+      "p90_points": 313.78,
+      "edge_vs_roll": 12.83,
+      "ending_bank": 2.9,
       "ending_free_transfers": 1,
       "actions": [
         {
@@ -275,7 +263,7 @@
               "route": "Schade → Henderson",
               "out_id": 94,
               "in_id": 101,
-              "uplift": 15.65
+              "uplift": 13.7
             }
           ],
           "hit": 0,
@@ -319,19 +307,19 @@
         {
           "gw": 10,
           "action": "TRANSFER",
-          "route": "Tzolakis → Trafford",
+          "route": "Tzolakis → Raya",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Tzolakis → Trafford",
+              "route": "Tzolakis → Raya",
               "out_id": 572,
-              "in_id": 385,
-              "uplift": 1.1
+              "in_id": 1,
+              "uplift": 1.34
             }
           ],
           "hit": 0,
           "out_id": 572,
-          "in_id": 385
+          "in_id": 1
         }
       ]
     },
@@ -353,41 +341,29 @@
       "later_action": {
         "gw": 9,
         "action": "TRANSFER",
-        "route": "Gabriel → Tarkowski + Hughes → Henderson + Calvert-Lewin → Cherif",
-        "transfer_count": 3,
+        "route": "Schade → Henderson",
+        "transfer_count": 1,
         "transfers": [
           {
-            "route": "Gabriel → Tarkowski",
-            "out_id": 4,
-            "in_id": 229,
-            "uplift": 4.49
-          },
-          {
-            "route": "Hughes → Henderson",
-            "out_id": 212,
+            "route": "Schade → Henderson",
+            "out_id": 94,
             "in_id": 101,
-            "uplift": 6.2
-          },
-          {
-            "route": "Calvert-Lewin → Cherif",
-            "out_id": 346,
-            "in_id": 599,
-            "uplift": 2.09
+            "uplift": 5.89
           }
         ],
         "hit": 0,
-        "out_id": 4,
-        "in_id": 229
+        "out_id": 94,
+        "in_id": 101
       },
       "transfer_count_now": 0,
       "free_transfers_before": 1,
       "free_transfers_after_deadline": 2,
       "hit_cost": 0,
-      "expected_points": 257.66,
-      "p10_points": 218.3,
-      "p90_points": 299.01,
+      "expected_points": 256.49,
+      "p10_points": 214.89,
+      "p90_points": 300.12,
       "edge_vs_roll": 0.0,
-      "ending_bank": 2.2,
+      "ending_bank": 3.1,
       "ending_free_transfers": 1,
       "actions": [
         {
@@ -401,55 +377,55 @@
         {
           "gw": 9,
           "action": "TRANSFER",
-          "route": "Gabriel → Tarkowski + Hughes → Henderson + Calvert-Lewin → Cherif",
+          "route": "Schade → Henderson",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Schade → Henderson",
+              "out_id": 94,
+              "in_id": 101,
+              "uplift": 5.89
+            }
+          ],
+          "hit": 0,
+          "out_id": 94,
+          "in_id": 101
+        },
+        {
+          "gw": 10,
+          "action": "TRANSFER",
+          "route": "Gabriel → Tarkowski + Tzolakis → Raya + Cherki → Dewsbury-Hall",
           "transfer_count": 3,
           "transfers": [
             {
               "route": "Gabriel → Tarkowski",
               "out_id": 4,
               "in_id": 229,
-              "uplift": 4.49
+              "uplift": 2.15
             },
             {
-              "route": "Hughes → Henderson",
-              "out_id": 212,
-              "in_id": 101,
-              "uplift": 6.2
+              "route": "Tzolakis → Raya",
+              "out_id": 572,
+              "in_id": 1,
+              "uplift": 1.34
             },
             {
-              "route": "Calvert-Lewin → Cherif",
-              "out_id": 346,
-              "in_id": 599,
-              "uplift": 2.09
+              "route": "Cherki → Dewsbury-Hall",
+              "out_id": 399,
+              "in_id": 236,
+              "uplift": 0.93
             }
           ],
           "hit": 0,
           "out_id": 4,
           "in_id": 229
-        },
-        {
-          "gw": 10,
-          "action": "TRANSFER",
-          "route": "Tzolakis → Trafford",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Tzolakis → Trafford",
-              "out_id": 572,
-              "in_id": 385,
-              "uplift": 1.1
-            }
-          ],
-          "hit": 0,
-          "out_id": 572,
-          "in_id": 385
         }
       ]
     }
   ],
   "chips": {
     "action": "HOLD",
-    "reason": "Hold chips. Best visible TC uplift is 0.0 and BB uplift is 12.7, but the first-half portfolio remains comfortable with 10 slack Gameweeks. Preserve option value for stronger blank/double or squad-structure windows.",
+    "reason": "Hold chips. Best visible TC uplift is 0.0 and BB uplift is 12.8, but the first-half portfolio remains comfortable with 10 slack Gameweeks. Preserve option value for stronger blank/double or squad-structure windows.",
     "best_visible_triple_captain": {},
     "best_visible_bench_boost": {
       "actions": [
@@ -463,7 +439,7 @@
               "route": "Schade → Henderson",
               "out_id": 94,
               "in_id": 101,
-              "uplift": 15.65
+              "uplift": 13.7
             }
           ],
           "hit": 0,
@@ -524,22 +500,22 @@
       ],
       "chip": "Bench Boost",
       "chip_gw": 10,
-      "expected_points": 280.8,
-      "chip_incremental_expected_points": 12.66,
-      "p10_points": 237.85,
-      "p90_points": 324.17,
+      "expected_points": 281.05,
+      "chip_incremental_expected_points": 12.78,
+      "p10_points": 239.1,
+      "p90_points": 326.92,
       "expected_rank_after_path": 1.01,
       "prob_finish_ahead_each_rival": [
-        0.997,
-        1.0,
-        0.991,
         0.998,
+        0.999,
+        0.991,
+        0.999,
         1.0,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 275.579
+      "utility_score": 275.946
     },
     "portfolio_pressure": "comfortable",
     "latest_safe_start_gw": 17
