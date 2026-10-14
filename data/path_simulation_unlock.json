@@ -1,6 +1,6 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-10-14T06:39:27.398098+00:00",
+  "generated_at_utc": "2026-10-14T12:50:30.688496+00:00",
   "engine_version": 7,
   "planner": "bounded same-deadline multi-transfer beam search + GW-specific shared-outcome Monte Carlo + live FT state + season calibration + shared captaincy + deadline-aware sampling + enabling-downgrade retention",
   "projection_model": "season-maturity calibrated + shared captaincy model",
@@ -12,12 +12,12 @@
     10
   ],
   "beam_width": 18,
-  "iterations": 1200,
+  "iterations": 1600,
   "iteration_policy": {
     "layer": "path",
-    "deadline_phase": "normal",
-    "hours_to_deadline": 75.36,
-    "iterations": 1200,
+    "deadline_phase": "approaching",
+    "hours_to_deadline": 69.18,
+    "iterations": 1600,
     "policy": "lighter normal-week sampling; higher precision inside 72h/24h/6h of official FPL deadline"
   },
   "starting_free_transfers": 1,
@@ -207,16 +207,16 @@
         "bank_released": 9.6
       }
     ],
-    "expected_points": 269.09,
-    "p10_points": 227.66,
-    "p90_points": 314.81,
-    "expected_rank_after_path": 1.04,
+    "expected_points": 266.27,
+    "p10_points": 224.37,
+    "p90_points": 309.35,
+    "expected_rank_after_path": 1.06,
     "prob_gain_league_place": 0.0,
     "prob_finish_ahead_each_rival": [
-      0.988,
-      0.996,
-      0.983,
+      0.977,
       0.994,
+      0.978,
+      0.993,
       1.0,
       1.0,
       1.0,
@@ -226,7 +226,7 @@
     "ending_free_transfers": 1,
     "first_transfer_incoming_starts": true,
     "first_deadline_transfer_count": 1,
-    "utility_score": 264.268,
+    "utility_score": 261.298,
     "contains_enabler": true,
     "unlock_sequence": {
       "enabler_gw": 10,
@@ -317,16 +317,16 @@
           "bank_released": 9.6
         }
       ],
-      "expected_points": 269.09,
-      "p10_points": 227.66,
-      "p90_points": 314.81,
-      "expected_rank_after_path": 1.04,
+      "expected_points": 266.27,
+      "p10_points": 224.37,
+      "p90_points": 309.35,
+      "expected_rank_after_path": 1.06,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.988,
-        0.996,
-        0.983,
+        0.977,
         0.994,
+        0.978,
+        0.993,
         1.0,
         1.0,
         1.0,
@@ -336,7 +336,7 @@
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
       "first_deadline_transfer_count": 1,
-      "utility_score": 264.268,
+      "utility_score": 261.298,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 10,
@@ -426,16 +426,16 @@
           "bank_released": 9.6
         }
       ],
-      "expected_points": 269.09,
-      "p10_points": 227.66,
-      "p90_points": 314.81,
-      "expected_rank_after_path": 1.04,
+      "expected_points": 266.27,
+      "p10_points": 224.37,
+      "p90_points": 309.35,
+      "expected_rank_after_path": 1.06,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.988,
-        0.996,
-        0.983,
+        0.977,
         0.994,
+        0.978,
+        0.993,
         1.0,
         1.0,
         1.0,
@@ -445,7 +445,116 @@
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
       "first_deadline_transfer_count": 1,
-      "utility_score": 264.268,
+      "utility_score": 261.298,
+      "contains_enabler": true,
+      "unlock_sequence": {
+        "enabler_gw": 10,
+        "enabler_route": "Haaland → Calvert-Lewin",
+        "bank_released": 9.6,
+        "follow_up_gw": null,
+        "follow_up_route": null,
+        "completed_unlock": false
+      }
+    },
+    {
+      "actions": [
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Schade → Henderson",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Schade → Henderson",
+              "out_id": 94,
+              "in_id": 101,
+              "uplift": 13.7
+            }
+          ],
+          "hit": 0,
+          "out_id": 94,
+          "in_id": 101,
+          "enabler": false,
+          "bank_released": 1.3
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "Calvert-Lewin → Cherif",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Calvert-Lewin → Cherif",
+              "out_id": 346,
+              "in_id": 599,
+              "uplift": 4.02
+            }
+          ],
+          "hit": 0,
+          "out_id": 346,
+          "in_id": 599,
+          "enabler": false,
+          "bank_released": 1.0
+        },
+        {
+          "gw": 9,
+          "action": "TRANSFER",
+          "route": "De Cuyper → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "De Cuyper → Tarkowski",
+              "out_id": 115,
+              "in_id": 229,
+              "uplift": 3.95
+            }
+          ],
+          "hit": 0,
+          "out_id": 115,
+          "in_id": 229,
+          "enabler": false,
+          "bank_released": 0.0
+        },
+        {
+          "gw": 10,
+          "action": "TRANSFER",
+          "route": "Haaland → Calvert-Lewin",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Haaland → Calvert-Lewin",
+              "out_id": 411,
+              "in_id": 346,
+              "uplift": 0.08
+            }
+          ],
+          "hit": 0,
+          "out_id": 411,
+          "in_id": 346,
+          "enabler": true,
+          "bank_released": 9.6
+        }
+      ],
+      "expected_points": 265.97,
+      "p10_points": 224.39,
+      "p90_points": 309.27,
+      "expected_rank_after_path": 1.06,
+      "prob_gain_league_place": 0.0,
+      "prob_finish_ahead_each_rival": [
+        0.974,
+        0.994,
+        0.978,
+        0.994,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "ending_bank": 11.1,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 1,
+      "utility_score": 261.029,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 10,
@@ -535,16 +644,16 @@
           "bank_released": 11.2
         }
       ],
-      "expected_points": 268.99,
-      "p10_points": 228.18,
-      "p90_points": 313.53,
-      "expected_rank_after_path": 1.04,
+      "expected_points": 266.04,
+      "p10_points": 223.5,
+      "p90_points": 309.21,
+      "expected_rank_after_path": 1.06,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.988,
-        0.998,
-        0.98,
-        0.997,
+        0.979,
+        0.994,
+        0.977,
+        0.993,
         1.0,
         1.0,
         1.0,
@@ -554,7 +663,7 @@
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
       "first_deadline_transfer_count": 1,
-      "utility_score": 264.253,
+      "utility_score": 260.999,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 10,
@@ -644,16 +753,16 @@
           "bank_released": 3.5
         }
       ],
-      "expected_points": 268.58,
-      "p10_points": 228.14,
-      "p90_points": 313.33,
-      "expected_rank_after_path": 1.03,
+      "expected_points": 265.55,
+      "p10_points": 223.34,
+      "p90_points": 308.71,
+      "expected_rank_after_path": 1.06,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.989,
-        0.996,
-        0.983,
-        0.997,
+        0.978,
+        0.995,
+        0.977,
+        0.994,
         1.0,
         1.0,
         1.0,
@@ -663,339 +772,12 @@
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
       "first_deadline_transfer_count": 1,
-      "utility_score": 263.903,
+      "utility_score": 260.549,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 10,
         "enabler_route": "Cherki → Crooks",
         "bank_released": 3.5,
-        "follow_up_gw": null,
-        "follow_up_route": null,
-        "completed_unlock": false
-      }
-    },
-    {
-      "actions": [
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "Schade → Henderson",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Schade → Henderson",
-              "out_id": 94,
-              "in_id": 101,
-              "uplift": 13.7
-            }
-          ],
-          "hit": 0,
-          "out_id": 94,
-          "in_id": 101,
-          "enabler": false,
-          "bank_released": 1.3
-        },
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "Calvert-Lewin → Cherif",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Calvert-Lewin → Cherif",
-              "out_id": 346,
-              "in_id": 599,
-              "uplift": 4.02
-            }
-          ],
-          "hit": 0,
-          "out_id": 346,
-          "in_id": 599,
-          "enabler": false,
-          "bank_released": 1.0
-        },
-        {
-          "gw": 9,
-          "action": "TRANSFER",
-          "route": "De Cuyper → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "De Cuyper → Tarkowski",
-              "out_id": 115,
-              "in_id": 229,
-              "uplift": 3.95
-            }
-          ],
-          "hit": 0,
-          "out_id": 115,
-          "in_id": 229,
-          "enabler": false,
-          "bank_released": 0.0
-        },
-        {
-          "gw": 10,
-          "action": "TRANSFER",
-          "route": "Haaland → Calvert-Lewin",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Haaland → Calvert-Lewin",
-              "out_id": 411,
-              "in_id": 346,
-              "uplift": 0.08
-            }
-          ],
-          "hit": 0,
-          "out_id": 411,
-          "in_id": 346,
-          "enabler": true,
-          "bank_released": 9.6
-        }
-      ],
-      "expected_points": 268.62,
-      "p10_points": 227.89,
-      "p90_points": 313.58,
-      "expected_rank_after_path": 1.04,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.985,
-        0.994,
-        0.982,
-        0.994,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "ending_bank": 11.1,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 1,
-      "utility_score": 263.855,
-      "contains_enabler": true,
-      "unlock_sequence": {
-        "enabler_gw": 10,
-        "enabler_route": "Haaland → Calvert-Lewin",
-        "bank_released": 9.6,
-        "follow_up_gw": null,
-        "follow_up_route": null,
-        "completed_unlock": false
-      }
-    },
-    {
-      "actions": [
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "Schade → Henderson",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Schade → Henderson",
-              "out_id": 94,
-              "in_id": 101,
-              "uplift": 13.7
-            }
-          ],
-          "hit": 0,
-          "out_id": 94,
-          "in_id": 101,
-          "enabler": false,
-          "bank_released": 1.3
-        },
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "Gabriel → Mfuni",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Gabriel → Mfuni",
-              "out_id": 4,
-              "in_id": 656,
-              "uplift": 4.02
-            }
-          ],
-          "hit": 0,
-          "out_id": 4,
-          "in_id": 656,
-          "enabler": false,
-          "bank_released": 3.9
-        },
-        {
-          "gw": 9,
-          "action": "TRANSFER",
-          "route": "Affengruber → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Tarkowski",
-              "out_id": 650,
-              "in_id": 229,
-              "uplift": 3.42
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
-          "in_id": 229,
-          "enabler": false,
-          "bank_released": 0.0
-        },
-        {
-          "gw": 10,
-          "action": "TRANSFER",
-          "route": "Cherki → Crooks",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Cherki → Crooks",
-              "out_id": 399,
-              "in_id": 289,
-              "uplift": 0.0
-            }
-          ],
-          "hit": 0,
-          "out_id": 399,
-          "in_id": 289,
-          "enabler": true,
-          "bank_released": 3.5
-        }
-      ],
-      "expected_points": 268.32,
-      "p10_points": 226.52,
-      "p90_points": 312.01,
-      "expected_rank_after_path": 1.04,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.988,
-        0.996,
-        0.983,
-        0.997,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "ending_bank": 7.3,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 1,
-      "utility_score": 263.47,
-      "contains_enabler": true,
-      "unlock_sequence": {
-        "enabler_gw": 10,
-        "enabler_route": "Cherki → Crooks",
-        "bank_released": 3.5,
-        "follow_up_gw": null,
-        "follow_up_route": null,
-        "completed_unlock": false
-      }
-    },
-    {
-      "actions": [
-        {
-          "gw": 7,
-          "action": "TRANSFER",
-          "route": "Schade → Henderson",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Schade → Henderson",
-              "out_id": 94,
-              "in_id": 101,
-              "uplift": 13.7
-            }
-          ],
-          "hit": 0,
-          "out_id": 94,
-          "in_id": 101,
-          "enabler": false,
-          "bank_released": 1.3
-        },
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "Calvert-Lewin → Cherif",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Calvert-Lewin → Cherif",
-              "out_id": 346,
-              "in_id": 599,
-              "uplift": 4.02
-            }
-          ],
-          "hit": 0,
-          "out_id": 346,
-          "in_id": 599,
-          "enabler": false,
-          "bank_released": 1.0
-        },
-        {
-          "gw": 9,
-          "action": "TRANSFER",
-          "route": "Affengruber → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Tarkowski",
-              "out_id": 650,
-              "in_id": 229,
-              "uplift": 3.42
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
-          "in_id": 229,
-          "enabler": false,
-          "bank_released": 0.0
-        },
-        {
-          "gw": 10,
-          "action": "TRANSFER",
-          "route": "Haaland → Calvert-Lewin",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Haaland → Calvert-Lewin",
-              "out_id": 411,
-              "in_id": 346,
-              "uplift": 0.08
-            }
-          ],
-          "hit": 0,
-          "out_id": 411,
-          "in_id": 346,
-          "enabler": true,
-          "bank_released": 9.6
-        }
-      ],
-      "expected_points": 268.32,
-      "p10_points": 226.83,
-      "p90_points": 313.74,
-      "expected_rank_after_path": 1.04,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.984,
-        0.995,
-        0.982,
-        0.994,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "ending_bank": 10.5,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 1,
-      "utility_score": 263.465,
-      "contains_enabler": true,
-      "unlock_sequence": {
-        "enabler_gw": 10,
-        "enabler_route": "Haaland → Calvert-Lewin",
-        "bank_released": 9.6,
         "follow_up_gw": null,
         "follow_up_route": null,
         "completed_unlock": false
@@ -1080,16 +862,16 @@
           "bank_released": 9.6
         }
       ],
-      "expected_points": 267.88,
-      "p10_points": 225.45,
-      "p90_points": 312.93,
-      "expected_rank_after_path": 1.04,
+      "expected_points": 265.35,
+      "p10_points": 224.4,
+      "p90_points": 308.69,
+      "expected_rank_after_path": 1.06,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.988,
-        0.995,
         0.981,
-        0.992,
+        0.994,
+        0.98,
+        0.988,
         1.0,
         1.0,
         1.0,
@@ -1099,7 +881,116 @@
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
       "first_deadline_transfer_count": 1,
-      "utility_score": 262.915,
+      "utility_score": 260.497,
+      "contains_enabler": true,
+      "unlock_sequence": {
+        "enabler_gw": 10,
+        "enabler_route": "Haaland → Calvert-Lewin",
+        "bank_released": 9.6,
+        "follow_up_gw": null,
+        "follow_up_route": null,
+        "completed_unlock": false
+      }
+    },
+    {
+      "actions": [
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Schade → Henderson",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Schade → Henderson",
+              "out_id": 94,
+              "in_id": 101,
+              "uplift": 13.7
+            }
+          ],
+          "hit": 0,
+          "out_id": 94,
+          "in_id": 101,
+          "enabler": false,
+          "bank_released": 1.3
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "Calvert-Lewin → Cherif",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Calvert-Lewin → Cherif",
+              "out_id": 346,
+              "in_id": 599,
+              "uplift": 4.02
+            }
+          ],
+          "hit": 0,
+          "out_id": 346,
+          "in_id": 599,
+          "enabler": false,
+          "bank_released": 1.0
+        },
+        {
+          "gw": 9,
+          "action": "TRANSFER",
+          "route": "Affengruber → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Affengruber → Tarkowski",
+              "out_id": 650,
+              "in_id": 229,
+              "uplift": 3.42
+            }
+          ],
+          "hit": 0,
+          "out_id": 650,
+          "in_id": 229,
+          "enabler": false,
+          "bank_released": 0.0
+        },
+        {
+          "gw": 10,
+          "action": "TRANSFER",
+          "route": "Haaland → Calvert-Lewin",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Haaland → Calvert-Lewin",
+              "out_id": 411,
+              "in_id": 346,
+              "uplift": 0.08
+            }
+          ],
+          "hit": 0,
+          "out_id": 411,
+          "in_id": 346,
+          "enabler": true,
+          "bank_released": 9.6
+        }
+      ],
+      "expected_points": 265.5,
+      "p10_points": 222.29,
+      "p90_points": 308.67,
+      "expected_rank_after_path": 1.06,
+      "prob_gain_league_place": 0.0,
+      "prob_finish_ahead_each_rival": [
+        0.976,
+        0.994,
+        0.977,
+        0.994,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "ending_bank": 10.5,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 1,
+      "utility_score": 260.362,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 10,
@@ -1189,16 +1080,16 @@
           "bank_released": 9.6
         }
       ],
-      "expected_points": 267.79,
-      "p10_points": 226.29,
-      "p90_points": 312.08,
-      "expected_rank_after_path": 1.05,
+      "expected_points": 265.17,
+      "p10_points": 224.63,
+      "p90_points": 308.04,
+      "expected_rank_after_path": 1.06,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.984,
-        0.993,
-        0.982,
-        0.99,
+        0.979,
+        0.996,
+        0.974,
+        0.987,
         1.0,
         1.0,
         1.0,
@@ -1208,12 +1099,121 @@
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
       "first_deadline_transfer_count": 1,
-      "utility_score": 262.905,
+      "utility_score": 260.334,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 10,
         "enabler_route": "Haaland → Calvert-Lewin",
         "bank_released": 9.6,
+        "follow_up_gw": null,
+        "follow_up_route": null,
+        "completed_unlock": false
+      }
+    },
+    {
+      "actions": [
+        {
+          "gw": 7,
+          "action": "TRANSFER",
+          "route": "Schade → Henderson",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Schade → Henderson",
+              "out_id": 94,
+              "in_id": 101,
+              "uplift": 13.7
+            }
+          ],
+          "hit": 0,
+          "out_id": 94,
+          "in_id": 101,
+          "enabler": false,
+          "bank_released": 1.3
+        },
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "Gabriel → Mfuni",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Gabriel → Mfuni",
+              "out_id": 4,
+              "in_id": 656,
+              "uplift": 4.02
+            }
+          ],
+          "hit": 0,
+          "out_id": 4,
+          "in_id": 656,
+          "enabler": false,
+          "bank_released": 3.9
+        },
+        {
+          "gw": 9,
+          "action": "TRANSFER",
+          "route": "Affengruber → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Affengruber → Tarkowski",
+              "out_id": 650,
+              "in_id": 229,
+              "uplift": 3.42
+            }
+          ],
+          "hit": 0,
+          "out_id": 650,
+          "in_id": 229,
+          "enabler": false,
+          "bank_released": 0.0
+        },
+        {
+          "gw": 10,
+          "action": "TRANSFER",
+          "route": "Cherki → Crooks",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Cherki → Crooks",
+              "out_id": 399,
+              "in_id": 289,
+              "uplift": 0.0
+            }
+          ],
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 289,
+          "enabler": true,
+          "bank_released": 3.5
+        }
+      ],
+      "expected_points": 265.31,
+      "p10_points": 223.18,
+      "p90_points": 309.33,
+      "expected_rank_after_path": 1.06,
+      "prob_gain_league_place": 0.0,
+      "prob_finish_ahead_each_rival": [
+        0.979,
+        0.996,
+        0.974,
+        0.994,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "ending_bank": 7.3,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 1,
+      "utility_score": 260.31,
+      "contains_enabler": true,
+      "unlock_sequence": {
+        "enabler_gw": 10,
+        "enabler_route": "Cherki → Crooks",
+        "bank_released": 3.5,
         "follow_up_gw": null,
         "follow_up_route": null,
         "completed_unlock": false
@@ -1289,16 +1289,16 @@
           "bank_released": 3.5
         }
       ],
-      "expected_points": 257.92,
-      "p10_points": 216.61,
-      "p90_points": 304.58,
-      "expected_rank_after_path": 1.06,
+      "expected_points": 254.94,
+      "p10_points": 214.17,
+      "p90_points": 295.9,
+      "expected_rank_after_path": 1.08,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.974,
-        0.991,
-        0.977,
-        0.994,
+        0.969,
+        0.992,
+        0.969,
+        0.988,
         1.0,
         1.0,
         1.0,
@@ -1308,7 +1308,7 @@
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": null,
       "first_deadline_transfer_count": 0,
-      "utility_score": 252.995,
+      "utility_score": 249.989,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 8,
@@ -1389,17 +1389,17 @@
           "bank_released": 3.5
         }
       ],
-      "expected_points": 257.47,
-      "p10_points": 216.24,
-      "p90_points": 304.22,
-      "expected_rank_after_path": 1.06,
+      "expected_points": 254.71,
+      "p10_points": 214.08,
+      "p90_points": 295.9,
+      "expected_rank_after_path": 1.08,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.979,
-        0.992,
-        0.976,
+        0.971,
         0.994,
-        1.0,
+        0.968,
+        0.989,
+        0.999,
         1.0,
         1.0,
         1.0
@@ -1408,7 +1408,7 @@
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": null,
       "first_deadline_transfer_count": 0,
-      "utility_score": 252.577,
+      "utility_score": 249.792,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 8,
@@ -1489,16 +1489,16 @@
           "bank_released": 3.5
         }
       ],
-      "expected_points": 257.42,
-      "p10_points": 216.38,
-      "p90_points": 302.62,
-      "expected_rank_after_path": 1.07,
+      "expected_points": 254.6,
+      "p10_points": 214.06,
+      "p90_points": 296.28,
+      "expected_rank_after_path": 1.09,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.973,
-        0.991,
-        0.977,
-        0.993,
+        0.966,
+        0.992,
+        0.969,
+        0.988,
         1.0,
         1.0,
         1.0,
@@ -1508,7 +1508,7 @@
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": null,
       "first_deadline_transfer_count": 0,
-      "utility_score": 252.506,
+      "utility_score": 249.653,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 8,
