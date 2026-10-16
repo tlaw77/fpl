@@ -1,5 +1,5 @@
 (()=>{
-const BUILD='free-transfer-portfolio-stage117-20261016-1',KEY='fplWorkingPlanV2',POOL_URL='https://raw.githubusercontent.com/tlaw77/fpl/main/data/player_pool.json';
+const BUILD='free-transfer-portfolio-stage117-20261016-2',KEY='fplWorkingPlanV2',POOL_URL='https://raw.githubusercontent.com/tlaw77/fpl/main/data/player_pool.json';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
 const n=(v,d=0)=>Number.isFinite(Number(v))?Number(v):d;
 const q=(s,r=document)=>r.querySelector(s);
