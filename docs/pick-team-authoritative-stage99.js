@@ -1,6 +1,7 @@
 (()=>{
-const BUILD='pick-team-authoritative-stage99-20260912-1';
+const BUILD='pick-team-authoritative-stage99-20261016-1';
 const BASE='https://raw.githubusercontent.com/tlaw77/fpl/main/data/';
+const PLAN_KEY='fplWorkingPlanV2';
 const q=(s,r=document)=>r.querySelector(s), n=(v,d=0)=>Number.isFinite(Number(v))?Number(v):d;
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
 let loading=null;
@@ -21,19 +22,29 @@ function rationale(review){const rows=Array.isArray(review?.selection_rationale)
 function captainRationale(review){const c=review?.captain||{},v=review?.vice_captain||{};return `<div class="a99-cap-head"><div><strong>${esc(c.player||'—')} · C</strong><span>${n(c.expected_points).toFixed(2)} xPts · captain score ${n(c.captaincy_score).toFixed(2)}</span></div>${review?.confidence?`<b>${esc(review.confidence)}% confidence</b>`:''}</div><ul>${(c.reasons||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ul>${v?.player?`<div class="a99-vice">Vice: <strong>${esc(v.player)}</strong> · ${n(v.expected_points).toFixed(2)} xPts · gap ${n(review?.score_edge_to_second).toFixed(2)}</div>`:''}`}
 function completedTransfer(latest){const a=latest?.decision_synthesis?.current_action||{},c=a.completed_transfer;if(c&&Number(c.event)===Number(latest?.next_gw))return c;return null}
 function transferContext(latest){const c=completedTransfer(latest);if(!c)return'';return `<div class="a99-transfer-context"><span>GW${esc(c.event||latest?.next_gw||'—')} squad includes</span><strong>${esc(c.route||'completed transfer')}</strong><b>APPLIED ✓</b></div>`}
+function workingPlan(){try{return JSON.parse(localStorage.getItem(PLAN_KEY)||'null')}catch{return null}}
+function effectiveSquad(base,poolRows,plan=workingPlan()){
+ const rows=Array.isArray(base)?base:[],api=window.FPLWorkingPlan;
+ if(!api?.pending?.(rows,plan))return rows.map(x=>({...x}));
+ return api.apply(rows,[...(poolRows||[]),...rows],plan);
+}
 function render(latest,review,pool){
  const host=q('#dc-team-view');if(!host||review?.status!=='SUCCESS')return;
  const ids=(review.recommended_xi_ids||[]).map(Number);if(ids.length!==11)return;
  const base=latest?.current_squad_next5||latest?.squad_next5||latest?.current_squad||latest?.squad||[];
- const poolRows=pool?.players||[];const byId=new Map([...poolRows,...base].map(x=>[Number(x.player_id),x]));
- const squad=base.map(x=>byId.get(Number(x.player_id))||x),xi=ids.map(id=>byId.get(id)).filter(Boolean);if(xi.length!==11)return;
- const idSet=new Set(ids),benchByModel=(review?.bench_order_ids||[]).map(Number),benchRaw=squad.filter(x=>!idSet.has(Number(x.player_id))),bench=benchByModel.length?benchByModel.map(id=>byId.get(id)).filter(Boolean):benchRaw.sort((a,b)=>posOrder(a)-posOrder(b));
+ const poolRows=pool?.players||[],squad=effectiveSquad(base,poolRows),squadById=new Map(squad.map(x=>[Number(x.player_id),x]));
+ const xi=ids.map(id=>squadById.get(id)).filter(Boolean),old=host.querySelector('[data-authoritative-pick-team]');
+ // A model XI can contain a proposed transfer that the user has not selected. In that
+ // case leave the client-side squad view authoritative instead of creating a 16-player
+ // hybrid with the proposed player plus the outgoing player still on the bench.
+ if(squad.length!==15||xi.length!==11){old?.remove();host.querySelectorAll('.pitch-panel,.pitch-bench-panel,.selection-rationale').forEach(el=>el.style.removeProperty('display'));return}
+ const idSet=new Set(ids),benchByModel=(review?.bench_order_ids||[]).map(Number),benchRaw=squad.filter(x=>!idSet.has(Number(x.player_id))),ordered=benchByModel.map(id=>squadById.get(id)).filter(p=>p&&!idSet.has(Number(p.player_id))),orderedIds=new Set(ordered.map(p=>Number(p.player_id))),bench=[...ordered,...benchRaw.filter(p=>!orderedIds.has(Number(p.player_id))).sort((a,b)=>posOrder(a)-posOrder(b))];
  const by={GKP:[],DEF:[],MID:[],FWD:[]};xi.forEach(p=>by[p.position]?.push(p));
  const formation=['DEF','MID','FWD'].map(pos=>by[pos].length).join('-');
  const capId=Number(review?.captain?.player_id||0),vcId=Number(review?.vice_captain?.player_id||0);
- const cap=byId.get(capId)||review.captain||{},vc=byId.get(vcId)||review.vice_captain||{},expMap=exposureMap(latest);
+ const cap=squadById.get(capId)||review.captain||{},vc=squadById.get(vcId)||review.vice_captain||{},expMap=exposureMap(latest);
  const benchValue=bench.reduce((s,p)=>s+n(p?.price),0),bank=n(latest?.current_bank??latest?.me?.bank),reasonByPlayer=new Map((review?.selection_rationale||[]).map(r=>[String(r.player||'').trim().toLowerCase(),r]));
- host.querySelector('[data-authoritative-pick-team]')?.remove();
+ old?.remove();
  const sec=document.createElement('section');sec.className='a99-card';sec.dataset.authoritativePickTeam='1';
  sec.innerHTML=`<div class="a99-head"><div><p class="eyebrow">PICK TEAM · AUTHORITATIVE</p><h2>${esc(formation)} · GW${esc(review.next_gw||latest?.next_gw||'—')}</h2><p>${esc(cap.player||'—')} captain · ${esc(vc.player||'—')} vice</p></div><span>MODEL XI</span></div>${transferContext(latest)}<div class="a99-pitch"><div class="a99-pitch-lines"></div>${row('GK',by.GKP,capId,vcId,expMap)}${row('DEF',by.DEF,capId,vcId,expMap)}${row('MID',by.MID,capId,vcId,expMap)}${row('FWD',by.FWD,capId,vcId,expMap)}</div><div class="a99-legend"><span>🛡 shield</span><span>• neutral</span><span>🎯 leverage</span><span>EO relative to your league</span></div><div class="a99-bench"><div class="a99-bench-head"><div><p class="a99-label">BENCH · TAP FOR WHY</p><small>Selection reasoning is layered into each player</small></div><span>£${benchValue.toFixed(1)}m bench · £${bank.toFixed(1)}m bank</span></div>${bench.map(p=>benchTile(p,reasonByPlayer.get(String(p?.player||'').trim().toLowerCase()))).join('')}</div><details class="a99-explain"><summary>Captaincy summary</summary><div class="a99-explain-body">${captainRationale(review)}</div></details><details><summary>Why this is authoritative</summary><p>The pitch, formation, bench, explanations and armband all come from the shared calibrated selection/captaincy model also used by the simulations. The visual layer no longer chooses its own XI.</p></details>`;
  const mode=host.querySelector('[data-global-phase-strip]');if(mode)mode.insertAdjacentElement('afterend',sec);else host.prepend(sec);
@@ -42,6 +53,7 @@ function render(latest,review,pool){
  document.documentElement.dataset.pickTeamAuthoritativeBuild=BUILD;
 }
 async function run(){if(loading)return loading;loading=Promise.all([get('latest.json'),get('captaincy_review.json'),get('player_pool.json')]).then(([l,r,p])=>render(l,r,p)).finally(()=>loading=null);return loading}
-function bind(){q('#decision-nav button[data-view="team"]')?.addEventListener('click',()=>setTimeout(run,80),{passive:true});window.addEventListener('fplCoreDataReady',()=>{if(q('.dashboard-view.active')?.id==='view-team')setTimeout(run,120)},{passive:true});window.addEventListener('fplViewSettled',e=>{if(e.detail?.viewName==='team')setTimeout(run,80)},{passive:true});if(q('.dashboard-view.active')?.id==='view-team')run()}
+function bind(){q('#decision-nav button[data-view="team"]')?.addEventListener('click',()=>setTimeout(run,80),{passive:true});window.addEventListener('fplCoreDataReady',()=>{if(q('.dashboard-view.active')?.id==='view-team')setTimeout(run,120)},{passive:true});window.addEventListener('fplViewSettled',e=>{if(e.detail?.viewName==='team')setTimeout(run,80)},{passive:true});window.addEventListener('fplSafePlanUpdated',()=>{if(q('.dashboard-view.active')?.id==='view-team')setTimeout(run,80)},{passive:true});if(q('.dashboard-view.active')?.id==='view-team')run()}
+window.FPLPickTeamAuthoritativeTest={effectiveSquad};
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind,{once:true});else bind();
 })();
