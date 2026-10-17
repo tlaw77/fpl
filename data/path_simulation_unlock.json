@@ -1,6 +1,6 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-10-17T19:42:25.399245+00:00",
+  "generated_at_utc": "2026-10-17T22:11:03.765998+00:00",
   "engine_version": 7,
   "planner": "bounded same-deadline multi-transfer beam search + GW-specific shared-outcome Monte Carlo + live FT state + season calibration + shared captaincy + deadline-aware sampling + enabling-downgrade retention",
   "projection_model": "season-maturity calibrated + shared captaincy model",
@@ -16,7 +16,7 @@
   "iteration_policy": {
     "layer": "path",
     "deadline_phase": "normal",
-    "hours_to_deadline": 141.82,
+    "hours_to_deadline": 139.34,
     "iterations": 1200,
     "policy": "lighter normal-week sampling; higher precision inside 72h/24h/6h of official FPL deadline"
   },
@@ -152,92 +152,419 @@
       {
         "gw": 9,
         "action": "TRANSFER",
-        "route": "Maguire → Tarkowski",
+        "route": "Gabriel → Mfuni",
         "transfer_count": 1,
         "transfers": [
           {
-            "route": "Maguire → Tarkowski",
-            "out_id": 418,
-            "in_id": 229,
-            "uplift": 5.54
+            "route": "Gabriel → Mfuni",
+            "out_id": 4,
+            "in_id": 656,
+            "uplift": 5.16
           }
         ],
         "hit": 0,
-        "out_id": 418,
+        "out_id": 4,
+        "in_id": 656,
+        "enabler": false,
+        "bank_released": 3.9
+      },
+      {
+        "gw": 10,
+        "action": "TRANSFER",
+        "route": "Affengruber → Tarkowski",
+        "transfer_count": 1,
+        "transfers": [
+          {
+            "route": "Affengruber → Tarkowski",
+            "out_id": 650,
+            "in_id": 229,
+            "uplift": 3.06
+          }
+        ],
+        "hit": 0,
+        "out_id": 650,
         "in_id": 229,
         "enabler": false,
         "bank_released": 0.0
       },
       {
-        "gw": 10,
-        "action": "TRANSFER",
-        "route": "B.Fernandes → Hinshelwood",
-        "transfer_count": 1,
-        "transfers": [
-          {
-            "route": "B.Fernandes → Hinshelwood",
-            "out_id": 426,
-            "in_id": 123,
-            "uplift": 3.04
-          }
-        ],
-        "hit": 0,
-        "out_id": 426,
-        "in_id": 123,
-        "enabler": false,
-        "bank_released": 5.9
-      },
-      {
         "gw": 11,
         "action": "TRANSFER",
-        "route": "Gabriel → Hadjam",
+        "route": "B.Fernandes → Gakpo",
         "transfer_count": 1,
         "transfers": [
           {
-            "route": "Gabriel → Hadjam",
-            "out_id": 4,
-            "in_id": 614,
+            "route": "B.Fernandes → Gakpo",
+            "out_id": 426,
+            "in_id": 367,
             "uplift": 0.09
           }
         ],
         "hit": 0,
-        "out_id": 4,
-        "in_id": 614,
+        "out_id": 426,
+        "in_id": 367,
         "enabler": true,
-        "bank_released": 3.4
+        "bank_released": 4.7
       }
     ],
-    "expected_points": 266.33,
-    "p10_points": 225.78,
-    "p90_points": 306.91,
-    "expected_rank_after_path": 1.07,
+    "expected_points": 269.0,
+    "p10_points": 230.41,
+    "p90_points": 312.1,
+    "expected_rank_after_path": 1.06,
     "prob_gain_league_place": 0.0,
     "prob_finish_ahead_each_rival": [
-      0.947,
+      0.951,
       0.993,
-      0.993,
+      0.992,
       1.0,
       1.0,
       1.0,
       1.0,
       1.0
     ],
-    "ending_bank": 10.4,
+    "ending_bank": 9.4,
     "ending_free_transfers": 1,
     "first_transfer_incoming_starts": true,
     "first_deadline_transfer_count": 1,
-    "utility_score": 261.475,
+    "utility_score": 264.397,
     "contains_enabler": true,
     "unlock_sequence": {
       "enabler_gw": 11,
-      "enabler_route": "Gabriel → Hadjam",
-      "bank_released": 3.4,
+      "enabler_route": "B.Fernandes → Gakpo",
+      "bank_released": 4.7,
       "follow_up_gw": null,
       "follow_up_route": null,
       "completed_unlock": false
     }
   },
   "paths": [
+    {
+      "actions": [
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "Calvert-Lewin → Cherif",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Calvert-Lewin → Cherif",
+              "out_id": 346,
+              "in_id": 599,
+              "uplift": 7.21
+            }
+          ],
+          "hit": 0,
+          "out_id": 346,
+          "in_id": 599,
+          "enabler": false,
+          "bank_released": 1.0
+        },
+        {
+          "gw": 9,
+          "action": "TRANSFER",
+          "route": "Gabriel → Mfuni",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Gabriel → Mfuni",
+              "out_id": 4,
+              "in_id": 656,
+              "uplift": 5.16
+            }
+          ],
+          "hit": 0,
+          "out_id": 4,
+          "in_id": 656,
+          "enabler": false,
+          "bank_released": 3.9
+        },
+        {
+          "gw": 10,
+          "action": "TRANSFER",
+          "route": "Affengruber → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Affengruber → Tarkowski",
+              "out_id": 650,
+              "in_id": 229,
+              "uplift": 3.06
+            }
+          ],
+          "hit": 0,
+          "out_id": 650,
+          "in_id": 229,
+          "enabler": false,
+          "bank_released": 0.0
+        },
+        {
+          "gw": 11,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Gakpo",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "B.Fernandes → Gakpo",
+              "out_id": 426,
+              "in_id": 367,
+              "uplift": 0.09
+            }
+          ],
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 367,
+          "enabler": true,
+          "bank_released": 4.7
+        }
+      ],
+      "expected_points": 269.0,
+      "p10_points": 230.41,
+      "p90_points": 312.1,
+      "expected_rank_after_path": 1.06,
+      "prob_gain_league_place": 0.0,
+      "prob_finish_ahead_each_rival": [
+        0.951,
+        0.993,
+        0.992,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "ending_bank": 9.4,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 1,
+      "utility_score": 264.397,
+      "contains_enabler": true,
+      "unlock_sequence": {
+        "enabler_gw": 11,
+        "enabler_route": "B.Fernandes → Gakpo",
+        "bank_released": 4.7,
+        "follow_up_gw": null,
+        "follow_up_route": null,
+        "completed_unlock": false
+      }
+    },
+    {
+      "actions": [
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "Calvert-Lewin → Cherif",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Calvert-Lewin → Cherif",
+              "out_id": 346,
+              "in_id": 599,
+              "uplift": 7.21
+            }
+          ],
+          "hit": 0,
+          "out_id": 346,
+          "in_id": 599,
+          "enabler": false,
+          "bank_released": 1.0
+        },
+        {
+          "gw": 9,
+          "action": "TRANSFER",
+          "route": "Gabriel → Mfuni",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Gabriel → Mfuni",
+              "out_id": 4,
+              "in_id": 656,
+              "uplift": 5.16
+            }
+          ],
+          "hit": 0,
+          "out_id": 4,
+          "in_id": 656,
+          "enabler": false,
+          "bank_released": 3.9
+        },
+        {
+          "gw": 10,
+          "action": "TRANSFER",
+          "route": "Maguire → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Maguire → Tarkowski",
+              "out_id": 418,
+              "in_id": 229,
+              "uplift": 3.06
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 229,
+          "enabler": false,
+          "bank_released": 0.0
+        },
+        {
+          "gw": 11,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Gakpo",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "B.Fernandes → Gakpo",
+              "out_id": 426,
+              "in_id": 367,
+              "uplift": 0.09
+            }
+          ],
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 367,
+          "enabler": true,
+          "bank_released": 4.7
+        }
+      ],
+      "expected_points": 269.0,
+      "p10_points": 230.41,
+      "p90_points": 312.1,
+      "expected_rank_after_path": 1.06,
+      "prob_gain_league_place": 0.0,
+      "prob_finish_ahead_each_rival": [
+        0.951,
+        0.993,
+        0.992,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "ending_bank": 9.7,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 1,
+      "utility_score": 264.397,
+      "contains_enabler": true,
+      "unlock_sequence": {
+        "enabler_gw": 11,
+        "enabler_route": "B.Fernandes → Gakpo",
+        "bank_released": 4.7,
+        "follow_up_gw": null,
+        "follow_up_route": null,
+        "completed_unlock": false
+      }
+    },
+    {
+      "actions": [
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "Calvert-Lewin → Cherif",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Calvert-Lewin → Cherif",
+              "out_id": 346,
+              "in_id": 599,
+              "uplift": 7.21
+            }
+          ],
+          "hit": 0,
+          "out_id": 346,
+          "in_id": 599,
+          "enabler": false,
+          "bank_released": 1.0
+        },
+        {
+          "gw": 9,
+          "action": "TRANSFER",
+          "route": "Maguire → Mfuni",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Maguire → Mfuni",
+              "out_id": 418,
+              "in_id": 656,
+              "uplift": 5.16
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 656,
+          "enabler": false,
+          "bank_released": 0.8
+        },
+        {
+          "gw": 10,
+          "action": "TRANSFER",
+          "route": "Affengruber → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Affengruber → Tarkowski",
+              "out_id": 650,
+              "in_id": 229,
+              "uplift": 3.06
+            }
+          ],
+          "hit": 0,
+          "out_id": 650,
+          "in_id": 229,
+          "enabler": false,
+          "bank_released": 0.0
+        },
+        {
+          "gw": 11,
+          "action": "TRANSFER",
+          "route": "Gabriel → Hadjam",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Gabriel → Hadjam",
+              "out_id": 4,
+              "in_id": 614,
+              "uplift": 0.09
+            }
+          ],
+          "hit": 0,
+          "out_id": 4,
+          "in_id": 614,
+          "enabler": true,
+          "bank_released": 3.4
+        }
+      ],
+      "expected_points": 268.92,
+      "p10_points": 229.95,
+      "p90_points": 311.96,
+      "expected_rank_after_path": 1.07,
+      "prob_gain_league_place": 0.0,
+      "prob_finish_ahead_each_rival": [
+        0.951,
+        0.992,
+        0.989,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "ending_bank": 5.0,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 1,
+      "utility_score": 264.252,
+      "contains_enabler": true,
+      "unlock_sequence": {
+        "enabler_gw": 11,
+        "enabler_route": "Gabriel → Hadjam",
+        "bank_released": 3.4,
+        "follow_up_gw": null,
+        "follow_up_route": null,
+        "completed_unlock": false
+      }
+    },
     {
       "actions": [
         {
@@ -317,15 +644,15 @@
           "bank_released": 3.4
         }
       ],
-      "expected_points": 266.33,
-      "p10_points": 225.78,
-      "p90_points": 306.91,
-      "expected_rank_after_path": 1.07,
+      "expected_points": 268.92,
+      "p10_points": 227.81,
+      "p90_points": 310.35,
+      "expected_rank_after_path": 1.08,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.947,
+        0.939,
         0.993,
-        0.993,
+        0.987,
         1.0,
         1.0,
         1.0,
@@ -336,12 +663,121 @@
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
       "first_deadline_transfer_count": 1,
-      "utility_score": 261.475,
+      "utility_score": 263.935,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 11,
         "enabler_route": "Gabriel → Hadjam",
         "bank_released": 3.4,
+        "follow_up_gw": null,
+        "follow_up_route": null,
+        "completed_unlock": false
+      }
+    },
+    {
+      "actions": [
+        {
+          "gw": 8,
+          "action": "TRANSFER",
+          "route": "Calvert-Lewin → Cherif",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Calvert-Lewin → Cherif",
+              "out_id": 346,
+              "in_id": 599,
+              "uplift": 7.21
+            }
+          ],
+          "hit": 0,
+          "out_id": 346,
+          "in_id": 599,
+          "enabler": false,
+          "bank_released": 1.0
+        },
+        {
+          "gw": 9,
+          "action": "TRANSFER",
+          "route": "Gabriel → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Gabriel → Tarkowski",
+              "out_id": 4,
+              "in_id": 229,
+              "uplift": 5.54
+            }
+          ],
+          "hit": 0,
+          "out_id": 4,
+          "in_id": 229,
+          "enabler": false,
+          "bank_released": 1.7
+        },
+        {
+          "gw": 10,
+          "action": "TRANSFER",
+          "route": "Hughes → Hinshelwood",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Hughes → Hinshelwood",
+              "out_id": 212,
+              "in_id": 123,
+              "uplift": 3.04
+            }
+          ],
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 123,
+          "enabler": false,
+          "bank_released": 0.0
+        },
+        {
+          "gw": 11,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → McAteer",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "B.Fernandes → McAteer",
+              "out_id": 426,
+              "in_id": 323,
+              "uplift": 0.0
+            }
+          ],
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 323,
+          "enabler": true,
+          "bank_released": 7.4
+        }
+      ],
+      "expected_points": 268.71,
+      "p10_points": 227.78,
+      "p90_points": 310.67,
+      "expected_rank_after_path": 1.08,
+      "prob_gain_league_place": 0.0,
+      "prob_finish_ahead_each_rival": [
+        0.939,
+        0.993,
+        0.989,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "ending_bank": 10.1,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 1,
+      "utility_score": 263.749,
+      "contains_enabler": true,
+      "unlock_sequence": {
+        "enabler_gw": 11,
+        "enabler_route": "B.Fernandes → McAteer",
+        "bank_released": 7.4,
         "follow_up_gw": null,
         "follow_up_route": null,
         "completed_unlock": false
@@ -426,15 +862,15 @@
           "bank_released": 3.4
         }
       ],
-      "expected_points": 266.47,
-      "p10_points": 224.2,
-      "p90_points": 310.86,
-      "expected_rank_after_path": 1.06,
+      "expected_points": 268.68,
+      "p10_points": 227.13,
+      "p90_points": 310.73,
+      "expected_rank_after_path": 1.07,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.953,
-        0.995,
-        0.993,
+        0.946,
+        0.992,
+        0.989,
         1.0,
         0.999,
         1.0,
@@ -445,7 +881,7 @@
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
       "first_deadline_transfer_count": 1,
-      "utility_score": 261.449,
+      "utility_score": 263.676,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 11,
@@ -535,15 +971,15 @@
           "bank_released": 3.4
         }
       ],
-      "expected_points": 266.47,
-      "p10_points": 224.2,
-      "p90_points": 310.86,
-      "expected_rank_after_path": 1.06,
+      "expected_points": 268.68,
+      "p10_points": 227.13,
+      "p90_points": 310.73,
+      "expected_rank_after_path": 1.07,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.953,
-        0.995,
-        0.993,
+        0.946,
+        0.992,
+        0.989,
         1.0,
         0.999,
         1.0,
@@ -554,116 +990,7 @@
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
       "first_deadline_transfer_count": 1,
-      "utility_score": 261.449,
-      "contains_enabler": true,
-      "unlock_sequence": {
-        "enabler_gw": 11,
-        "enabler_route": "Gabriel → Hadjam",
-        "bank_released": 3.4,
-        "follow_up_gw": null,
-        "follow_up_route": null,
-        "completed_unlock": false
-      }
-    },
-    {
-      "actions": [
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "Calvert-Lewin → Cherif",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Calvert-Lewin → Cherif",
-              "out_id": 346,
-              "in_id": 599,
-              "uplift": 7.21
-            }
-          ],
-          "hit": 0,
-          "out_id": 346,
-          "in_id": 599,
-          "enabler": false,
-          "bank_released": 1.0
-        },
-        {
-          "gw": 9,
-          "action": "TRANSFER",
-          "route": "Maguire → Mfuni",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Mfuni",
-              "out_id": 418,
-              "in_id": 656,
-              "uplift": 5.16
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 656,
-          "enabler": false,
-          "bank_released": 0.8
-        },
-        {
-          "gw": 10,
-          "action": "TRANSFER",
-          "route": "Affengruber → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Tarkowski",
-              "out_id": 650,
-              "in_id": 229,
-              "uplift": 3.06
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
-          "in_id": 229,
-          "enabler": false,
-          "bank_released": 0.0
-        },
-        {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Gabriel → Hadjam",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Gabriel → Hadjam",
-              "out_id": 4,
-              "in_id": 614,
-              "uplift": 0.09
-            }
-          ],
-          "hit": 0,
-          "out_id": 4,
-          "in_id": 614,
-          "enabler": true,
-          "bank_released": 3.4
-        }
-      ],
-      "expected_points": 266.34,
-      "p10_points": 224.13,
-      "p90_points": 309.66,
-      "expected_rank_after_path": 1.06,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.953,
-        0.994,
-        0.995,
-        1.0,
-        0.999,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "ending_bank": 5.0,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 1,
-      "utility_score": 261.33,
+      "utility_score": 263.676,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 11,
@@ -753,15 +1080,15 @@
           "bank_released": 7.4
         }
       ],
-      "expected_points": 266.39,
-      "p10_points": 223.86,
-      "p90_points": 310.56,
-      "expected_rank_after_path": 1.06,
+      "expected_points": 268.47,
+      "p10_points": 227.86,
+      "p90_points": 310.87,
+      "expected_rank_after_path": 1.08,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.951,
-        0.996,
-        0.993,
+        0.942,
+        0.991,
+        0.989,
         1.0,
         0.999,
         1.0,
@@ -772,7 +1099,7 @@
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
       "first_deadline_transfer_count": 1,
-      "utility_score": 261.33,
+      "utility_score": 263.548,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 11,
@@ -862,15 +1189,15 @@
           "bank_released": 4.7
         }
       ],
-      "expected_points": 266.22,
-      "p10_points": 224.54,
-      "p90_points": 310.77,
-      "expected_rank_after_path": 1.06,
+      "expected_points": 268.26,
+      "p10_points": 227.86,
+      "p90_points": 312.88,
+      "expected_rank_after_path": 1.09,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.951,
-        0.995,
-        0.992,
+        0.93,
+        0.993,
+        0.987,
         1.0,
         1.0,
         1.0,
@@ -881,334 +1208,7 @@
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
       "first_deadline_transfer_count": 1,
-      "utility_score": 261.259,
-      "contains_enabler": true,
-      "unlock_sequence": {
-        "enabler_gw": 11,
-        "enabler_route": "B.Fernandes → Gakpo",
-        "bank_released": 4.7,
-        "follow_up_gw": null,
-        "follow_up_route": null,
-        "completed_unlock": false
-      }
-    },
-    {
-      "actions": [
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "Calvert-Lewin → Cherif",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Calvert-Lewin → Cherif",
-              "out_id": 346,
-              "in_id": 599,
-              "uplift": 7.21
-            }
-          ],
-          "hit": 0,
-          "out_id": 346,
-          "in_id": 599,
-          "enabler": false,
-          "bank_released": 1.0
-        },
-        {
-          "gw": 9,
-          "action": "TRANSFER",
-          "route": "Gabriel → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Gabriel → Tarkowski",
-              "out_id": 4,
-              "in_id": 229,
-              "uplift": 5.54
-            }
-          ],
-          "hit": 0,
-          "out_id": 4,
-          "in_id": 229,
-          "enabler": false,
-          "bank_released": 1.7
-        },
-        {
-          "gw": 10,
-          "action": "TRANSFER",
-          "route": "Hughes → Hinshelwood",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Hughes → Hinshelwood",
-              "out_id": 212,
-              "in_id": 123,
-              "uplift": 3.04
-            }
-          ],
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 123,
-          "enabler": false,
-          "bank_released": 0.0
-        },
-        {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → McAteer",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "B.Fernandes → McAteer",
-              "out_id": 426,
-              "in_id": 323,
-              "uplift": 0.0
-            }
-          ],
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 323,
-          "enabler": true,
-          "bank_released": 7.4
-        }
-      ],
-      "expected_points": 266.24,
-      "p10_points": 224.01,
-      "p90_points": 308.58,
-      "expected_rank_after_path": 1.07,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.946,
-        0.996,
-        0.991,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "ending_bank": 10.1,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 1,
-      "utility_score": 261.189,
-      "contains_enabler": true,
-      "unlock_sequence": {
-        "enabler_gw": 11,
-        "enabler_route": "B.Fernandes → McAteer",
-        "bank_released": 7.4,
-        "follow_up_gw": null,
-        "follow_up_route": null,
-        "completed_unlock": false
-      }
-    },
-    {
-      "actions": [
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "Calvert-Lewin → Cherif",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Calvert-Lewin → Cherif",
-              "out_id": 346,
-              "in_id": 599,
-              "uplift": 7.21
-            }
-          ],
-          "hit": 0,
-          "out_id": 346,
-          "in_id": 599,
-          "enabler": false,
-          "bank_released": 1.0
-        },
-        {
-          "gw": 9,
-          "action": "TRANSFER",
-          "route": "Gabriel → Mfuni",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Gabriel → Mfuni",
-              "out_id": 4,
-              "in_id": 656,
-              "uplift": 5.16
-            }
-          ],
-          "hit": 0,
-          "out_id": 4,
-          "in_id": 656,
-          "enabler": false,
-          "bank_released": 3.9
-        },
-        {
-          "gw": 10,
-          "action": "TRANSFER",
-          "route": "Affengruber → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Tarkowski",
-              "out_id": 650,
-              "in_id": 229,
-              "uplift": 3.06
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
-          "in_id": 229,
-          "enabler": false,
-          "bank_released": 0.0
-        },
-        {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Gakpo",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "B.Fernandes → Gakpo",
-              "out_id": 426,
-              "in_id": 367,
-              "uplift": 0.09
-            }
-          ],
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 367,
-          "enabler": true,
-          "bank_released": 4.7
-        }
-      ],
-      "expected_points": 266.26,
-      "p10_points": 222.88,
-      "p90_points": 311.47,
-      "expected_rank_after_path": 1.06,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.95,
-        0.993,
-        0.994,
-        1.0,
-        0.999,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "ending_bank": 9.4,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 1,
-      "utility_score": 261.089,
-      "contains_enabler": true,
-      "unlock_sequence": {
-        "enabler_gw": 11,
-        "enabler_route": "B.Fernandes → Gakpo",
-        "bank_released": 4.7,
-        "follow_up_gw": null,
-        "follow_up_route": null,
-        "completed_unlock": false
-      }
-    },
-    {
-      "actions": [
-        {
-          "gw": 8,
-          "action": "TRANSFER",
-          "route": "Calvert-Lewin → Cherif",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Calvert-Lewin → Cherif",
-              "out_id": 346,
-              "in_id": 599,
-              "uplift": 7.21
-            }
-          ],
-          "hit": 0,
-          "out_id": 346,
-          "in_id": 599,
-          "enabler": false,
-          "bank_released": 1.0
-        },
-        {
-          "gw": 9,
-          "action": "TRANSFER",
-          "route": "Gabriel → Mfuni",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Gabriel → Mfuni",
-              "out_id": 4,
-              "in_id": 656,
-              "uplift": 5.16
-            }
-          ],
-          "hit": 0,
-          "out_id": 4,
-          "in_id": 656,
-          "enabler": false,
-          "bank_released": 3.9
-        },
-        {
-          "gw": 10,
-          "action": "TRANSFER",
-          "route": "Maguire → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Tarkowski",
-              "out_id": 418,
-              "in_id": 229,
-              "uplift": 3.06
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 229,
-          "enabler": false,
-          "bank_released": 0.0
-        },
-        {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Gakpo",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "B.Fernandes → Gakpo",
-              "out_id": 426,
-              "in_id": 367,
-              "uplift": 0.09
-            }
-          ],
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 367,
-          "enabler": true,
-          "bank_released": 4.7
-        }
-      ],
-      "expected_points": 266.26,
-      "p10_points": 222.88,
-      "p90_points": 311.47,
-      "expected_rank_after_path": 1.06,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.95,
-        0.993,
-        0.994,
-        1.0,
-        0.999,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "ending_bank": 9.7,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 1,
-      "utility_score": 261.089,
+      "utility_score": 263.308,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 11,
@@ -1280,17 +1280,17 @@
           "bank_released": 0.5
         }
       ],
-      "expected_points": 261.07,
-      "p10_points": 219.82,
-      "p90_points": 303.91,
-      "expected_rank_after_path": 1.09,
+      "expected_points": 262.93,
+      "p10_points": 224.67,
+      "p90_points": 306.56,
+      "expected_rank_after_path": 1.1,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.927,
-        0.991,
+        0.922,
         0.992,
+        0.988,
         1.0,
-        0.999,
+        0.998,
         1.0,
         1.0,
         1.0
@@ -1299,7 +1299,7 @@
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": null,
       "first_deadline_transfer_count": 0,
-      "utility_score": 256.02,
+      "utility_score": 258.181,
       "contains_enabler": false
     },
     {
@@ -1357,17 +1357,17 @@
           "bank_released": 0.5
         }
       ],
-      "expected_points": 260.51,
-      "p10_points": 219.7,
-      "p90_points": 302.36,
-      "expected_rank_after_path": 1.09,
+      "expected_points": 262.11,
+      "p10_points": 223.31,
+      "p90_points": 303.5,
+      "expected_rank_after_path": 1.11,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.924,
-        0.993,
+        0.915,
         0.992,
+        0.986,
         1.0,
-        0.999,
+        0.998,
         1.0,
         1.0,
         1.0
@@ -1376,7 +1376,7 @@
       "ending_free_transfers": 2,
       "first_transfer_incoming_starts": null,
       "first_deadline_transfer_count": 0,
-      "utility_score": 255.851,
+      "utility_score": 257.605,
       "contains_enabler": false
     },
     {
@@ -1434,17 +1434,17 @@
           "bank_released": 7.4
         }
       ],
-      "expected_points": 258.25,
-      "p10_points": 217.92,
-      "p90_points": 300.11,
-      "expected_rank_after_path": 1.11,
+      "expected_points": 259.69,
+      "p10_points": 220.53,
+      "p90_points": 301.46,
+      "expected_rank_after_path": 1.13,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.916,
-        0.989,
-        0.988,
+        0.903,
+        0.986,
+        0.982,
         1.0,
-        0.999,
+        0.998,
         1.0,
         1.0,
         1.0
@@ -1453,7 +1453,7 @@
       "ending_free_transfers": 2,
       "first_transfer_incoming_starts": null,
       "first_deadline_transfer_count": 0,
-      "utility_score": 253.575,
+      "utility_score": 255.036,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 11,
