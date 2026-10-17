@@ -1,8 +1,8 @@
 {
   "version": 4,
-  "generated_at_utc": "2026-10-17T06:02:35.906272+00:00",
+  "generated_at_utc": "2026-10-17T11:06:02.654442+00:00",
   "entry_id": 5332809,
-  "current_gw": 6,
+  "current_gw": 7,
   "weeks": [
     {
       "event": 1,
@@ -345,6 +345,101 @@
         }
       ],
       "source": "official_fpl_history"
+    },
+    {
+      "event": 7,
+      "captain_id": 124,
+      "captain_name": "Groß",
+      "vice_id": 411,
+      "vice_name": "Haaland",
+      "active_chip": null,
+      "transfers": [
+        {
+          "event": 7,
+          "time": "2026-10-15T21:33:11.859039Z",
+          "element_out": 94,
+          "out_name": "Schade",
+          "element_in": 101,
+          "in_name": "Henderson",
+          "out_cost": 6.1,
+          "in_cost": 4.9,
+          "source": "official_transfer_history",
+          "status": "confirmed",
+          "recommendation_context": {
+            "matched": true,
+            "match_type": "exact_route",
+            "snapshot_at_utc": "2026-10-13T17:05:12.946722+00:00",
+            "strategy": "Balanced+ / controlled leverage",
+            "team_rank_at_snapshot": 1,
+            "bank_at_snapshot": 0.3,
+            "lenses": [
+              {
+                "type": "lower_variance",
+                "label": "Lower variance",
+                "model_uplift": 12.883,
+                "target_rival_ownership_pct": 0.0,
+                "next3": [
+                  {
+                    "gw": 7,
+                    "opponent": "Everton",
+                    "venue": "A",
+                    "fdr": 3
+                  },
+                  {
+                    "gw": 8,
+                    "opponent": "Spurs",
+                    "venue": "H",
+                    "fdr": 2
+                  },
+                  {
+                    "gw": 9,
+                    "opponent": "Man Utd",
+                    "venue": "H",
+                    "fdr": 4
+                  }
+                ],
+                "rationale": [
+                  "Next-3 fixtures: Everton A FDR 3, Spurs H FDR 2, Man Utd H FDR 4",
+                  "Nearest-rival ownership 0%: ownership context only; the football case still leads.",
+                  "Model uplift 12.9 versus the outgoing player on the dashboard heuristic."
+                ]
+              },
+              {
+                "type": "variety",
+                "label": "Leverage",
+                "model_uplift": 17.133,
+                "target_rival_ownership_pct": 0.0,
+                "next3": [
+                  {
+                    "gw": 7,
+                    "opponent": "Everton",
+                    "venue": "A",
+                    "fdr": 3
+                  },
+                  {
+                    "gw": 8,
+                    "opponent": "Spurs",
+                    "venue": "H",
+                    "fdr": 2
+                  },
+                  {
+                    "gw": 9,
+                    "opponent": "Man Utd",
+                    "venue": "H",
+                    "fdr": 4
+                  }
+                ],
+                "rationale": [
+                  "Next-3 fixtures: Everton A FDR 3, Spurs H FDR 2, Man Utd H FDR 4",
+                  "Nearest-rival ownership 0%: lower ownership can add leverage if the football case is strong.",
+                  "Model uplift 17.1 versus the outgoing player on the dashboard heuristic."
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "source": "official_fpl_history"
     }
   ],
   "decisions": [
@@ -621,6 +716,90 @@
               "Next-3 fixtures: Everton H FDR 3, Fulham A FDR 3, Brentford H FDR 3",
               "Nearest-rival ownership 0%: lower ownership can add leverage if the football case is strong.",
               "Model uplift 11.1 versus the outgoing player on the dashboard heuristic."
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "event": 7,
+      "time": "2026-10-15T21:33:11.859039Z",
+      "element_out": 94,
+      "out_name": "Schade",
+      "element_in": 101,
+      "in_name": "Henderson",
+      "out_cost": 6.1,
+      "in_cost": 4.9,
+      "source": "official_transfer_history",
+      "status": "confirmed",
+      "recommendation_context": {
+        "matched": true,
+        "match_type": "exact_route",
+        "snapshot_at_utc": "2026-10-13T17:05:12.946722+00:00",
+        "strategy": "Balanced+ / controlled leverage",
+        "team_rank_at_snapshot": 1,
+        "bank_at_snapshot": 0.3,
+        "lenses": [
+          {
+            "type": "lower_variance",
+            "label": "Lower variance",
+            "model_uplift": 12.883,
+            "target_rival_ownership_pct": 0.0,
+            "next3": [
+              {
+                "gw": 7,
+                "opponent": "Everton",
+                "venue": "A",
+                "fdr": 3
+              },
+              {
+                "gw": 8,
+                "opponent": "Spurs",
+                "venue": "H",
+                "fdr": 2
+              },
+              {
+                "gw": 9,
+                "opponent": "Man Utd",
+                "venue": "H",
+                "fdr": 4
+              }
+            ],
+            "rationale": [
+              "Next-3 fixtures: Everton A FDR 3, Spurs H FDR 2, Man Utd H FDR 4",
+              "Nearest-rival ownership 0%: ownership context only; the football case still leads.",
+              "Model uplift 12.9 versus the outgoing player on the dashboard heuristic."
+            ]
+          },
+          {
+            "type": "variety",
+            "label": "Leverage",
+            "model_uplift": 17.133,
+            "target_rival_ownership_pct": 0.0,
+            "next3": [
+              {
+                "gw": 7,
+                "opponent": "Everton",
+                "venue": "A",
+                "fdr": 3
+              },
+              {
+                "gw": 8,
+                "opponent": "Spurs",
+                "venue": "H",
+                "fdr": 2
+              },
+              {
+                "gw": 9,
+                "opponent": "Man Utd",
+                "venue": "H",
+                "fdr": 4
+              }
+            ],
+            "rationale": [
+              "Next-3 fixtures: Everton A FDR 3, Spurs H FDR 2, Man Utd H FDR 4",
+              "Nearest-rival ownership 0%: lower ownership can add leverage if the football case is strong.",
+              "Model uplift 17.1 versus the outgoing player on the dashboard heuristic."
             ]
           }
         ]
