@@ -1,6 +1,6 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-10-17T11:07:15.045270+00:00",
+  "generated_at_utc": "2026-10-17T14:22:56.978519+00:00",
   "version": 4,
   "current_gw": 7,
   "next_gw": 8,
@@ -8,7 +8,7 @@
     "action": "HOLD",
     "headline": "Hold / roll",
     "confidence": 76,
-    "reason": "The leading transfer edge is 15.6 projected points over holding and does not yet clear the full evidence hurdle with sufficient agreement on that exact route. Holding moves the bank from 1/5 to 2/5; no free transfer expires. The outgoing player has the easier immediate fixture; the move can wait unless other evidence changes.",
+    "reason": "The leading transfer edge is 12.6 projected points over holding and does not yet clear the full evidence hurdle with sufficient agreement on that exact route. Holding moves the bank from 1/5 to 2/5; no free transfer expires. The outgoing player has the easier immediate fixture; the move can wait unless other evidence changes.",
     "completed_transfer": null,
     "free_transfers_remaining": 1,
     "free_transfer_cap": 5,
@@ -19,7 +19,7 @@
   "robustness": {
     "season_maturity_weight": 0.538,
     "single_step_leader": "Maguire → Tarkowski",
-    "single_step_edge_over_hold_6gw": 15.62,
+    "single_step_edge_over_hold_6gw": 12.65,
     "multi_gw_first_action": "Calvert-Lewin → Cherif",
     "adaptive_rival_first_action": "Calvert-Lewin → Cherif",
     "exact_route_consensus_models": 2,
@@ -37,7 +37,7 @@
     "multi_transfer_required_edge": 3.5,
     "active_route": "Maguire → Tarkowski",
     "active_route_type": "single_transfer_challenger",
-    "active_edge_over_hold_6gw": 15.62,
+    "active_edge_over_hold_6gw": 12.65,
     "active_required_edge": 2.0,
     "active_validation_kind": "model_agreement",
     "active_validation_label": "Model agreement",
@@ -81,7 +81,7 @@
           "route": "Calvert-Lewin → Cherif",
           "out_id": 346,
           "in_id": 599,
-          "uplift": 7.12
+          "uplift": 7.14
         }
       ],
       "hit": 0,
@@ -98,7 +98,7 @@
           "route": "Calvert-Lewin → Cherif",
           "out_id": 346,
           "in_id": 599,
-          "uplift": 7.12
+          "uplift": 7.14
         }
       ],
       "hit": 0,
@@ -119,31 +119,37 @@
         "action": "ROLL"
       },
       "later_action": {
-        "gw": 9,
+        "gw": 10,
         "action": "TRANSFER",
-        "route": "De Cuyper → Tarkowski",
-        "transfer_count": 1,
+        "route": "Gabriel → Tarkowski + B.Fernandes → Hinshelwood",
+        "transfer_count": 2,
         "transfers": [
           {
-            "route": "De Cuyper → Tarkowski",
-            "out_id": 115,
+            "route": "Gabriel → Tarkowski",
+            "out_id": 4,
             "in_id": 229,
-            "uplift": 4.66
+            "uplift": 4.28
+          },
+          {
+            "route": "B.Fernandes → Hinshelwood",
+            "out_id": 426,
+            "in_id": 123,
+            "uplift": 3.69
           }
         ],
         "hit": 0,
-        "out_id": 115,
+        "out_id": 4,
         "in_id": 229
       },
       "transfer_count_now": 0,
       "free_transfers_before": 1,
       "free_transfers_after_deadline": 2,
       "hit_cost": 0,
-      "expected_points": 278.18,
-      "p10_points": 234.04,
-      "p90_points": 325.44,
+      "expected_points": 255.51,
+      "p10_points": 216.58,
+      "p90_points": 297.32,
       "edge_vs_roll": 0.0,
-      "ending_bank": 0.5,
+      "ending_bank": 20.3,
       "ending_free_transfers": 1,
       "actions": [
         {
@@ -152,55 +158,48 @@
         },
         {
           "gw": 9,
-          "action": "TRANSFER",
-          "route": "De Cuyper → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "De Cuyper → Tarkowski",
-              "out_id": 115,
-              "in_id": 229,
-              "uplift": 4.66
-            }
-          ],
-          "hit": 0,
-          "out_id": 115,
-          "in_id": 229
+          "action": "ROLL"
         },
         {
           "gw": 10,
           "action": "TRANSFER",
-          "route": "Calvert-Lewin → Cherif + Hughes → Hinshelwood",
+          "route": "Gabriel → Tarkowski + B.Fernandes → Hinshelwood",
           "transfer_count": 2,
           "transfers": [
             {
-              "route": "Calvert-Lewin → Cherif",
-              "out_id": 346,
-              "in_id": 599,
-              "uplift": 3.37
+              "route": "Gabriel → Tarkowski",
+              "out_id": 4,
+              "in_id": 229,
+              "uplift": 4.28
             },
             {
-              "route": "Hughes → Hinshelwood",
-              "out_id": 212,
+              "route": "B.Fernandes → Hinshelwood",
+              "out_id": 426,
               "in_id": 123,
-              "uplift": 3.67
+              "uplift": 3.69
             }
           ],
           "hit": 0,
-          "out_id": 346,
-          "in_id": 599
+          "out_id": 4,
+          "in_id": 229
         },
         {
           "gw": 11,
           "action": "TRANSFER",
-          "route": "Affengruber → Mfuni",
-          "transfer_count": 1,
+          "route": "Affengruber → Mfuni + Haaland → Cherif",
+          "transfer_count": 2,
           "transfers": [
             {
               "route": "Affengruber → Mfuni",
               "out_id": 650,
               "in_id": 656,
-              "uplift": 2.43
+              "uplift": 2.47
+            },
+            {
+              "route": "Haaland → Cherif",
+              "out_id": 411,
+              "in_id": 599,
+              "uplift": 1.36
             }
           ],
           "hit": 0,
@@ -225,7 +224,7 @@
             "route": "Calvert-Lewin → Cherif",
             "out_id": 346,
             "in_id": 599,
-            "uplift": 7.12
+            "uplift": 7.14
           }
         ],
         "hit": 0,
@@ -242,7 +241,7 @@
             "route": "Gabriel → Tarkowski",
             "out_id": 4,
             "in_id": 229,
-            "uplift": 7.3
+            "uplift": 6.03
           }
         ],
         "hit": 0,
@@ -253,10 +252,10 @@
       "free_transfers_before": 1,
       "free_transfers_after_deadline": 1,
       "hit_cost": 0,
-      "expected_points": 283.64,
-      "p10_points": 239.02,
-      "p90_points": 331.0,
-      "edge_vs_roll": 5.46,
+      "expected_points": 262.58,
+      "p10_points": 222.05,
+      "p90_points": 303.66,
+      "edge_vs_roll": 7.07,
       "ending_bank": 3.4,
       "ending_free_transfers": 1,
       "actions": [
@@ -270,7 +269,7 @@
               "route": "Calvert-Lewin → Cherif",
               "out_id": 346,
               "in_id": 599,
-              "uplift": 7.12
+              "uplift": 7.14
             }
           ],
           "hit": 0,
@@ -287,7 +286,7 @@
               "route": "Gabriel → Tarkowski",
               "out_id": 4,
               "in_id": 229,
-              "uplift": 7.3
+              "uplift": 6.03
             }
           ],
           "hit": 0,
@@ -304,7 +303,7 @@
               "route": "Hughes → Hinshelwood",
               "out_id": 212,
               "in_id": 123,
-              "uplift": 3.19
+              "uplift": 3.69
             }
           ],
           "hit": 0,
@@ -346,31 +345,37 @@
         "action": "ROLL"
       },
       "later_action": {
-        "gw": 9,
+        "gw": 10,
         "action": "TRANSFER",
-        "route": "De Cuyper → Tarkowski",
-        "transfer_count": 1,
+        "route": "Gabriel → Tarkowski + B.Fernandes → Hinshelwood",
+        "transfer_count": 2,
         "transfers": [
           {
-            "route": "De Cuyper → Tarkowski",
-            "out_id": 115,
+            "route": "Gabriel → Tarkowski",
+            "out_id": 4,
             "in_id": 229,
-            "uplift": 4.66
+            "uplift": 4.28
+          },
+          {
+            "route": "B.Fernandes → Hinshelwood",
+            "out_id": 426,
+            "in_id": 123,
+            "uplift": 3.69
           }
         ],
         "hit": 0,
-        "out_id": 115,
+        "out_id": 4,
         "in_id": 229
       },
       "transfer_count_now": 0,
       "free_transfers_before": 1,
       "free_transfers_after_deadline": 2,
       "hit_cost": 0,
-      "expected_points": 278.18,
-      "p10_points": 234.04,
-      "p90_points": 325.44,
+      "expected_points": 255.51,
+      "p10_points": 216.58,
+      "p90_points": 297.32,
       "edge_vs_roll": 0.0,
-      "ending_bank": 0.5,
+      "ending_bank": 20.3,
       "ending_free_transfers": 1,
       "actions": [
         {
@@ -379,55 +384,48 @@
         },
         {
           "gw": 9,
-          "action": "TRANSFER",
-          "route": "De Cuyper → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "De Cuyper → Tarkowski",
-              "out_id": 115,
-              "in_id": 229,
-              "uplift": 4.66
-            }
-          ],
-          "hit": 0,
-          "out_id": 115,
-          "in_id": 229
+          "action": "ROLL"
         },
         {
           "gw": 10,
           "action": "TRANSFER",
-          "route": "Calvert-Lewin → Cherif + Hughes → Hinshelwood",
+          "route": "Gabriel → Tarkowski + B.Fernandes → Hinshelwood",
           "transfer_count": 2,
           "transfers": [
             {
-              "route": "Calvert-Lewin → Cherif",
-              "out_id": 346,
-              "in_id": 599,
-              "uplift": 3.37
+              "route": "Gabriel → Tarkowski",
+              "out_id": 4,
+              "in_id": 229,
+              "uplift": 4.28
             },
             {
-              "route": "Hughes → Hinshelwood",
-              "out_id": 212,
+              "route": "B.Fernandes → Hinshelwood",
+              "out_id": 426,
               "in_id": 123,
-              "uplift": 3.67
+              "uplift": 3.69
             }
           ],
           "hit": 0,
-          "out_id": 346,
-          "in_id": 599
+          "out_id": 4,
+          "in_id": 229
         },
         {
           "gw": 11,
           "action": "TRANSFER",
-          "route": "Affengruber → Mfuni",
-          "transfer_count": 1,
+          "route": "Affengruber → Mfuni + Haaland → Cherif",
+          "transfer_count": 2,
           "transfers": [
             {
               "route": "Affengruber → Mfuni",
               "out_id": 650,
               "in_id": 656,
-              "uplift": 2.43
+              "uplift": 2.47
+            },
+            {
+              "route": "Haaland → Cherif",
+              "out_id": 411,
+              "in_id": 599,
+              "uplift": 1.36
             }
           ],
           "hit": 0,
@@ -439,7 +437,7 @@
   ],
   "chips": {
     "action": "HOLD",
-    "reason": "Hold chips. Best visible TC uplift is 0.0 and BB uplift is 14.0, but the first-half portfolio remains comfortable with 9 slack Gameweeks. Preserve option value for stronger blank/double or squad-structure windows.",
+    "reason": "Hold chips. Best visible TC uplift is 0.0 and BB uplift is 13.5, but the first-half portfolio remains comfortable with 9 slack Gameweeks. Preserve option value for stronger blank/double or squad-structure windows.",
     "best_visible_triple_captain": {},
     "best_visible_bench_boost": {
       "actions": [
@@ -453,7 +451,7 @@
               "route": "Calvert-Lewin → Cherif",
               "out_id": 346,
               "in_id": 599,
-              "uplift": 7.12
+              "uplift": 7.14
             }
           ],
           "hit": 0,
@@ -470,7 +468,7 @@
               "route": "Gabriel → Tarkowski",
               "out_id": 4,
               "in_id": 229,
-              "uplift": 7.3
+              "uplift": 6.03
             }
           ],
           "hit": 0,
@@ -487,7 +485,7 @@
               "route": "Hughes → Hinshelwood",
               "out_id": 212,
               "in_id": 123,
-              "uplift": 3.19
+              "uplift": 3.69
             }
           ],
           "hit": 0,
@@ -514,22 +512,22 @@
       ],
       "chip": "Bench Boost",
       "chip_gw": 11,
-      "expected_points": 298.07,
-      "chip_incremental_expected_points": 13.98,
-      "p10_points": 251.42,
-      "p90_points": 346.1,
+      "expected_points": 277.61,
+      "chip_incremental_expected_points": 13.53,
+      "p10_points": 233.63,
+      "p90_points": 321.14,
       "expected_rank_after_path": 1.01,
       "prob_finish_ahead_each_rival": [
+        0.991,
         0.998,
-        0.999,
+        0.998,
         1.0,
-        0.998,
-        0.999,
+        1.0,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 292.442
+      "utility_score": 272.266
     },
     "portfolio_pressure": "comfortable",
     "latest_safe_start_gw": 17
