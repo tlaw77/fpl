@@ -1,6 +1,6 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-10-20T06:34:14.651929+00:00",
+  "generated_at_utc": "2026-10-20T12:03:46.171894+00:00",
   "version": 4,
   "current_gw": 7,
   "next_gw": 8,
@@ -8,7 +8,7 @@
     "action": "HOLD",
     "headline": "Hold / roll",
     "confidence": 76,
-    "reason": "The leading transfer edge is 8.4 projected points over holding and does not yet clear the full evidence hurdle with sufficient agreement on that exact route. Holding moves the bank from 1/5 to 2/5; no free transfer expires. The outgoing player has the easier immediate fixture; the move can wait unless other evidence changes.",
+    "reason": "The leading transfer edge is 8.2 projected points over holding and does not yet clear the full evidence hurdle with sufficient agreement on that exact route. Holding moves the bank from 1/5 to 2/5; no free transfer expires. The outgoing player has the easier immediate fixture; the move can wait unless other evidence changes.",
     "completed_transfer": null,
     "free_transfers_remaining": 1,
     "free_transfer_cap": 5,
@@ -19,7 +19,7 @@
   "robustness": {
     "season_maturity_weight": 0.538,
     "single_step_leader": "Maguire → Vuskovic",
-    "single_step_edge_over_hold_6gw": 8.38,
+    "single_step_edge_over_hold_6gw": 8.22,
     "multi_gw_first_action": "Gabriel → Mfuni",
     "adaptive_rival_first_action": "Gabriel → Mfuni",
     "exact_route_consensus_models": 2,
@@ -37,7 +37,7 @@
     "multi_transfer_required_edge": 3.5,
     "active_route": "Maguire → Vuskovic",
     "active_route_type": "single_transfer_challenger",
-    "active_edge_over_hold_6gw": 8.38,
+    "active_edge_over_hold_6gw": 8.22,
     "active_required_edge": 2.0,
     "active_validation_kind": "model_agreement",
     "active_validation_label": "Model agreement",
@@ -81,7 +81,7 @@
           "route": "Gabriel → Mfuni",
           "out_id": 4,
           "in_id": 656,
-          "uplift": 8.0
+          "uplift": 8.01
         }
       ],
       "hit": 0,
@@ -98,7 +98,7 @@
           "route": "Gabriel → Mfuni",
           "out_id": 4,
           "in_id": 656,
-          "uplift": 8.0
+          "uplift": 8.01
         }
       ],
       "hit": 0,
@@ -145,9 +145,9 @@
       "free_transfers_before": 1,
       "free_transfers_after_deadline": 2,
       "hit_cost": 0,
-      "expected_points": 255.62,
-      "p10_points": 216.34,
-      "p90_points": 298.15,
+      "expected_points": 255.08,
+      "p10_points": 215.94,
+      "p90_points": 296.52,
       "edge_vs_roll": 0.0,
       "ending_bank": 6.7,
       "ending_free_transfers": 1,
@@ -213,7 +213,7 @@
       "label": "Use one free transfer now",
       "available": true,
       "recommended_path": true,
-      "adaptive_support": false,
+      "adaptive_support": true,
       "first_action": {
         "gw": 8,
         "action": "TRANSFER",
@@ -224,7 +224,7 @@
             "route": "Gabriel → Mfuni",
             "out_id": 4,
             "in_id": 656,
-            "uplift": 8.0
+            "uplift": 8.01
           }
         ],
         "hit": 0,
@@ -252,11 +252,11 @@
       "free_transfers_before": 1,
       "free_transfers_after_deadline": 1,
       "hit_cost": 0,
-      "expected_points": 262.53,
-      "p10_points": 223.54,
-      "p90_points": 305.78,
-      "edge_vs_roll": 6.91,
-      "ending_bank": 9.2,
+      "expected_points": 262.66,
+      "p10_points": 223.57,
+      "p90_points": 304.35,
+      "edge_vs_roll": 7.58,
+      "ending_bank": 10.5,
       "ending_free_transfers": 1,
       "actions": [
         {
@@ -269,7 +269,7 @@
               "route": "Gabriel → Mfuni",
               "out_id": 4,
               "in_id": 656,
-              "uplift": 8.0
+              "uplift": 8.01
             }
           ],
           "hit": 0,
@@ -296,6 +296,23 @@
         {
           "gw": 10,
           "action": "TRANSFER",
+          "route": "Affengruber → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Affengruber → Tarkowski",
+              "out_id": 650,
+              "in_id": 229,
+              "uplift": 2.72
+            }
+          ],
+          "hit": 0,
+          "out_id": 650,
+          "in_id": 229
+        },
+        {
+          "gw": 11,
+          "action": "TRANSFER",
           "route": "B.Fernandes → Hinshelwood",
           "transfer_count": 1,
           "transfers": [
@@ -303,29 +320,12 @@
               "route": "B.Fernandes → Hinshelwood",
               "out_id": 426,
               "in_id": 123,
-              "uplift": 2.83
+              "uplift": 1.68
             }
           ],
           "hit": 0,
           "out_id": 426,
           "in_id": 123
-        },
-        {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Calvert-Lewin → Isak",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Calvert-Lewin → Isak",
-              "out_id": 346,
-              "in_id": 379,
-              "uplift": 1.07
-            }
-          ],
-          "hit": 0,
-          "out_id": 346,
-          "in_id": 379
         }
       ]
     },
@@ -371,9 +371,9 @@
       "free_transfers_before": 1,
       "free_transfers_after_deadline": 2,
       "hit_cost": 0,
-      "expected_points": 255.62,
-      "p10_points": 216.34,
-      "p90_points": 298.15,
+      "expected_points": 255.08,
+      "p10_points": 215.94,
+      "p90_points": 296.52,
       "edge_vs_roll": 0.0,
       "ending_bank": 6.7,
       "ending_free_transfers": 1,
@@ -437,7 +437,7 @@
   ],
   "chips": {
     "action": "HOLD",
-    "reason": "Hold chips. Best visible TC uplift is 0.0 and BB uplift is 14.8, but the first-half portfolio remains comfortable with 9 slack Gameweeks. Preserve option value for stronger blank/double or squad-structure windows.",
+    "reason": "Hold chips. Best visible TC uplift is 0.0 and BB uplift is 14.7, but the first-half portfolio remains comfortable with 9 slack Gameweeks. Preserve option value for stronger blank/double or squad-structure windows.",
     "best_visible_triple_captain": {},
     "best_visible_bench_boost": {
       "actions": [
@@ -451,7 +451,7 @@
               "route": "Gabriel → Mfuni",
               "out_id": 4,
               "in_id": 656,
-              "uplift": 8.0
+              "uplift": 8.01
             }
           ],
           "hit": 0,
@@ -512,22 +512,22 @@
       ],
       "chip": "Bench Boost",
       "chip_gw": 10,
-      "expected_points": 274.28,
-      "chip_incremental_expected_points": 14.79,
-      "p10_points": 231.6,
-      "p90_points": 317.64,
-      "expected_rank_after_path": 1.05,
+      "expected_points": 277.02,
+      "chip_incremental_expected_points": 14.7,
+      "p10_points": 238.81,
+      "p90_points": 319.17,
+      "expected_rank_after_path": 1.03,
       "prob_finish_ahead_each_rival": [
-        0.958,
+        0.973,
         0.994,
-        0.997,
-        1.0,
         0.999,
+        1.0,
+        1.0,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 268.902
+      "utility_score": 272.26
     },
     "portfolio_pressure": "comfortable",
     "latest_safe_start_gw": 17
