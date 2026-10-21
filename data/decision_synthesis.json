@@ -1,6 +1,6 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-10-21T04:26:16.281713+00:00",
+  "generated_at_utc": "2026-10-21T09:32:59.312199+00:00",
   "version": 4,
   "current_gw": 7,
   "next_gw": 8,
@@ -8,7 +8,7 @@
     "action": "HOLD",
     "headline": "Hold / roll",
     "confidence": 76,
-    "reason": "The leading transfer edge is 8.3 projected points over holding and does not yet clear the full evidence hurdle with sufficient agreement on that exact route. Holding moves the bank from 1/5 to 2/5; no free transfer expires. The outgoing player has the easier immediate fixture; the move can wait unless other evidence changes.",
+    "reason": "The leading transfer edge is 8.0 projected points over holding and does not yet clear the full evidence hurdle with sufficient agreement on that exact route. Holding moves the bank from 1/5 to 2/5; no free transfer expires. The outgoing player has the easier immediate fixture; the move can wait unless other evidence changes.",
     "completed_transfer": null,
     "free_transfers_remaining": 1,
     "free_transfer_cap": 5,
@@ -19,7 +19,7 @@
   "robustness": {
     "season_maturity_weight": 0.538,
     "single_step_leader": "Maguire → Vuskovic",
-    "single_step_edge_over_hold_6gw": 8.26,
+    "single_step_edge_over_hold_6gw": 8.02,
     "multi_gw_first_action": "Gabriel → Mfuni",
     "adaptive_rival_first_action": "Gabriel → Mfuni",
     "exact_route_consensus_models": 2,
@@ -37,7 +37,7 @@
     "multi_transfer_required_edge": 3.5,
     "active_route": "Maguire → Vuskovic",
     "active_route_type": "single_transfer_challenger",
-    "active_edge_over_hold_6gw": 8.26,
+    "active_edge_over_hold_6gw": 8.02,
     "active_required_edge": 2.0,
     "active_validation_kind": "model_agreement",
     "active_validation_label": "Model agreement",
@@ -139,11 +139,11 @@
       "free_transfers_before": 1,
       "free_transfers_after_deadline": 2,
       "hit_cost": 0,
-      "expected_points": 268.87,
-      "p10_points": 225.68,
-      "p90_points": 314.43,
+      "expected_points": 269.04,
+      "p10_points": 226.42,
+      "p90_points": 314.39,
       "edge_vs_roll": 0.0,
-      "ending_bank": 3.4,
+      "ending_bank": 3.3,
       "ending_free_transfers": 1,
       "actions": [
         {
@@ -170,14 +170,20 @@
         {
           "gw": 10,
           "action": "TRANSFER",
-          "route": "B.Fernandes → Hinshelwood",
-          "transfer_count": 1,
+          "route": "B.Fernandes → Hinshelwood + Affengruber → Mfuni",
+          "transfer_count": 2,
           "transfers": [
             {
               "route": "B.Fernandes → Hinshelwood",
               "out_id": 426,
               "in_id": 123,
               "uplift": 3.1
+            },
+            {
+              "route": "Affengruber → Mfuni",
+              "out_id": 650,
+              "in_id": 656,
+              "uplift": 2.33
             }
           ],
           "hit": 0,
@@ -187,15 +193,9 @@
         {
           "gw": 11,
           "action": "TRANSFER",
-          "route": "Affengruber → Davies + Hughes → Doku",
-          "transfer_count": 2,
+          "route": "Hughes → Doku",
+          "transfer_count": 1,
           "transfers": [
-            {
-              "route": "Affengruber → Davies",
-              "out_id": 650,
-              "in_id": 508,
-              "uplift": 2.34
-            },
             {
               "route": "Hughes → Doku",
               "out_id": 212,
@@ -204,8 +204,8 @@
             }
           ],
           "hit": 0,
-          "out_id": 650,
-          "in_id": 508
+          "out_id": 212,
+          "in_id": 400
         }
       ]
     },
@@ -253,10 +253,10 @@
       "free_transfers_before": 1,
       "free_transfers_after_deadline": 1,
       "hit_cost": 0,
-      "expected_points": 274.11,
-      "p10_points": 230.68,
-      "p90_points": 320.41,
-      "edge_vs_roll": 5.24,
+      "expected_points": 274.18,
+      "p10_points": 230.25,
+      "p90_points": 319.14,
+      "edge_vs_roll": 5.14,
       "ending_bank": 8.9,
       "ending_free_transfers": 1,
       "actions": [
@@ -366,11 +366,11 @@
       "free_transfers_before": 1,
       "free_transfers_after_deadline": 2,
       "hit_cost": 0,
-      "expected_points": 268.87,
-      "p10_points": 225.68,
-      "p90_points": 314.43,
+      "expected_points": 269.04,
+      "p10_points": 226.42,
+      "p90_points": 314.39,
       "edge_vs_roll": 0.0,
-      "ending_bank": 3.4,
+      "ending_bank": 3.3,
       "ending_free_transfers": 1,
       "actions": [
         {
@@ -397,14 +397,20 @@
         {
           "gw": 10,
           "action": "TRANSFER",
-          "route": "B.Fernandes → Hinshelwood",
-          "transfer_count": 1,
+          "route": "B.Fernandes → Hinshelwood + Affengruber → Mfuni",
+          "transfer_count": 2,
           "transfers": [
             {
               "route": "B.Fernandes → Hinshelwood",
               "out_id": 426,
               "in_id": 123,
               "uplift": 3.1
+            },
+            {
+              "route": "Affengruber → Mfuni",
+              "out_id": 650,
+              "in_id": 656,
+              "uplift": 2.33
             }
           ],
           "hit": 0,
@@ -414,15 +420,9 @@
         {
           "gw": 11,
           "action": "TRANSFER",
-          "route": "Affengruber → Davies + Hughes → Doku",
-          "transfer_count": 2,
+          "route": "Hughes → Doku",
+          "transfer_count": 1,
           "transfers": [
-            {
-              "route": "Affengruber → Davies",
-              "out_id": 650,
-              "in_id": 508,
-              "uplift": 2.34
-            },
             {
               "route": "Hughes → Doku",
               "out_id": 212,
@@ -431,15 +431,15 @@
             }
           ],
           "hit": 0,
-          "out_id": 650,
-          "in_id": 508
+          "out_id": 212,
+          "in_id": 400
         }
       ]
     }
   ],
   "chips": {
     "action": "HOLD",
-    "reason": "Hold chips. Best visible TC uplift is 0.0 and BB uplift is 14.1, but the first-half portfolio remains comfortable with 9 slack Gameweeks. Preserve option value for stronger blank/double or squad-structure windows.",
+    "reason": "Hold chips. Best visible TC uplift is 0.0 and BB uplift is 14.0, but the first-half portfolio remains comfortable with 9 slack Gameweeks. Preserve option value for stronger blank/double or squad-structure windows.",
     "best_visible_triple_captain": {},
     "best_visible_bench_boost": {
       "actions": [
@@ -514,22 +514,22 @@
       ],
       "chip": "Bench Boost",
       "chip_gw": 11,
-      "expected_points": 287.04,
-      "chip_incremental_expected_points": 14.05,
-      "p10_points": 241.35,
-      "p90_points": 334.41,
-      "expected_rank_after_path": 1.04,
+      "expected_points": 285.97,
+      "chip_incremental_expected_points": 13.96,
+      "p10_points": 243.19,
+      "p90_points": 333.05,
+      "expected_rank_after_path": 1.03,
       "prob_finish_ahead_each_rival": [
-        0.973,
-        0.994,
-        0.998,
+        0.975,
+        0.996,
+        0.997,
         1.0,
-        0.999,
+        1.0,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 281.372
+      "utility_score": 280.683
     },
     "portfolio_pressure": "comfortable",
     "latest_safe_start_gw": 17
