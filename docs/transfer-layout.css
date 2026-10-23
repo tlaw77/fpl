@@ -1,0 +1,17 @@
+#view-transfer[data-transfer-mode] [data-transfer-group="obsolete"],
+#view-transfer[data-transfer-mode="decision"] [data-transfer-group]:not([data-transfer-group="decision"]):not([data-transfer-group="navigation"]),
+#view-transfer[data-transfer-mode="compare"] [data-transfer-group]:not([data-transfer-group="compare"]):not([data-transfer-group="navigation"]),
+#view-transfer[data-transfer-mode="evidence"] [data-transfer-group]:not([data-transfer-group="evidence"]):not([data-transfer-group="navigation"]),
+#view-transfer[data-transfer-mode="history"] [data-transfer-group]:not([data-transfer-group="history"]):not([data-transfer-group="navigation"]){display:none!important}
+#view-transfer .transfer-layout{margin:0 0 16px;padding:16px;border:1px solid #2d415b;border-radius:18px;background:#101c2e}
+#view-transfer .transfer-layout h2{margin:4px 0 16px;font-size:24px;color:#f1f5f9}
+#view-transfer .transfer-layout nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+#view-transfer .transfer-layout button{min-height:44px;border:1px solid #34475e;border-radius:10px;background:#152237;color:#cbd5e1;font:inherit;font-size:13px;cursor:pointer;padding:9px}
+#view-transfer .transfer-layout button[aria-pressed="true"]{background:#163c42;border-color:#65ced8;color:#d4fbff;font-weight:700}
+#view-transfer .transfer-layout button:focus-visible{outline:2px solid #a5f3fc;outline-offset:3px}
+#view-transfer .transfer-layout p[data-transfer-help]{font-size:13px;line-height:1.5;color:#a6b6cb;margin:14px 0 8px}
+#view-transfer .transfer-layout p[data-transfer-budget]{font-size:13px;color:#e2e8f0;margin:0}
+#view-transfer[data-transfer-mode="history"] .tx-history-section-collapsed .history-snapshot{display:block!important}
+#view-transfer[data-transfer-mode="history"] .tx-history-section-toggle{display:none!important}
+@media(min-width:700px){#view-transfer .transfer-layout nav{grid-template-columns:repeat(4,minmax(0,1fr))}}
+#view-transfer[data-transfer-mode="history"] .history-panel.tx-history-section-collapsed>*:not(.panel-head){display:block!important}
