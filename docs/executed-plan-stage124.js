@@ -1,5 +1,5 @@
 (()=>{
-const BUILD='executed-plan-stage124-20260916-2',PLAN_KEY='fplWorkingPlanV2',EXECUTED_KEY='fplExecutedPlanV1',POOL_URL='https://raw.githubusercontent.com/tlaw77/fpl/main/data/player_pool.json';
+const BUILD='executed-plan-stage124-20261023-1',PLAN_KEY='fplWorkingPlanV2',EXECUTED_KEY='fplExecutedPlanV1',POOL_URL='https://raw.githubusercontent.com/tlaw77/fpl/main/data/player_pool.json';
 const q=(s,r=document)=>r.querySelector(s),n=(v,d=0)=>Number.isFinite(Number(v))?Number(v):d;
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
 const read=(key)=>{try{return JSON.parse(localStorage.getItem(key)||'null')}catch{return null}};
@@ -18,14 +18,15 @@ function completeDecision(data,receipt){
  a.action='HOLD';a.headline='HOLD';a.reason=`${receipt.route} is registered as completed. Further moves are assessed separately.`;a.free_transfers_remaining=receipt.free_transfers_remaining;a.next_transfer_hit_cost=receipt.free_transfers_remaining>0?0:4;a.transfer_count=0;
  data.free_transfers_available_before_moves=receipt.starting_free_transfers;data.free_transfers_used_next_gw=receipt.free_transfers_used;data.free_transfers_remaining_next_gw=receipt.free_transfers_remaining;data.transfer_hits_already_incurred_next_gw=receipt.hit_cost;data.next_transfer_hit_cost=receipt.free_transfers_remaining>0?0:4;data.declared_transfer_overlay_status='local_confirmation_pending_official';
 }
+function isCurrentReceipt(data,receipt){return n(data?.next_gw)>0&&n(receipt?.event)===n(data.next_gw)}
 function applyLocal(data,pool,receipt){
- if(!data||!receipt||officialApplied(data,receipt))return data;
+ if(!isCurrentReceipt(data,receipt)||officialApplied(data,receipt))return data;
  const base=data.current_squad_next5||data.squad_next5||[],api=window.FPLWorkingPlan;
  if(api?.apply){const applied=api.apply(base,pool?.players||[],receipt);if(applied.length===15){data.current_squad_next5=applied;data.current_squad_source='local_execution_confirmation'}}
  completeDecision(data,receipt);return data;
 }
 function reconcile(data){
- const receipt=read(EXECUTED_KEY);if(!receipt)return null;
+ const receipt=read(EXECUTED_KEY);if(!isCurrentReceipt(data,receipt))return null;
  const completed=data?.decision_synthesis?.current_action?.completed_transfer;
  if(officialApplied(data,receipt)||(completed&&Number(completed.event)===Number(receipt.event)&&completed.route===receipt.route)){
   receipt.status='officially-reconciled';receipt.reconciled_at_utc=new Date().toISOString();write(EXECUTED_KEY,receipt);localStorage.removeItem(PLAN_KEY);return receipt;
@@ -53,6 +54,6 @@ function render(){
 function hydrate(){const data=window.FPLCoreData;if(!data)return;const receipt=reconcile(data);if(receipt&&receipt.status!=='officially-reconciled')loadPool().then(p=>{applyLocal(data,p,receipt);render();window.dispatchEvent(new CustomEvent('fplSafePlanUpdated',{detail:receipt}))});else render()}
 function run(){[80,300,800].forEach(ms=>setTimeout(hydrate,ms))}
 function bind(){run();window.addEventListener('fplCoreDataReady',run,{passive:true});window.addEventListener('fplSafePlanUpdated',()=>setTimeout(render,40),{passive:true});q('#decision-nav button[data-view="transfer"]')?.addEventListener('click',()=>setTimeout(render,80),{passive:true})}
-window.FPLExecutedPlan={PLAN_KEY,EXECUTED_KEY,buildReceipt,officialApplied,applyLocal,reconcile,adoptOfficialPlan};
+window.FPLExecutedPlan={PLAN_KEY,EXECUTED_KEY,buildReceipt,officialApplied,isCurrentReceipt,applyLocal,reconcile,adoptOfficialPlan};
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind,{once:true});else bind();
 })();

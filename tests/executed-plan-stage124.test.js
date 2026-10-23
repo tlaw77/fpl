@@ -8,3 +8,19 @@ api.applyLocal(data,pool,receipt);assert.equal(data.current_squad_next5.length,1
 assert.equal(api.officialApplied(data,receipt),true);
 storage.set('fplWorkingPlanV2',JSON.stringify(plan));const adopted=api.adoptOfficialPlan(data);assert.equal(adopted.status,'officially-reconciled');assert.equal(storage.has('fplWorkingPlanV2'),false);
 console.log('executed plan tests passed');
+
+// Previous-week receipts remain archived locally but cannot render or mutate this week.
+for(const status of ['awaiting-official','officially-reconciled']){
+ const old={...receipt,status},current={...data,next_gw:8,decision_synthesis:{current_action:{action:'TRANSFER'}}};
+ storage.set(api.EXECUTED_KEY,JSON.stringify(old));
+ storage.set(api.PLAN_KEY,JSON.stringify(plan));
+ const before=JSON.stringify(current);
+ assert.equal(api.isCurrentReceipt(current,old),false);
+ assert.equal(api.reconcile(current),null);
+ api.applyLocal(current,pool,old);
+ assert.equal(JSON.stringify(current),before);
+ assert.ok(storage.has(api.PLAN_KEY));
+ assert.ok(storage.has(api.EXECUTED_KEY));
+}
+assert.equal(api.isCurrentReceipt({},receipt),false);
+assert.equal(api.isCurrentReceipt({next_gw:5},receipt),true);
