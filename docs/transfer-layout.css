@@ -1,7 +1,7 @@
 #view-transfer[data-transfer-mode] [data-transfer-group="obsolete"],
 #view-transfer[data-transfer-mode="decision"] [data-transfer-group]:not([data-transfer-group="decision"]):not([data-transfer-group="navigation"]),
 #view-transfer[data-transfer-mode="compare"] [data-transfer-group]:not([data-transfer-group="compare"]):not([data-transfer-group="navigation"]),
-#view-transfer[data-transfer-mode="evidence"] [data-transfer-group]:not([data-transfer-group="evidence"]):not([data-transfer-group="navigation"]),
+#view-transfer[data-transfer-mode="evidence"] [data-transfer-group]:not([data-transfer-group="evidence"]):not([data-transfer-group="navigation"]):not([data-decision-signal]),
 #view-transfer[data-transfer-mode="history"] [data-transfer-group]:not([data-transfer-group="history"]):not([data-transfer-group="navigation"]){display:none!important}
 #view-transfer .transfer-layout{margin:0 0 16px;padding:16px;border:1px solid #2d415b;border-radius:18px;background:#101c2e}
 #view-transfer .transfer-layout h2{margin:4px 0 16px;font-size:24px;color:#f1f5f9}
@@ -15,3 +15,6 @@
 #view-transfer[data-transfer-mode="history"] .tx-history-section-toggle{display:none!important}
 @media(min-width:700px){#view-transfer .transfer-layout nav{grid-template-columns:repeat(4,minmax(0,1fr))}}
 #view-transfer[data-transfer-mode="history"] .history-panel.tx-history-section-collapsed>*:not(.panel-head){display:block!important}
+
+#view-transfer[data-transfer-mode="decision"] [data-decision-signal] [data-monitor],
+#view-transfer[data-transfer-mode="decision"] [data-decision-signal] [data-monitor-session]{display:none!important}
