@@ -1,6 +1,6 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-10-23T11:27:12.221023+00:00",
+  "generated_at_utc": "2026-10-23T15:53:12.407460+00:00",
   "version": 4,
   "current_gw": 7,
   "next_gw": 8,
@@ -8,7 +8,7 @@
     "action": "HOLD",
     "headline": "Hold / roll",
     "confidence": 76,
-    "reason": "The leading transfer edge is 14.1 projected points over holding and does not yet clear the full evidence hurdle with sufficient agreement on that exact route. Holding moves the bank from 1/5 to 2/5; no free transfer expires. The outgoing player has the easier immediate fixture; the move can wait unless other evidence changes.",
+    "reason": "The leading transfer edge is 16.2 projected points over holding and does not yet clear the full evidence hurdle with sufficient agreement on that exact route. Holding moves the bank from 1/5 to 2/5; no free transfer expires. The outgoing player has the easier immediate fixture; the move can wait unless other evidence changes.",
     "completed_transfer": null,
     "free_transfers_remaining": 1,
     "free_transfer_cap": 5,
@@ -19,7 +19,7 @@
   "robustness": {
     "season_maturity_weight": 0.538,
     "single_step_leader": "Maguire → Vuskovic",
-    "single_step_edge_over_hold_6gw": 14.14,
+    "single_step_edge_over_hold_6gw": 16.25,
     "multi_gw_first_action": "Gabriel → Mfuni",
     "adaptive_rival_first_action": "Gabriel → Mfuni",
     "exact_route_consensus_models": 2,
@@ -37,7 +37,7 @@
     "multi_transfer_required_edge": 3.5,
     "active_route": "Maguire → Vuskovic",
     "active_route_type": "single_transfer_challenger",
-    "active_edge_over_hold_6gw": 14.14,
+    "active_edge_over_hold_6gw": 16.25,
     "active_required_edge": 2.0,
     "active_validation_kind": "model_agreement",
     "active_validation_label": "Model agreement",
@@ -81,7 +81,7 @@
           "route": "Gabriel → Mfuni",
           "out_id": 4,
           "in_id": 656,
-          "uplift": 8.1
+          "uplift": 9.17
         }
       ],
       "hit": 0,
@@ -98,7 +98,7 @@
           "route": "Gabriel → Mfuni",
           "out_id": 4,
           "in_id": 656,
-          "uplift": 8.1
+          "uplift": 9.17
         }
       ],
       "hit": 0,
@@ -119,31 +119,43 @@
         "action": "ROLL"
       },
       "later_action": {
-        "gw": 9,
+        "gw": 10,
         "action": "TRANSFER",
-        "route": "Gabriel → Tarkowski",
-        "transfer_count": 1,
+        "route": "Gabriel → Vuskovic + B.Fernandes → Hinshelwood + Maguire → Tarkowski",
+        "transfer_count": 3,
         "transfers": [
           {
-            "route": "Gabriel → Tarkowski",
+            "route": "Gabriel → Vuskovic",
             "out_id": 4,
+            "in_id": 504,
+            "uplift": 4.78
+          },
+          {
+            "route": "B.Fernandes → Hinshelwood",
+            "out_id": 426,
+            "in_id": 123,
+            "uplift": 4.76
+          },
+          {
+            "route": "Maguire → Tarkowski",
+            "out_id": 418,
             "in_id": 229,
-            "uplift": 6.42
+            "uplift": 3.09
           }
         ],
         "hit": 0,
         "out_id": 4,
-        "in_id": 229
+        "in_id": 504
       },
       "transfer_count_now": 0,
       "free_transfers_before": 1,
       "free_transfers_after_deadline": 2,
       "hit_cost": 0,
-      "expected_points": 270.69,
-      "p10_points": 228.37,
-      "p90_points": 316.57,
+      "expected_points": 265.15,
+      "p10_points": 223.64,
+      "p90_points": 308.67,
       "edge_vs_roll": 0.0,
-      "ending_bank": 9.3,
+      "ending_bank": 5.5,
       "ending_free_transfers": 1,
       "actions": [
         {
@@ -152,60 +164,53 @@
         },
         {
           "gw": 9,
-          "action": "TRANSFER",
-          "route": "Gabriel → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Gabriel → Tarkowski",
-              "out_id": 4,
-              "in_id": 229,
-              "uplift": 6.42
-            }
-          ],
-          "hit": 0,
-          "out_id": 4,
-          "in_id": 229
+          "action": "ROLL"
         },
         {
           "gw": 10,
           "action": "TRANSFER",
-          "route": "B.Fernandes → Hinshelwood + Affengruber → Vuskovic",
-          "transfer_count": 2,
+          "route": "Gabriel → Vuskovic + B.Fernandes → Hinshelwood + Maguire → Tarkowski",
+          "transfer_count": 3,
           "transfers": [
+            {
+              "route": "Gabriel → Vuskovic",
+              "out_id": 4,
+              "in_id": 504,
+              "uplift": 4.78
+            },
             {
               "route": "B.Fernandes → Hinshelwood",
               "out_id": 426,
               "in_id": 123,
-              "uplift": 3.48
+              "uplift": 4.76
             },
             {
-              "route": "Affengruber → Vuskovic",
-              "out_id": 650,
-              "in_id": 504,
-              "uplift": 2.89
+              "route": "Maguire → Tarkowski",
+              "out_id": 418,
+              "in_id": 229,
+              "uplift": 3.09
             }
           ],
           "hit": 0,
-          "out_id": 426,
-          "in_id": 123
+          "out_id": 4,
+          "in_id": 504
         },
         {
           "gw": 11,
           "action": "TRANSFER",
-          "route": "Bogle → Davies",
+          "route": "Hughes → Doku",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Bogle → Davies",
-              "out_id": 330,
-              "in_id": 508,
-              "uplift": 2.04
+              "route": "Hughes → Doku",
+              "out_id": 212,
+              "in_id": 400,
+              "uplift": 1.58
             }
           ],
           "hit": 0,
-          "out_id": 330,
-          "in_id": 508
+          "out_id": 212,
+          "in_id": 400
         }
       ]
     },
@@ -225,7 +230,7 @@
             "route": "Gabriel → Mfuni",
             "out_id": 4,
             "in_id": 656,
-            "uplift": 8.1
+            "uplift": 9.17
           }
         ],
         "hit": 0,
@@ -242,7 +247,7 @@
             "route": "Maguire → Davies",
             "out_id": 418,
             "in_id": 508,
-            "uplift": 5.95
+            "uplift": 7.52
           }
         ],
         "hit": 0,
@@ -253,11 +258,11 @@
       "free_transfers_before": 1,
       "free_transfers_after_deadline": 1,
       "hit_cost": 0,
-      "expected_points": 274.54,
-      "p10_points": 231.49,
-      "p90_points": 320.52,
-      "edge_vs_roll": 3.85,
-      "ending_bank": 11.7,
+      "expected_points": 272.25,
+      "p10_points": 231.39,
+      "p90_points": 316.61,
+      "edge_vs_roll": 7.1,
+      "ending_bank": 11.5,
       "ending_free_transfers": 1,
       "actions": [
         {
@@ -270,7 +275,7 @@
               "route": "Gabriel → Mfuni",
               "out_id": 4,
               "in_id": 656,
-              "uplift": 8.1
+              "uplift": 9.17
             }
           ],
           "hit": 0,
@@ -287,7 +292,7 @@
               "route": "Maguire → Davies",
               "out_id": 418,
               "in_id": 508,
-              "uplift": 5.95
+              "uplift": 7.52
             }
           ],
           "hit": 0,
@@ -304,7 +309,7 @@
               "route": "B.Fernandes → Hinshelwood",
               "out_id": 426,
               "in_id": 123,
-              "uplift": 3.05
+              "uplift": 3.48
             }
           ],
           "hit": 0,
@@ -314,18 +319,18 @@
         {
           "gw": 11,
           "action": "TRANSFER",
-          "route": "Bogle → Vuskovic",
+          "route": "Affengruber → Vuskovic",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Bogle → Vuskovic",
-              "out_id": 330,
+              "route": "Affengruber → Vuskovic",
+              "out_id": 650,
               "in_id": 504,
               "uplift": 1.83
             }
           ],
           "hit": 0,
-          "out_id": 330,
+          "out_id": 650,
           "in_id": 504
         }
       ]
@@ -346,31 +351,43 @@
         "action": "ROLL"
       },
       "later_action": {
-        "gw": 9,
+        "gw": 10,
         "action": "TRANSFER",
-        "route": "Gabriel → Tarkowski",
-        "transfer_count": 1,
+        "route": "Gabriel → Vuskovic + B.Fernandes → Hinshelwood + Maguire → Tarkowski",
+        "transfer_count": 3,
         "transfers": [
           {
-            "route": "Gabriel → Tarkowski",
+            "route": "Gabriel → Vuskovic",
             "out_id": 4,
+            "in_id": 504,
+            "uplift": 4.78
+          },
+          {
+            "route": "B.Fernandes → Hinshelwood",
+            "out_id": 426,
+            "in_id": 123,
+            "uplift": 4.76
+          },
+          {
+            "route": "Maguire → Tarkowski",
+            "out_id": 418,
             "in_id": 229,
-            "uplift": 6.42
+            "uplift": 3.09
           }
         ],
         "hit": 0,
         "out_id": 4,
-        "in_id": 229
+        "in_id": 504
       },
       "transfer_count_now": 0,
       "free_transfers_before": 1,
       "free_transfers_after_deadline": 2,
       "hit_cost": 0,
-      "expected_points": 270.69,
-      "p10_points": 228.37,
-      "p90_points": 316.57,
+      "expected_points": 265.15,
+      "p10_points": 223.64,
+      "p90_points": 308.67,
       "edge_vs_roll": 0.0,
-      "ending_bank": 9.3,
+      "ending_bank": 5.5,
       "ending_free_transfers": 1,
       "actions": [
         {
@@ -379,67 +396,60 @@
         },
         {
           "gw": 9,
-          "action": "TRANSFER",
-          "route": "Gabriel → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Gabriel → Tarkowski",
-              "out_id": 4,
-              "in_id": 229,
-              "uplift": 6.42
-            }
-          ],
-          "hit": 0,
-          "out_id": 4,
-          "in_id": 229
+          "action": "ROLL"
         },
         {
           "gw": 10,
           "action": "TRANSFER",
-          "route": "B.Fernandes → Hinshelwood + Affengruber → Vuskovic",
-          "transfer_count": 2,
+          "route": "Gabriel → Vuskovic + B.Fernandes → Hinshelwood + Maguire → Tarkowski",
+          "transfer_count": 3,
           "transfers": [
+            {
+              "route": "Gabriel → Vuskovic",
+              "out_id": 4,
+              "in_id": 504,
+              "uplift": 4.78
+            },
             {
               "route": "B.Fernandes → Hinshelwood",
               "out_id": 426,
               "in_id": 123,
-              "uplift": 3.48
+              "uplift": 4.76
             },
             {
-              "route": "Affengruber → Vuskovic",
-              "out_id": 650,
-              "in_id": 504,
-              "uplift": 2.89
+              "route": "Maguire → Tarkowski",
+              "out_id": 418,
+              "in_id": 229,
+              "uplift": 3.09
             }
           ],
           "hit": 0,
-          "out_id": 426,
-          "in_id": 123
+          "out_id": 4,
+          "in_id": 504
         },
         {
           "gw": 11,
           "action": "TRANSFER",
-          "route": "Bogle → Davies",
+          "route": "Hughes → Doku",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Bogle → Davies",
-              "out_id": 330,
-              "in_id": 508,
-              "uplift": 2.04
+              "route": "Hughes → Doku",
+              "out_id": 212,
+              "in_id": 400,
+              "uplift": 1.58
             }
           ],
           "hit": 0,
-          "out_id": 330,
-          "in_id": 508
+          "out_id": 212,
+          "in_id": 400
         }
       ]
     }
   ],
   "chips": {
     "action": "HOLD",
-    "reason": "Hold chips. Best visible TC uplift is 0.0 and BB uplift is 15.8, but the first-half portfolio remains comfortable with 9 slack Gameweeks. Preserve option value for stronger blank/double or squad-structure windows.",
+    "reason": "Hold chips. Best visible TC uplift is 0.0 and BB uplift is 13.1, but the first-half portfolio remains comfortable with 9 slack Gameweeks. Preserve option value for stronger blank/double or squad-structure windows.",
     "best_visible_triple_captain": {},
     "best_visible_bench_boost": {
       "actions": [
@@ -453,7 +463,7 @@
               "route": "Gabriel → Mfuni",
               "out_id": 4,
               "in_id": 656,
-              "uplift": 8.1
+              "uplift": 9.17
             }
           ],
           "hit": 0,
@@ -470,7 +480,7 @@
               "route": "Maguire → Davies",
               "out_id": 418,
               "in_id": 508,
-              "uplift": 5.95
+              "uplift": 7.52
             }
           ],
           "hit": 0,
@@ -487,7 +497,7 @@
               "route": "Hughes → Hinshelwood",
               "out_id": 212,
               "in_id": 123,
-              "uplift": 3.05
+              "uplift": 3.48
             }
           ],
           "hit": 0,
@@ -497,31 +507,31 @@
         {
           "gw": 11,
           "action": "TRANSFER",
-          "route": "Bogle → Vuskovic",
+          "route": "Affengruber → Vuskovic",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Bogle → Vuskovic",
-              "out_id": 330,
+              "route": "Affengruber → Vuskovic",
+              "out_id": 650,
               "in_id": 504,
               "uplift": 1.83
             }
           ],
           "hit": 0,
-          "out_id": 330,
+          "out_id": 650,
           "in_id": 504
         }
       ],
       "chip": "Bench Boost",
       "chip_gw": 10,
-      "expected_points": 290.5,
-      "chip_incremental_expected_points": 15.79,
-      "p10_points": 246.67,
-      "p90_points": 337.06,
+      "expected_points": 284.81,
+      "chip_incremental_expected_points": 13.08,
+      "p10_points": 243.57,
+      "p90_points": 328.1,
       "expected_rank_after_path": 1.02,
       "prob_finish_ahead_each_rival": [
-        0.985,
-        0.996,
+        0.983,
+        0.995,
         0.998,
         1.0,
         1.0,
@@ -529,7 +539,7 @@
         1.0,
         1.0
       ],
-      "utility_score": 285.139
+      "utility_score": 279.742
     },
     "portfolio_pressure": "comfortable",
     "latest_safe_start_gw": 17
