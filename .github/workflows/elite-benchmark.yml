@@ -32,7 +32,6 @@ jobs:
           python-version: "3.12"
       - name: Build elite FPL benchmark
         run: python elite_benchmark.py
-        continue-on-error: true
       - name: Commit benchmark snapshot
         run: |
           if [ ! -f data/elite_benchmark.json ]; then
