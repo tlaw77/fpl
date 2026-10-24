@@ -54,7 +54,7 @@ def pick_detail(entry_id, gw):
     return get_json(f"{BASE}/entry/{entry_id}/event/{gw}/picks/")
 
 
-def history(entry_id):
+def manager_history(entry_id):
     return get_json(f"{BASE}/entry/{entry_id}/history/")
 
 
@@ -120,7 +120,7 @@ def main():
         eid = int(row.get("entry") or 0)
         try:
             picks = pick_detail(eid, current_gw)
-            hist = history(eid)
+            hist = manager_history(eid)
             transfers = transfer_history(eid)
         except Exception as exc:
             elite.append({"entry_id": eid, "rank": row.get("rank"), "team_name": row.get("entry_name"), "status": "fetch_failed", "error": str(exc)})
