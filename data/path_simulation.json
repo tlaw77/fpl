@@ -1,6 +1,6 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-10-25T13:53:07.975820+00:00",
+  "generated_at_utc": "2026-10-25T17:33:58.741565+00:00",
   "engine_version": 7,
   "planner": "bounded same-deadline multi-transfer beam search + GW-specific shared-outcome Monte Carlo + live FT state + season calibration + shared captaincy + deadline-aware sampling",
   "projection_model": "season-maturity calibrated + shared captaincy model",
@@ -16,7 +16,7 @@
   "iteration_policy": {
     "layer": "path",
     "deadline_phase": "normal",
-    "hours_to_deadline": 141.13,
+    "hours_to_deadline": 137.45,
     "iterations": 1200,
     "policy": "lighter normal-week sampling; higher precision inside 72h/24h/6h of official FPL deadline"
   },
@@ -45,21 +45,21 @@
         "preferred_gw": 11,
         "provisional_gw": 11,
         "status": "hold",
-        "visible_score": 44.21
+        "visible_score": 44.88
       },
       {
         "chip": "Free Hit",
         "preferred_gw": 9,
         "provisional_gw": 9,
         "status": "hold",
-        "visible_score": 4.6
+        "visible_score": 1.4
       },
       {
         "chip": "Wildcard",
         "preferred_gw": 9,
         "provisional_gw": 10,
         "status": "hold",
-        "visible_score": 4.0
+        "visible_score": 0.0
       }
     ],
     "rules": [
@@ -72,60 +72,60 @@
   },
   "rivals": [
     {
-      "entry_id": 5129943,
-      "team_name": "YesWeCanice FC",
-      "manager": "Canice Cheevers",
-      "rank": 2,
-      "total_points": 494.0
-    },
-    {
       "entry_id": 7711703,
       "team_name": "Shamrock Sheilas",
       "manager": "Jack Cheevers",
+      "rank": 1,
+      "total_points": 513.0
+    },
+    {
+      "entry_id": 5129943,
+      "team_name": "YesWeCanice FC",
+      "manager": "Canice Cheevers",
       "rank": 3,
-      "total_points": 481.0
+      "total_points": 511.0
     },
     {
       "entry_id": 6324266,
       "team_name": "Ballon Dorgu",
       "manager": "Darren Nestor",
       "rank": 4,
-      "total_points": 476.0
+      "total_points": 488.0
     },
     {
       "entry_id": 5202441,
       "team_name": "Rayan Kirk-i",
       "manager": "John Cheevers",
       "rank": 5,
-      "total_points": 456.0
+      "total_points": 464.0
     },
     {
       "entry_id": 8179701,
       "team_name": "Wirtz to best",
       "manager": "Cian Quigley",
       "rank": 6,
-      "total_points": 435.0
+      "total_points": 459.0
     },
     {
       "entry_id": 9967314,
       "team_name": "the Four Horseman",
       "manager": "Darren Higgins",
       "rank": 7,
-      "total_points": 381.0
+      "total_points": 396.0
     },
     {
       "entry_id": 2166366,
       "team_name": "Johnians 2026Taepotz",
       "manager": "Johneen Cheevers Snr",
       "rank": 8,
-      "total_points": 360.0
+      "total_points": 376.0
     },
     {
       "entry_id": 5227829,
       "team_name": "De-Mainoo Event",
       "manager": "Dan Nestor",
       "rank": 9,
-      "total_points": 341.0
+      "total_points": 361.0
     }
   ],
   "recommendation": {
@@ -133,37 +133,20 @@
       {
         "gw": 9,
         "action": "TRANSFER",
-        "route": "Hughes → Belloumi + Cherki → Hinshelwood",
+        "route": "João Pedro → Isak + Maguire → Van Hecke",
         "transfer_count": 2,
-        "transfers": [
-          {
-            "route": "Hughes → Belloumi",
-            "out_id": 212,
-            "in_id": 286,
-            "uplift": 6.86
-          },
-          {
-            "route": "Cherki → Hinshelwood",
-            "out_id": 399,
-            "in_id": 123,
-            "uplift": 6.37
-          }
-        ],
-        "hit": 0,
-        "out_id": 212,
-        "in_id": 286
-      },
-      {
-        "gw": 10,
-        "action": "TRANSFER",
-        "route": "João Pedro → Isak",
-        "transfer_count": 1,
         "transfers": [
           {
             "route": "João Pedro → Isak",
             "out_id": 165,
             "in_id": 379,
-            "uplift": 3.18
+            "uplift": 6.17
+          },
+          {
+            "route": "Maguire → Van Hecke",
+            "out_id": 418,
+            "in_id": 112,
+            "uplift": 4.08
           }
         ],
         "hit": 0,
@@ -171,60 +154,77 @@
         "in_id": 379
       },
       {
-        "gw": 11,
+        "gw": 10,
         "action": "TRANSFER",
-        "route": "Maguire → Vuskovic",
+        "route": "Cherki → Hinshelwood",
         "transfer_count": 1,
         "transfers": [
           {
-            "route": "Maguire → Vuskovic",
-            "out_id": 418,
-            "in_id": 504,
-            "uplift": 1.93
+            "route": "Cherki → Hinshelwood",
+            "out_id": 399,
+            "in_id": 123,
+            "uplift": 2.07
           }
         ],
         "hit": 0,
-        "out_id": 418,
-        "in_id": 504
+        "out_id": 399,
+        "in_id": 123
+      },
+      {
+        "gw": 11,
+        "action": "TRANSFER",
+        "route": "Hughes → Belloumi",
+        "transfer_count": 1,
+        "transfers": [
+          {
+            "route": "Hughes → Belloumi",
+            "out_id": 212,
+            "in_id": 286,
+            "uplift": 2.37
+          }
+        ],
+        "hit": 0,
+        "out_id": 212,
+        "in_id": 286
       },
       {
         "gw": 12,
         "action": "TRANSFER",
-        "route": "Affengruber → Muharemović",
+        "route": "Van Hecke → Muharemović",
         "transfer_count": 1,
         "transfers": [
           {
-            "route": "Affengruber → Muharemović",
-            "out_id": 650,
+            "route": "Van Hecke → Muharemović",
+            "out_id": 112,
             "in_id": 334,
-            "uplift": 1.3
+            "uplift": 0.62
           }
         ],
         "hit": 0,
-        "out_id": 650,
+        "out_id": 112,
         "in_id": 334
       }
     ],
-    "expected_points": 241.85,
-    "p10_points": 203.05,
-    "p90_points": 281.69,
-    "expected_rank_after_path": 1.09,
-    "prob_gain_league_place": 0.0,
+    "expected_points": 236.43,
+    "p10_points": 199.81,
+    "p90_points": 273.29,
+    "expected_rank_after_path": 1.23,
+    "prob_gain_league_place": 0.81,
     "prob_finish_ahead_each_rival": [
-      0.937,
-      0.983,
-      0.993,
-      1.0,
+      0.888,
+      0.894,
+      0.987,
+      0.997,
       1.0,
       1.0,
       1.0,
       1.0
     ],
-    "ending_bank": 0.7,
+    "ending_bank": 1.3,
     "ending_free_transfers": 1,
     "first_transfer_incoming_starts": true,
     "first_deadline_transfer_count": 2,
-    "utility_score": 237.108
+    "utility_score": 236.214
   },
   "paths": [
     {
@@ -232,480 +232,186 @@
         {
           "gw": 9,
           "action": "TRANSFER",
-          "route": "Hughes → Belloumi + Cherki → Hinshelwood",
+          "route": "João Pedro → Isak + Maguire → Van Hecke",
           "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Hughes → Belloumi",
-              "out_id": 212,
-              "in_id": 286,
-              "uplift": 6.86
-            },
-            {
-              "route": "Cherki → Hinshelwood",
-              "out_id": 399,
-              "in_id": 123,
-              "uplift": 6.37
-            }
-          ],
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 286
-        },
-        {
-          "gw": 10,
-          "action": "TRANSFER",
-          "route": "João Pedro → Isak",
-          "transfer_count": 1,
           "transfers": [
             {
               "route": "João Pedro → Isak",
               "out_id": 165,
               "in_id": 379,
-              "uplift": 3.18
-            }
-          ],
-          "hit": 0,
-          "out_id": 165,
-          "in_id": 379
-        },
-        {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Maguire → Vuskovic",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Vuskovic",
-              "out_id": 418,
-              "in_id": 504,
-              "uplift": 1.93
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 504
-        },
-        {
-          "gw": 12,
-          "action": "TRANSFER",
-          "route": "Affengruber → Muharemović",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Muharemović",
-              "out_id": 650,
-              "in_id": 334,
-              "uplift": 1.3
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
-          "in_id": 334
-        }
-      ],
-      "expected_points": 241.85,
-      "p10_points": 203.05,
-      "p90_points": 281.69,
-      "expected_rank_after_path": 1.09,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.937,
-        0.983,
-        0.993,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "ending_bank": 0.7,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 2,
-      "utility_score": 237.108
-    },
-    {
-      "actions": [
-        {
-          "gw": 9,
-          "action": "TRANSFER",
-          "route": "Hughes → Belloumi + Cherki → Hinshelwood",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Hughes → Belloumi",
-              "out_id": 212,
-              "in_id": 286,
-              "uplift": 6.86
+              "uplift": 6.17
             },
             {
-              "route": "Cherki → Hinshelwood",
-              "out_id": 399,
-              "in_id": 123,
-              "uplift": 6.37
-            }
-          ],
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 286
-        },
-        {
-          "gw": 10,
-          "action": "TRANSFER",
-          "route": "Affengruber → Muharemović",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Muharemović",
-              "out_id": 650,
-              "in_id": 334,
-              "uplift": 3.06
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
-          "in_id": 334
-        },
-        {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Maguire → Vuskovic",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Vuskovic",
+              "route": "Maguire → Van Hecke",
               "out_id": 418,
-              "in_id": 504,
-              "uplift": 1.91
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 504
-        },
-        {
-          "gw": 12,
-          "action": "TRANSFER",
-          "route": "Haaland → Isak",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Haaland → Isak",
-              "out_id": 411,
-              "in_id": 379,
-              "uplift": 1.08
-            }
-          ],
-          "hit": 0,
-          "out_id": 411,
-          "in_id": 379
-        }
-      ],
-      "expected_points": 241.6,
-      "p10_points": 203.98,
-      "p90_points": 282.25,
-      "expected_rank_after_path": 1.09,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.932,
-        0.982,
-        0.994,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "ending_bank": 8.5,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 2,
-      "utility_score": 236.976
-    },
-    {
-      "actions": [
-        {
-          "gw": 9,
-          "action": "TRANSFER",
-          "route": "Hughes → Belloumi + Cherki → Hinshelwood",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Hughes → Belloumi",
-              "out_id": 212,
-              "in_id": 286,
-              "uplift": 6.86
-            },
-            {
-              "route": "Cherki → Hinshelwood",
-              "out_id": 399,
-              "in_id": 123,
-              "uplift": 6.37
-            }
-          ],
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 286
-        },
-        {
-          "gw": 10,
-          "action": "TRANSFER",
-          "route": "João Pedro → Isak",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "João Pedro → Isak",
-              "out_id": 165,
-              "in_id": 379,
-              "uplift": 3.18
-            }
-          ],
-          "hit": 0,
-          "out_id": 165,
-          "in_id": 379
-        },
-        {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Affengruber → Mfuni",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Mfuni",
-              "out_id": 650,
-              "in_id": 656,
-              "uplift": 1.7
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
-          "in_id": 656
-        },
-        {
-          "gw": 12,
-          "action": "TRANSFER",
-          "route": "Maguire → Muharemović",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Muharemović",
-              "out_id": 418,
-              "in_id": 334,
-              "uplift": 1.3
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 334
-        }
-      ],
-      "expected_points": 241.52,
-      "p10_points": 203.17,
-      "p90_points": 280.4,
-      "expected_rank_after_path": 1.1,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.922,
-        0.987,
-        0.991,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "ending_bank": 1.8,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 2,
-      "utility_score": 236.767
-    },
-    {
-      "actions": [
-        {
-          "gw": 9,
-          "action": "TRANSFER",
-          "route": "Hughes → Belloumi + Cherki → Hinshelwood",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Hughes → Belloumi",
-              "out_id": 212,
-              "in_id": 286,
-              "uplift": 6.86
-            },
-            {
-              "route": "Cherki → Hinshelwood",
-              "out_id": 399,
-              "in_id": 123,
-              "uplift": 6.37
-            }
-          ],
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 286
-        },
-        {
-          "gw": 10,
-          "action": "TRANSFER",
-          "route": "João Pedro → Isak",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "João Pedro → Isak",
-              "out_id": 165,
-              "in_id": 379,
-              "uplift": 3.18
-            }
-          ],
-          "hit": 0,
-          "out_id": 165,
-          "in_id": 379
-        },
-        {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Maguire → Vuskovic",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Vuskovic",
-              "out_id": 418,
-              "in_id": 504,
-              "uplift": 1.93
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 504
-        },
-        {
-          "gw": 12,
-          "action": "TRANSFER",
-          "route": "Affengruber → Justin",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Justin",
-              "out_id": 650,
-              "in_id": 332,
-              "uplift": 1.08
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
-          "in_id": 332
-        }
-      ],
-      "expected_points": 241.44,
-      "p10_points": 203.16,
-      "p90_points": 281.85,
-      "expected_rank_after_path": 1.1,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.924,
-        0.983,
-        0.993,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "ending_bank": 1.2,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 2,
-      "utility_score": 236.696
-    },
-    {
-      "actions": [
-        {
-          "gw": 9,
-          "action": "TRANSFER",
-          "route": "Hughes → Belloumi + Cherki → Hinshelwood",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Hughes → Belloumi",
-              "out_id": 212,
-              "in_id": 286,
-              "uplift": 6.86
-            },
-            {
-              "route": "Cherki → Hinshelwood",
-              "out_id": 399,
-              "in_id": 123,
-              "uplift": 6.37
-            }
-          ],
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 286
-        },
-        {
-          "gw": 10,
-          "action": "TRANSFER",
-          "route": "João Pedro → Isak",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "João Pedro → Isak",
-              "out_id": 165,
-              "in_id": 379,
-              "uplift": 3.18
-            }
-          ],
-          "hit": 0,
-          "out_id": 165,
-          "in_id": 379
-        },
-        {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Affengruber → Van Hecke",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Van Hecke",
-              "out_id": 650,
               "in_id": 112,
-              "uplift": 1.79
+              "uplift": 4.08
             }
           ],
           "hit": 0,
-          "out_id": 650,
-          "in_id": 112
+          "out_id": 165,
+          "in_id": 379
+        },
+        {
+          "gw": 10,
+          "action": "TRANSFER",
+          "route": "Cherki → Hinshelwood",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Cherki → Hinshelwood",
+              "out_id": 399,
+              "in_id": 123,
+              "uplift": 2.07
+            }
+          ],
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 123
+        },
+        {
+          "gw": 11,
+          "action": "TRANSFER",
+          "route": "Hughes → Belloumi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Hughes → Belloumi",
+              "out_id": 212,
+              "in_id": 286,
+              "uplift": 2.37
+            }
+          ],
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 286
         },
         {
           "gw": 12,
           "action": "TRANSFER",
-          "route": "Maguire → Muharemović",
+          "route": "Van Hecke → Muharemović",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Maguire → Muharemović",
-              "out_id": 418,
+              "route": "Van Hecke → Muharemović",
+              "out_id": 112,
               "in_id": 334,
-              "uplift": 1.3
+              "uplift": 0.62
             }
           ],
           "hit": 0,
-          "out_id": 418,
+          "out_id": 112,
           "in_id": 334
         }
       ],
-      "expected_points": 241.52,
-      "p10_points": 202.41,
-      "p90_points": 281.8,
-      "expected_rank_after_path": 1.1,
-      "prob_gain_league_place": 0.0,
+      "expected_points": 236.43,
+      "p10_points": 199.81,
+      "p90_points": 273.29,
+      "expected_rank_after_path": 1.23,
+      "prob_gain_league_place": 0.81,
       "prob_finish_ahead_each_rival": [
-        0.921,
-        0.986,
-        0.991,
+        0.888,
+        0.894,
+        0.987,
+        0.997,
         1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "ending_bank": 1.3,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 2,
+      "utility_score": 236.214
+    },
+    {
+      "actions": [
+        {
+          "gw": 9,
+          "action": "TRANSFER",
+          "route": "João Pedro → Isak + Maguire → Van Hecke",
+          "transfer_count": 2,
+          "transfers": [
+            {
+              "route": "João Pedro → Isak",
+              "out_id": 165,
+              "in_id": 379,
+              "uplift": 6.17
+            },
+            {
+              "route": "Maguire → Van Hecke",
+              "out_id": 418,
+              "in_id": 112,
+              "uplift": 4.08
+            }
+          ],
+          "hit": 0,
+          "out_id": 165,
+          "in_id": 379
+        },
+        {
+          "gw": 10,
+          "action": "TRANSFER",
+          "route": "Cherki → Hinshelwood",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Cherki → Hinshelwood",
+              "out_id": 399,
+              "in_id": 123,
+              "uplift": 2.07
+            }
+          ],
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 123
+        },
+        {
+          "gw": 11,
+          "action": "TRANSFER",
+          "route": "Hughes → Belloumi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Hughes → Belloumi",
+              "out_id": 212,
+              "in_id": 286,
+              "uplift": 2.37
+            }
+          ],
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 286
+        },
+        {
+          "gw": 12,
+          "action": "TRANSFER",
+          "route": "Affengruber → Muharemović",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Affengruber → Muharemović",
+              "out_id": 650,
+              "in_id": 334,
+              "uplift": 0.62
+            }
+          ],
+          "hit": 0,
+          "out_id": 650,
+          "in_id": 334
+        }
+      ],
+      "expected_points": 236.43,
+      "p10_points": 199.81,
+      "p90_points": 273.29,
+      "expected_rank_after_path": 1.23,
+      "prob_gain_league_place": 0.81,
+      "prob_finish_ahead_each_rival": [
+        0.888,
+        0.894,
+        0.987,
+        0.997,
         1.0,
         1.0,
         1.0,
@@ -715,44 +421,27 @@
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
       "first_deadline_transfer_count": 2,
-      "utility_score": 236.665
+      "utility_score": 236.214
     },
     {
       "actions": [
         {
           "gw": 9,
           "action": "TRANSFER",
-          "route": "Hughes → Belloumi + Cherki → Hinshelwood",
+          "route": "João Pedro → Isak + Henderson → Belloumi",
           "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Hughes → Belloumi",
-              "out_id": 212,
-              "in_id": 286,
-              "uplift": 6.86
-            },
-            {
-              "route": "Cherki → Hinshelwood",
-              "out_id": 399,
-              "in_id": 123,
-              "uplift": 6.37
-            }
-          ],
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 286
-        },
-        {
-          "gw": 10,
-          "action": "TRANSFER",
-          "route": "João Pedro → Isak",
-          "transfer_count": 1,
           "transfers": [
             {
               "route": "João Pedro → Isak",
               "out_id": 165,
               "in_id": 379,
-              "uplift": 3.18
+              "uplift": 6.17
+            },
+            {
+              "route": "Henderson → Belloumi",
+              "out_id": 101,
+              "in_id": 286,
+              "uplift": 4.09
             }
           ],
           "hit": 0,
@@ -760,97 +449,33 @@
           "in_id": 379
         },
         {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Affengruber → Van Hecke",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Van Hecke",
-              "out_id": 650,
-              "in_id": 112,
-              "uplift": 1.79
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
-          "in_id": 112
-        },
-        {
-          "gw": 12,
-          "action": "TRANSFER",
-          "route": "Maguire → Justin",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Justin",
-              "out_id": 418,
-              "in_id": 332,
-              "uplift": 1.08
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 332
-        }
-      ],
-      "expected_points": 241.11,
-      "p10_points": 202.49,
-      "p90_points": 281.61,
-      "expected_rank_after_path": 1.11,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.918,
-        0.983,
-        0.991,
-        0.999,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "ending_bank": 1.4,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 2,
-      "utility_score": 236.283
-    },
-    {
-      "actions": [
-        {
-          "gw": 9,
-          "action": "TRANSFER",
-          "route": "Maguire → Van Hecke",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Van Hecke",
-              "out_id": 418,
-              "in_id": 112,
-              "uplift": 6.16
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 112
-        },
-        {
           "gw": 10,
           "action": "TRANSFER",
-          "route": "B.Fernandes → Hinshelwood + Hughes → Mbeumo",
-          "transfer_count": 2,
+          "route": "Maguire → Konsa",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Maguire → Konsa",
+              "out_id": 418,
+              "in_id": 31,
+              "uplift": 2.46
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 31
+        },
+        {
+          "gw": 11,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Hinshelwood",
+          "transfer_count": 1,
           "transfers": [
             {
               "route": "B.Fernandes → Hinshelwood",
               "out_id": 426,
               "in_id": 123,
-              "uplift": 5.44
-            },
-            {
-              "route": "Hughes → Mbeumo",
-              "out_id": 212,
-              "in_id": 427,
-              "uplift": 3.63
+              "uplift": 1.47
             }
           ],
           "hit": 0,
@@ -858,20 +483,101 @@
           "in_id": 123
         },
         {
-          "gw": 11,
+          "gw": 12,
           "action": "TRANSFER",
-          "route": "Henderson → Belloumi",
+          "route": "Affengruber → Muharemović",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Henderson → Belloumi",
-              "out_id": 101,
-              "in_id": 286,
-              "uplift": 2.14
+              "route": "Affengruber → Muharemović",
+              "out_id": 650,
+              "in_id": 334,
+              "uplift": 1.15
             }
           ],
           "hit": 0,
-          "out_id": 101,
+          "out_id": 650,
+          "in_id": 334
+        }
+      ],
+      "expected_points": 236.59,
+      "p10_points": 198.23,
+      "p90_points": 274.5,
+      "expected_rank_after_path": 1.25,
+      "prob_gain_league_place": 0.806,
+      "prob_finish_ahead_each_rival": [
+        0.883,
+        0.892,
+        0.982,
+        0.996,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "ending_bank": 5.5,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 2,
+      "utility_score": 236.104
+    },
+    {
+      "actions": [
+        {
+          "gw": 9,
+          "action": "TRANSFER",
+          "route": "João Pedro → Isak + Maguire → Van Hecke",
+          "transfer_count": 2,
+          "transfers": [
+            {
+              "route": "João Pedro → Isak",
+              "out_id": 165,
+              "in_id": 379,
+              "uplift": 6.17
+            },
+            {
+              "route": "Maguire → Van Hecke",
+              "out_id": 418,
+              "in_id": 112,
+              "uplift": 4.08
+            }
+          ],
+          "hit": 0,
+          "out_id": 165,
+          "in_id": 379
+        },
+        {
+          "gw": 10,
+          "action": "TRANSFER",
+          "route": "Cherki → Hinshelwood",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Cherki → Hinshelwood",
+              "out_id": 399,
+              "in_id": 123,
+              "uplift": 2.07
+            }
+          ],
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 123
+        },
+        {
+          "gw": 11,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Belloumi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "B.Fernandes → Belloumi",
+              "out_id": 426,
+              "in_id": 286,
+              "uplift": 1.84
+            }
+          ],
+          "hit": 0,
+          "out_id": 426,
           "in_id": 286
         },
         {
@@ -884,7 +590,7 @@
               "route": "Affengruber → Muharemović",
               "out_id": 650,
               "in_id": 334,
-              "uplift": 1.36
+              "uplift": 1.14
             }
           ],
           "hit": 0,
@@ -892,231 +598,227 @@
           "in_id": 334
         }
       ],
-      "expected_points": 241.07,
-      "p10_points": 202.06,
-      "p90_points": 281.64,
-      "expected_rank_after_path": 1.11,
-      "prob_gain_league_place": 0.0,
+      "expected_points": 236.24,
+      "p10_points": 199.96,
+      "p90_points": 273.69,
+      "expected_rank_after_path": 1.23,
+      "prob_gain_league_place": 0.813,
       "prob_finish_ahead_each_rival": [
-        0.914,
-        0.978,
-        0.993,
-        1.0,
+        0.892,
+        0.896,
+        0.984,
+        0.997,
         1.0,
         1.0,
         1.0,
         1.0
       ],
-      "ending_bank": 2.7,
+      "ending_bank": 8.3,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 1,
-      "utility_score": 236.169
+      "first_deadline_transfer_count": 2,
+      "utility_score": 236.077
     },
     {
       "actions": [
         {
           "gw": 9,
           "action": "TRANSFER",
-          "route": "Maguire → Muharemović",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Muharemović",
-              "out_id": 418,
-              "in_id": 334,
-              "uplift": 6.16
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 334
-        },
-        {
-          "gw": 10,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Hinshelwood + João Pedro → Isak",
+          "route": "João Pedro → Isak + Henderson → Belloumi",
           "transfer_count": 2,
           "transfers": [
-            {
-              "route": "B.Fernandes → Hinshelwood",
-              "out_id": 426,
-              "in_id": 123,
-              "uplift": 5.44
-            },
             {
               "route": "João Pedro → Isak",
               "out_id": 165,
               "in_id": 379,
-              "uplift": 3.47
-            }
-          ],
-          "hit": 0,
-          "out_id": 426,
-          "in_id": 123
-        },
-        {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Henderson → Belloumi",
-          "transfer_count": 1,
-          "transfers": [
+              "uplift": 6.17
+            },
             {
               "route": "Henderson → Belloumi",
               "out_id": 101,
               "in_id": 286,
-              "uplift": 2.14
+              "uplift": 4.09
             }
           ],
           "hit": 0,
-          "out_id": 101,
-          "in_id": 286
+          "out_id": 165,
+          "in_id": 379
+        },
+        {
+          "gw": 10,
+          "action": "TRANSFER",
+          "route": "Affengruber → Konsa",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Affengruber → Konsa",
+              "out_id": 650,
+              "in_id": 31,
+              "uplift": 2.46
+            }
+          ],
+          "hit": 0,
+          "out_id": 650,
+          "in_id": 31
+        },
+        {
+          "gw": 11,
+          "action": "TRANSFER",
+          "route": "Maguire → Mfuni",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Maguire → Mfuni",
+              "out_id": 418,
+              "in_id": 656,
+              "uplift": 1.71
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 656
         },
         {
           "gw": 12,
           "action": "TRANSFER",
-          "route": "Cherki → Mbeumo",
+          "route": "Konsa → Muharemović",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Cherki → Mbeumo",
+              "route": "Konsa → Muharemović",
+              "out_id": 31,
+              "in_id": 334,
+              "uplift": 0.81
+            }
+          ],
+          "hit": 0,
+          "out_id": 31,
+          "in_id": 334
+        }
+      ],
+      "expected_points": 236.44,
+      "p10_points": 198.56,
+      "p90_points": 274.11,
+      "expected_rank_after_path": 1.24,
+      "prob_gain_league_place": 0.807,
+      "prob_finish_ahead_each_rival": [
+        0.881,
+        0.899,
+        0.983,
+        0.995,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "ending_bank": 0.3,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 2,
+      "utility_score": 236.029
+    },
+    {
+      "actions": [
+        {
+          "gw": 9,
+          "action": "TRANSFER",
+          "route": "João Pedro → Isak + Maguire → Van Hecke",
+          "transfer_count": 2,
+          "transfers": [
+            {
+              "route": "João Pedro → Isak",
+              "out_id": 165,
+              "in_id": 379,
+              "uplift": 6.17
+            },
+            {
+              "route": "Maguire → Van Hecke",
+              "out_id": 418,
+              "in_id": 112,
+              "uplift": 4.08
+            }
+          ],
+          "hit": 0,
+          "out_id": 165,
+          "in_id": 379
+        },
+        {
+          "gw": 10,
+          "action": "TRANSFER",
+          "route": "Cherki → Hinshelwood",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Cherki → Hinshelwood",
               "out_id": 399,
-              "in_id": 427,
-              "uplift": 1.31
+              "in_id": 123,
+              "uplift": 2.07
             }
           ],
           "hit": 0,
           "out_id": 399,
-          "in_id": 427
-        }
-      ],
-      "expected_points": 240.71,
-      "p10_points": 203.2,
-      "p90_points": 279.81,
-      "expected_rank_after_path": 1.1,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.921,
-        0.992,
-        0.99,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "ending_bank": 5.7,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 1,
-      "utility_score": 236.067
-    },
-    {
-      "actions": [
-        {
-          "gw": 9,
-          "action": "TRANSFER",
-          "route": "Maguire → Muharemović",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Muharemović",
-              "out_id": 418,
-              "in_id": 334,
-              "uplift": 6.16
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 334
-        },
-        {
-          "gw": 10,
-          "action": "TRANSFER",
-          "route": "B.Fernandes → Hinshelwood + João Pedro → Isak",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "B.Fernandes → Hinshelwood",
-              "out_id": 426,
-              "in_id": 123,
-              "uplift": 5.44
-            },
-            {
-              "route": "João Pedro → Isak",
-              "out_id": 165,
-              "in_id": 379,
-              "uplift": 3.47
-            }
-          ],
-          "hit": 0,
-          "out_id": 426,
           "in_id": 123
         },
         {
           "gw": 11,
           "action": "TRANSFER",
-          "route": "Henderson → Belloumi",
+          "route": "Hughes → Belloumi",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Henderson → Belloumi",
-              "out_id": 101,
+              "route": "Hughes → Belloumi",
+              "out_id": 212,
               "in_id": 286,
-              "uplift": 2.14
+              "uplift": 2.37
             }
           ],
           "hit": 0,
-          "out_id": 101,
+          "out_id": 212,
           "in_id": 286
         },
         {
           "gw": 12,
           "action": "TRANSFER",
-          "route": "Hughes → Mbeumo",
+          "route": "De Cuyper → Muharemović",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Hughes → Mbeumo",
-              "out_id": 212,
-              "in_id": 427,
-              "uplift": 1.31
+              "route": "De Cuyper → Muharemović",
+              "out_id": 115,
+              "in_id": 334,
+              "uplift": 0.59
             }
           ],
           "hit": 0,
-          "out_id": 212,
-          "in_id": 427
+          "out_id": 115,
+          "in_id": 334
         }
       ],
-      "expected_points": 240.71,
-      "p10_points": 203.2,
-      "p90_points": 279.81,
-      "expected_rank_after_path": 1.1,
-      "prob_gain_league_place": 0.0,
+      "expected_points": 236.17,
+      "p10_points": 199.52,
+      "p90_points": 274.22,
+      "expected_rank_after_path": 1.24,
+      "prob_gain_league_place": 0.812,
       "prob_finish_ahead_each_rival": [
-        0.921,
-        0.992,
-        0.99,
-        1.0,
+        0.89,
+        0.892,
+        0.985,
+        0.997,
         1.0,
         1.0,
         1.0,
         1.0
       ],
-      "ending_bank": 2.0,
+      "ending_bank": 1.7,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 1,
-      "utility_score": 236.067
+      "first_deadline_transfer_count": 2,
+      "utility_score": 235.947
     },
     {
       "actions": [
         {
           "gw": 9,
-          "action": "ROLL"
-        },
-        {
-          "gw": 10,
           "action": "TRANSFER",
           "route": "Maguire → White",
           "transfer_count": 1,
@@ -1125,7 +827,7 @@
               "route": "Maguire → White",
               "out_id": 418,
               "in_id": 10,
-              "uplift": 4.78
+              "uplift": 3.98
             }
           ],
           "hit": 0,
@@ -1133,33 +835,44 @@
           "in_id": 10
         },
         {
-          "gw": 11,
+          "gw": 10,
           "action": "TRANSFER",
-          "route": "B.Fernandes → Hinshelwood + João Pedro → Isak + Henderson → Belloumi",
-          "transfer_count": 3,
+          "route": "Cherki → Hinshelwood + João Pedro → Isak",
+          "transfer_count": 2,
           "transfers": [
             {
-              "route": "B.Fernandes → Hinshelwood",
-              "out_id": 426,
+              "route": "Cherki → Hinshelwood",
+              "out_id": 399,
               "in_id": 123,
-              "uplift": 4.2
+              "uplift": 2.11
             },
             {
               "route": "João Pedro → Isak",
               "out_id": 165,
               "in_id": 379,
-              "uplift": 2.35
-            },
+              "uplift": 4.15
+            }
+          ],
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 123
+        },
+        {
+          "gw": 11,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Belloumi",
+          "transfer_count": 1,
+          "transfers": [
             {
-              "route": "Henderson → Belloumi",
-              "out_id": 101,
+              "route": "B.Fernandes → Belloumi",
+              "out_id": 426,
               "in_id": 286,
-              "uplift": 2.14
+              "uplift": 1.84
             }
           ],
           "hit": 0,
           "out_id": 426,
-          "in_id": 123
+          "in_id": 286
         },
         {
           "gw": 12,
@@ -1171,7 +884,7 @@
               "route": "Affengruber → Muharemović",
               "out_id": 650,
               "in_id": 334,
-              "uplift": 1.36
+              "uplift": 1.14
             }
           ],
           "hit": 0,
@@ -1179,26 +892,222 @@
           "in_id": 334
         }
       ],
-      "expected_points": 236.93,
-      "p10_points": 199.58,
-      "p90_points": 275.75,
-      "expected_rank_after_path": 1.12,
-      "prob_gain_league_place": 0.0,
+      "expected_points": 234.5,
+      "p10_points": 197.47,
+      "p90_points": 271.63,
+      "expected_rank_after_path": 1.25,
+      "prob_gain_league_place": 0.803,
       "prob_finish_ahead_each_rival": [
-        0.906,
-        0.985,
-        0.991,
-        0.999,
+        0.873,
+        0.896,
+        0.981,
+        0.997,
         1.0,
         1.0,
         1.0,
         1.0
       ],
-      "ending_bank": 4.7,
+      "ending_bank": 7.8,
       "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": null,
-      "first_deadline_transfer_count": 0,
-      "utility_score": 232.2
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 1,
+      "utility_score": 234.14
+    },
+    {
+      "actions": [
+        {
+          "gw": 9,
+          "action": "TRANSFER",
+          "route": "Maguire → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Maguire → Tarkowski",
+              "out_id": 418,
+              "in_id": 229,
+              "uplift": 3.99
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 229
+        },
+        {
+          "gw": 10,
+          "action": "TRANSFER",
+          "route": "Cherki → Hinshelwood + João Pedro → Isak",
+          "transfer_count": 2,
+          "transfers": [
+            {
+              "route": "Cherki → Hinshelwood",
+              "out_id": 399,
+              "in_id": 123,
+              "uplift": 2.11
+            },
+            {
+              "route": "João Pedro → Isak",
+              "out_id": 165,
+              "in_id": 379,
+              "uplift": 4.15
+            }
+          ],
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 123
+        },
+        {
+          "gw": 11,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Belloumi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "B.Fernandes → Belloumi",
+              "out_id": 426,
+              "in_id": 286,
+              "uplift": 1.84
+            }
+          ],
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 286
+        },
+        {
+          "gw": 12,
+          "action": "TRANSFER",
+          "route": "Affengruber → Muharemović",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Affengruber → Muharemović",
+              "out_id": 650,
+              "in_id": 334,
+              "uplift": 1.14
+            }
+          ],
+          "hit": 0,
+          "out_id": 650,
+          "in_id": 334
+        }
+      ],
+      "expected_points": 234.45,
+      "p10_points": 197.36,
+      "p90_points": 270.71,
+      "expected_rank_after_path": 1.27,
+      "prob_gain_league_place": 0.797,
+      "prob_finish_ahead_each_rival": [
+        0.873,
+        0.884,
+        0.981,
+        0.994,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "ending_bank": 7.0,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 1,
+      "utility_score": 234.008
+    },
+    {
+      "actions": [
+        {
+          "gw": 9,
+          "action": "TRANSFER",
+          "route": "Maguire → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Maguire → Tarkowski",
+              "out_id": 418,
+              "in_id": 229,
+              "uplift": 3.99
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 229
+        },
+        {
+          "gw": 10,
+          "action": "TRANSFER",
+          "route": "Cherki → Hinshelwood + João Pedro → Isak",
+          "transfer_count": 2,
+          "transfers": [
+            {
+              "route": "Cherki → Hinshelwood",
+              "out_id": 399,
+              "in_id": 123,
+              "uplift": 2.11
+            },
+            {
+              "route": "João Pedro → Isak",
+              "out_id": 165,
+              "in_id": 379,
+              "uplift": 4.15
+            }
+          ],
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 123
+        },
+        {
+          "gw": 11,
+          "action": "TRANSFER",
+          "route": "Hughes → Belloumi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Hughes → Belloumi",
+              "out_id": 212,
+              "in_id": 286,
+              "uplift": 2.37
+            }
+          ],
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 286
+        },
+        {
+          "gw": 12,
+          "action": "TRANSFER",
+          "route": "De Cuyper → Muharemović",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "De Cuyper → Muharemović",
+              "out_id": 115,
+              "in_id": 334,
+              "uplift": 0.59
+            }
+          ],
+          "hit": 0,
+          "out_id": 115,
+          "in_id": 334
+        }
+      ],
+      "expected_points": 234.38,
+      "p10_points": 197.59,
+      "p90_points": 270.54,
+      "expected_rank_after_path": 1.27,
+      "prob_gain_league_place": 0.795,
+      "prob_finish_ahead_each_rival": [
+        0.868,
+        0.887,
+        0.981,
+        0.993,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "ending_bank": 0.4,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 1,
+      "utility_score": 233.963
     },
     {
       "actions": [
@@ -1209,48 +1118,139 @@
         {
           "gw": 10,
           "action": "TRANSFER",
-          "route": "Maguire → Vuskovic",
-          "transfer_count": 1,
+          "route": "Maguire → Konsa + Hughes → Hinshelwood",
+          "transfer_count": 2,
           "transfers": [
             {
-              "route": "Maguire → Vuskovic",
+              "route": "Maguire → Konsa",
               "out_id": 418,
-              "in_id": 504,
-              "uplift": 4.79
+              "in_id": 31,
+              "uplift": 2.86
+            },
+            {
+              "route": "Hughes → Hinshelwood",
+              "out_id": 212,
+              "in_id": 123,
+              "uplift": 2.84
             }
           ],
           "hit": 0,
           "out_id": 418,
-          "in_id": 504
+          "in_id": 31
         },
         {
           "gw": 11,
           "action": "TRANSFER",
-          "route": "B.Fernandes → Hinshelwood + João Pedro → Isak + Henderson → Belloumi",
-          "transfer_count": 3,
+          "route": "B.Fernandes → Belloumi + João Pedro → Isak",
+          "transfer_count": 2,
           "transfers": [
             {
-              "route": "B.Fernandes → Hinshelwood",
+              "route": "B.Fernandes → Belloumi",
               "out_id": 426,
-              "in_id": 123,
-              "uplift": 4.2
+              "in_id": 286,
+              "uplift": 1.84
             },
             {
               "route": "João Pedro → Isak",
               "out_id": 165,
               "in_id": 379,
-              "uplift": 2.35
-            },
-            {
-              "route": "Henderson → Belloumi",
-              "out_id": 101,
-              "in_id": 286,
-              "uplift": 2.14
+              "uplift": 2.53
             }
           ],
           "hit": 0,
           "out_id": 426,
-          "in_id": 123
+          "in_id": 286
+        },
+        {
+          "gw": 12,
+          "action": "TRANSFER",
+          "route": "Affengruber → Muharemović",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Affengruber → Muharemović",
+              "out_id": 650,
+              "in_id": 334,
+              "uplift": 1.14
+            }
+          ],
+          "hit": 0,
+          "out_id": 650,
+          "in_id": 334
+        }
+      ],
+      "expected_points": 232.5,
+      "p10_points": 195.26,
+      "p90_points": 271.27,
+      "expected_rank_after_path": 1.31,
+      "prob_gain_league_place": 0.767,
+      "prob_finish_ahead_each_rival": [
+        0.864,
+        0.861,
+        0.973,
+        0.993,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "ending_bank": 4.9,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": null,
+      "first_deadline_transfer_count": 0,
+      "utility_score": 231.834
+    },
+    {
+      "actions": [
+        {
+          "gw": 9,
+          "action": "ROLL"
+        },
+        {
+          "gw": 10,
+          "action": "TRANSFER",
+          "route": "Maguire → Konsa + Hughes → Hinshelwood",
+          "transfer_count": 2,
+          "transfers": [
+            {
+              "route": "Maguire → Konsa",
+              "out_id": 418,
+              "in_id": 31,
+              "uplift": 2.86
+            },
+            {
+              "route": "Hughes → Hinshelwood",
+              "out_id": 212,
+              "in_id": 123,
+              "uplift": 2.84
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 31
+        },
+        {
+          "gw": 11,
+          "action": "TRANSFER",
+          "route": "B.Fernandes → Belloumi + João Pedro → Isak",
+          "transfer_count": 2,
+          "transfers": [
+            {
+              "route": "B.Fernandes → Belloumi",
+              "out_id": 426,
+              "in_id": 286,
+              "uplift": 1.84
+            },
+            {
+              "route": "João Pedro → Isak",
+              "out_id": 165,
+              "in_id": 379,
+              "uplift": 2.53
+            }
+          ],
+          "hit": 0,
+          "out_id": 426,
+          "in_id": 286
         },
         {
           "gw": 12,
@@ -1262,7 +1262,7 @@
               "route": "Cherki → Mbeumo",
               "out_id": 399,
               "in_id": 427,
-              "uplift": 1.31
+              "uplift": 0.97
             }
           ],
           "hit": 0,
@@ -1270,26 +1270,26 @@
           "in_id": 427
         }
       ],
-      "expected_points": 236.93,
-      "p10_points": 198.87,
-      "p90_points": 277.71,
-      "expected_rank_after_path": 1.1,
-      "prob_gain_league_place": 0.0,
+      "expected_points": 232.31,
+      "p10_points": 194.73,
+      "p90_points": 270.96,
+      "expected_rank_after_path": 1.29,
+      "prob_gain_league_place": 0.776,
       "prob_finish_ahead_each_rival": [
-        0.923,
-        0.983,
-        0.99,
-        1.0,
+        0.873,
+        0.865,
+        0.973,
+        0.994,
         1.0,
         1.0,
         1.0,
         1.0
       ],
-      "ending_bank": 5.6,
+      "ending_bank": 5.5,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": null,
       "first_deadline_transfer_count": 0,
-      "utility_score": 232.2
+      "utility_score": 231.676
     },
     {
       "actions": [
@@ -1300,87 +1300,87 @@
         {
           "gw": 10,
           "action": "TRANSFER",
-          "route": "Maguire → Vuskovic",
-          "transfer_count": 1,
+          "route": "Maguire → Konsa + Hughes → Hinshelwood",
+          "transfer_count": 2,
           "transfers": [
             {
-              "route": "Maguire → Vuskovic",
+              "route": "Maguire → Konsa",
               "out_id": 418,
-              "in_id": 504,
-              "uplift": 4.79
+              "in_id": 31,
+              "uplift": 2.86
+            },
+            {
+              "route": "Hughes → Hinshelwood",
+              "out_id": 212,
+              "in_id": 123,
+              "uplift": 2.84
             }
           ],
           "hit": 0,
           "out_id": 418,
-          "in_id": 504
+          "in_id": 31
         },
         {
           "gw": 11,
           "action": "TRANSFER",
-          "route": "B.Fernandes → Hinshelwood + João Pedro → Isak + Henderson → Belloumi",
-          "transfer_count": 3,
+          "route": "B.Fernandes → Belloumi + João Pedro → Isak",
+          "transfer_count": 2,
           "transfers": [
             {
-              "route": "B.Fernandes → Hinshelwood",
+              "route": "B.Fernandes → Belloumi",
               "out_id": 426,
-              "in_id": 123,
-              "uplift": 4.2
+              "in_id": 286,
+              "uplift": 1.84
             },
             {
               "route": "João Pedro → Isak",
               "out_id": 165,
               "in_id": 379,
-              "uplift": 2.35
-            },
-            {
-              "route": "Henderson → Belloumi",
-              "out_id": 101,
-              "in_id": 286,
-              "uplift": 2.14
+              "uplift": 2.53
             }
           ],
           "hit": 0,
           "out_id": 426,
-          "in_id": 123
+          "in_id": 286
         },
         {
           "gw": 12,
           "action": "TRANSFER",
-          "route": "Hughes → Mbeumo",
+          "route": "Cherki → Stach",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Hughes → Mbeumo",
-              "out_id": 212,
-              "in_id": 427,
-              "uplift": 1.31
+              "route": "Cherki → Stach",
+              "out_id": 399,
+              "in_id": 335,
+              "uplift": 1.05
             }
           ],
           "hit": 0,
-          "out_id": 212,
-          "in_id": 427
+          "out_id": 399,
+          "in_id": 335
         }
       ],
-      "expected_points": 236.93,
-      "p10_points": 198.87,
-      "p90_points": 277.71,
-      "expected_rank_after_path": 1.1,
-      "prob_gain_league_place": 0.0,
+      "expected_points": 232.3,
+      "p10_points": 194.97,
+      "p90_points": 270.32,
+      "expected_rank_after_path": 1.3,
+      "prob_gain_league_place": 0.769,
       "prob_finish_ahead_each_rival": [
-        0.923,
-        0.983,
-        0.99,
-        1.0,
+        0.867,
+        0.86,
+        0.975,
+        0.993,
         1.0,
         1.0,
         1.0,
         1.0
       ],
-      "ending_bank": 1.9,
+      "ending_bank": 7.4,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": null,
       "first_deadline_transfer_count": 0,
-      "utility_score": 232.2
+      "utility_score": 231.643
     }
   ],
   "method_note": "Each path is scored with the actual squad owned in each Gameweek. A deadline may use one, two or three transfers up to the available free-transfer bank; a no-FT state retains only a single-hit contingency. Current-deadline hits use live FT state. Early-season extremes are shrunk toward priors. Legal XI selection uses the shared captaincy model. Monte Carlo sampling is lighter midweek and increases close to the official FPL deadline without changing decision thresholds."
