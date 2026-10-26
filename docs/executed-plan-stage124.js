@@ -1,5 +1,5 @@
 (()=>{
-const BUILD='executed-plan-stage124-20261026-2',PLAN_KEY='fplWorkingPlanV2',EXECUTED_KEY='fplExecutedPlanV1',POOL_URL='https://raw.githubusercontent.com/tlaw77/fpl/main/data/player_pool.json';
+const BUILD='executed-plan-stage124-20261026-3',PLAN_KEY='fplWorkingPlanV2',EXECUTED_KEY='fplExecutedPlanV1',POOL_URL='https://raw.githubusercontent.com/tlaw77/fpl/main/data/player_pool.json';
 const q=(s,r=document)=>r.querySelector(s),n=(v,d=0)=>Number.isFinite(Number(v))?Number(v):d;
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
 const read=(key)=>{try{return JSON.parse(localStorage.getItem(key)||'null')}catch{return null}};
@@ -28,20 +28,22 @@ function applyLocal(data,pool,receipt){
 function reconcile(data){
  const receipt=read(EXECUTED_KEY);if(!isCurrentReceipt(data,receipt))return null;
  const completed=data?.decision_synthesis?.current_action?.completed_transfer;
- if(officialApplied(data,receipt)||(completed&&Number(completed.event)===Number(receipt.event)&&completed.route===receipt.route)){
+ if(data.current_squad_source!=='local_execution_confirmation'&&(officialApplied(data,receipt)||(completed&&completed.source!=='local_execution_confirmation'&&Number(completed.event)===Number(receipt.event)&&completed.route===receipt.route))){
   receipt.status='officially-reconciled';receipt.reconciled_at_utc=new Date().toISOString();write(EXECUTED_KEY,receipt);localStorage.removeItem(PLAN_KEY);return receipt;
  }
  return receipt;
 }
-function adoptOfficialPlan(data){const plan=read(PLAN_KEY);if(!moves(plan).length||!officialApplied(data,plan))return null;const receipt=buildReceipt(data,plan);receipt.status='officially-reconciled';receipt.reconciled_at_utc=new Date().toISOString();write(EXECUTED_KEY,receipt);localStorage.removeItem(PLAN_KEY);return receipt}
+function adoptOfficialPlan(data){if(data?.current_squad_source==='local_execution_confirmation')return null;const plan=read(PLAN_KEY);if(!moves(plan).length||!officialApplied(data,plan))return null;const receipt=buildReceipt(data,plan);receipt.status='officially-reconciled';receipt.reconciled_at_utc=new Date().toISOString();write(EXECUTED_KEY,receipt);localStorage.removeItem(PLAN_KEY);return receipt}
 let pool=null,loading=null;
 function loadPool(){if(pool)return Promise.resolve(pool);if(window.FPLPlayerPoolData){pool=window.FPLPlayerPoolData;return Promise.resolve(pool)}if(loading)return loading;loading=fetch(`${POOL_URL}?ep124=${Date.now()}`,{cache:'no-store'}).then(r=>r.ok?r.json():null).catch(()=>null).then(x=>{pool=x;if(x)window.FPLPlayerPoolData=x;return x}).finally(()=>loading=null);return loading}
-function confirmPlan(){
+async function confirmPlan(){
  const data=window.FPLCoreData||{},plan=read(PLAN_KEY),ms=moves(plan);if(!ms.length)return;
  if(!window.confirm(`Confirm these transfers were completed in FPL?\n\n${route(plan)}\n\nThis records the move in the app; it does not submit a transfer to FPL.`))return;
  const receipt=buildReceipt(data,plan);if(!write(EXECUTED_KEY,receipt))return;
- applyLocal(data,pool,receipt);window.dispatchEvent(new CustomEvent('fplTransferExecuted',{detail:receipt}));window.dispatchEvent(new CustomEvent('fplSafePlanUpdated',{detail:receipt}));render();
+ await loadPool();applyLocal(data,pool,receipt);window.dispatchEvent(new CustomEvent('fplTransferExecuted',{detail:receipt}));window.dispatchEvent(new CustomEvent('fplSafePlanUpdated',{detail:receipt}));render();
 }
+function effectiveData(data,poolData){const result=JSON.parse(JSON.stringify(data||{})),receipt=read(EXECUTED_KEY);return applyLocal(result,poolData||window.FPLPlayerPoolData,receipt)}
+function currentReceipt(data){const receipt=read(EXECUTED_KEY);return isCurrentReceipt(data,receipt)?receipt:null}
 function clearLocal(){if(!window.confirm('Remove only the app confirmation? This cannot undo transfers already made in FPL.'))return;localStorage.removeItem(EXECUTED_KEY);location.reload()}
 function draftMismatch(data,plan){const recommended=window.FPLActiveDecisionSignal?.fromSynthesis(data?.decision_synthesis||{})?.route;return !!moves(plan).length&&!!recommended&&recommended!=='—'&&route(plan)!==recommended}
 function render(){
@@ -55,6 +57,6 @@ function render(){
 function hydrate(){const data=window.FPLCoreData;if(!data)return;const receipt=reconcile(data);if(receipt&&receipt.status!=='officially-reconciled')loadPool().then(p=>{applyLocal(data,p,receipt);render();window.dispatchEvent(new CustomEvent('fplSafePlanUpdated',{detail:receipt}))});else render()}
 function run(){[80,300,800].forEach(ms=>setTimeout(hydrate,ms))}
 function bind(){run();window.addEventListener('fplCoreDataReady',run,{passive:true});window.addEventListener('fplSafePlanUpdated',()=>setTimeout(render,40),{passive:true});q('#decision-nav button[data-view="transfer"]')?.addEventListener('click',()=>setTimeout(render,80),{passive:true})}
-window.FPLExecutedPlan={PLAN_KEY,EXECUTED_KEY,buildReceipt,officialApplied,isCurrentReceipt,applyLocal,reconcile,adoptOfficialPlan,draftMismatch};
+window.FPLExecutedPlan={PLAN_KEY,EXECUTED_KEY,buildReceipt,officialApplied,isCurrentReceipt,applyLocal,reconcile,adoptOfficialPlan,draftMismatch,effectiveData,currentReceipt};
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind,{once:true});else bind();
 })();
