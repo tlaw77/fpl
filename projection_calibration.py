@@ -1,4 +1,5 @@
 import math
+from minutes_model import participation
 from short_term_risk import availability as gw_availability
 
 
@@ -68,6 +69,9 @@ def expected_gw(player, gw, model_lo, model_hi, scout_maps, market_maps, current
 
     avail = gw_availability(player, gw)
     sched = max(.78, min(1.04, n(player.get('schedule_modifier'), 1)))
+    if (player.get('minutes_review') or {}).get('status') == 'observed':
+        avail, _ = participation(player, avail)
+        sched = 1.0
 
     sid, sname = scout_maps
     scout = sid.get(int(player.get('player_id') or 0)) or sname.get(norm(player.get('player'))) or {}
@@ -114,6 +118,9 @@ def expected_gw(player, gw, model_lo, model_hi, scout_maps, market_maps, current
         cv += .05
     if not player.get('player_workload_observed', False):
         cv += .04
+    role = player.get('minutes_review') or {}
+    if role.get('status') == 'observed':
+        cv += min(.18, (1 - float(role.get('factor', 1))) * .3)
     mid, mname = market_maps
     market = mid.get(int(player.get('player_id') or 0)) or mname.get(norm(player.get('player'))) or {}
     if 'strong_' in norm(market.get('market_status')):
