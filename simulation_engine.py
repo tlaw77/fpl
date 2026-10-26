@@ -203,9 +203,19 @@ def apply_move(squad, move, by_id, by_name):
 def candidate_routes(latest, base_squad, by_id, by_name):
     rows = (latest.get('current_next_gw_decisions') or {}).get('safe_moves') or []
     candidates = [{'key':'ROLL','label':'Roll / no transfer','move':None,'squad':list(base_squad)}]
+    budget = load_json(Path('data/budget_state.json'), {})
+    selling = {int(x['player_id']): n(x.get('selling_price')) for x in budget.get('players', []) if x.get('selling_price') is not None}
+    valid_budget = int(budget.get('next_gw') or 0) == int(latest.get('next_gw') or 0)
+    bank = n(latest.get('current_bank', (latest.get('me') or {}).get('bank')))
     seen = set()
     for m in rows[:MAX_TRANSFER_ROUTES*2]:
         out = m.get('out') or {}; inc = m.get('safe_in') or m.get('in') or {}
+        out_id = int(out.get('player_id') or 0)
+        incoming = by_id.get(int(inc.get('player_id') or 0)) or inc
+        if not valid_budget or out_id not in selling or incoming.get('price') is None:
+            continue
+        if round((bank + selling[out_id] - n(incoming['price'])) * 10) < 0:
+            continue
         label = f"{out.get('player','—')} → {inc.get('player','—')}"
         if label in seen:
             continue

@@ -14,6 +14,7 @@ function render(){
   const view=q('#view-transfer'),transferHost=q('#dc-transfer-view',view);if(!view||!transferHost)return;
   let host=q('#gw-decision-brief',view);if(!host){host=document.createElement('section');host.id='gw-decision-brief';host.className='gw-decision-brief';transferHost.insertAdjacentElement('beforebegin',host)}
   const gw=txt(q('#gw-pill'))||`GW ${syn.next_gw||'—'}`,confidence=Number(decision.confidence||0),tone=confidence>=80?'strong':confidence>=68?'good':'watch';
+  const budget=window.FPLTransferBudget?.decision(d),blocked=budget&&!budget.ok;
   const done=decision.completed_transfer?.route||'';
   const ft=Number(decision.free_transfers_remaining||0),hit=Number(decision.next_transfer_hit_cost||0);
   const chip=syn.chips||{},chipText=chip.action==='HOLD'?`HOLD · latest safe chip start GW${chip.latest_safe_start_gw||'—'}`:`${chip.action||'WATCH'} · check again for the best chip week`;
@@ -21,11 +22,11 @@ function render(){
   host.dataset.tone=tone;
   host.dataset.synthesis='1';
   host.dataset.authoritative='1';
-  host.innerHTML=`<div class="gwd-top"><div><p class="eyebrow">${esc(gw)} AUTHORITATIVE DECISION</p><div class="gwd-action">${esc(decision.headline||decision.action||'HOLD')}</div></div><div class="gwd-confidence"><strong>${esc(confidence)}%</strong><span>confidence</span></div></div><p class="gwd-why">${esc(decision.reason||'')}</p><div class="gwd-strip"><span><b>TEAM</b>${esc(teamSummary())}</span><span><b>LEAGUE</b>${esc(leaguePosture())}</span></div><div class="gwd-watch"><b>THIS WEEK</b> ${esc(done?`${done} done · ${ftText}`:ftText)}</div><div class="gwd-watch"><b>CHIPS</b> ${esc(chipText)}</div>`;
+  host.innerHTML=`<div class="gwd-top"><div><p class="eyebrow">${esc(gw)} AUTHORITATIVE DECISION</p><div class="gwd-action">${esc(blocked?'BUDGET CHECK · '+budget.message:decision.headline||decision.action||'HOLD')}</div></div><div class="gwd-confidence"><strong>${esc(confidence)}%</strong><span>confidence</span></div></div><p class="gwd-why">${esc(blocked?'The model route is not actionable at current selling prices. Review the affordable choices below.':decision.reason||'')}</p><div class="gwd-strip"><span><b>TEAM</b>${esc(teamSummary())}</span><span><b>LEAGUE</b>${esc(leaguePosture())}</span></div><div class="gwd-watch"><b>THIS WEEK</b> ${esc(done?`${done} done · ${ftText}`:ftText)}</div><div class="gwd-watch"><b>CHIPS</b> ${esc(chipText)}</div>`;
   const phase=q('[data-transfer-phase]',view);if(phase&&phase.parentElement===view)phase.insertAdjacentElement('afterend',host);
   document.documentElement.dataset.decisionSynthesisBuild=BUILD;
 }
 function run(){[120,350,800,1500,2600].forEach(ms=>setTimeout(render,ms));ensureCaptaincy().then(()=>render())}
-function bind(){run();['fplCoreDataReady','fplSafePlanUpdated','fplCaptaincyReviewReady','fplStrategyPostureReady'].forEach(ev=>window.addEventListener(ev,e=>{if(ev==='fplCaptaincyReviewReady'&&e.detail)capData=e.detail;run()},{passive:true}));window.addEventListener('fplViewSettled',e=>{if(e.detail?.viewName==='transfer')render()},{passive:true});q('#decision-nav button[data-view="transfer"]')?.addEventListener('click',()=>setTimeout(render,120),{passive:true})}
+function bind(){run();['fplCoreDataReady','fplTransferBudgetReady','fplSafePlanUpdated','fplCaptaincyReviewReady','fplStrategyPostureReady'].forEach(ev=>window.addEventListener(ev,e=>{if(ev==='fplCaptaincyReviewReady'&&e.detail)capData=e.detail;run()},{passive:true}));window.addEventListener('fplViewSettled',e=>{if(e.detail?.viewName==='transfer')render()},{passive:true});q('#decision-nav button[data-view="transfer"]')?.addEventListener('click',()=>setTimeout(render,120),{passive:true})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind,{once:true});else bind();
 })();

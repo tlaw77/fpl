@@ -36,6 +36,21 @@ def price(p):
     return n(p.get('price'))
 
 
+def sell_price(player):
+    return n(player.get('selling_price'), price(player))
+
+
+def with_selling_prices(squad, budget, next_gw):
+    """Attach only held-player proceeds; future purchases retain their buy price."""
+    if int(budget.get('next_gw') or 0) != int(next_gw):
+        raise ValueError('Transfer budget is from a different deadline')
+    selling = {int(x['player_id']): x['selling_price'] for x in budget.get('players', [])
+               if x.get('selling_price') is not None}
+    if any(pid(x) not in selling for x in squad):
+        raise ValueError('Selling-price ledger does not cover the current squad')
+    return [{**x, 'selling_price': selling[pid(x)]} for x in squad]
+
+
 def expected_table(players, gws, model_lo, model_hi, scout_maps, market_maps):
     out = {}
     for gw in gws:
@@ -87,7 +102,7 @@ def transfer_candidates(state, remaining_gws, pool_rows, exp, limit=10):
     moves = []
     for out_p in squad:
         for in_p in ranked_by_pos.get(out_p.get('position'), []):
-            if price(in_p) > price(out_p) + bank + 1e-9:
+            if price(in_p) > sell_price(out_p) + bank + 1e-9:
                 continue
             new = replace_player(squad, out_p, in_p)
             if not new:
@@ -100,7 +115,7 @@ def transfer_candidates(state, remaining_gws, pool_rows, exp, limit=10):
                 'out': out_p,
                 'in': in_p,
                 'squad': new,
-                'bank': round(bank + price(out_p) - price(in_p), 2),
+                'bank': round(bank + sell_price(out_p) - price(in_p), 2),
                 'uplift': uplift,
                 'label': f"{out_p.get('player')} → {in_p.get('player')}",
             })
@@ -395,7 +410,8 @@ def run():
 
     start_ft = int((latest.get('me') or {}).get('free_transfers_next_gw') or 1)
     start_ft = max(1, min(MAX_FT, start_ft))
-    bank = n((latest.get('me') or {}).get('bank'))
+    bank = n(latest.get('current_bank', (latest.get('me') or {}).get('bank')))
+    base_squad = with_selling_prices(base_squad, load_json(Path('data/budget_state.json'), {}), next_gw)
 
     finalists = beam_search(base_squad, bank, start_ft, gws, pool_rows, exp)
     results = simulate_paths(finalists, rivals, gws, exp, latest)

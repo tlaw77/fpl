@@ -28,6 +28,8 @@ function fromSnapshot(x={}){
  return{...x,action,route,edge,required,gateClear,type:x.active_route_type||'legacy',validationLabel:x.active_validation_label||'Model agreement',validationClear:x.active_validation_clear!==undefined?!!x.active_validation_clear:gateClear};
 }
 function execution(d={},signal=fromSynthesis(d.decision_synthesis||{})){
+ const budget=window.FPLTransferBudget?.decision(d);
+ if(budget&&!budget.ok)return{state:'unaffordable',label:'BUDGET CHECK',title:'TRANSFER NOT ACTIONABLE',canExecute:false,copy:budget.message};
  const hours=n(d.hours_to_deadline,d.deadline_context?.hours_to_deadline),phase=String(d.deadline_context?.phase||'normal').toLowerCase();
  if(signal.action!=='TRANSFER'||!signal.gateClear)return{state:'hold',label:'HOLD',title:'NO CALL TO ACTION YET',canExecute:false,copy:'Keep the transfer banked unless the full active-route gate clears.'};
  if(phase==='locked')return{state:'closed',label:'WINDOW CLOSED',title:'DECISION WINDOW CLOSED',canExecute:false,copy:'The deadline has passed; keep the route as review evidence only.'};

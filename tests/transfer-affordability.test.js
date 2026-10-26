@@ -1,0 +1,16 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+const d={next_gw:9,current_bank:1.5,current_squad_next5:[{player_id:165,player:'João Pedro',price:7.9},{player_id:418,player:'Maguire',price:4.7}]};
+const b={next_gw:9,bank:1.5,players:[{player_id:165,selling_price:7.7},{player_id:418,selling_price:4.7}]};
+const window={FPLCoreData:d,addEventListener(){}},document={readyState:'loading',addEventListener(){},documentElement:{dataset:{}}};
+vm.runInNewContext(fs.readFileSync('docs/working-plan-multi-stage118.js','utf8'),{window,document,localStorage:{getItem(){return null}},fetch:async()=>({ok:false})});
+const check=window.FPLTransferBudget.evaluate;
+const ms=[{out:{player_id:165},in:{player_id:379}},{out:{player_id:418},in:{player_id:334}}];
+const pool=[{player_id:379,price:9},{player_id:334,price:5.1}];
+assert.equal(check(ms,d,b,pool).remaining,-.2);assert.equal(check(ms,d,b,pool).ok,false);
+assert.equal(check(ms.slice(0,1),d,b,pool).remaining,.2);
+assert.equal(check(ms,{...d,current_bank:1.7},b,pool).remaining,0);
+assert.equal(check(ms,d,{...b,next_gw:8},pool).known,false);
+assert.equal(check(ms,d,b,[]).known,false);
+assert.equal(check([],d,null,[]).ok,true);
+assert.equal(check(ms.concat(ms[0]),d,b,pool).ok,false);
+console.log('Passed: £0.2m shortfall, single move, exact budget, stale/missing data, roll, duplicate moves');

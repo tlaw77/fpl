@@ -49,6 +49,7 @@ def run():
     start_ft = max(0, min(p.MAX_FT, int(raw_ft)))
     bank = p.n(latest.get('current_bank', (latest.get('me') or {}).get('bank')))
 
+    base_squad = p.with_selling_prices(base_squad, p.load_json(p.Path('data/budget_state.json'), {}), next_gw)
     finalists = p.beam_search(base_squad, bank, start_ft, gws, pool_rows, exp)
     results = p.simulate_paths(finalists, rivals, gws, exp, latest)
     rival_meta = [{k: r.get(k) for k in ('entry_id', 'team_name', 'manager', 'rank', 'total_points')} for r in rivals]

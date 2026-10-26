@@ -4,7 +4,7 @@ const vm = require('vm');
 
 const saved = {};
 const context = {
-  window: {dispatchEvent() {}},
+  window: {dispatchEvent() {},FPLTransferBudget:{evaluate:()=>({ok:true,known:true,remaining:0,message:'£0.0m left after transfers'})}},
   localStorage: {
     getItem: key => saved[key] || null,
     setItem: (key, value) => { saved[key] = value; },
@@ -27,4 +27,10 @@ assert.equal(JSON.parse(saved.fplWorkingPlanV2).moves.length, 1);
 assert.equal(button.textContent, '✓ Plan selected');
 assert.equal(button['aria-pressed'], 'true');
 
-console.log('plan-choice persistence tests passed');
+const previous=saved.fplWorkingPlanV2;
+context.window.FPLTransferBudget.evaluate=()=>({ok:false,known:true,remaining:-.2,message:'£0.2m short'});
+assert.equal(api.save({...option,key:'multiple_now'},button),false);
+assert.equal(saved.fplWorkingPlanV2,previous);
+assert.equal(button.disabled,true);
+assert.equal(button.textContent,'£0.2m short');
+console.log('plan-choice persistence and affordability blocking tests passed');

@@ -40,14 +40,14 @@ def enhanced_transfer_candidates(state, remaining_gws, pool_rows, exp, limit=10)
     normal, enablers = [], []
     for out_p in squad:
         for in_p in ranked_by_pos.get(out_p.get('position'), []):
-            if p.price(in_p) > p.price(out_p) + bank + 1e-9:
+            if p.price(in_p) > p.sell_price(out_p) + bank + 1e-9:
                 continue
             new = p.replace_player(squad, out_p, in_p)
             if not new:
                 continue
             val = p.horizon_value(new, remaining_gws, exp)
             uplift = val - base
-            bank_released = p.price(out_p) - p.price(in_p)
+            bank_released = p.sell_price(out_p) - p.price(in_p)
             row = {
                 'out': out_p,
                 'in': in_p,

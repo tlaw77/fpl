@@ -63,6 +63,10 @@ jobs:
         uses: actions/setup-python@v7
         with:
           python-version: "3.12"
+      - name: Verify transfer affordability
+        run: |
+          python -m unittest discover -s tests -p 'test_transfer_affordability.py'
+          node tests/transfer-affordability.test.js
       - name: Preserve completed gameweek before rollover
         run: python archive_week.py
       - name: Run FPL ETL
