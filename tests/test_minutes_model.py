@@ -18,7 +18,9 @@ class MinutesModelTests(unittest.TestCase):
 
     def test_regular_starter_and_regular_cameos_not_discounted_twice(self):
         self.assertEqual(profile(history([90]*6))['factor'], 1)
-        self.assertEqual(profile(history([20]*6))['factor'], 1)
+        cameo = profile(history([20]*6))
+        self.assertEqual(cameo['factor'], 1)
+        self.assertLess(cameo['prior_factor'], .25)
         self.assertEqual(profile(history([0,0]))['status'], 'insufficient')
 
     def test_workload_and_fitness_use_strongest_constraint(self):
