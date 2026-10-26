@@ -115,7 +115,7 @@ def expected_gw(p, gw, model_lo, model_hi, scout_maps, market_maps):
 
     from minutes_model import participation
     if (p.get('minutes_review') or {}).get('status') == 'observed':
-        avail, _ = participation(p, avail)
+        avail, _ = participation(p, avail, pos_base * (1-reliability) / max(.01, base))
         sched = 1.0
     mean = base * model_factor * fixture_factor * avail * sched * scout_factor
 
