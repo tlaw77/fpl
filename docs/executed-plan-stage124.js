@@ -1,5 +1,5 @@
 (()=>{
-const BUILD='executed-plan-stage124-20261026-3',PLAN_KEY='fplWorkingPlanV2',EXECUTED_KEY='fplExecutedPlanV1',POOL_URL='https://raw.githubusercontent.com/tlaw77/fpl/main/data/player_pool.json';
+const BUILD='executed-plan-stage124-20261026-5',PLAN_KEY='fplWorkingPlanV2',EXECUTED_KEY='fplExecutedPlanV1',POOL_URL='https://raw.githubusercontent.com/tlaw77/fpl/main/data/player_pool.json';
 const q=(s,r=document)=>r.querySelector(s),n=(v,d=0)=>Number.isFinite(Number(v))?Number(v):d;
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
 const read=(key)=>{try{return JSON.parse(localStorage.getItem(key)||'null')}catch{return null}};
@@ -54,9 +54,20 @@ function render(){
  else {const mismatch=draftMismatch(data,plan);sec.innerHTML=`<div class="ep124-head"><div><p class="eyebrow">${mismatch?'SAVED DRAFT · DIFFERENT ROUTE':'YOUR SELECTED DRAFT'}</p><h3>Made these transfers in FPL?</h3></div><span>${ms.length} MOVE${ms.length===1?'':'S'}</span></div><strong class="ep124-route">${esc(route(plan))}</strong>${mismatch?'<p role="status"><b>This saved draft differs from the current recommendation above.</b> To use that recommendation, select “Use this route as my draft” first. The confirmation below records only the route shown here.</p>':''}<p>Confirm only after completing the moves in the official FPL app. This locks the full route as completed here and starts planning from the new squad immediately.</p><button type="button" data-ep-confirm>Confirm this saved route was made</button>`;}
  const portfolio=q('[data-ft-portfolio]',view);if(portfolio)portfolio.insertAdjacentElement('beforebegin',sec);else host.prepend(sec);q('[data-ep-confirm]',sec)?.addEventListener('click',confirmPlan);q('[data-ep-correct]',sec)?.addEventListener('click',clearLocal);document.documentElement.dataset.executedPlanBuild=BUILD;
 }
+
+function renderTeamStatus(){
+ const host=q('#dc-team-view'),data=window.FPLCoreData||{};if(!host)return;
+ const receipt=currentReceipt(data),completed=data.decision_synthesis?.current_action?.completed_transfer,done=receipt||(Number(completed?.event)===Number(data.next_gw)?completed:null),draft=read(PLAN_KEY);
+ if(!done&&!moves(draft).length)return;
+ const routeText=done?.route||route(draft);
+ const markup=done?`<p class="eyebrow">EXECUTED TRANSFERS · GW${esc(data.next_gw)}</p><h3>${esc(routeText)}</h3><p>Recorded as completed. These players are part of your squad; further news is for lineup selection and additional-move reviews.</p><small>${receipt?'Saved on this device; shared calculations update after the data refresh.':'Included in the shared calculation snapshot.'}</small>`:`<p class="eyebrow">DRAFT ONLY · NOT RECORDED AS EXECUTED</p><h3>${esc(routeText)}</h3><p>If you have already made these exact moves in FPL, record them here.</p><button type="button" data-team-confirm>Record these transfers as executed</button>`;
+ let sec=q('[data-executed-team-status]',host);if(!sec){sec=document.createElement('section');sec.className='dc-card ep124';sec.dataset.executedTeamStatus='1';host.prepend(sec)}
+ if(sec._receiptMarkup!==markup){sec._receiptMarkup=markup;sec.innerHTML=markup;q('[data-team-confirm]',sec)?.addEventListener('click',confirmPlan)}
+}
+
 function hydrate(){const data=window.FPLCoreData;if(!data)return;const receipt=reconcile(data);if(receipt&&receipt.status!=='officially-reconciled')loadPool().then(p=>{applyLocal(data,p,receipt);render();window.dispatchEvent(new CustomEvent('fplSafePlanUpdated',{detail:receipt}))});else render()}
-function run(){[80,300,800].forEach(ms=>setTimeout(hydrate,ms))}
-function bind(){run();window.addEventListener('fplCoreDataReady',run,{passive:true});window.addEventListener('fplSafePlanUpdated',()=>setTimeout(render,40),{passive:true});q('#decision-nav button[data-view="transfer"]')?.addEventListener('click',()=>setTimeout(render,80),{passive:true})}
+function run(){[80,300,800].forEach(ms=>setTimeout(()=>{hydrate();renderTeamStatus()},ms))}
+function bind(){run();window.addEventListener('fplViewSettled',e=>{if(e.detail?.viewName==='team')setTimeout(renderTeamStatus,150)});q('#decision-nav button[data-view="team"]')?.addEventListener('click',()=>{[200,1000,2500].forEach(ms=>setTimeout(renderTeamStatus,ms))});window.addEventListener('fplCoreDataReady',run,{passive:true});window.addEventListener('fplSafePlanUpdated',()=>setTimeout(()=>{render();renderTeamStatus()},40),{passive:true});q('#decision-nav button[data-view="transfer"]')?.addEventListener('click',()=>setTimeout(render,80),{passive:true})}
 window.FPLExecutedPlan={PLAN_KEY,EXECUTED_KEY,buildReceipt,officialApplied,isCurrentReceipt,applyLocal,reconcile,adoptOfficialPlan,draftMismatch,effectiveData,currentReceipt};
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind,{once:true});else bind();
 })();
