@@ -171,9 +171,14 @@ def main():
         r['defcon_edge_per_90']=round(edge,3) if x is not None else None
         r['six_gw_score']=round(float(r['six_gw_score_base'])+max(-.45,min(.45,edge))*reliability*1.4,2)
 
+    from minutes_model import collect
+    minutes_profiles, minutes_coverage = collect(b, get, current_gw)
+    for row in rows:
+        row['minutes_review'] = minutes_profiles.get(row['player_id'], {'status': 'unknown', 'factor': 1.0, 'risk': 'Unknown'})
+
     rows.sort(key=lambda x:x['six_gw_score'],reverse=True)
     OUT.write_text(json.dumps({'status':'SUCCESS','generated_at_utc':datetime.now(timezone.utc).isoformat(),'current_gw':current_gw,'next_gw':next_gw,
-                               'horizon':6,'sample_reliability':round(reliability,2),'schedule_load_source':schedule.get('source'),
+                               'minutes_model': minutes_coverage, 'horizon':6,'sample_reliability':round(reliability,2),'schedule_load_source':schedule.get('source'),
                                'schedule_load_coverage':schedule.get('coverage',[]),'player_workload_source':'ESPN match summaries where available',
                                'defcon_model':{'version':1,'source':'official FPL bootstrap defensive_contribution_per_90','thresholds':{'DEF':10,'MID':12,'FWD':12},
                                                'method':'Poisson threshold probability; relative-to-position edge only to avoid double-counting PPG','position_baseline_expected_points_per_90':{k:round(v,3) for k,v in baselines.items()}},
