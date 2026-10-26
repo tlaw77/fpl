@@ -1,5 +1,5 @@
 (()=>{
-const BUILD='pick-team-authoritative-stage99-20261017-1';
+const BUILD='pick-team-authoritative-stage99-20261026-3';
 const BASE='https://raw.githubusercontent.com/tlaw77/fpl/main/data/';
 const PLAN_KEY='fplWorkingPlanV2';
 const q=(s,r=document)=>r.querySelector(s), n=(v,d=0)=>Number.isFinite(Number(v))?Number(v):d;
@@ -29,13 +29,14 @@ function effectiveSquad(base,poolRows,plan=workingPlan()){
  return api.apply(rows,[...(poolRows||[]),...rows],plan);
 }
 function render(latest,review,pool){
+ latest=window.FPLExecutedPlan?.effectiveData(latest,pool)||latest;
  const host=q('#dc-team-view');if(!host||review?.status!=='SUCCESS')return;
  const modelIds=(review.recommended_xi_ids||[]).map(Number);if(modelIds.length!==11)return;
  const baseRows=latest?.current_squad_next5||latest?.squad_next5||latest?.current_squad||latest?.squad||[];
- const working=window.FPLWorkingPlan,selected=working?.moves?.(workingPlan())||[];
+ const receipt=window.FPLExecutedPlan?.currentReceipt(latest),working=window.FPLWorkingPlan,selected=working?.moves?.(receipt||workingPlan())||[];
  const hasDraft=!!working?.pending?.(baseRows,workingPlan());
  // Draft transfers inherit their outgoing player's slot; this is not a model rerun.
- const substitute=id=>{const move=hasDraft?selected.find(m=>Number(m.out?.player_id)===id):null;return move?Number(move.in?.player_id)||id:id};
+ const substitute=id=>{const move=(hasDraft||receipt)?selected.find(m=>Number(m.out?.player_id)===id):null;return move?Number(move.in?.player_id)||id:id};
  const ids=modelIds.map(substitute);
  const base=baseRows;
  const poolRows=pool?.players||[],squad=effectiveSquad(base,poolRows),squadById=new Map(squad.map(x=>[Number(x.player_id),x]));
@@ -53,7 +54,7 @@ function render(latest,review,pool){
  const benchValue=bench.reduce((s,p)=>s+n(p?.price),0),bank=n(latest?.current_bank??latest?.me?.bank),reasonByPlayer=new Map((review?.selection_rationale||[]).map(r=>[String(r.player||'').trim().toLowerCase(),r]));
  old?.remove();
  const sec=document.createElement('section');sec.className='a99-card';sec.dataset.authoritativePickTeam='1';
- sec.innerHTML=`<div class="a99-head"><div><p class="eyebrow">${hasDraft?'PICK TEAM · WORKING DRAFT':'PICK TEAM · AUTHORITATIVE'}</p><h2>${esc(formation)} · GW${esc(review.next_gw||latest?.next_gw||'—')}</h2><p>${esc(cap.player||'—')} captain · ${esc(vc.player||'—')} vice</p></div><span>${hasDraft?'DRAFT XI':'MODEL XI'}</span></div>${hasDraft?'<div class="a99-transfer-context"><strong>Working transfer draft</strong><span>Your chosen incoming players inherit outgoing players\' squad slots. This is not a recalculated model XI.</span></div>':''}${transferContext(latest)}<div class="a99-pitch"><div class="a99-pitch-lines"></div>${row('GK',by.GKP,capId,vcId,expMap)}${row('DEF',by.DEF,capId,vcId,expMap)}${row('MID',by.MID,capId,vcId,expMap)}${row('FWD',by.FWD,capId,vcId,expMap)}</div><div class="a99-legend"><span>🛡 shield</span><span>• neutral</span><span>🎯 leverage</span><span>EO relative to your league</span></div><div class="a99-bench"><div class="a99-bench-head"><div><p class="a99-label">BENCH · TAP FOR WHY</p><small>Selection reasoning is layered into each player</small></div><span>£${benchValue.toFixed(1)}m bench · £${bank.toFixed(1)}m bank</span></div>${bench.map(p=>benchTile(p,reasonByPlayer.get(String(p?.player||'').trim().toLowerCase()))).join('')}</div><details class="a99-explain"><summary>Captaincy summary</summary><div class="a99-explain-body">${captainRationale(captainReview)}</div></details><details><summary>Why this is authoritative</summary><p>The calibrated model XI is the starting point. Working transfers replace outgoing players in their squad slots for a draft preview. Model reasoning remains provisional until recalculated.</p></details>`;
+ sec.innerHTML=`<div class="a99-head"><div><p class="eyebrow">${receipt?'PICK TEAM · CONFIRMED SQUAD':hasDraft?'PICK TEAM · WORKING DRAFT':'PICK TEAM · AUTHORITATIVE'}</p><h2>${esc(formation)} · GW${esc(review.next_gw||latest?.next_gw||'—')}</h2><p>${esc(cap.player||'—')} captain · ${esc(vc.player||'—')} vice</p></div><span>${receipt?'UPDATED SQUAD':hasDraft?'DRAFT XI':'MODEL XI'}</span></div>${hasDraft?'<div class="a99-transfer-context"><strong>Working transfer draft</strong><span>Your chosen incoming players inherit outgoing players\' squad slots. This is not a recalculated model XI.</span></div>':''}${transferContext(latest)}<div class="a99-pitch"><div class="a99-pitch-lines"></div>${row('GK',by.GKP,capId,vcId,expMap)}${row('DEF',by.DEF,capId,vcId,expMap)}${row('MID',by.MID,capId,vcId,expMap)}${row('FWD',by.FWD,capId,vcId,expMap)}</div><div class="a99-legend"><span>🛡 shield</span><span>• neutral</span><span>🎯 leverage</span><span>EO relative to your league</span></div><div class="a99-bench"><div class="a99-bench-head"><div><p class="a99-label">BENCH · TAP FOR WHY</p><small>Selection reasoning is layered into each player</small></div><span>£${benchValue.toFixed(1)}m bench · £${bank.toFixed(1)}m bank</span></div>${bench.map(p=>benchTile(p,reasonByPlayer.get(String(p?.player||'').trim().toLowerCase()))).join('')}</div><details class="a99-explain"><summary>Captaincy summary</summary><div class="a99-explain-body">${captainRationale(captainReview)}</div></details><details><summary>Why this is authoritative</summary><p>The calibrated model XI is the starting point. Working transfers replace outgoing players in their squad slots for a draft preview. Model reasoning remains provisional until recalculated.</p></details>`;
  const mode=host.querySelector('[data-global-phase-strip]');if(mode)mode.insertAdjacentElement('afterend',sec);else host.prepend(sec);
  // Only suppress stale primary selection visuals. Complementary evidence survives.
  if(sec.isConnected&&sec.querySelectorAll('.a99-pitch-player').length===11){host.querySelectorAll('.pitch-panel,.pitch-bench-panel,.selection-rationale').forEach(el=>{if(!sec.contains(el))el.style.display='none'});host.querySelectorAll('.pitch-impact,.captain-rationale,[data-consolidation-group="gw-selection"]').forEach(el=>el.style.removeProperty('display'));}
