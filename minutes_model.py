@@ -81,5 +81,5 @@ def participation(player, availability):
     adjusted = float(player.get('adjusted_availability', fitness))
     # Restore only the known upstream workload discount; leave scenario caps intact.
     bound = fitness if abs(availability - adjusted) < 1e-8 else availability
-    role_bound = fitness * float(role.get('factor', 1))
-    return min(bound, role_bound, fitness * schedule), schedule
+    role_bound = float(role.get('factor', 1))
+    return min(bound, role_bound, fitness, schedule), schedule
