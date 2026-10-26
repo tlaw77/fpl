@@ -77,6 +77,7 @@ def model_fingerprint():
             (x.get('minutes_review') or {}).get('version'),
             (x.get('minutes_review') or {}).get('status'),
             q((x.get('minutes_review') or {}).get('factor', 1), .01),
+            q((x.get('minutes_review') or {}).get('prior_factor', 1), .01),
         ))
     packed.sort()
     raw = json.dumps(packed, separators=(',', ':'), ensure_ascii=False).encode()
