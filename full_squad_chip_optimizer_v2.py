@@ -74,6 +74,9 @@ def model_fingerprint():
             (x.get('short_term_review') or {}).get('valid_until_utc'),
             q(x.get('price'), .1),
             str(x.get('schedule_risk') or ''),
+            (x.get('minutes_review') or {}).get('version'),
+            (x.get('minutes_review') or {}).get('status'),
+            q((x.get('minutes_review') or {}).get('factor', 1), .01),
         ))
     packed.sort()
     raw = json.dumps(packed, separators=(',', ':'), ensure_ascii=False).encode()
