@@ -70,7 +70,7 @@ def expected_gw(player, gw, model_lo, model_hi, scout_maps, market_maps, current
     avail = gw_availability(player, gw)
     sched = max(.78, min(1.04, n(player.get('schedule_modifier'), 1)))
     if (player.get('minutes_review') or {}).get('status') == 'observed':
-        avail, _ = participation(player, avail)
+        avail, _ = participation(player, avail, pos_base * (1-observed_weight) / max(.01, base))
         sched = 1.0
 
     sid, sname = scout_maps
