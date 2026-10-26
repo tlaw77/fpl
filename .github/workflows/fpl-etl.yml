@@ -24,6 +24,8 @@ on:
       - "rules_edge_audit.py"
       - "schedule_load.py"
       - "player_pool.py"
+      - "minutes_model.py"
+      - "tests/test_minutes_model.py"
       - "short_term_risk.py"
       - "data/team_news_reviews.json"
       - "press_conference_watch.py"
@@ -70,6 +72,7 @@ jobs:
         run: |
           python -m unittest discover -s tests -p 'test_transfer_affordability.py'
           python -m unittest discover -s tests -p 'test_short_term_risk.py'
+          python -m unittest discover -s tests -p 'test_minutes_model.py'
           node tests/transfer-affordability.test.js
       - name: Preserve completed gameweek before rollover
         run: python archive_week.py
