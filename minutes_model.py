@@ -19,6 +19,8 @@ def profile(history):
     factor = min(1.0, max(.20, expected / max(1, baseline)))
     p_start = (sum(x['starts'] for x in recent) + 2 * .85) / (len(recent) + 2)
     p_cameo = (sum(0 < x['minutes'] < 60 for x in recent) + 2 * .10) / (len(recent) + 2)
+    p_sub = (sum(x['starts'] == 0 and x['minutes'] > 0 for x in recent) + 2 * .10) / (len(recent) + 2)
+    p_early = (sum(x['starts'] == 1 and 0 < x['minutes'] < 60 for x in recent) + 2 * .15) / (len(recent) + 2)
     p_zero = (sum(x['minutes'] == 0 for x in recent) + 2 * .05) / (len(recent) + 2)
     risk = 'High' if factor < .65 else 'Medium' if factor < .85 else 'Low'
     return {'version': 1, 'status': 'observed', 'source': 'official_fpl_completed_event_live',
@@ -26,6 +28,7 @@ def profile(history):
             'recent_minutes': [x['minutes'] for x in recent], 'history': rows,
             'baseline_minutes_per_appearance': round(baseline, 1),
             'expected_minutes': round(expected, 1), 'start_estimate': round(p_start, 3),
+            'substitute_estimate': round(p_sub, 3), 'early_sub_estimate': round(p_early, 3),
             'short_appearance_estimate': round(p_cameo, 3), 'no_appearance_estimate': round(p_zero, 3),
             'factor': round(factor, 3), 'risk': risk,
             'method': 'Last three completed single-fixture PL matches, shrunk by two prior matches; relative to per-appearance minutes. Starts and short appearances overlap; estimates are not calibrated probabilities.'}
