@@ -29,15 +29,17 @@ function fromSnapshot(x={}){
 }
 function execution(d={},signal=fromSynthesis(d.decision_synthesis||{})){
  const review=d.decision_synthesis?.current_action,report=d.decision_synthesis?.team_news_review;
+ const completed=review?.completed_transfer;
+ if(completed&&Number(completed.event)===Number(d.next_gw))return{state:'completed',label:'TRANSFERS EXECUTED',title:'COMPLETED · REVIEW ADDITIONAL MOVES ONLY',canExecute:false,copy:`${completed.route||'Your transfers'} are recorded as done. News now affects lineup choices and any additional moves; do not repeat this route.`};
  const age=Date.now()-Date.parse(report?.generated_at_utc||'');
  if(report&&(!Number.isFinite(age)||age<0||age>6*3600000))return{state:'team-news',label:'REFRESH TEAM NEWS',title:'NEWS CHECKS EXPIRED',canExecute:false,copy:'Refresh the recommendation and team news before executing.'};
- if(review?.execution_ready===false)return{state:'team-news',label:'WAIT FOR TEAM NEWS',title:'PLAN ONLY · NEWS UNRESOLVED',canExecute:false,copy:review.execution_reason||'Refresh team news before executing.'};
+ if(review?.execution_ready===false)return{state:'team-news',label:'WAIT FOR TEAM NEWS',title:'PLAN ONLY · NEWS UNRESOLVED',canExecute:false,copy:`${review.execution_reason||'Team news remains unresolved'}. Waiting buys information but can cost budget if incoming prices rise or selling values fall. An early move can secure affordability, while accepting injury, rotation and later-news risk. Check the current route cost and price evidence before deciding.`};
  const budget=window.FPLTransferBudget?.decision(d);
  if(budget&&!budget.ok)return{state:'unaffordable',label:'BUDGET CHECK',title:'TRANSFER NOT ACTIONABLE',canExecute:false,copy:budget.message};
  const hours=n(d.hours_to_deadline,d.deadline_context?.hours_to_deadline),phase=String(d.deadline_context?.phase||'normal').toLowerCase();
  if(signal.action!=='TRANSFER'||!signal.gateClear)return{state:'hold',label:'HOLD',title:'NO CALL TO ACTION YET',canExecute:false,copy:'Keep the transfer banked unless the full active-route gate clears.'};
  if(phase==='locked')return{state:'closed',label:'WINDOW CLOSED',title:'DECISION WINDOW CLOSED',canExecute:false,copy:'The deadline has passed; keep the route as review evidence only.'};
- if(hours>24)return{state:'plan',label:`PLAN ${signal.transferCount||1} TRANSFER${signal.transferCount===1?'':'S'}`,title:'PLAN READY · WAIT TO EXECUTE',canExecute:false,copy:'The route has cleared its decision gate, but wait for team news, workload and material price information before committing.'};
+ if(hours>24)return{state:'plan',label:`PLAN ${signal.transferCount||1} TRANSFER${signal.transferCount===1?'':'S'}`,title:'PLAN READY · WAIT TO EXECUTE',canExecute:false,copy:'The route has cleared its decision gate, but weigh the value of more team news against price changes. Early execution can secure the route at current prices but accepts later injury and rotation risk. Price movement is uncertain; check affordability and price evidence before deciding.'};
  if(hours>6)return{state:'check',label:'FINAL CHECKS',title:'FINAL CHECKS · THEN TRANSFER',canExecute:false,copy:'The route remains recommended. Confirm availability, price and deadline timing before executing.'};
  return{state:'execute',label:'TRANSFER AFTER CHECKS',title:'EXECUTION WINDOW',canExecute:true,copy:'The route is actionable if the final availability, price and deadline checks remain clear.'};
 }
