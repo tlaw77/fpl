@@ -152,8 +152,14 @@ def main():
     squad = latest.get('current_squad_next5') or latest.get('squad_next5') or latest.get('squad') or []
     squad_ids = {int(x.get('player_id') or 0) for x in squad}
     pool_rows = pool.get('players') or []
-    decision = latest.get('decision_synthesis') or {}
+    prior_path = Path('data/decision_synthesis.json')
+    decision = latest.get('decision_synthesis') or (json.loads(prior_path.read_text()) if prior_path.exists() else {})
     candidate_ids = {int(t.get('in_id') or 0) for o in decision.get('transfer_options', []) for t in (o.get('first_action') or {}).get('transfers', [])}
+    current = latest.get('current_next_gw_decisions') or latest.get('next_gw_decisions') or {}
+    for key in ('safe_moves', 'safe_transfer_moves', 'aggressive_moves', 'aggressive_transfer_moves'):
+        for move in current.get(key) or []:
+            incoming = move.get('safe_in') or move.get('in') or move.get('aggressive_in') or {}
+            candidate_ids.add(int(incoming.get('player_id') or 0))
     relevant = [p for p in pool_rows if int(p.get('player_id') or 0) in squad_ids | candidate_ids]
     # Always retain squad names even when a player is absent from the market pool.
     known = {int(p.get('player_id') or 0) for p in relevant}
