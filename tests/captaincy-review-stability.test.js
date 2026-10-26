@@ -1,0 +1,11 @@
+const fs=require('fs'),vm=require('vm'),assert=require('assert/strict');let writes=0;
+const card={dataset:{playerId:'1'},querySelector:s=>s==='.a99-player-name strong'?{textContent:'Haaland'}:null};
+const old={set innerHTML(v){writes++},get innerHTML(){return ''}};
+const host={querySelector:s=>s==='.captain-rationale'?old:s==='[data-authoritative-pick-team]'?{querySelectorAll:()=>[card]}:null,querySelectorAll:()=>[]};
+const ctx={window:{addEventListener(){}},document:{getElementById:()=>host,querySelector:()=>null,documentElement:{dataset:{}}},setTimeout:f=>f(),console};vm.createContext(ctx);
+let source=fs.readFileSync('docs/captaincy-review-stage65.js','utf8');source=source.replace(/\}\)\(\);\s*$/,'window.test={apply,setData:x=>data=x};})();');vm.runInContext(source,ctx);
+const review={next_gw:9,captain:{player_id:1,player:'Haaland',expected_points:5},shortlist:[],xi_projection:[],confidence:80};
+ctx.window.test.setData(review);ctx.window.test.apply();assert.equal(writes,1);
+for(let i=0;i<20;i++)ctx.window.test.apply();assert.equal(writes,1,'Unchanged review must not rewrite DOM');
+ctx.window.test.setData({...review,captain:{...review.captain,expected_points:7}});ctx.window.test.apply();assert.equal(writes,2,'Changed evidence must update');
+console.log('Passed: repeated observer callbacks do not rewrite unchanged review; new evidence updates once.');
