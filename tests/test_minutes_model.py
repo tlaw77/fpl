@@ -26,6 +26,8 @@ class MinutesModelTests(unittest.TestCase):
                   'minutes_review': {'status':'observed', 'factor':.75}}
         self.assertEqual(participation(player, .88)[0], .75)
         self.assertEqual(participation(player, .40)[0], .40)
+        player['availability']=.25
+        self.assertEqual(participation(player, .25)[0], .25)
         player['availability']=0
         self.assertEqual(participation(player, 0)[0], 0)
 
