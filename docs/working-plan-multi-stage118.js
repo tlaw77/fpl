@@ -31,7 +31,7 @@ function ids(side,plan=read()){return new Set(moves(plan).map(m=>Number(m?.[side
 window.FPLWorkingPlan={KEY,read,moves,matches,find,state,pending,apply,label,priceDelta,ids};
 
 let transferBudget=null;
-const money=v=>Number.isFinite(Number(v))?Math.round(Number(v)*10):null;
+const money=v=>v!==null&&v!==undefined&&v!==''&&Number.isFinite(Number(v))?Math.round(Number(v)*10):null;
 function affordability(ms,core=window.FPLCoreData,budget=transferBudget,catalog=window.FPLPlayerPoolData?.players||[]){
  if(!ms.length)return{ok:true,known:true,remaining:core?.current_bank??core?.me?.bank??0,message:'No spend this gameweek'};
  if(!budget||Number(budget.next_gw)!==Number(core?.next_gw))return{ok:false,known:false,message:'Checking current selling prices…'};
