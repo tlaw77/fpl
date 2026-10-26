@@ -70,6 +70,8 @@ def model_fingerprint():
             pid,
             q(x.get('six_gw_score'), .5),
             q(x.get('adjusted_availability', x.get('availability')), .05),
+            tuple(sorted((x.get('availability_by_gw') or {}).items())),
+            (x.get('short_term_review') or {}).get('valid_until_utc'),
             q(x.get('price'), .1),
             str(x.get('schedule_risk') or ''),
         ))

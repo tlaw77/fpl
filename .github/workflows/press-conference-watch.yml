@@ -3,8 +3,8 @@ name: Press Conference Watch
 on:
   workflow_dispatch:
   schedule:
-    # Thu/Fri daytime UTC. In Irish summer time this is 08:00-20:45 local.
-    - cron: "*/15 7-19 * * 4,5"
+    # Daily coverage; main ETL also refreshes this before projections.
+    - cron: "0 */3 * * *"
   push:
     paths:
       - "press_conference_watch.py"

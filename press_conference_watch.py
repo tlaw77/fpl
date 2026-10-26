@@ -1,4 +1,6 @@
 import html
+import unicodedata
+from concurrent.futures import ThreadPoolExecutor
 import json
 import re
 import urllib.parse
@@ -12,6 +14,7 @@ from pathlib import Path
 LATEST = Path('data/latest.json')
 POOL = Path('data/player_pool.json')
 OUT = Path('data/press_conference_watch.json')
+NEWS_ERRORS = []
 
 SOURCE_WEIGHT = {
     'Official club': 1.00,
@@ -33,7 +36,7 @@ TEAM_NEWS_PATTERNS = [
 
 def get_text(url):
     req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 fpl-press-watch/1.0'})
-    with urllib.request.urlopen(req, timeout=25) as r:
+    with urllib.request.urlopen(req, timeout=8) as r:
         return r.read().decode('utf-8', errors='ignore')
 
 
@@ -64,7 +67,8 @@ def google_news(query):
     rows = []
     try:
         root = ET.fromstring(get_text(url))
-    except Exception:
+    except Exception as exc:
+        NEWS_ERRORS.append({"query": query, "error": type(exc).__name__})
         return rows
     for item in root.findall('.//item'):
         title = strip_tags(item.findtext('title'))
@@ -91,7 +95,8 @@ def google_news(query):
 def player_aliases(rows):
     out = {}
     for p in rows:
-        names = {str(p.get('player') or '').strip()}
+        names = {str(p.get('player') or '').strip(), str(p.get('full_name') or '').strip()}
+        names |= set(p.get('aliases') or [])
         for n in list(names):
             if len(n) >= 4:
                 out.setdefault(int(p.get('player_id') or 0), set()).add(n)
@@ -99,10 +104,11 @@ def player_aliases(rows):
 
 
 def match_players(text, aliases):
-    low = f' {text.lower()} '
+    clean = lambda x: re.sub(r'[^a-z0-9]+', ' ', unicodedata.normalize('NFKD', x).encode('ascii','ignore').decode().lower()).strip()
+    low = f' {clean(text)} '
     hits = []
     for pid,names in aliases.items():
-        if any(re.search(r'(?<!\w)' + re.escape(n.lower()) + r'(?!\w)', low) for n in names):
+        if any(re.search(r'(?<!\w)' + re.escape(clean(n)) + r'(?!\w)', low) for n in names):
             hits.append(pid)
     return hits
 
@@ -146,7 +152,12 @@ def main():
     squad = latest.get('current_squad_next5') or latest.get('squad_next5') or latest.get('squad') or []
     squad_ids = {int(x.get('player_id') or 0) for x in squad}
     pool_rows = pool.get('players') or []
-    relevant = [p for p in pool_rows if int(p.get('player_id') or 0) in squad_ids]
+    decision = latest.get('decision_synthesis') or {}
+    candidate_ids = {int(t.get('in_id') or 0) for o in decision.get('transfer_options', []) for t in (o.get('first_action') or {}).get('transfers', [])}
+    relevant = [p for p in pool_rows if int(p.get('player_id') or 0) in squad_ids | candidate_ids]
+    # Always retain squad names even when a player is absent from the market pool.
+    known = {int(p.get('player_id') or 0) for p in relevant}
+    relevant += [p for p in squad if int(p.get('player_id') or 0) not in known]
     aliases = player_aliases(relevant)
     clubs = sorted({p.get('club') for p in relevant if p.get('club')})
 
@@ -161,9 +172,11 @@ def main():
         f'FPL Gameweek {next_gw} press conference injury news predicted lineups',
     ]
 
+    queries += [f'"{p.get("full_name") or p.get("player")}" injury fitness dropped bench team news when:3d' for p in relevant]
     raw = []
-    for q in queries:
-        raw.extend(google_news(q))
+    with ThreadPoolExecutor(max_workers=6) as executor:
+        for rows in executor.map(google_news, queries):
+            raw.extend(rows)
     seen, dedup = set(), []
     for x in raw:
         key = (re.sub(r'\W+',' ',x['title'].lower()).strip(), x['source'])
@@ -212,6 +225,8 @@ def main():
         'hours_to_deadline': round(hours_to_deadline,1) if hours_to_deadline is not None else None,
         'friday_press_window': friday_window,
         'query_count': len(queries),
+        'failed_queries': NEWS_ERRORS,
+        'players_checked': [{'player_id': p.get('player_id'), 'player': p.get('player')} for p in relevant],
         'article_count': len(dedup),
         'players': players,
         'method_note':'Dedicated pre-deadline press-conference watch for current-squad players. Manager/team-news language is classified from public titles/search summaries and weighted by source + recency. It is evidence for availability/minutes review, not an automatic bench/transfer instruction.'

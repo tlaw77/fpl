@@ -1,4 +1,5 @@
 import math
+from short_term_risk import availability as gw_availability
 
 
 def n(v, d=0.0):
@@ -65,7 +66,7 @@ def expected_gw(player, gw, model_lo, model_hi, scout_maps, market_maps, current
     model_evidence = max(.12, min(.75, maturity * (.55 + .45 * source_rel)))
     model_factor = 1.0 + (raw_model_factor - 1.0) * model_evidence
 
-    avail = max(0.0, min(1.0, n(player.get('adjusted_availability', player.get('availability')), 1)))
+    avail = gw_availability(player, gw)
     sched = max(.78, min(1.04, n(player.get('schedule_modifier'), 1)))
 
     sid, sname = scout_maps

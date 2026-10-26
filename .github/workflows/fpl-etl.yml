@@ -24,6 +24,9 @@ on:
       - "rules_edge_audit.py"
       - "schedule_load.py"
       - "player_pool.py"
+      - "short_term_risk.py"
+      - "data/team_news_reviews.json"
+      - "press_conference_watch.py"
       - "scout_consensus.py"
       - "projection_calibration.py"
       - "captaincy_model.py"
@@ -66,6 +69,7 @@ jobs:
       - name: Verify transfer affordability
         run: |
           python -m unittest discover -s tests -p 'test_transfer_affordability.py'
+          python -m unittest discover -s tests -p 'test_short_term_risk.py'
           node tests/transfer-affordability.test.js
       - name: Preserve completed gameweek before rollover
         run: python archive_week.py
@@ -99,6 +103,10 @@ jobs:
         run: python schedule_load.py
       - name: Run six-GW player pool
         run: python player_pool.py
+      - name: Refresh squad and candidate team news
+        run: python press_conference_watch.py
+      - name: Apply dated short-term risk scenarios
+        run: python short_term_risk.py
       - name: Run scout consensus
         run: python scout_consensus.py
       - name: Run calibrated rival-aware Monte Carlo simulation

@@ -55,3 +55,6 @@ if (live.action === 'TRANSFER') {
 }
 
 console.log('active decision signal tests passed');
+
+assert.equal(api.execution({hours_to_deadline:1,decision_synthesis:{current_action:{execution_ready:false,execution_reason:"Pending Pedro news"}}}, {action:"TRANSFER",gateClear:true}).canExecute,false);
+assert.equal(api.execution({decision_synthesis:{team_news_review:{generated_at_utc:"2020-01-01T00:00:00Z"}}}, {action:"TRANSFER",gateClear:true}).label,"REFRESH TEAM NEWS");

@@ -141,7 +141,7 @@ def main():
         dc_prob=poisson_tail(dc90,threshold) if threshold else None
         dc_xpts=2.0*dc_prob if threshold else None
         rows.append({'player_id':p['id'],'player':p['web_name'],'club':club,'position':position,'price':p['now_cost']/10,
-                     'availability':avail,'adjusted_availability':round(adjusted_avail,3),'schedule_modifier':round(player_sched_mod,3),
+                     'full_name':f"{p.get('first_name', '')} {p.get('second_name', '')}".strip(),'aliases':[f"{(p.get('first_name') or '').split()[0]} {(p.get('second_name') or '').split()[-1]}"] if p.get('first_name') and p.get('second_name') else [],'fpl_status':p.get('status'),'availability':avail,'adjusted_availability':round(adjusted_avail,3),'schedule_modifier':round(player_sched_mod,3),
                      'club_schedule_modifier':round(club_sched_mod,3),'schedule_risk':schedule_risk,'schedule_note':schedule_note,
                      'extra_club_fixtures_6gw':len(horizon_extra),'days_rest_before_next_pl':round(rest_days,1) if rest_days is not None else None,
                      'midweek_minutes':round(float(midweek_minutes),1) if midweek_minutes is not None else None,

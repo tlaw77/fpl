@@ -96,6 +96,8 @@ def build_transfer_options(paths, adaptive, next_gw, remaining_ft, ft_cap):
             'free_transfers_after_deadline': min(ft_cap, max(0, remaining_ft - count_now) + 1),
             'hit_cost': hit,
             'expected_points': row.get('expected_points'),
+            'next_gw_expected_points': row.get('next_gw_expected_points'),
+            'next_two_gw_expected_points': row.get('next_two_gw_expected_points'),
             'p10_points': row.get('p10_points'),
             'p90_points': row.get('p90_points'),
             'edge_vs_roll': round(n(row.get('expected_points')) - roll_points, 2) if roll_row else None,
@@ -204,6 +206,9 @@ def run():
     adaptive = load(ADAPTIVE)
     chips = load(CHIPS)
     player_pool = load(PLAYER_POOL)
+    from short_term_risk import readiness
+    risk_report = load(Path("data/short_term_risk.json"))
+    execution_ready, execution_reason = readiness(risk_report, latest.get("next_gw"))
 
     sim_routes = sim.get('routes') or []
     sim_top = sim.get('recommendation') or (sim_routes[0] if sim_routes else {})
@@ -394,6 +399,8 @@ def run():
             'action': action,
             'headline': headline,
             'confidence': confidence,
+            'execution_ready': execution_ready,
+            'execution_reason': execution_reason,
             'reason': reason,
             'completed_transfer': completed,
             'free_transfers_remaining': remaining_ft,
@@ -445,6 +452,7 @@ def run():
             'note': 'Forward paths are planning evidence, not instructions to pre-commit future transfers. Re-optimise after each deadline and new information.',
         },
         'transfer_options': transfer_options,
+        'team_news_review': risk_report,
         'chips': {
             'action': chip_action,
             'reason': chip_reason,

@@ -28,6 +28,10 @@ function fromSnapshot(x={}){
  return{...x,action,route,edge,required,gateClear,type:x.active_route_type||'legacy',validationLabel:x.active_validation_label||'Model agreement',validationClear:x.active_validation_clear!==undefined?!!x.active_validation_clear:gateClear};
 }
 function execution(d={},signal=fromSynthesis(d.decision_synthesis||{})){
+ const review=d.decision_synthesis?.current_action,report=d.decision_synthesis?.team_news_review;
+ const age=Date.now()-Date.parse(report?.generated_at_utc||'');
+ if(report&&(!Number.isFinite(age)||age<0||age>6*3600000))return{state:'team-news',label:'REFRESH TEAM NEWS',title:'NEWS CHECKS EXPIRED',canExecute:false,copy:'Refresh the recommendation and team news before executing.'};
+ if(review?.execution_ready===false)return{state:'team-news',label:'WAIT FOR TEAM NEWS',title:'PLAN ONLY · NEWS UNRESOLVED',canExecute:false,copy:review.execution_reason||'Refresh team news before executing.'};
  const budget=window.FPLTransferBudget?.decision(d);
  if(budget&&!budget.ok)return{state:'unaffordable',label:'BUDGET CHECK',title:'TRANSFER NOT ACTIONABLE',canExecute:false,copy:budget.message};
  const hours=n(d.hours_to_deadline,d.deadline_context?.hours_to_deadline),phase=String(d.deadline_context?.phase||'normal').toLowerCase();

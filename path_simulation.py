@@ -120,7 +120,14 @@ def transfer_candidates(state, remaining_gws, pool_rows, exp, limit=10):
                 'label': f"{out_p.get('player')} → {in_p.get('player')}",
             })
     moves.sort(key=lambda x: x['uplift'], reverse=True)
-    return moves[:limit]
+    # Preserve explicit repair candidates even when long-horizon scores favour other moves.
+    repairs = {}
+    for move in moves:
+        if (move['out'].get('short_term_review') or {}).get('unresolved'):
+            repairs.setdefault(pid(move['out']), move)
+    chosen = list(repairs.values())[:2]
+    chosen += [m for m in moves if m not in chosen][:max(0, limit-len(chosen))]
+    return chosen[:limit]
 
 
 def deadline_transfer_sequences(state, remaining_gws, pool_rows, exp):
@@ -175,6 +182,7 @@ def transfer_action(gw, moves, hit):
         'out_id': pid(m['out']),
         'in_id': pid(m['in']),
         'uplift': round(n(m.get('uplift')), 2),
+        'addresses_short_term_risk': bool((m['out'].get('short_term_review') or {}).get('unresolved')),
     } for m in moves]
     return {
         'gw': gw,
@@ -236,6 +244,13 @@ def diverse_states(states, limit):
     """Keep roll, one-now and multiple-now branches alive in the bounded beam."""
     ranked = sorted(states, key=lambda x: x['search_score'], reverse=True)
     selected, seen = [], set()
+    # Retain one- and two-risk repairs for a fair full-path comparison, not just
+    # routes that win a long-horizon prefilter. Monte Carlo still decides the winner.
+    for count in (2, 1):
+        repair = next((x for x in ranked if sum(bool(t.get('addresses_short_term_risk')) for t in ((x.get('actions') or [{}])[0].get('transfers') or [])) >= count and id(x) not in seen), None)
+        if repair is not None:
+            selected.append(repair)
+            seen.add(id(repair))
     per_bucket = max(1, limit // 4)
     for bucket in ('roll', 'one', 'multiple'):
         for row in (x for x in ranked if first_deadline_bucket(x) == bucket):
@@ -377,6 +392,8 @@ def simulate_paths(paths, rivals, gws, exp, latest):
             'expected_rank_after_path': round(exp_rank, 2),
             'prob_gain_league_place': round(gain[j] / ITERATIONS, 3),
             'prob_finish_ahead_each_rival': [round(x / ITERATIONS, 3) for x in beat[j]],
+            'next_gw_expected_points': round(sum(exp[gws[0]].get(x, (0,0))[0] for x in p_lineups[j][gws[0]][0]) + exp[gws[0]].get(p_lineups[j][gws[0]][1], (0,0))[0] - sum(a.get('hit',0) for a in s['actions'] if a.get('gw') == gws[0]), 2),
+            'next_two_gw_expected_points': round(sum(sum(exp[g].get(x, (0,0))[0] for x in p_lineups[j][g][0]) + exp[g].get(p_lineups[j][g][1], (0,0))[0] for g in gws[:2]) - sum(a.get('hit',0) for a in s['actions'] if a.get('gw') in gws[:2]), 2),
             'ending_bank': s['bank'],
             'ending_free_transfers': s['ft'],
             'first_transfer_incoming_starts': incoming_starts,
