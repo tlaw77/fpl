@@ -1,0 +1,11 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+const current={headline:'Hold / roll',execution_ready:false,execution_reason:'Wait for Pedro and Bruno news'};
+const window={FPLCoreData:{decision_synthesis:{current_action:current,generated_at_utc:'2026-10-26T12:30:00Z'}}};
+const document={readyState:'loading',addEventListener(){}};
+vm.runInNewContext(fs.readFileSync('docs/decision-twin-stage107.js','utf8'),{window,document,location:{hostname:'localhost'}});
+const render=window.FPLDecisionTwinTest.markup;
+let html=render({generated_at_utc:'2026-10-26T10:00:00Z',decision_certificate:{headline:'Old transfer',confidence:99}});
+assert.ok(!html.includes('Old transfer'));assert.ok(html.includes('Wait for Pedro and Bruno news'));
+html=render({generated_at_utc:'2026-10-26T12:31:00Z',decision_certificate:{headline:'Hold / roll',confidence:76}});
+assert.ok(html.includes('WAIT FOR TEAM NEWS'));assert.ok(!html.includes('76% model confidence'));
+console.log('Decision Twin respects current readiness and suppresses stale certificates');
