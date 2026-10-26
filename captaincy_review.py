@@ -42,8 +42,11 @@ def reasons(p, mean, cv, fixture, edge=None):
         out.append('Premium asset with a stronger captaincy ceiling than a normal XI pick.')
     if s.n(p.get('form')) > 0:
         out.append(f"Recent form {s.n(p.get('form')):.1f}; PPG {s.n(p.get('points_per_game')):.1f}.")
-    if s.n(p.get('availability'), 1) >= .95:
-        out.append('Strong minutes/availability signal.')
+    role = p.get('minutes_review') or {}
+    if role.get('status') == 'observed':
+        out.insert(0, f"PL minutes {role['recent_minutes']}; estimated {role['expected_minutes']:.0f} minutes, {role['risk'].lower()} participation risk.")
+    elif s.n(p.get('availability'), 1) >= .95:
+        out.append('No official fitness flag; starting minutes are unverified.')
     if cv <= .85:
         out.append('Lower projection uncertainty than several alternatives.')
     if edge is not None and edge > .25:
@@ -126,6 +129,7 @@ def run():
             'position': p.get('position'),
             'expected_points': round(mean, 2),
             'projection_cv': round(cv, 3),
+            'minutes_review': p.get('minutes_review'),
             'edge_player_id': pid(edge_player) if edge_player else None,
             'edge_player': edge_player.get('player') if edge_player else None,
             'edge_expected_points': round(edge_mean, 2) if edge_player else None,
@@ -142,6 +146,7 @@ def run():
             'position': p.get('position'),
             'expected_points': round(mean, 2),
             'projection_cv': round(cv, 3),
+            'minutes_review': p.get('minutes_review'),
         })
 
     candidates = []
@@ -163,6 +168,7 @@ def run():
             'points_per_game': s.n(p.get('points_per_game')),
             'availability': s.n(p.get('availability'), 1),
             'captaincy_score': round(row['captaincy_score'], 3),
+            'minutes_review': p.get('minutes_review'),
         })
 
     top = candidates[:5]
