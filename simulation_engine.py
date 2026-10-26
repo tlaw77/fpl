@@ -113,6 +113,10 @@ def expected_gw(p, gw, model_lo, model_hi, scout_maps, market_maps):
     if any(x in merit for x in ('avoid', 'concern', 'sell')):
         scout_factor -= .055
 
+    from minutes_model import participation
+    if (p.get('minutes_review') or {}).get('status') == 'observed':
+        avail, _ = participation(p, avail)
+        sched = 1.0
     mean = base * model_factor * fixture_factor * avail * sched * scout_factor
 
     # Uncertainty is deliberately higher while the season sample is immature.
