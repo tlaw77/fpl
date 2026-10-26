@@ -1,6 +1,6 @@
 import unittest
 from datetime import datetime, timezone, timedelta
-from short_term_risk import build, readiness, availability
+from short_term_risk import build, readiness, availability, compare_first_steps
 from projection_calibration import expected_gw
 from press_conference_watch import player_aliases, match_players
 
@@ -51,6 +51,22 @@ class ShortTermRiskTests(unittest.TestCase):
         aliases = player_aliases([{'player_id': 165, 'player': 'João Pedro'},
                                  {'player_id': 426, 'player': 'B.Fernandes', 'full_name': 'Bruno Fernandes'}])
         self.assertEqual(match_players('Joao Pedro injured; Bruno Fernandes benched', aliases), [165, 426])
+
+    def test_first_step_scenarios_keep_inputs_and_change_near_term_points(self):
+        from copy import deepcopy
+        positions = ['GKP']*2+['DEF']*5+['MID']*5+['FWD']*3
+        rows = [dict(self.player, player_id=i+1, position=pos, club=str(i), six_gw_score=20, points_per_game=5) for i,pos in enumerate(positions)]
+        rows[7]['short_term_review'] = self.review
+        rows[7]['availability_by_gw'] = {'9': .5}
+        pool = {'players': rows}
+        original = deepcopy(pool)
+        options = [{'key': 'roll', 'available': True, 'first_action': {'action': 'ROLL'}}]
+        result = compare_first_steps({'next_gw':9,'current_gw':8,'squad':rows}, pool, options)
+        self.assertEqual(pool, original)
+        self.assertEqual(len(result['scenarios']), 3)
+        recovered = result['scenarios'][1]['options'][0]['next_gw']
+        missing = result['scenarios'][2]['options'][0]['next_gw']
+        self.assertGreaterEqual(recovered, missing)
 
 
 if __name__ == '__main__':

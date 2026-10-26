@@ -79,6 +79,52 @@ def readiness(report, next_gw, now=None):
     return (False, 'Wait for updated team news: ' + ', '.join(dict.fromkeys(names))) if names else (True, 'Current team-news checks completed; recheck before the deadline.')
 
 
+
+def compare_first_steps(latest, pool, options):
+    """Fixed first-step sensitivity, not a replacement for multi-GW Monte Carlo."""
+    from copy import deepcopy
+    import path_simulation as p
+    from projection_calibration import expected_gw
+    by_id = {int(x['player_id']): x for x in pool.get('players', [])}
+    base = latest.get('current_squad_next5') or latest.get('squad_next5') or latest.get('squad') or []
+    ids = [int(x['player_id']) for x in base]
+    gw = int(latest['next_gw'])
+    scores = [float(x.get('six_gw_score') or 0) for x in by_id.values()]
+    lo, hi = p.percentile(scores, .1), p.percentile(scores, .9)
+    scout_maps = p.scout_lookup(p.load_json(p.SCOUT, {}))
+    market_maps = p.market_lookup(p.load_json(p.MARKET, {}))
+    output = []
+    for scenario in ('review_assumptions', 'both_cleared', 'both_miss_next_gw'):
+        players = deepcopy(by_id)
+        for player in players.values():
+            if not player.get('short_term_review'):
+                continue
+            if scenario == 'both_cleared':
+                player['availability_by_gw'] = {}
+                player['availability'] = 1
+                player['adjusted_availability'] = player.get('schedule_modifier', 1)
+            elif scenario == 'both_miss_next_gw':
+                player['availability_by_gw'] = {**player.get('availability_by_gw', {}), str(gw): 0}
+        table = {g: {i: expected_gw(x, g, lo, hi, scout_maps, market_maps, current_gw=latest.get('current_gw', 8)) for i,x in players.items()} for g in (gw,gw+1)}
+        rows = []
+        for option in options:
+            if not option.get('available'):
+                continue
+            selected = list(ids)
+            action = option.get('first_action') or {}
+            for move in action.get('transfers') or []:
+                if move['out_id'] in selected and move['in_id'] in players:
+                    selected.remove(move['out_id']); selected.append(move['in_id'])
+            squad = [players[i] for i in selected if i in players]
+            if len(squad) != 15:
+                continue
+            pts = [p.lineup_expected(squad, g, table)[0] for g in (gw,gw+1)]
+            hit = float(action.get('hit') or 0)
+            rows.append({'option': option['key'], 'route': action.get('route', 'Roll'), 'next_gw': round(pts[0]-hit,2), 'next_two_gw': round(sum(pts)-hit,2)})
+        output.append({'scenario': scenario, 'options': rows})
+    return {'method': 'Deterministic first-transfer comparison; hold each resulting squad for two GWs, no future transfers or Monte Carlo. Both-cleared and both-miss are hypothetical, not forecasts.', 'scenarios': output}
+
+
 def main():
     latest = json.loads(Path('data/latest.json').read_text())
     pool = json.loads(Path('data/player_pool.json').read_text())

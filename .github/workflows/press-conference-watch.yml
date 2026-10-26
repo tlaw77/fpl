@@ -2,14 +2,9 @@ name: Press Conference Watch
 
 on:
   workflow_dispatch:
-  schedule:
-    # Daily coverage; main ETL also refreshes this before projections.
-    - cron: "0 */3 * * *"
-  push:
-    paths:
-      - "press_conference_watch.py"
-      - ".github/workflows/press-conference-watch.yml"
 
+# The main FPL ETL refreshes and publishes news before projections.
+# This manual diagnostic must not race that atomic publication.
 concurrency:
   group: press-conference-watch
   cancel-in-progress: true
@@ -41,21 +36,3 @@ jobs:
           assert 'players' in x and 'friday_press_window' in x
           print('press conference watch valid', x.get('article_count'), len(x.get('players',[])))
           PY
-      - name: Commit snapshot
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/press_conference_watch.json
-          if git diff --cached --quiet; then
-            echo "No press-conference changes"
-          else
-            git commit -m "Refresh press conference watch"
-            for attempt in 1 2 3; do
-              git pull --rebase origin main
-              if git push origin HEAD:main; then exit 0; fi
-              echo "Press-conference push raced with another writer; retrying ($attempt/3)"
-              sleep $((attempt * 2))
-            done
-            echo "Press-conference push failed after 3 attempts"
-            exit 1
-          fi

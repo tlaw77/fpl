@@ -387,6 +387,8 @@ def run():
         chip_action = 'CONSIDER'
         chip_reason = f'{chip_play[0]} in GW{chip_play[2]} has the strongest current visible window, but should still be checked against the remaining half-season portfolio before activation.'
 
+    from short_term_risk import compare_first_steps
+    risk_report['first_step_sensitivity'] = compare_first_steps(latest, player_pool, transfer_options)
     next_plan = first_action(path_top) or {}
     adaptive_plan = first_action(adaptive_top) or {}
     output = {
