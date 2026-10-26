@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 from minutes_model import profile, collect, participation
 from projection_calibration import expected_gw
 
@@ -45,6 +45,14 @@ class MinutesModelTests(unittest.TestCase):
         rows, coverage=collect(boot,Mock(side_effect=RuntimeError('offline')),3)
         self.assertEqual(len(coverage['failures']),2)
         self.assertEqual(coverage['observed_players'],0)
+
+    def test_chip_cache_invalidates_on_role_change(self):
+        import full_squad_chip_optimizer_v2 as chips
+        player = {'player_id': 1, 'minutes_review': {'version': 1, 'status': 'observed', 'factor': 1}}
+        with patch.object(chips, 'load', return_value={'players': [player]}):
+            before = chips.model_fingerprint()
+            player['minutes_review']['factor'] = .75
+            self.assertNotEqual(before, chips.model_fingerprint())
 
     def test_shared_projection_penalizes_dnp_risk_not_fitness_label(self):
         p={'player_id':1,'position':'MID','points_per_game':6,'availability':1,
