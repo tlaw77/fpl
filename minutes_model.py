@@ -30,7 +30,7 @@ def profile(history):
             'expected_minutes': round(expected, 1), 'start_estimate': round(p_start, 3),
             'substitute_estimate': round(p_sub, 3), 'early_sub_estimate': round(p_early, 3),
             'short_appearance_estimate': round(p_cameo, 3), 'no_appearance_estimate': round(p_zero, 3),
-            'factor': round(factor, 3), 'risk': risk,
+            'factor': round(factor, 3), 'prior_factor': round(min(1.0, expected / 90), 3), 'risk': risk,
             'method': 'Last three completed single-fixture PL matches, shrunk by two prior matches; relative to per-appearance minutes. Starts and short appearances overlap; estimates are not calibrated probabilities.'}
 
 
@@ -67,7 +67,7 @@ def collect(bootstrap, get, current_gw):
                       'observed_players': sum(p['status'] == 'observed' for p in profiles.values())}
 
 
-def participation(player, availability):
+def participation(player, availability, prior_fraction=0.0):
     """Use the strongest playing-time constraint, not three stacked haircuts.
 
     adjusted_availability already embeds schedule_modifier. Recover the fitness/
@@ -81,5 +81,9 @@ def participation(player, availability):
     adjusted = float(player.get('adjusted_availability', fitness))
     # Restore only the known upstream workload discount; leave scenario caps intact.
     bound = fitness if abs(availability - adjusted) < 1e-8 else availability
-    role_bound = float(role.get('factor', 1))
+    weight = max(0.0, min(1.0, prior_fraction))
+    # Only the full-match positional prior scales by minutes/90. The empirical
+    # PPG component scales relative to observed per-appearance minutes instead.
+    role_bound = ((1-weight) * float(role.get('factor', 1))
+                  + weight * float(role.get('prior_factor', role.get('factor', 1))))
     return min(bound, role_bound, fitness, schedule), schedule
