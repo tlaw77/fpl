@@ -31,7 +31,7 @@ def signal_score(edge, threshold, support, required_support, clears):
 
 
 def band(score, clears):
-    if clears or score >= 90:
+    if clears:
         return 'ACT'
     if score >= 65:
         return 'WATCH'

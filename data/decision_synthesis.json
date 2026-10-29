@@ -1,16 +1,16 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-10-29T16:51:28.105418+00:00",
+  "generated_at_utc": "2026-10-29T20:35:33.371565+00:00",
   "version": 4,
   "current_gw": 8,
   "next_gw": 9,
   "current_action": {
-    "action": "TRANSFER",
-    "headline": "Hughes → Tavernier",
-    "confidence": 91,
+    "action": "HOLD",
+    "headline": "Transfer complete · hold",
+    "confidence": 70,
     "execution_ready": false,
     "execution_reason": "Wait for updated team news: Affengruber",
-    "reason": "The leading move clears the 4.5-point robustness hurdle after hit cost and the same measured route is supported by 3/3 decision models. Holding moves the bank from 0/5 to 1/5; no free transfer expires. The fixture swing is broadly balanced rather than time-critical.",
+    "reason": "Hold: do not take the -4 hit now. Hughes → Tavernier is only 1.07 projected points ahead of waiting this deadline with future transfers allowed, after hits; it needs 4.5. The 10.4-point six-GW gain versus keeping the squad unchanged does not establish that paying now is worthwhile. João Pedro → Isak + B.Fernandes → Belloumi is already completed. Holding moves the bank from 0/5 to 1/5; no free transfer expires.",
     "completed_transfer": {
       "event": 9,
       "out": "B.Fernandes",
@@ -39,7 +39,7 @@
     "free_transfer_cap": 5,
     "free_transfer_would_expire_on_hold": false,
     "next_transfer_hit_cost": 4,
-    "transfer_count": 1
+    "transfer_count": 0
   },
   "robustness": {
     "season_maturity_weight": 0.571,
@@ -54,20 +54,20 @@
     "base_required_edge": 4.5,
     "required_edge": 4.5,
     "required_consensus_models": 2,
-    "transfer_clears_gate": true,
+    "transfer_clears_gate": false,
     "multi_transfer_clears_gate": null,
     "multi_transfer_route": null,
     "multi_transfer_count": 0,
     "multi_transfer_edge_over_roll": 0.0,
     "multi_transfer_required_edge": 6.0,
     "active_route": "Hughes → Tavernier",
-    "active_route_type": "single_transfer",
+    "active_route_type": "single_transfer_challenger",
     "active_edge_over_hold_6gw": 10.41,
     "active_required_edge": 4.5,
     "active_validation_kind": "model_agreement",
     "active_validation_label": "Model agreement",
     "active_validation_clear": true,
-    "active_transfer_gate_clear": true,
+    "active_transfer_gate_clear": false,
     "free_transfers_before_moves": 2,
     "free_transfers_before_decision": 0,
     "free_transfer_cap": 5,
@@ -93,6 +93,13 @@
       ],
       "timing": "balanced",
       "summary": "The fixture swing is broadly balanced rather than time-critical."
+    },
+    "hit_timing": {
+      "required": true,
+      "clear": false,
+      "edge_vs_wait": 1.07,
+      "required_edge": 4.5,
+      "comparison": "Best path starting with this move versus best path waiting this deadline; both may transfer later, net of hits."
     }
   },
   "forward_plan": {
@@ -238,7 +245,7 @@
     },
     {
       "key": "one_now",
-      "label": "Use one free transfer now",
+      "label": "Take one transfer now",
       "available": true,
       "recommended_path": true,
       "adaptive_support": false,

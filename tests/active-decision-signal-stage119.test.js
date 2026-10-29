@@ -58,3 +58,14 @@ console.log('active decision signal tests passed');
 
 assert.equal(api.execution({hours_to_deadline:1,decision_synthesis:{current_action:{execution_ready:false,execution_reason:"Pending Pedro news"}}}, {action:"TRANSFER",gateClear:true}).canExecute,false);
 assert.equal(api.execution({decision_synthesis:{team_news_review:{generated_at_utc:"2020-01-01T00:00:00Z"}}}, {action:"TRANSFER",gateClear:true}).label,"REFRESH TEAM NEWS");
+
+// Completed earlier moves cannot hide a newly evaluated additional route.
+const extra = {...synthesis, current_action: {...synthesis.current_action,
+  completed_transfer: {event:9,route:'Pedro → Isak',source:'official'},next_transfer_hit_cost:4}};
+assert.notEqual(api.execution({next_gw:9,hours_to_deadline:1,decision_synthesis:extra}, api.fromSynthesis(extra)).state,'completed');
+extra.current_action.action='HOLD';extra.current_action.reason='Waiting beats the hit.';
+extra.robustness={active_transfer_gate_clear:false};
+const held=api.execution({next_gw:9,decision_synthesis:extra},api.fromSynthesis(extra));
+assert.equal(held.state,'hold');assert.equal(held.copy,'Waiting beats the hit.');
+extra.current_action.completed_transfer.source='local_execution_confirmation';
+assert.equal(api.execution({next_gw:9,decision_synthesis:extra},api.fromSynthesis(extra)).state,'completed');

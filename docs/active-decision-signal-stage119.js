@@ -14,11 +14,11 @@ function fromSynthesis(syn={}){
  const validationLabel=r.active_validation_label||(multi?'Adaptive-rival test':'Model agreement');
  const support=n(r.measured_leader_support_models),supportNeed=Math.max(1,n(r.required_consensus_models,2));
  const validationClear=r.active_validation_clear!==undefined?!!r.active_validation_clear:(multi?!!r.multi_transfer_clears_gate:support>=supportNeed);
- const gateClear=r.active_transfer_gate_clear!==undefined?!!r.active_transfer_gate_clear:(action==='TRANSFER'&&(multi?!!r.multi_transfer_clears_gate:!!r.transfer_clears_gate));
+ const gateClear=action==='TRANSFER'&&(r.active_transfer_gate_clear!==undefined?!!r.active_transfer_gate_clear:(action==='TRANSFER'&&(multi?!!r.multi_transfer_clears_gate:!!r.transfer_clears_gate)));
  const validationValue=validationKind==='adaptive_rival'?(validationClear?'PASS':'FAIL'):`${support}/${supportNeed}`;
  const ratio=validationKind==='adaptive_rival'?(validationClear?1:0):Math.min(1,support/supportNeed);
  const score=gateClear?100:Math.min(99,Math.round((Math.min(1,edge/Math.max(1,required))*72+ratio*28)*10)/10);
- return{action,type,multi,route,edge,required,edgeClear,validationKind,validationLabel,validationValue,validationClear,gateClear,score,transferCount:n(a.transfer_count,multi?n(r.multi_transfer_count,2):action==='TRANSFER'?1:0)};
+ return{action,type,multi,route,edge,required,edgeClear,validationKind,validationLabel,validationValue,validationClear,gateClear,score,hitCost:n(a.next_transfer_hit_cost),timingGate:r.hit_timing,transferCount:n(a.transfer_count,multi?n(r.multi_transfer_count,2):action==='TRANSFER'?1:0)};
 }
 function fromSnapshot(x={}){
  const action=String(x.action||'HOLD').toUpperCase(),route=x.active_route||x.leader||x.single_step_leader||'—';
@@ -30,10 +30,11 @@ function fromSnapshot(x={}){
 function execution(d={},signal=fromSynthesis(d.decision_synthesis||{})){
  const review=d.decision_synthesis?.current_action,report=d.decision_synthesis?.team_news_review;
  const completed=review?.completed_transfer;
- if(completed&&Number(completed.event)===Number(d.next_gw))return{state:'completed',label:'TRANSFERS EXECUTED',title:'COMPLETED · REVIEW ADDITIONAL MOVES ONLY',canExecute:false,copy:`${completed.route||'Your transfers'} are recorded as done. News now affects lineup choices and any additional moves; do not repeat this route.`};
+ if(completed&&Number(completed.event)===Number(d.next_gw)&&completed.source==='local_execution_confirmation')return{state:'completed',label:'TRANSFERS EXECUTED',title:'COMPLETED · REVIEW ADDITIONAL MOVES ONLY',canExecute:false,copy:`${completed.route||'Your transfers'} are recorded as done. News now affects lineup choices and any additional moves; do not repeat this route.`};
+ if(signal.action!=='TRANSFER'||!signal.gateClear)return{state:'hold',label:'HOLD · NO FURTHER TRANSFER',title:'KEEP YOUR CURRENT SQUAD',canExecute:false,copy:review?.reason||'No additional transfer clears the full decision checks.'};
  const age=Date.now()-Date.parse(report?.generated_at_utc||'');
  if(report&&(!Number.isFinite(age)||age<0||age>6*3600000))return{state:'team-news',label:'REFRESH TEAM NEWS',title:'NEWS CHECKS EXPIRED',canExecute:false,copy:'Refresh the recommendation and team news before executing.'};
- if(review?.execution_ready===false)return{state:'team-news',label:'WAIT FOR TEAM NEWS',title:'PLAN ONLY · NEWS UNRESOLVED',canExecute:false,copy:`${review.execution_reason||'Team news remains unresolved'}. Waiting buys information but can cost budget if incoming prices rise or selling values fall. An early move can secure affordability, while accepting injury, rotation and later-news risk. Check the current route cost and price evidence before deciding.`};
+ if(review?.execution_ready===false)return{state:'team-news',label:signal.hitCost?`WAIT · OPTIONAL −${signal.hitCost} HIT`:'WAIT FOR TEAM NEWS',title:'PLAN ONLY · NEWS UNRESOLVED',canExecute:false,copy:`${review.execution_reason||'Team news remains unresolved'}. Waiting buys information but can cost budget if incoming prices rise or selling values fall. An early move can secure affordability, while accepting injury, rotation and later-news risk. Check the current route cost and price evidence before deciding.`};
  const budget=window.FPLTransferBudget?.decision(d);
  if(budget&&!budget.ok)return{state:'unaffordable',label:'BUDGET CHECK',title:'TRANSFER NOT ACTIONABLE',canExecute:false,copy:budget.message};
  const hours=n(d.hours_to_deadline,d.deadline_context?.hours_to_deadline),phase=String(d.deadline_context?.phase||'normal').toLowerCase();

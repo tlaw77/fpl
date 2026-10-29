@@ -67,7 +67,7 @@ def build_transfer_options(paths, adaptive, next_gw, remaining_ft, ft_cap):
 
     selected = [
         ('roll', 'Roll to build the bank', best(lambda r: first(r).get('action') == 'ROLL')),
-        ('one_now', 'Use one free transfer now', best(lambda r: first(r).get('action') == 'TRANSFER' and transfer_count(first(r)) == 1)),
+        ('one_now', 'Take one transfer now' if remaining_ft == 0 else 'Use one free transfer now', best(lambda r: first(r).get('action') == 'TRANSFER' and transfer_count(first(r)) == 1)),
         ('multiple_now', f'Use multiple free transfers now', best(lambda r: first(r).get('action') == 'TRANSFER' and transfer_count(first(r)) >= 2)),
         ('staged', 'Wait, then transfer later', best(lambda r: first(r).get('action') == 'ROLL' and later_transfer(r))),
     ]
@@ -106,6 +106,25 @@ def build_transfer_options(paths, adaptive, next_gw, remaining_ft, ft_cap):
             'actions': row.get('actions') or [],
         })
     return output
+
+
+def hit_timing_gate(options, route, hit_cost, required_edge):
+    """A paid move must also beat waiting with future free transfers available.
+
+    Single-step six-GW hold comparisons cannot establish the value of paying now.
+    Use expected points (already net of hits), never utility scores, on matched paths.
+    """
+    if not hit_cost:
+        return {'required': False, 'clear': True, 'edge_vs_wait': None}
+    now = next((o for o in options if o.get('available') and
+                route_of(o.get('first_action')) == route and
+                o.get('first_action', {}).get('action') == 'TRANSFER'), {})
+    wait = next((o for o in options if o.get('key') == 'roll' and o.get('available')), {})
+    edge = (round(n(now['expected_points']) - n(wait['expected_points']), 2)
+            if now.get('expected_points') is not None and wait.get('expected_points') is not None else None)
+    return {'required': True, 'clear': edge is not None and edge >= required_edge,
+            'edge_vs_wait': edge, 'required_edge': required_edge,
+            'comparison': 'Best path starting with this move versus best path waiting this deadline; both may transfer later, net of hits.'}
 
 
 def normalise_name(value):
@@ -275,9 +294,11 @@ def run():
     else:
         rollover_sentence = f'Holding moves the bank from {remaining_ft}/{ft_cap} to {hold_next_ft}/{ft_cap}; no free transfer expires.'
 
+    hit_timing = hit_timing_gate(transfer_options, sim_route, hit_cost, edge_hurdle)
     transfer_clears = (
         sim_top.get('action') == 'TRANSFER'
         and sim_edge >= edge_hurdle
+        and hit_timing['clear']
         and measured_leader_support >= consensus_required
     )
     multi_option = next((x for x in transfer_options if x.get('key') == 'multiple_now' and x.get('available')), {})
@@ -339,6 +360,16 @@ def run():
                 f'The leading transfer edge is {sim_edge:.1f} projected points over holding and does not yet clear the '
                 f'full evidence hurdle with sufficient agreement on that exact route. {rollover_sentence} {timing.get("summary")}'
             )
+
+    if hit_cost and not hit_timing['clear']:
+        timing_edge = hit_timing['edge_vs_wait']
+        comparison = (f"only {timing_edge:.2f} projected points ahead of waiting this deadline"
+                      if timing_edge is not None else "missing a valid comparison against waiting this deadline")
+        reason = (f"Hold: do not take the -{hit_cost} hit now. {sim_route} is {comparison} "
+                  f"with future transfers allowed, after hits; it needs {edge_hurdle:.1f}. "
+                  f"The {sim_edge:.1f}-point six-GW gain versus keeping the squad unchanged does not establish that paying now is worthwhile. "
+                  + (f"{completed.get('route')} is already completed. " if completed else '')
+                  + rollover_sentence)
 
     # One canonical signal for every consumer.  The single-step challenger remains
     # useful evidence, but it must not be presented as the active route when a
@@ -447,6 +478,7 @@ def run():
             'rollover_pressure': rollover_pressure,
             'rollover_edge_credit': round(expiry_credit, 2),
             'fixture_timing': timing,
+            'hit_timing': hit_timing,
         },
         'forward_plan': {
             'primary_path_first_action': next_plan,
