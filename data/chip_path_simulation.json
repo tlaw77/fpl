@@ -1,12 +1,12 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-10-31T20:14:54.466264+00:00",
+  "generated_at_utc": "2026-10-31T23:37:58.785228+00:00",
   "engine_version": 3,
   "iterations": 1200,
   "iteration_policy": {
     "layer": "chip",
     "deadline_phase": "normal",
-    "hours_to_deadline": 142.27,
+    "hours_to_deadline": 138.88,
     "iterations": 1200,
     "policy": "lighter normal-week sampling; higher precision inside 72h/24h/6h of official FPL deadline"
   },
@@ -39,7 +39,7 @@
             "route": "Maguire → Tarkowski",
             "out_id": 418,
             "in_id": 229,
-            "uplift": 6.9,
+            "uplift": 6.85,
             "addresses_short_term_risk": false
           }
         ],
@@ -50,6 +50,42 @@
       {
         "gw": 11,
         "action": "TRANSFER",
+        "route": "Hughes → Rogers",
+        "transfer_count": 1,
+        "transfers": [
+          {
+            "route": "Hughes → Rogers",
+            "out_id": 212,
+            "in_id": 40,
+            "uplift": 3.93,
+            "addresses_short_term_risk": false
+          }
+        ],
+        "hit": 0,
+        "out_id": 212,
+        "in_id": 40
+      },
+      {
+        "gw": 12,
+        "action": "TRANSFER",
+        "route": "Cherki → Manzambi",
+        "transfer_count": 1,
+        "transfers": [
+          {
+            "route": "Cherki → Manzambi",
+            "out_id": 399,
+            "in_id": 53,
+            "uplift": 2.37,
+            "addresses_short_term_risk": false
+          }
+        ],
+        "hit": 0,
+        "out_id": 399,
+        "in_id": 53
+      },
+      {
+        "gw": 13,
+        "action": "TRANSFER",
         "route": "Affengruber → Van Hecke",
         "transfer_count": 1,
         "transfers": [
@@ -57,69 +93,33 @@
             "route": "Affengruber → Van Hecke",
             "out_id": 650,
             "in_id": 112,
-            "uplift": 3.45,
+            "uplift": 1.1,
             "addresses_short_term_risk": false
           }
         ],
         "hit": 0,
         "out_id": 650,
         "in_id": 112
-      },
-      {
-        "gw": 12,
-        "action": "TRANSFER",
-        "route": "Cherki → Rogers",
-        "transfer_count": 1,
-        "transfers": [
-          {
-            "route": "Cherki → Rogers",
-            "out_id": 399,
-            "in_id": 40,
-            "uplift": 2.69,
-            "addresses_short_term_risk": false
-          }
-        ],
-        "hit": 0,
-        "out_id": 399,
-        "in_id": 40
-      },
-      {
-        "gw": 13,
-        "action": "TRANSFER",
-        "route": "Hughes → Neto",
-        "transfer_count": 1,
-        "transfers": [
-          {
-            "route": "Hughes → Neto",
-            "out_id": 212,
-            "in_id": 156,
-            "uplift": 0.45,
-            "addresses_short_term_risk": false
-          }
-        ],
-        "hit": 0,
-        "out_id": 212,
-        "in_id": 156
       }
     ],
     "chip": "Bench Boost",
-    "chip_gw": 13,
-    "expected_points": 254.13,
-    "chip_incremental_expected_points": 11.96,
-    "p10_points": 217.27,
-    "p90_points": 294.34,
-    "expected_rank_after_path": 1.07,
+    "chip_gw": 12,
+    "expected_points": 255.42,
+    "chip_incremental_expected_points": 13.34,
+    "p10_points": 216.48,
+    "p90_points": 293.8,
+    "expected_rank_after_path": 1.1,
     "prob_finish_ahead_each_rival": [
-      0.959,
-      0.984,
-      0.988,
+      0.955,
+      0.977,
+      0.973,
       1.0,
       1.0,
       1.0,
       1.0,
       1.0
     ],
-    "utility_score": 249.359
+    "utility_score": 250.271
   },
   "best_no_chip_path": {
     "actions": [
@@ -133,7 +133,7 @@
             "route": "Maguire → Tarkowski",
             "out_id": 418,
             "in_id": 229,
-            "uplift": 6.9,
+            "uplift": 6.85,
             "addresses_short_term_risk": false
           }
         ],
@@ -144,23 +144,41 @@
       {
         "gw": 11,
         "action": "TRANSFER",
-        "route": "Affengruber → Van Hecke",
+        "route": "Bogle → Van Hecke",
         "transfer_count": 1,
         "transfers": [
           {
-            "route": "Affengruber → Van Hecke",
-            "out_id": 650,
+            "route": "Bogle → Van Hecke",
+            "out_id": 330,
             "in_id": 112,
-            "uplift": 3.45,
+            "uplift": 3.93,
             "addresses_short_term_risk": false
           }
         ],
         "hit": 0,
-        "out_id": 650,
+        "out_id": 330,
         "in_id": 112
       },
       {
         "gw": 12,
+        "action": "TRANSFER",
+        "route": "Cherki → Manzambi",
+        "transfer_count": 1,
+        "transfers": [
+          {
+            "route": "Cherki → Manzambi",
+            "out_id": 399,
+            "in_id": 53,
+            "uplift": 2.39,
+            "addresses_short_term_risk": false
+          }
+        ],
+        "hit": 0,
+        "out_id": 399,
+        "in_id": 53
+      },
+      {
+        "gw": 13,
         "action": "TRANSFER",
         "route": "Henderson → Rogers",
         "transfer_count": 1,
@@ -169,51 +187,33 @@
             "route": "Henderson → Rogers",
             "out_id": 101,
             "in_id": 40,
-            "uplift": 1.96,
+            "uplift": 1.2,
             "addresses_short_term_risk": false
           }
         ],
         "hit": 0,
         "out_id": 101,
         "in_id": 40
-      },
-      {
-        "gw": 13,
-        "action": "TRANSFER",
-        "route": "Bogle → Vuskovic",
-        "transfer_count": 1,
-        "transfers": [
-          {
-            "route": "Bogle → Vuskovic",
-            "out_id": 330,
-            "in_id": 504,
-            "uplift": 1.07,
-            "addresses_short_term_risk": false
-          }
-        ],
-        "hit": 0,
-        "out_id": 330,
-        "in_id": 504
       }
     ],
     "chip": null,
     "chip_gw": null,
-    "expected_points": 242.22,
+    "expected_points": 242.33,
     "chip_incremental_expected_points": 0.0,
-    "p10_points": 206.13,
-    "p90_points": 283.64,
-    "expected_rank_after_path": 1.16,
+    "p10_points": 205.87,
+    "p90_points": 279.9,
+    "expected_rank_after_path": 1.23,
     "prob_finish_ahead_each_rival": [
-      0.911,
-      0.953,
-      0.973,
-      1.0,
+      0.909,
+      0.938,
+      0.929,
+      0.999,
       1.0,
       1.0,
       1.0,
       1.0
     ],
-    "utility_score": 237.068
+    "utility_score": 236.833
   },
   "best_triple_captain_window": null,
   "best_bench_boost_window": {
@@ -228,7 +228,7 @@
             "route": "Maguire → Tarkowski",
             "out_id": 418,
             "in_id": 229,
-            "uplift": 6.9,
+            "uplift": 6.85,
             "addresses_short_term_risk": false
           }
         ],
@@ -239,6 +239,42 @@
       {
         "gw": 11,
         "action": "TRANSFER",
+        "route": "Hughes → Rogers",
+        "transfer_count": 1,
+        "transfers": [
+          {
+            "route": "Hughes → Rogers",
+            "out_id": 212,
+            "in_id": 40,
+            "uplift": 3.93,
+            "addresses_short_term_risk": false
+          }
+        ],
+        "hit": 0,
+        "out_id": 212,
+        "in_id": 40
+      },
+      {
+        "gw": 12,
+        "action": "TRANSFER",
+        "route": "Cherki → Manzambi",
+        "transfer_count": 1,
+        "transfers": [
+          {
+            "route": "Cherki → Manzambi",
+            "out_id": 399,
+            "in_id": 53,
+            "uplift": 2.37,
+            "addresses_short_term_risk": false
+          }
+        ],
+        "hit": 0,
+        "out_id": 399,
+        "in_id": 53
+      },
+      {
+        "gw": 13,
+        "action": "TRANSFER",
         "route": "Affengruber → Van Hecke",
         "transfer_count": 1,
         "transfers": [
@@ -246,69 +282,33 @@
             "route": "Affengruber → Van Hecke",
             "out_id": 650,
             "in_id": 112,
-            "uplift": 3.45,
+            "uplift": 1.1,
             "addresses_short_term_risk": false
           }
         ],
         "hit": 0,
         "out_id": 650,
         "in_id": 112
-      },
-      {
-        "gw": 12,
-        "action": "TRANSFER",
-        "route": "Cherki → Rogers",
-        "transfer_count": 1,
-        "transfers": [
-          {
-            "route": "Cherki → Rogers",
-            "out_id": 399,
-            "in_id": 40,
-            "uplift": 2.69,
-            "addresses_short_term_risk": false
-          }
-        ],
-        "hit": 0,
-        "out_id": 399,
-        "in_id": 40
-      },
-      {
-        "gw": 13,
-        "action": "TRANSFER",
-        "route": "Hughes → Neto",
-        "transfer_count": 1,
-        "transfers": [
-          {
-            "route": "Hughes → Neto",
-            "out_id": 212,
-            "in_id": 156,
-            "uplift": 0.45,
-            "addresses_short_term_risk": false
-          }
-        ],
-        "hit": 0,
-        "out_id": 212,
-        "in_id": 156
       }
     ],
     "chip": "Bench Boost",
-    "chip_gw": 13,
-    "expected_points": 254.13,
-    "chip_incremental_expected_points": 11.96,
-    "p10_points": 217.27,
-    "p90_points": 294.34,
-    "expected_rank_after_path": 1.07,
+    "chip_gw": 12,
+    "expected_points": 255.42,
+    "chip_incremental_expected_points": 13.34,
+    "p10_points": 216.48,
+    "p90_points": 293.8,
+    "expected_rank_after_path": 1.1,
     "prob_finish_ahead_each_rival": [
-      0.959,
-      0.984,
-      0.988,
+      0.955,
+      0.977,
+      0.973,
       1.0,
       1.0,
       1.0,
       1.0,
       1.0
     ],
-    "utility_score": 249.359
+    "utility_score": 250.271
   },
   "rival_behaviour": [
     {
@@ -389,7 +389,7 @@
               "route": "Maguire → Tarkowski",
               "out_id": 418,
               "in_id": 229,
-              "uplift": 6.9,
+              "uplift": 6.85,
               "addresses_short_term_risk": false
             }
           ],
@@ -400,6 +400,42 @@
         {
           "gw": 11,
           "action": "TRANSFER",
+          "route": "Hughes → Rogers",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Hughes → Rogers",
+              "out_id": 212,
+              "in_id": 40,
+              "uplift": 3.93,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 40
+        },
+        {
+          "gw": 12,
+          "action": "TRANSFER",
+          "route": "Cherki → Manzambi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Cherki → Manzambi",
+              "out_id": 399,
+              "in_id": 53,
+              "uplift": 2.37,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 53
+        },
+        {
+          "gw": 13,
+          "action": "TRANSFER",
           "route": "Affengruber → Van Hecke",
           "transfer_count": 1,
           "transfers": [
@@ -407,69 +443,33 @@
               "route": "Affengruber → Van Hecke",
               "out_id": 650,
               "in_id": 112,
-              "uplift": 3.45,
+              "uplift": 1.1,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
           "out_id": 650,
           "in_id": 112
-        },
-        {
-          "gw": 12,
-          "action": "TRANSFER",
-          "route": "Cherki → Rogers",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Cherki → Rogers",
-              "out_id": 399,
-              "in_id": 40,
-              "uplift": 2.69,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 399,
-          "in_id": 40
-        },
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Hughes → Neto",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Hughes → Neto",
-              "out_id": 212,
-              "in_id": 156,
-              "uplift": 0.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 156
         }
       ],
       "chip": "Bench Boost",
-      "chip_gw": 13,
-      "expected_points": 254.13,
-      "chip_incremental_expected_points": 11.96,
-      "p10_points": 217.27,
-      "p90_points": 294.34,
-      "expected_rank_after_path": 1.07,
+      "chip_gw": 12,
+      "expected_points": 255.42,
+      "chip_incremental_expected_points": 13.34,
+      "p10_points": 216.48,
+      "p90_points": 293.8,
+      "expected_rank_after_path": 1.1,
       "prob_finish_ahead_each_rival": [
-        0.959,
-        0.984,
-        0.988,
+        0.955,
+        0.977,
+        0.973,
         1.0,
         1.0,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 249.359
+      "utility_score": 250.271
     },
     {
       "actions": [
@@ -483,7 +483,7 @@
               "route": "Maguire → Tarkowski",
               "out_id": 418,
               "in_id": 229,
-              "uplift": 6.9,
+              "uplift": 6.85,
               "addresses_short_term_risk": false
             }
           ],
@@ -494,6 +494,42 @@
         {
           "gw": 11,
           "action": "TRANSFER",
+          "route": "Hughes → Rogers",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Hughes → Rogers",
+              "out_id": 212,
+              "in_id": 40,
+              "uplift": 3.93,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 40
+        },
+        {
+          "gw": 12,
+          "action": "TRANSFER",
+          "route": "Cherki → Manzambi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Cherki → Manzambi",
+              "out_id": 399,
+              "in_id": 53,
+              "uplift": 2.37,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 53
+        },
+        {
+          "gw": 13,
+          "action": "TRANSFER",
           "route": "Affengruber → Van Hecke",
           "transfer_count": 1,
           "transfers": [
@@ -501,257 +537,127 @@
               "route": "Affengruber → Van Hecke",
               "out_id": 650,
               "in_id": 112,
-              "uplift": 3.45,
+              "uplift": 1.1,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
           "out_id": 650,
           "in_id": 112
-        },
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 11,
+      "expected_points": 254.31,
+      "chip_incremental_expected_points": 12.23,
+      "p10_points": 216.3,
+      "p90_points": 292.86,
+      "expected_rank_after_path": 1.1,
+      "prob_finish_ahead_each_rival": [
+        0.949,
+        0.978,
+        0.973,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "utility_score": 249.256
+    },
+    {
+      "actions": [
         {
-          "gw": 12,
+          "gw": 10,
           "action": "TRANSFER",
-          "route": "Cherki → Rogers",
+          "route": "Maguire → Tarkowski",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Cherki → Rogers",
-              "out_id": 399,
-              "in_id": 40,
-              "uplift": 2.69,
+              "route": "Maguire → Tarkowski",
+              "out_id": 418,
+              "in_id": 229,
+              "uplift": 6.85,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
-          "out_id": 399,
-          "in_id": 40
+          "out_id": 418,
+          "in_id": 229
         },
         {
-          "gw": 13,
+          "gw": 11,
           "action": "TRANSFER",
-          "route": "Bogle → Vuskovic",
+          "route": "Bogle → Van Hecke",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Bogle → Vuskovic",
+              "route": "Bogle → Van Hecke",
               "out_id": 330,
-              "in_id": 504,
-              "uplift": 0.34,
+              "in_id": 112,
+              "uplift": 3.93,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
           "out_id": 330,
-          "in_id": 504
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 12,
-      "expected_points": 251.69,
-      "chip_incremental_expected_points": 9.48,
-      "p10_points": 214.66,
-      "p90_points": 292.26,
-      "expected_rank_after_path": 1.08,
-      "prob_finish_ahead_each_rival": [
-        0.953,
-        0.98,
-        0.985,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "utility_score": 246.843
-    },
-    {
-      "actions": [
-        {
-          "gw": 10,
-          "action": "TRANSFER",
-          "route": "Maguire → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Tarkowski",
-              "out_id": 418,
-              "in_id": 229,
-              "uplift": 6.9,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 229
-        },
-        {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Affengruber → Van Hecke",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Van Hecke",
-              "out_id": 650,
-              "in_id": 112,
-              "uplift": 3.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
           "in_id": 112
         },
         {
           "gw": 12,
           "action": "TRANSFER",
-          "route": "Cherki → Rogers",
+          "route": "Hughes → Manzambi",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Cherki → Rogers",
-              "out_id": 399,
-              "in_id": 40,
-              "uplift": 2.69,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 399,
-          "in_id": 40
-        },
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Henderson → Neto",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Henderson → Neto",
-              "out_id": 101,
-              "in_id": 156,
-              "uplift": 0.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 101,
-          "in_id": 156
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 12,
-      "expected_points": 251.64,
-      "chip_incremental_expected_points": 9.48,
-      "p10_points": 214.95,
-      "p90_points": 292.44,
-      "expected_rank_after_path": 1.09,
-      "prob_finish_ahead_each_rival": [
-        0.951,
-        0.978,
-        0.986,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "utility_score": 246.812
-    },
-    {
-      "actions": [
-        {
-          "gw": 10,
-          "action": "TRANSFER",
-          "route": "Maguire → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Tarkowski",
-              "out_id": 418,
-              "in_id": 229,
-              "uplift": 6.9,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 229
-        },
-        {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Affengruber → Van Hecke",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Van Hecke",
-              "out_id": 650,
-              "in_id": 112,
-              "uplift": 3.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
-          "in_id": 112
-        },
-        {
-          "gw": 12,
-          "action": "TRANSFER",
-          "route": "Cherki → Rogers",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Cherki → Rogers",
-              "out_id": 399,
-              "in_id": 40,
-              "uplift": 2.69,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 399,
-          "in_id": 40
-        },
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Hughes → Neto",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Hughes → Neto",
+              "route": "Hughes → Manzambi",
               "out_id": 212,
-              "in_id": 156,
-              "uplift": 0.45,
+              "in_id": 53,
+              "uplift": 2.39,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
           "out_id": 212,
-          "in_id": 156
+          "in_id": 53
+        },
+        {
+          "gw": 13,
+          "action": "TRANSFER",
+          "route": "Groß → Rogers",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Groß → Rogers",
+              "out_id": 124,
+              "in_id": 40,
+              "uplift": 0.95,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 124,
+          "in_id": 40
         }
       ],
       "chip": "Bench Boost",
-      "chip_gw": 12,
-      "expected_points": 251.64,
-      "chip_incremental_expected_points": 9.48,
-      "p10_points": 214.95,
-      "p90_points": 292.44,
-      "expected_rank_after_path": 1.09,
+      "chip_gw": 13,
+      "expected_points": 254.14,
+      "chip_incremental_expected_points": 12.11,
+      "p10_points": 217.17,
+      "p90_points": 292.34,
+      "expected_rank_after_path": 1.11,
       "prob_finish_ahead_each_rival": [
-        0.951,
-        0.978,
-        0.986,
+        0.953,
+        0.976,
+        0.965,
         1.0,
         1.0,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 246.812
+      "utility_score": 249.172
     },
     {
       "actions": [
@@ -765,7 +671,7 @@
               "route": "Maguire → Tarkowski",
               "out_id": 418,
               "in_id": 229,
-              "uplift": 6.9,
+              "uplift": 6.85,
               "addresses_short_term_risk": false
             }
           ],
@@ -776,62 +682,76 @@
         {
           "gw": 11,
           "action": "TRANSFER",
-          "route": "Affengruber → Van Hecke",
+          "route": "Hughes → Rogers",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Affengruber → Van Hecke",
-              "out_id": 650,
-              "in_id": 112,
-              "uplift": 3.45,
+              "route": "Hughes → Rogers",
+              "out_id": 212,
+              "in_id": 40,
+              "uplift": 3.93,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
-          "out_id": 650,
-          "in_id": 112
+          "out_id": 212,
+          "in_id": 40
         },
         {
           "gw": 12,
           "action": "TRANSFER",
-          "route": "Cherki → Rogers",
+          "route": "Cherki → Manzambi",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Cherki → Rogers",
+              "route": "Cherki → Manzambi",
               "out_id": 399,
-              "in_id": 40,
-              "uplift": 2.69,
+              "in_id": 53,
+              "uplift": 2.37,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
           "out_id": 399,
-          "in_id": 40
+          "in_id": 53
         },
         {
           "gw": 13,
-          "action": "ROLL"
+          "action": "TRANSFER",
+          "route": "Affengruber → Van Hecke",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Affengruber → Van Hecke",
+              "out_id": 650,
+              "in_id": 112,
+              "uplift": 1.1,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 650,
+          "in_id": 112
         }
       ],
       "chip": "Bench Boost",
-      "chip_gw": 12,
-      "expected_points": 251.23,
-      "chip_incremental_expected_points": 9.48,
-      "p10_points": 214.42,
-      "p90_points": 291.31,
-      "expected_rank_after_path": 1.08,
+      "chip_gw": 13,
+      "expected_points": 253.99,
+      "chip_incremental_expected_points": 11.91,
+      "p10_points": 215.54,
+      "p90_points": 292.82,
+      "expected_rank_after_path": 1.11,
       "prob_finish_ahead_each_rival": [
-        0.953,
-        0.982,
-        0.984,
+        0.952,
+        0.975,
+        0.963,
         1.0,
         1.0,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 246.411
+      "utility_score": 248.824
     },
     {
       "actions": [
@@ -845,7 +765,7 @@
               "route": "Maguire → Tarkowski",
               "out_id": 418,
               "in_id": 229,
-              "uplift": 6.9,
+              "uplift": 6.85,
               "addresses_short_term_risk": false
             }
           ],
@@ -856,23 +776,135 @@
         {
           "gw": 11,
           "action": "TRANSFER",
-          "route": "Affengruber → Van Hecke",
+          "route": "Bogle → Van Hecke",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Affengruber → Van Hecke",
-              "out_id": 650,
+              "route": "Bogle → Van Hecke",
+              "out_id": 330,
               "in_id": 112,
-              "uplift": 3.45,
+              "uplift": 3.93,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
-          "out_id": 650,
+          "out_id": 330,
           "in_id": 112
         },
         {
           "gw": 12,
+          "action": "TRANSFER",
+          "route": "Hughes → Manzambi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Hughes → Manzambi",
+              "out_id": 212,
+              "in_id": 53,
+              "uplift": 2.39,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 53
+        },
+        {
+          "gw": 13,
+          "action": "TRANSFER",
+          "route": "Groß → Rogers",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Groß → Rogers",
+              "out_id": 124,
+              "in_id": 40,
+              "uplift": 0.95,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 124,
+          "in_id": 40
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 12,
+      "expected_points": 253.76,
+      "chip_incremental_expected_points": 11.72,
+      "p10_points": 216.58,
+      "p90_points": 292.02,
+      "expected_rank_after_path": 1.11,
+      "prob_finish_ahead_each_rival": [
+        0.949,
+        0.977,
+        0.968,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "utility_score": 248.765
+    },
+    {
+      "actions": [
+        {
+          "gw": 10,
+          "action": "TRANSFER",
+          "route": "Maguire → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Maguire → Tarkowski",
+              "out_id": 418,
+              "in_id": 229,
+              "uplift": 6.85,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 229
+        },
+        {
+          "gw": 11,
+          "action": "TRANSFER",
+          "route": "Bogle → Van Hecke",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Bogle → Van Hecke",
+              "out_id": 330,
+              "in_id": 112,
+              "uplift": 3.93,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 330,
+          "in_id": 112
+        },
+        {
+          "gw": 12,
+          "action": "TRANSFER",
+          "route": "Cherki → Manzambi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Cherki → Manzambi",
+              "out_id": 399,
+              "in_id": 53,
+              "uplift": 2.39,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 53
+        },
+        {
+          "gw": 13,
           "action": "TRANSFER",
           "route": "Henderson → Rogers",
           "transfer_count": 1,
@@ -881,601 +913,33 @@
               "route": "Henderson → Rogers",
               "out_id": 101,
               "in_id": 40,
-              "uplift": 1.96,
+              "uplift": 1.2,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
           "out_id": 101,
           "in_id": 40
-        },
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Bogle → Vuskovic",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Bogle → Vuskovic",
-              "out_id": 330,
-              "in_id": 504,
-              "uplift": 1.07,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 330,
-          "in_id": 504
         }
       ],
       "chip": "Bench Boost",
-      "chip_gw": 11,
-      "expected_points": 251.33,
-      "chip_incremental_expected_points": 9.12,
-      "p10_points": 213.86,
-      "p90_points": 292.68,
-      "expected_rank_after_path": 1.09,
+      "chip_gw": 12,
+      "expected_points": 251.94,
+      "chip_incremental_expected_points": 9.6,
+      "p10_points": 215.15,
+      "p90_points": 288.76,
+      "expected_rank_after_path": 1.11,
       "prob_finish_ahead_each_rival": [
-        0.953,
-        0.976,
-        0.986,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "utility_score": 246.407
-    },
-    {
-      "actions": [
-        {
-          "gw": 10,
-          "action": "TRANSFER",
-          "route": "Maguire → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Tarkowski",
-              "out_id": 418,
-              "in_id": 229,
-              "uplift": 6.9,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 229
-        },
-        {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Affengruber → Van Hecke",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Van Hecke",
-              "out_id": 650,
-              "in_id": 112,
-              "uplift": 3.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
-          "in_id": 112
-        },
-        {
-          "gw": 12,
-          "action": "TRANSFER",
-          "route": "Cherki → Rogers",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Cherki → Rogers",
-              "out_id": 399,
-              "in_id": 40,
-              "uplift": 2.69,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 399,
-          "in_id": 40
-        },
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Bogle → Vuskovic",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Bogle → Vuskovic",
-              "out_id": 330,
-              "in_id": 504,
-              "uplift": 0.34,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 330,
-          "in_id": 504
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 11,
-      "expected_points": 251.33,
-      "chip_incremental_expected_points": 9.12,
-      "p10_points": 213.86,
-      "p90_points": 292.68,
-      "expected_rank_after_path": 1.09,
-      "prob_finish_ahead_each_rival": [
-        0.953,
-        0.976,
-        0.986,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "utility_score": 246.407
-    },
-    {
-      "actions": [
-        {
-          "gw": 10,
-          "action": "TRANSFER",
-          "route": "Maguire → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Tarkowski",
-              "out_id": 418,
-              "in_id": 229,
-              "uplift": 6.9,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 229
-        },
-        {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Affengruber → Van Hecke",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Van Hecke",
-              "out_id": 650,
-              "in_id": 112,
-              "uplift": 3.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
-          "in_id": 112
-        },
-        {
-          "gw": 12,
-          "action": "TRANSFER",
-          "route": "Cherki → Rogers",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Cherki → Rogers",
-              "out_id": 399,
-              "in_id": 40,
-              "uplift": 2.69,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 399,
-          "in_id": 40
-        },
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Henderson → Neto",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Henderson → Neto",
-              "out_id": 101,
-              "in_id": 156,
-              "uplift": 0.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 101,
-          "in_id": 156
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 11,
-      "expected_points": 251.28,
-      "chip_incremental_expected_points": 9.12,
-      "p10_points": 213.77,
-      "p90_points": 292.96,
-      "expected_rank_after_path": 1.09,
-      "prob_finish_ahead_each_rival": [
-        0.949,
-        0.975,
-        0.987,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "utility_score": 246.336
-    },
-    {
-      "actions": [
-        {
-          "gw": 10,
-          "action": "TRANSFER",
-          "route": "Maguire → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Tarkowski",
-              "out_id": 418,
-              "in_id": 229,
-              "uplift": 6.9,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 229
-        },
-        {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Affengruber → Van Hecke",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Van Hecke",
-              "out_id": 650,
-              "in_id": 112,
-              "uplift": 3.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
-          "in_id": 112
-        },
-        {
-          "gw": 12,
-          "action": "TRANSFER",
-          "route": "Cherki → Rogers",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Cherki → Rogers",
-              "out_id": 399,
-              "in_id": 40,
-              "uplift": 2.69,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 399,
-          "in_id": 40
-        },
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Hughes → Neto",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Hughes → Neto",
-              "out_id": 212,
-              "in_id": 156,
-              "uplift": 0.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 156
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 11,
-      "expected_points": 251.28,
-      "chip_incremental_expected_points": 9.12,
-      "p10_points": 213.77,
-      "p90_points": 292.96,
-      "expected_rank_after_path": 1.09,
-      "prob_finish_ahead_each_rival": [
-        0.949,
-        0.975,
-        0.987,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "utility_score": 246.336
-    },
-    {
-      "actions": [
-        {
-          "gw": 10,
-          "action": "TRANSFER",
-          "route": "Maguire → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Tarkowski",
-              "out_id": 418,
-              "in_id": 229,
-              "uplift": 6.9,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 229
-        },
-        {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Affengruber → Van Hecke",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Van Hecke",
-              "out_id": 650,
-              "in_id": 112,
-              "uplift": 3.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
-          "in_id": 112
-        },
-        {
-          "gw": 12,
-          "action": "TRANSFER",
-          "route": "Cherki → Rogers",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Cherki → Rogers",
-              "out_id": 399,
-              "in_id": 40,
-              "uplift": 2.69,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 399,
-          "in_id": 40
-        },
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Bogle → Vuskovic",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Bogle → Vuskovic",
-              "out_id": 330,
-              "in_id": 504,
-              "uplift": 0.34,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 330,
-          "in_id": 504
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 13,
-      "expected_points": 251.04,
-      "chip_incremental_expected_points": 8.82,
-      "p10_points": 214.94,
-      "p90_points": 292.16,
-      "expected_rank_after_path": 1.09,
-      "prob_finish_ahead_each_rival": [
-        0.949,
-        0.979,
-        0.985,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "utility_score": 246.274
-    },
-    {
-      "actions": [
-        {
-          "gw": 10,
-          "action": "TRANSFER",
-          "route": "Maguire → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Tarkowski",
-              "out_id": 418,
-              "in_id": 229,
-              "uplift": 6.9,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 229
-        },
-        {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Affengruber → Van Hecke",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Van Hecke",
-              "out_id": 650,
-              "in_id": 112,
-              "uplift": 3.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
-          "in_id": 112
-        },
-        {
-          "gw": 12,
-          "action": "TRANSFER",
-          "route": "Cherki → Rogers",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Cherki → Rogers",
-              "out_id": 399,
-              "in_id": 40,
-              "uplift": 2.69,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 399,
-          "in_id": 40
-        },
-        {
-          "gw": 13,
-          "action": "ROLL"
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 11,
-      "expected_points": 250.87,
-      "chip_incremental_expected_points": 9.12,
-      "p10_points": 214.0,
-      "p90_points": 291.69,
-      "expected_rank_after_path": 1.09,
-      "prob_finish_ahead_each_rival": [
-        0.953,
-        0.975,
-        0.986,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "utility_score": 246.017
-    },
-    {
-      "actions": [
-        {
-          "gw": 10,
-          "action": "TRANSFER",
-          "route": "Maguire → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Tarkowski",
-              "out_id": 418,
-              "in_id": 229,
-              "uplift": 6.9,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 229
-        },
-        {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Affengruber → Van Hecke",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Van Hecke",
-              "out_id": 650,
-              "in_id": 112,
-              "uplift": 3.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
-          "in_id": 112
-        },
-        {
-          "gw": 12,
-          "action": "TRANSFER",
-          "route": "Henderson → Rogers",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Henderson → Rogers",
-              "out_id": 101,
-              "in_id": 40,
-              "uplift": 1.96,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 101,
-          "in_id": 40
-        },
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Bogle → Vuskovic",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Bogle → Vuskovic",
-              "out_id": 330,
-              "in_id": 504,
-              "uplift": 1.07,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 330,
-          "in_id": 504
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 10,
-      "expected_points": 250.58,
-      "chip_incremental_expected_points": 8.37,
-      "p10_points": 214.17,
-      "p90_points": 291.63,
-      "expected_rank_after_path": 1.09,
-      "prob_finish_ahead_each_rival": [
-        0.949,
+        0.948,
         0.974,
-        0.985,
-        1.0,
+        0.966,
+        0.999,
         1.0,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 245.756
+      "utility_score": 246.96
     },
     {
       "actions": [
@@ -1489,7 +953,7 @@
               "route": "Maguire → Tarkowski",
               "out_id": 418,
               "in_id": 229,
-              "uplift": 6.9,
+              "uplift": 6.85,
               "addresses_short_term_risk": false
             }
           ],
@@ -1500,358 +964,76 @@
         {
           "gw": 11,
           "action": "TRANSFER",
-          "route": "Affengruber → Van Hecke",
+          "route": "Bogle → Van Hecke",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Affengruber → Van Hecke",
-              "out_id": 650,
-              "in_id": 112,
-              "uplift": 3.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
-          "in_id": 112
-        },
-        {
-          "gw": 12,
-          "action": "TRANSFER",
-          "route": "Cherki → Rogers",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Cherki → Rogers",
-              "out_id": 399,
-              "in_id": 40,
-              "uplift": 2.69,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 399,
-          "in_id": 40
-        },
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Bogle → Vuskovic",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Bogle → Vuskovic",
+              "route": "Bogle → Van Hecke",
               "out_id": 330,
-              "in_id": 504,
-              "uplift": 0.34,
+              "in_id": 112,
+              "uplift": 3.93,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
           "out_id": 330,
-          "in_id": 504
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 10,
-      "expected_points": 250.58,
-      "chip_incremental_expected_points": 8.37,
-      "p10_points": 214.17,
-      "p90_points": 291.63,
-      "expected_rank_after_path": 1.09,
-      "prob_finish_ahead_each_rival": [
-        0.949,
-        0.974,
-        0.985,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "utility_score": 245.756
-    },
-    {
-      "actions": [
-        {
-          "gw": 10,
-          "action": "TRANSFER",
-          "route": "Maguire → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Tarkowski",
-              "out_id": 418,
-              "in_id": 229,
-              "uplift": 6.9,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 229
-        },
-        {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Affengruber → Van Hecke",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Van Hecke",
-              "out_id": 650,
-              "in_id": 112,
-              "uplift": 3.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
           "in_id": 112
         },
         {
           "gw": 12,
           "action": "TRANSFER",
-          "route": "Cherki → Rogers",
+          "route": "Cherki → Manzambi",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Cherki → Rogers",
+              "route": "Cherki → Manzambi",
               "out_id": 399,
-              "in_id": 40,
-              "uplift": 2.69,
+              "in_id": 53,
+              "uplift": 2.39,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
           "out_id": 399,
-          "in_id": 40
+          "in_id": 53
         },
         {
           "gw": 13,
           "action": "TRANSFER",
-          "route": "Henderson → Neto",
+          "route": "Belloumi → Rogers",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Henderson → Neto",
-              "out_id": 101,
-              "in_id": 156,
-              "uplift": 0.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 101,
-          "in_id": 156
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 10,
-      "expected_points": 250.53,
-      "chip_incremental_expected_points": 8.37,
-      "p10_points": 213.77,
-      "p90_points": 291.39,
-      "expected_rank_after_path": 1.08,
-      "prob_finish_ahead_each_rival": [
-        0.953,
-        0.976,
-        0.987,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "utility_score": 245.702
-    },
-    {
-      "actions": [
-        {
-          "gw": 10,
-          "action": "TRANSFER",
-          "route": "Maguire → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Tarkowski",
-              "out_id": 418,
-              "in_id": 229,
-              "uplift": 6.9,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 229
-        },
-        {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Affengruber → Van Hecke",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Van Hecke",
-              "out_id": 650,
-              "in_id": 112,
-              "uplift": 3.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
-          "in_id": 112
-        },
-        {
-          "gw": 12,
-          "action": "TRANSFER",
-          "route": "Cherki → Rogers",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Cherki → Rogers",
-              "out_id": 399,
+              "route": "Belloumi → Rogers",
+              "out_id": 286,
               "in_id": 40,
-              "uplift": 2.69,
+              "uplift": 1.2,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
-          "out_id": 399,
+          "out_id": 286,
           "in_id": 40
-        },
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Hughes → Neto",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Hughes → Neto",
-              "out_id": 212,
-              "in_id": 156,
-              "uplift": 0.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 156
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 10,
-      "expected_points": 250.53,
-      "chip_incremental_expected_points": 8.37,
-      "p10_points": 213.77,
-      "p90_points": 291.39,
-      "expected_rank_after_path": 1.08,
-      "prob_finish_ahead_each_rival": [
-        0.953,
-        0.976,
-        0.987,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "utility_score": 245.702
-    },
-    {
-      "actions": [
-        {
-          "gw": 10,
-          "action": "TRANSFER",
-          "route": "Maguire → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Tarkowski",
-              "out_id": 418,
-              "in_id": 229,
-              "uplift": 6.9,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 229
-        },
-        {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Affengruber → Van Hecke",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Van Hecke",
-              "out_id": 650,
-              "in_id": 112,
-              "uplift": 3.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
-          "in_id": 112
-        },
-        {
-          "gw": 12,
-          "action": "TRANSFER",
-          "route": "Henderson → Rogers",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Henderson → Rogers",
-              "out_id": 101,
-              "in_id": 40,
-              "uplift": 1.96,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 101,
-          "in_id": 40
-        },
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Bogle → Vuskovic",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Bogle → Vuskovic",
-              "out_id": 330,
-              "in_id": 504,
-              "uplift": 1.07,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 330,
-          "in_id": 504
         }
       ],
       "chip": "Bench Boost",
       "chip_gw": 12,
-      "expected_points": 250.64,
-      "chip_incremental_expected_points": 8.43,
-      "p10_points": 213.27,
-      "p90_points": 291.9,
-      "expected_rank_after_path": 1.09,
+      "expected_points": 251.94,
+      "chip_incremental_expected_points": 9.6,
+      "p10_points": 215.15,
+      "p90_points": 288.76,
+      "expected_rank_after_path": 1.11,
       "prob_finish_ahead_each_rival": [
-        0.946,
-        0.978,
-        0.983,
-        1.0,
+        0.948,
+        0.974,
+        0.966,
+        0.999,
         1.0,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 245.694
+      "utility_score": 246.96
     },
     {
       "actions": [
@@ -1865,7 +1047,7 @@
               "route": "Maguire → Tarkowski",
               "out_id": 418,
               "in_id": 229,
-              "uplift": 6.9,
+              "uplift": 6.85,
               "addresses_short_term_risk": false
             }
           ],
@@ -1876,23 +1058,135 @@
         {
           "gw": 11,
           "action": "TRANSFER",
-          "route": "Affengruber → Van Hecke",
+          "route": "Bogle → Van Hecke",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Affengruber → Van Hecke",
-              "out_id": 650,
+              "route": "Bogle → Van Hecke",
+              "out_id": 330,
               "in_id": 112,
-              "uplift": 3.45,
+              "uplift": 3.93,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
-          "out_id": 650,
+          "out_id": 330,
           "in_id": 112
         },
         {
           "gw": 12,
+          "action": "TRANSFER",
+          "route": "Cherki → Manzambi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Cherki → Manzambi",
+              "out_id": 399,
+              "in_id": 53,
+              "uplift": 2.39,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 53
+        },
+        {
+          "gw": 13,
+          "action": "TRANSFER",
+          "route": "Belloumi → Rogers",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Belloumi → Rogers",
+              "out_id": 286,
+              "in_id": 40,
+              "uplift": 1.2,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 286,
+          "in_id": 40
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 13,
+      "expected_points": 251.31,
+      "chip_incremental_expected_points": 8.97,
+      "p10_points": 214.12,
+      "p90_points": 289.7,
+      "expected_rank_after_path": 1.12,
+      "prob_finish_ahead_each_rival": [
+        0.944,
+        0.973,
+        0.963,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "utility_score": 246.245
+    },
+    {
+      "actions": [
+        {
+          "gw": 10,
+          "action": "TRANSFER",
+          "route": "Maguire → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Maguire → Tarkowski",
+              "out_id": 418,
+              "in_id": 229,
+              "uplift": 6.85,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 229
+        },
+        {
+          "gw": 11,
+          "action": "TRANSFER",
+          "route": "Bogle → Van Hecke",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Bogle → Van Hecke",
+              "out_id": 330,
+              "in_id": 112,
+              "uplift": 3.93,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 330,
+          "in_id": 112
+        },
+        {
+          "gw": 12,
+          "action": "TRANSFER",
+          "route": "Cherki → Manzambi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Cherki → Manzambi",
+              "out_id": 399,
+              "in_id": 53,
+              "uplift": 2.39,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 53
+        },
+        {
+          "gw": 13,
           "action": "TRANSFER",
           "route": "Henderson → Rogers",
           "transfer_count": 1,
@@ -1901,51 +1195,33 @@
               "route": "Henderson → Rogers",
               "out_id": 101,
               "in_id": 40,
-              "uplift": 1.96,
+              "uplift": 1.2,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
           "out_id": 101,
           "in_id": 40
-        },
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Bogle → Vuskovic",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Bogle → Vuskovic",
-              "out_id": 330,
-              "in_id": 504,
-              "uplift": 1.07,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 330,
-          "in_id": 504
         }
       ],
       "chip": "Bench Boost",
       "chip_gw": 13,
-      "expected_points": 250.31,
-      "chip_incremental_expected_points": 8.09,
+      "expected_points": 251.21,
+      "chip_incremental_expected_points": 8.88,
       "p10_points": 213.32,
-      "p90_points": 291.56,
-      "expected_rank_after_path": 1.09,
+      "p90_points": 289.72,
+      "expected_rank_after_path": 1.12,
       "prob_finish_ahead_each_rival": [
-        0.949,
-        0.975,
-        0.984,
+        0.943,
+        0.973,
+        0.966,
         1.0,
         1.0,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 245.409
+      "utility_score": 246.074
     },
     {
       "actions": [
@@ -1959,7 +1235,7 @@
               "route": "Maguire → Tarkowski",
               "out_id": 418,
               "in_id": 229,
-              "uplift": 6.9,
+              "uplift": 6.85,
               "addresses_short_term_risk": false
             }
           ],
@@ -1970,156 +1246,76 @@
         {
           "gw": 11,
           "action": "TRANSFER",
-          "route": "Affengruber → Van Hecke",
+          "route": "Bogle → Van Hecke",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Affengruber → Van Hecke",
-              "out_id": 650,
+              "route": "Bogle → Van Hecke",
+              "out_id": 330,
               "in_id": 112,
-              "uplift": 3.45,
+              "uplift": 3.93,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
-          "out_id": 650,
+          "out_id": 330,
           "in_id": 112
         },
         {
           "gw": 12,
           "action": "TRANSFER",
-          "route": "Cherki → Rogers",
+          "route": "Cherki → Manzambi",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Cherki → Rogers",
+              "route": "Cherki → Manzambi",
               "out_id": 399,
-              "in_id": 40,
-              "uplift": 2.69,
+              "in_id": 53,
+              "uplift": 2.39,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
           "out_id": 399,
-          "in_id": 40
-        },
-        {
-          "gw": 13,
-          "action": "ROLL"
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 10,
-      "expected_points": 250.12,
-      "chip_incremental_expected_points": 8.37,
-      "p10_points": 214.45,
-      "p90_points": 290.36,
-      "expected_rank_after_path": 1.09,
-      "prob_finish_ahead_each_rival": [
-        0.951,
-        0.974,
-        0.985,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "utility_score": 245.391
-    },
-    {
-      "actions": [
-        {
-          "gw": 10,
-          "action": "TRANSFER",
-          "route": "Maguire → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Tarkowski",
-              "out_id": 418,
-              "in_id": 229,
-              "uplift": 6.9,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 229
-        },
-        {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Affengruber → Van Hecke",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Van Hecke",
-              "out_id": 650,
-              "in_id": 112,
-              "uplift": 3.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
-          "in_id": 112
-        },
-        {
-          "gw": 12,
-          "action": "TRANSFER",
-          "route": "Cherki → Rogers",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Cherki → Rogers",
-              "out_id": 399,
-              "in_id": 40,
-              "uplift": 2.69,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 399,
-          "in_id": 40
+          "in_id": 53
         },
         {
           "gw": 13,
           "action": "TRANSFER",
-          "route": "Henderson → Neto",
+          "route": "Henderson → Rogers",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Henderson → Neto",
+              "route": "Henderson → Rogers",
               "out_id": 101,
-              "in_id": 156,
-              "uplift": 0.45,
+              "in_id": 40,
+              "uplift": 1.2,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
           "out_id": 101,
-          "in_id": 156
+          "in_id": 40
         }
       ],
       "chip": "Bench Boost",
-      "chip_gw": 13,
-      "expected_points": 250.13,
-      "chip_incremental_expected_points": 7.97,
-      "p10_points": 213.41,
-      "p90_points": 290.57,
-      "expected_rank_after_path": 1.09,
+      "chip_gw": 11,
+      "expected_points": 251.07,
+      "chip_incremental_expected_points": 8.74,
+      "p10_points": 213.74,
+      "p90_points": 288.23,
+      "expected_rank_after_path": 1.12,
       "prob_finish_ahead_each_rival": [
         0.947,
-        0.977,
-        0.984,
+        0.972,
+        0.966,
         1.0,
         1.0,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 245.263
+      "utility_score": 246.016
     },
     {
       "actions": [
@@ -2133,7 +1329,7 @@
               "route": "Maguire → Tarkowski",
               "out_id": 418,
               "in_id": 229,
-              "uplift": 6.9,
+              "uplift": 6.85,
               "addresses_short_term_risk": false
             }
           ],
@@ -2144,62 +1340,76 @@
         {
           "gw": 11,
           "action": "TRANSFER",
-          "route": "Affengruber → Van Hecke",
+          "route": "Bogle → Van Hecke",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Affengruber → Van Hecke",
-              "out_id": 650,
+              "route": "Bogle → Van Hecke",
+              "out_id": 330,
               "in_id": 112,
-              "uplift": 3.45,
+              "uplift": 3.93,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
-          "out_id": 650,
+          "out_id": 330,
           "in_id": 112
         },
         {
           "gw": 12,
           "action": "TRANSFER",
-          "route": "Cherki → Rogers",
+          "route": "Cherki → Manzambi",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Cherki → Rogers",
+              "route": "Cherki → Manzambi",
               "out_id": 399,
-              "in_id": 40,
-              "uplift": 2.69,
+              "in_id": 53,
+              "uplift": 2.39,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
           "out_id": 399,
-          "in_id": 40
+          "in_id": 53
         },
         {
           "gw": 13,
-          "action": "ROLL"
+          "action": "TRANSFER",
+          "route": "Belloumi → Rogers",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Belloumi → Rogers",
+              "out_id": 286,
+              "in_id": 40,
+              "uplift": 1.2,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 286,
+          "in_id": 40
         }
       ],
       "chip": "Bench Boost",
-      "chip_gw": 13,
-      "expected_points": 249.72,
-      "chip_incremental_expected_points": 7.97,
-      "p10_points": 213.13,
-      "p90_points": 289.19,
-      "expected_rank_after_path": 1.09,
+      "chip_gw": 11,
+      "expected_points": 251.07,
+      "chip_incremental_expected_points": 8.74,
+      "p10_points": 213.74,
+      "p90_points": 288.23,
+      "expected_rank_after_path": 1.12,
       "prob_finish_ahead_each_rival": [
-        0.945,
-        0.976,
-        0.984,
+        0.947,
+        0.972,
+        0.966,
         1.0,
         1.0,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 244.854
+      "utility_score": 246.016
     },
     {
       "actions": [
@@ -2213,7 +1423,7 @@
               "route": "Maguire → Tarkowski",
               "out_id": 418,
               "in_id": 229,
-              "uplift": 6.9,
+              "uplift": 6.85,
               "addresses_short_term_risk": false
             }
           ],
@@ -2224,23 +1434,323 @@
         {
           "gw": 11,
           "action": "TRANSFER",
-          "route": "Affengruber → Van Hecke",
+          "route": "Bogle → Van Hecke",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Affengruber → Van Hecke",
-              "out_id": 650,
+              "route": "Bogle → Van Hecke",
+              "out_id": 330,
               "in_id": 112,
-              "uplift": 3.45,
+              "uplift": 3.93,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
-          "out_id": 650,
+          "out_id": 330,
           "in_id": 112
         },
         {
           "gw": 12,
+          "action": "TRANSFER",
+          "route": "Henderson → Manzambi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Henderson → Manzambi",
+              "out_id": 101,
+              "in_id": 53,
+              "uplift": 2.39,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 101,
+          "in_id": 53
+        },
+        {
+          "gw": 13,
+          "action": "TRANSFER",
+          "route": "Belloumi → Rogers",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Belloumi → Rogers",
+              "out_id": 286,
+              "in_id": 40,
+              "uplift": 1.2,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 286,
+          "in_id": 40
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 11,
+      "expected_points": 251.07,
+      "chip_incremental_expected_points": 8.74,
+      "p10_points": 213.74,
+      "p90_points": 288.23,
+      "expected_rank_after_path": 1.12,
+      "prob_finish_ahead_each_rival": [
+        0.947,
+        0.972,
+        0.966,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "utility_score": 246.016
+    },
+    {
+      "actions": [
+        {
+          "gw": 10,
+          "action": "TRANSFER",
+          "route": "Maguire → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Maguire → Tarkowski",
+              "out_id": 418,
+              "in_id": 229,
+              "uplift": 6.85,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 229
+        },
+        {
+          "gw": 11,
+          "action": "TRANSFER",
+          "route": "Bogle → Van Hecke",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Bogle → Van Hecke",
+              "out_id": 330,
+              "in_id": 112,
+              "uplift": 3.93,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 330,
+          "in_id": 112
+        },
+        {
+          "gw": 12,
+          "action": "TRANSFER",
+          "route": "Henderson → Manzambi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Henderson → Manzambi",
+              "out_id": 101,
+              "in_id": 53,
+              "uplift": 2.39,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 101,
+          "in_id": 53
+        },
+        {
+          "gw": 13,
+          "action": "TRANSFER",
+          "route": "Belloumi → Rogers",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Belloumi → Rogers",
+              "out_id": 286,
+              "in_id": 40,
+              "uplift": 1.2,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 286,
+          "in_id": 40
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 12,
+      "expected_points": 250.75,
+      "chip_incremental_expected_points": 8.42,
+      "p10_points": 214.38,
+      "p90_points": 288.83,
+      "expected_rank_after_path": 1.12,
+      "prob_finish_ahead_each_rival": [
+        0.945,
+        0.97,
+        0.962,
+        0.999,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "utility_score": 245.767
+    },
+    {
+      "actions": [
+        {
+          "gw": 10,
+          "action": "TRANSFER",
+          "route": "Maguire → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Maguire → Tarkowski",
+              "out_id": 418,
+              "in_id": 229,
+              "uplift": 6.85,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 229
+        },
+        {
+          "gw": 11,
+          "action": "TRANSFER",
+          "route": "Bogle → Van Hecke",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Bogle → Van Hecke",
+              "out_id": 330,
+              "in_id": 112,
+              "uplift": 3.93,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 330,
+          "in_id": 112
+        },
+        {
+          "gw": 12,
+          "action": "TRANSFER",
+          "route": "Hughes → Manzambi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Hughes → Manzambi",
+              "out_id": 212,
+              "in_id": 53,
+              "uplift": 2.39,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 53
+        },
+        {
+          "gw": 13,
+          "action": "TRANSFER",
+          "route": "Groß → Rogers",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Groß → Rogers",
+              "out_id": 124,
+              "in_id": 40,
+              "uplift": 0.95,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 124,
+          "in_id": 40
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 11,
+      "expected_points": 250.78,
+      "chip_incremental_expected_points": 8.74,
+      "p10_points": 213.63,
+      "p90_points": 287.81,
+      "expected_rank_after_path": 1.12,
+      "prob_finish_ahead_each_rival": [
+        0.947,
+        0.972,
+        0.964,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "utility_score": 245.731
+    },
+    {
+      "actions": [
+        {
+          "gw": 10,
+          "action": "TRANSFER",
+          "route": "Maguire → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Maguire → Tarkowski",
+              "out_id": 418,
+              "in_id": 229,
+              "uplift": 6.85,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 229
+        },
+        {
+          "gw": 11,
+          "action": "TRANSFER",
+          "route": "Bogle → Van Hecke",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Bogle → Van Hecke",
+              "out_id": 330,
+              "in_id": 112,
+              "uplift": 3.93,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 330,
+          "in_id": 112
+        },
+        {
+          "gw": 12,
+          "action": "TRANSFER",
+          "route": "Cherki → Manzambi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Cherki → Manzambi",
+              "out_id": 399,
+              "in_id": 53,
+              "uplift": 2.39,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 53
+        },
+        {
+          "gw": 13,
           "action": "TRANSFER",
           "route": "Henderson → Rogers",
           "transfer_count": 1,
@@ -2249,51 +1759,33 @@
               "route": "Henderson → Rogers",
               "out_id": 101,
               "in_id": 40,
-              "uplift": 1.96,
+              "uplift": 1.2,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
           "out_id": 101,
           "in_id": 40
-        },
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Bogle → Vuskovic",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Bogle → Vuskovic",
-              "out_id": 330,
-              "in_id": 504,
-              "uplift": 1.07,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 330,
-          "in_id": 504
         }
       ],
-      "chip": null,
-      "chip_gw": null,
-      "expected_points": 242.22,
-      "chip_incremental_expected_points": 0.0,
-      "p10_points": 206.13,
-      "p90_points": 283.64,
-      "expected_rank_after_path": 1.16,
+      "chip": "Bench Boost",
+      "chip_gw": 10,
+      "expected_points": 250.39,
+      "chip_incremental_expected_points": 8.06,
+      "p10_points": 213.39,
+      "p90_points": 288.55,
+      "expected_rank_after_path": 1.13,
       "prob_finish_ahead_each_rival": [
-        0.911,
-        0.953,
-        0.973,
+        0.945,
+        0.967,
+        0.963,
         1.0,
         1.0,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 237.068
+      "utility_score": 245.324
     },
     {
       "actions": [
@@ -2307,7 +1799,7 @@
               "route": "Maguire → Tarkowski",
               "out_id": 418,
               "in_id": 229,
-              "uplift": 6.9,
+              "uplift": 6.85,
               "addresses_short_term_risk": false
             }
           ],
@@ -2318,76 +1810,76 @@
         {
           "gw": 11,
           "action": "TRANSFER",
-          "route": "Affengruber → Van Hecke",
+          "route": "Bogle → Van Hecke",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Affengruber → Van Hecke",
-              "out_id": 650,
-              "in_id": 112,
-              "uplift": 3.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
-          "in_id": 112
-        },
-        {
-          "gw": 12,
-          "action": "TRANSFER",
-          "route": "Cherki → Rogers",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Cherki → Rogers",
-              "out_id": 399,
-              "in_id": 40,
-              "uplift": 2.69,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 399,
-          "in_id": 40
-        },
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Bogle → Vuskovic",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Bogle → Vuskovic",
+              "route": "Bogle → Van Hecke",
               "out_id": 330,
-              "in_id": 504,
-              "uplift": 0.34,
+              "in_id": 112,
+              "uplift": 3.93,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
           "out_id": 330,
-          "in_id": 504
+          "in_id": 112
+        },
+        {
+          "gw": 12,
+          "action": "TRANSFER",
+          "route": "Cherki → Manzambi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Cherki → Manzambi",
+              "out_id": 399,
+              "in_id": 53,
+              "uplift": 2.39,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 53
+        },
+        {
+          "gw": 13,
+          "action": "TRANSFER",
+          "route": "Belloumi → Rogers",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Belloumi → Rogers",
+              "out_id": 286,
+              "in_id": 40,
+              "uplift": 1.2,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 286,
+          "in_id": 40
         }
       ],
-      "chip": null,
-      "chip_gw": null,
-      "expected_points": 242.22,
-      "chip_incremental_expected_points": 0.0,
-      "p10_points": 206.13,
-      "p90_points": 283.64,
-      "expected_rank_after_path": 1.16,
+      "chip": "Bench Boost",
+      "chip_gw": 10,
+      "expected_points": 250.39,
+      "chip_incremental_expected_points": 8.06,
+      "p10_points": 213.39,
+      "p90_points": 288.55,
+      "expected_rank_after_path": 1.13,
       "prob_finish_ahead_each_rival": [
-        0.911,
-        0.953,
-        0.973,
+        0.945,
+        0.967,
+        0.963,
         1.0,
         1.0,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 237.068
+      "utility_score": 245.324
     },
     {
       "actions": [
@@ -2401,7 +1893,7 @@
               "route": "Maguire → Tarkowski",
               "out_id": 418,
               "in_id": 229,
-              "uplift": 6.9,
+              "uplift": 6.85,
               "addresses_short_term_risk": false
             }
           ],
@@ -2412,76 +1904,76 @@
         {
           "gw": 11,
           "action": "TRANSFER",
-          "route": "Affengruber → Van Hecke",
+          "route": "Bogle → Van Hecke",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Affengruber → Van Hecke",
-              "out_id": 650,
+              "route": "Bogle → Van Hecke",
+              "out_id": 330,
               "in_id": 112,
-              "uplift": 3.45,
+              "uplift": 3.93,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
-          "out_id": 650,
+          "out_id": 330,
           "in_id": 112
         },
         {
           "gw": 12,
           "action": "TRANSFER",
-          "route": "Cherki → Rogers",
+          "route": "Henderson → Manzambi",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Cherki → Rogers",
-              "out_id": 399,
-              "in_id": 40,
-              "uplift": 2.69,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 399,
-          "in_id": 40
-        },
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Henderson → Neto",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Henderson → Neto",
+              "route": "Henderson → Manzambi",
               "out_id": 101,
-              "in_id": 156,
-              "uplift": 0.45,
+              "in_id": 53,
+              "uplift": 2.39,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
           "out_id": 101,
-          "in_id": 156
+          "in_id": 53
+        },
+        {
+          "gw": 13,
+          "action": "TRANSFER",
+          "route": "Belloumi → Rogers",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Belloumi → Rogers",
+              "out_id": 286,
+              "in_id": 40,
+              "uplift": 1.2,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 286,
+          "in_id": 40
         }
       ],
-      "chip": null,
-      "chip_gw": null,
-      "expected_points": 242.16,
-      "chip_incremental_expected_points": 0.0,
-      "p10_points": 205.48,
-      "p90_points": 282.82,
-      "expected_rank_after_path": 1.17,
+      "chip": "Bench Boost",
+      "chip_gw": 10,
+      "expected_points": 250.39,
+      "chip_incremental_expected_points": 8.06,
+      "p10_points": 213.39,
+      "p90_points": 288.55,
+      "expected_rank_after_path": 1.13,
       "prob_finish_ahead_each_rival": [
-        0.902,
-        0.953,
-        0.974,
+        0.945,
+        0.967,
+        0.963,
         1.0,
         1.0,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 236.904
+      "utility_score": 245.324
     },
     {
       "actions": [
@@ -2495,7 +1987,7 @@
               "route": "Maguire → Tarkowski",
               "out_id": 418,
               "in_id": 229,
-              "uplift": 6.9,
+              "uplift": 6.85,
               "addresses_short_term_risk": false
             }
           ],
@@ -2506,76 +1998,170 @@
         {
           "gw": 11,
           "action": "TRANSFER",
-          "route": "Affengruber → Van Hecke",
+          "route": "Bogle → Van Hecke",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Affengruber → Van Hecke",
-              "out_id": 650,
+              "route": "Bogle → Van Hecke",
+              "out_id": 330,
               "in_id": 112,
-              "uplift": 3.45,
+              "uplift": 3.93,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
-          "out_id": 650,
+          "out_id": 330,
           "in_id": 112
         },
         {
           "gw": 12,
           "action": "TRANSFER",
-          "route": "Cherki → Rogers",
+          "route": "Henderson → Manzambi",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Cherki → Rogers",
-              "out_id": 399,
-              "in_id": 40,
-              "uplift": 2.69,
+              "route": "Henderson → Manzambi",
+              "out_id": 101,
+              "in_id": 53,
+              "uplift": 2.39,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
-          "out_id": 399,
-          "in_id": 40
+          "out_id": 101,
+          "in_id": 53
         },
         {
           "gw": 13,
           "action": "TRANSFER",
-          "route": "Hughes → Neto",
+          "route": "Belloumi → Rogers",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Hughes → Neto",
+              "route": "Belloumi → Rogers",
+              "out_id": 286,
+              "in_id": 40,
+              "uplift": 1.2,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 286,
+          "in_id": 40
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 13,
+      "expected_points": 250.36,
+      "chip_incremental_expected_points": 8.02,
+      "p10_points": 213.04,
+      "p90_points": 288.45,
+      "expected_rank_after_path": 1.13,
+      "prob_finish_ahead_each_rival": [
+        0.943,
+        0.97,
+        0.958,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "utility_score": 245.234
+    },
+    {
+      "actions": [
+        {
+          "gw": 10,
+          "action": "TRANSFER",
+          "route": "Maguire → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Maguire → Tarkowski",
+              "out_id": 418,
+              "in_id": 229,
+              "uplift": 6.85,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 229
+        },
+        {
+          "gw": 11,
+          "action": "TRANSFER",
+          "route": "Bogle → Van Hecke",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Bogle → Van Hecke",
+              "out_id": 330,
+              "in_id": 112,
+              "uplift": 3.93,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 330,
+          "in_id": 112
+        },
+        {
+          "gw": 12,
+          "action": "TRANSFER",
+          "route": "Hughes → Manzambi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Hughes → Manzambi",
               "out_id": 212,
-              "in_id": 156,
-              "uplift": 0.45,
+              "in_id": 53,
+              "uplift": 2.39,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
           "out_id": 212,
-          "in_id": 156
+          "in_id": 53
+        },
+        {
+          "gw": 13,
+          "action": "TRANSFER",
+          "route": "Groß → Rogers",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Groß → Rogers",
+              "out_id": 124,
+              "in_id": 40,
+              "uplift": 0.95,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 124,
+          "in_id": 40
         }
       ],
-      "chip": null,
-      "chip_gw": null,
-      "expected_points": 242.16,
-      "chip_incremental_expected_points": 0.0,
-      "p10_points": 205.48,
-      "p90_points": 282.82,
-      "expected_rank_after_path": 1.17,
+      "chip": "Bench Boost",
+      "chip_gw": 10,
+      "expected_points": 250.09,
+      "chip_incremental_expected_points": 8.06,
+      "p10_points": 213.86,
+      "p90_points": 289.15,
+      "expected_rank_after_path": 1.14,
       "prob_finish_ahead_each_rival": [
-        0.902,
-        0.953,
-        0.974,
+        0.941,
+        0.963,
+        0.961,
         1.0,
         1.0,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 236.904
+      "utility_score": 245.072
     },
     {
       "actions": [
@@ -2589,7 +2175,7 @@
               "route": "Maguire → Tarkowski",
               "out_id": 418,
               "in_id": 229,
-              "uplift": 6.9,
+              "uplift": 6.85,
               "addresses_short_term_risk": false
             }
           ],
@@ -2600,6 +2186,42 @@
         {
           "gw": 11,
           "action": "TRANSFER",
+          "route": "Hughes → Rogers",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Hughes → Rogers",
+              "out_id": 212,
+              "in_id": 40,
+              "uplift": 3.93,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 40
+        },
+        {
+          "gw": 12,
+          "action": "TRANSFER",
+          "route": "Cherki → Manzambi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Cherki → Manzambi",
+              "out_id": 399,
+              "in_id": 53,
+              "uplift": 2.37,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 53
+        },
+        {
+          "gw": 13,
+          "action": "TRANSFER",
           "route": "Affengruber → Van Hecke",
           "transfer_count": 1,
           "transfers": [
@@ -2607,55 +2229,503 @@
               "route": "Affengruber → Van Hecke",
               "out_id": 650,
               "in_id": 112,
-              "uplift": 3.45,
+              "uplift": 1.1,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
           "out_id": 650,
           "in_id": 112
-        },
-        {
-          "gw": 12,
-          "action": "TRANSFER",
-          "route": "Cherki → Rogers",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Cherki → Rogers",
-              "out_id": 399,
-              "in_id": 40,
-              "uplift": 2.69,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 399,
-          "in_id": 40
-        },
-        {
-          "gw": 13,
-          "action": "ROLL"
         }
       ],
-      "chip": null,
-      "chip_gw": null,
-      "expected_points": 241.75,
-      "chip_incremental_expected_points": 0.0,
-      "p10_points": 206.22,
-      "p90_points": 281.18,
-      "expected_rank_after_path": 1.18,
+      "chip": "Bench Boost",
+      "chip_gw": 10,
+      "expected_points": 250.14,
+      "chip_incremental_expected_points": 8.06,
+      "p10_points": 212.5,
+      "p90_points": 288.04,
+      "expected_rank_after_path": 1.13,
       "prob_finish_ahead_each_rival": [
-        0.901,
-        0.953,
-        0.97,
+        0.94,
+        0.965,
+        0.961,
         1.0,
         1.0,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 236.605
+      "utility_score": 244.951
+    },
+    {
+      "actions": [
+        {
+          "gw": 10,
+          "action": "TRANSFER",
+          "route": "Maguire → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Maguire → Tarkowski",
+              "out_id": 418,
+              "in_id": 229,
+              "uplift": 6.85,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 229
+        },
+        {
+          "gw": 11,
+          "action": "TRANSFER",
+          "route": "Bogle → Van Hecke",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Bogle → Van Hecke",
+              "out_id": 330,
+              "in_id": 112,
+              "uplift": 3.93,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 330,
+          "in_id": 112
+        },
+        {
+          "gw": 12,
+          "action": "TRANSFER",
+          "route": "Cherki → Manzambi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Cherki → Manzambi",
+              "out_id": 399,
+              "in_id": 53,
+              "uplift": 2.39,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 53
+        },
+        {
+          "gw": 13,
+          "action": "TRANSFER",
+          "route": "Henderson → Rogers",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Henderson → Rogers",
+              "out_id": 101,
+              "in_id": 40,
+              "uplift": 1.2,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 101,
+          "in_id": 40
+        }
+      ],
+      "chip": null,
+      "chip_gw": null,
+      "expected_points": 242.33,
+      "chip_incremental_expected_points": 0.0,
+      "p10_points": 205.87,
+      "p90_points": 279.9,
+      "expected_rank_after_path": 1.23,
+      "prob_finish_ahead_each_rival": [
+        0.909,
+        0.938,
+        0.929,
+        0.999,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "utility_score": 236.833
+    },
+    {
+      "actions": [
+        {
+          "gw": 10,
+          "action": "TRANSFER",
+          "route": "Maguire → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Maguire → Tarkowski",
+              "out_id": 418,
+              "in_id": 229,
+              "uplift": 6.85,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 229
+        },
+        {
+          "gw": 11,
+          "action": "TRANSFER",
+          "route": "Bogle → Van Hecke",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Bogle → Van Hecke",
+              "out_id": 330,
+              "in_id": 112,
+              "uplift": 3.93,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 330,
+          "in_id": 112
+        },
+        {
+          "gw": 12,
+          "action": "TRANSFER",
+          "route": "Cherki → Manzambi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Cherki → Manzambi",
+              "out_id": 399,
+              "in_id": 53,
+              "uplift": 2.39,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 53
+        },
+        {
+          "gw": 13,
+          "action": "TRANSFER",
+          "route": "Belloumi → Rogers",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Belloumi → Rogers",
+              "out_id": 286,
+              "in_id": 40,
+              "uplift": 1.2,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 286,
+          "in_id": 40
+        }
+      ],
+      "chip": null,
+      "chip_gw": null,
+      "expected_points": 242.33,
+      "chip_incremental_expected_points": 0.0,
+      "p10_points": 205.87,
+      "p90_points": 279.9,
+      "expected_rank_after_path": 1.23,
+      "prob_finish_ahead_each_rival": [
+        0.909,
+        0.938,
+        0.929,
+        0.999,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "utility_score": 236.833
+    },
+    {
+      "actions": [
+        {
+          "gw": 10,
+          "action": "TRANSFER",
+          "route": "Maguire → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Maguire → Tarkowski",
+              "out_id": 418,
+              "in_id": 229,
+              "uplift": 6.85,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 229
+        },
+        {
+          "gw": 11,
+          "action": "TRANSFER",
+          "route": "Bogle → Van Hecke",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Bogle → Van Hecke",
+              "out_id": 330,
+              "in_id": 112,
+              "uplift": 3.93,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 330,
+          "in_id": 112
+        },
+        {
+          "gw": 12,
+          "action": "TRANSFER",
+          "route": "Henderson → Manzambi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Henderson → Manzambi",
+              "out_id": 101,
+              "in_id": 53,
+              "uplift": 2.39,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 101,
+          "in_id": 53
+        },
+        {
+          "gw": 13,
+          "action": "TRANSFER",
+          "route": "Belloumi → Rogers",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Belloumi → Rogers",
+              "out_id": 286,
+              "in_id": 40,
+              "uplift": 1.2,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 286,
+          "in_id": 40
+        }
+      ],
+      "chip": null,
+      "chip_gw": null,
+      "expected_points": 242.33,
+      "chip_incremental_expected_points": 0.0,
+      "p10_points": 205.87,
+      "p90_points": 279.9,
+      "expected_rank_after_path": 1.23,
+      "prob_finish_ahead_each_rival": [
+        0.909,
+        0.938,
+        0.929,
+        0.999,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "utility_score": 236.833
+    },
+    {
+      "actions": [
+        {
+          "gw": 10,
+          "action": "TRANSFER",
+          "route": "Maguire → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Maguire → Tarkowski",
+              "out_id": 418,
+              "in_id": 229,
+              "uplift": 6.85,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 229
+        },
+        {
+          "gw": 11,
+          "action": "TRANSFER",
+          "route": "Bogle → Van Hecke",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Bogle → Van Hecke",
+              "out_id": 330,
+              "in_id": 112,
+              "uplift": 3.93,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 330,
+          "in_id": 112
+        },
+        {
+          "gw": 12,
+          "action": "TRANSFER",
+          "route": "Hughes → Manzambi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Hughes → Manzambi",
+              "out_id": 212,
+              "in_id": 53,
+              "uplift": 2.39,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 53
+        },
+        {
+          "gw": 13,
+          "action": "TRANSFER",
+          "route": "Groß → Rogers",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Groß → Rogers",
+              "out_id": 124,
+              "in_id": 40,
+              "uplift": 0.95,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 124,
+          "in_id": 40
+        }
+      ],
+      "chip": null,
+      "chip_gw": null,
+      "expected_points": 242.04,
+      "chip_incremental_expected_points": 0.0,
+      "p10_points": 205.78,
+      "p90_points": 280.17,
+      "expected_rank_after_path": 1.22,
+      "prob_finish_ahead_each_rival": [
+        0.907,
+        0.942,
+        0.931,
+        0.999,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "utility_score": 236.581
+    },
+    {
+      "actions": [
+        {
+          "gw": 10,
+          "action": "TRANSFER",
+          "route": "Maguire → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Maguire → Tarkowski",
+              "out_id": 418,
+              "in_id": 229,
+              "uplift": 6.85,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 229
+        },
+        {
+          "gw": 11,
+          "action": "TRANSFER",
+          "route": "Hughes → Rogers",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Hughes → Rogers",
+              "out_id": 212,
+              "in_id": 40,
+              "uplift": 3.93,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 40
+        },
+        {
+          "gw": 12,
+          "action": "TRANSFER",
+          "route": "Cherki → Manzambi",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Cherki → Manzambi",
+              "out_id": 399,
+              "in_id": 53,
+              "uplift": 2.37,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 53
+        },
+        {
+          "gw": 13,
+          "action": "TRANSFER",
+          "route": "Affengruber → Van Hecke",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Affengruber → Van Hecke",
+              "out_id": 650,
+              "in_id": 112,
+              "uplift": 1.1,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 650,
+          "in_id": 112
+        }
+      ],
+      "chip": null,
+      "chip_gw": null,
+      "expected_points": 242.08,
+      "chip_incremental_expected_points": 0.0,
+      "p10_points": 204.41,
+      "p90_points": 279.99,
+      "expected_rank_after_path": 1.23,
+      "prob_finish_ahead_each_rival": [
+        0.904,
+        0.941,
+        0.927,
+        1.0,
+        0.999,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "utility_score": 236.417
     }
   ],
   "method_note": "Triple Captain and Bench Boost are scored exactly on calibrated transfer paths against probabilistic rival behaviour. Values are opportunity windows, not automatic play recommendations. Sampling precision increases as the official FPL deadline approaches. Wildcard and Free Hit are handled by the separate legal full-squad optimiser and activation gate."
