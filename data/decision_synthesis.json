@@ -1,6 +1,6 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-11-01T13:08:15.803476+00:00",
+  "generated_at_utc": "2026-11-01T18:31:35.225057+00:00",
   "version": 4,
   "current_gw": 9,
   "next_gw": 10,
@@ -10,7 +10,7 @@
     "confidence": 76,
     "execution_ready": false,
     "execution_reason": "Wait for updated team news: Henderson",
-    "reason": "The leading transfer edge is 13.9 projected points over holding and does not yet clear the full evidence hurdle with sufficient agreement on that exact route. Holding moves the bank from 1/5 to 2/5; no free transfer expires. The incoming player has the easier immediate fixture run.",
+    "reason": "The leading transfer edge is 7.0 projected points over holding and does not yet clear the full evidence hurdle with sufficient agreement on that exact route. Holding moves the bank from 1/5 to 2/5; no free transfer expires. The fixture swing is broadly balanced rather than time-critical.",
     "completed_transfer": null,
     "free_transfers_remaining": 1,
     "free_transfer_cap": 5,
@@ -20,8 +20,8 @@
   },
   "robustness": {
     "season_maturity_weight": 0.6,
-    "single_step_leader": "Maguire → Van Hecke",
-    "single_step_edge_over_hold_6gw": 13.95,
+    "single_step_leader": "Calvert-Lewin → Evanilson",
+    "single_step_edge_over_hold_6gw": 7.03,
     "multi_gw_first_action": "Maguire → Tarkowski",
     "adaptive_rival_first_action": "Maguire → Tarkowski",
     "exact_route_consensus_models": 2,
@@ -37,9 +37,9 @@
     "multi_transfer_count": 0,
     "multi_transfer_edge_over_roll": 0.0,
     "multi_transfer_required_edge": 3.5,
-    "active_route": "Maguire → Van Hecke",
+    "active_route": "Calvert-Lewin → Evanilson",
     "active_route_type": "single_transfer_challenger",
-    "active_edge_over_hold_6gw": 13.95,
+    "active_edge_over_hold_6gw": 7.03,
     "active_required_edge": 2.0,
     "active_validation_kind": "model_agreement",
     "active_validation_label": "Model agreement",
@@ -55,21 +55,21 @@
     "rollover_edge_credit": 0.0,
     "fixture_timing": {
       "available": true,
-      "route": "Maguire → Van Hecke",
+      "route": "Calvert-Lewin → Evanilson",
       "next_fixture_swing": 0.0,
-      "weighted_three_fixture_swing": 0.6,
+      "weighted_three_fixture_swing": 0.15,
       "outgoing_difficulties": [
-        3.0,
+        2.0,
         4.0,
-        3.0
+        2.0
       ],
       "incoming_difficulties": [
-        3.0,
         2.0,
+        3.0,
         3.0
       ],
-      "timing": "front_loaded",
-      "summary": "The incoming player has the easier immediate fixture run."
+      "timing": "balanced",
+      "summary": "The fixture swing is broadly balanced rather than time-critical."
     },
     "hit_timing": {
       "required": false,
@@ -88,7 +88,7 @@
           "route": "Maguire → Tarkowski",
           "out_id": 418,
           "in_id": 229,
-          "uplift": 6.85,
+          "uplift": 6.84,
           "addresses_short_term_risk": false
         }
       ],
@@ -106,7 +106,7 @@
           "route": "Maguire → Tarkowski",
           "out_id": 418,
           "in_id": 229,
-          "uplift": 6.85,
+          "uplift": 6.84,
           "addresses_short_term_risk": false
         }
       ],
@@ -149,11 +149,11 @@
       "free_transfers_before": 1,
       "free_transfers_after_deadline": 2,
       "hit_cost": 0,
-      "expected_points": 239.48,
-      "next_gw_expected_points": 57.54,
-      "next_two_gw_expected_points": 116.94,
-      "p10_points": 202.33,
-      "p90_points": 278.79,
+      "expected_points": 238.56,
+      "next_gw_expected_points": 57.42,
+      "next_two_gw_expected_points": 116.72,
+      "p10_points": 201.13,
+      "p90_points": 277.95,
       "edge_vs_roll": 0.0,
       "ending_bank": 3.7,
       "ending_free_transfers": 1,
@@ -183,27 +183,27 @@
         {
           "gw": 12,
           "action": "TRANSFER",
-          "route": "Cherki → Manzambi + Henderson → Rogers",
+          "route": "Cherki → Rogers + Henderson → Manzambi",
           "transfer_count": 2,
           "transfers": [
             {
-              "route": "Cherki → Manzambi",
+              "route": "Cherki → Rogers",
               "out_id": 399,
-              "in_id": 53,
-              "uplift": 2.89,
+              "in_id": 40,
+              "uplift": 3.01,
               "addresses_short_term_risk": false
             },
             {
-              "route": "Henderson → Rogers",
+              "route": "Henderson → Manzambi",
               "out_id": 101,
-              "in_id": 40,
-              "uplift": 1.69,
+              "in_id": 53,
+              "uplift": 1.73,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
           "out_id": 399,
-          "in_id": 53
+          "in_id": 40
         },
         {
           "gw": 13,
@@ -215,7 +215,7 @@
               "route": "Bogle → Van Hecke",
               "out_id": 330,
               "in_id": 112,
-              "uplift": 1.28,
+              "uplift": 1.34,
               "addresses_short_term_risk": false
             }
           ],
@@ -230,7 +230,7 @@
       "label": "Use one free transfer now",
       "available": true,
       "recommended_path": true,
-      "adaptive_support": true,
+      "adaptive_support": false,
       "first_action": {
         "gw": 10,
         "action": "TRANSFER",
@@ -241,7 +241,7 @@
             "route": "Maguire → Tarkowski",
             "out_id": 418,
             "in_id": 229,
-            "uplift": 6.85,
+            "uplift": 6.84,
             "addresses_short_term_risk": false
           }
         ],
@@ -259,7 +259,7 @@
             "route": "Bogle → Van Hecke",
             "out_id": 330,
             "in_id": 112,
-            "uplift": 3.93,
+            "uplift": 3.92,
             "addresses_short_term_risk": false
           }
         ],
@@ -271,12 +271,12 @@
       "free_transfers_before": 1,
       "free_transfers_after_deadline": 1,
       "hit_cost": 0,
-      "expected_points": 243.03,
-      "next_gw_expected_points": 60.01,
-      "next_two_gw_expected_points": 121.44,
-      "p10_points": 205.62,
-      "p90_points": 282.27,
-      "edge_vs_roll": 3.55,
+      "expected_points": 242.98,
+      "next_gw_expected_points": 59.89,
+      "next_two_gw_expected_points": 121.22,
+      "p10_points": 204.4,
+      "p90_points": 282.74,
+      "edge_vs_roll": 4.42,
       "ending_bank": 0.1,
       "ending_free_transfers": 1,
       "actions": [
@@ -290,7 +290,7 @@
               "route": "Maguire → Tarkowski",
               "out_id": 418,
               "in_id": 229,
-              "uplift": 6.85,
+              "uplift": 6.84,
               "addresses_short_term_risk": false
             }
           ],
@@ -308,7 +308,7 @@
               "route": "Bogle → Van Hecke",
               "out_id": 330,
               "in_id": 112,
-              "uplift": 3.93,
+              "uplift": 3.92,
               "addresses_short_term_risk": false
             }
           ],
@@ -326,7 +326,7 @@
               "route": "Hughes → Manzambi",
               "out_id": 212,
               "in_id": 53,
-              "uplift": 2.39,
+              "uplift": 2.43,
               "addresses_short_term_risk": false
             }
           ],
@@ -344,7 +344,7 @@
               "route": "Belloumi → Rogers",
               "out_id": 286,
               "in_id": 40,
-              "uplift": 1.06,
+              "uplift": 1.13,
               "addresses_short_term_risk": false
             }
           ],
@@ -391,11 +391,11 @@
       "free_transfers_before": 1,
       "free_transfers_after_deadline": 2,
       "hit_cost": 0,
-      "expected_points": 239.48,
-      "next_gw_expected_points": 57.54,
-      "next_two_gw_expected_points": 116.94,
-      "p10_points": 202.33,
-      "p90_points": 278.79,
+      "expected_points": 238.56,
+      "next_gw_expected_points": 57.42,
+      "next_two_gw_expected_points": 116.72,
+      "p10_points": 201.13,
+      "p90_points": 277.95,
       "edge_vs_roll": 0.0,
       "ending_bank": 3.7,
       "ending_free_transfers": 1,
@@ -425,27 +425,27 @@
         {
           "gw": 12,
           "action": "TRANSFER",
-          "route": "Cherki → Manzambi + Henderson → Rogers",
+          "route": "Cherki → Rogers + Henderson → Manzambi",
           "transfer_count": 2,
           "transfers": [
             {
-              "route": "Cherki → Manzambi",
+              "route": "Cherki → Rogers",
               "out_id": 399,
-              "in_id": 53,
-              "uplift": 2.89,
+              "in_id": 40,
+              "uplift": 3.01,
               "addresses_short_term_risk": false
             },
             {
-              "route": "Henderson → Rogers",
+              "route": "Henderson → Manzambi",
               "out_id": 101,
-              "in_id": 40,
-              "uplift": 1.69,
+              "in_id": 53,
+              "uplift": 1.73,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
           "out_id": 399,
-          "in_id": 53
+          "in_id": 40
         },
         {
           "gw": 13,
@@ -457,7 +457,7 @@
               "route": "Bogle → Van Hecke",
               "out_id": 330,
               "in_id": 112,
-              "uplift": 1.28,
+              "uplift": 1.34,
               "addresses_short_term_risk": false
             }
           ],
@@ -470,7 +470,7 @@
   ],
   "team_news_review": {
     "status": "SUCCESS",
-    "generated_at_utc": "2026-11-01T13:07:22.240024+00:00",
+    "generated_at_utc": "2026-11-01T18:30:35.463444+00:00",
     "next_gw": 10,
     "risks": [
       {
@@ -491,8 +491,8 @@
     "execution_ready": false,
     "method_note": "Official FPL availability plus dated, sourced analyst minutes scenarios. Caps are assumptions, not injury probabilities. Minimum of official availability and scenario cap avoids double counting. Missing review is not evidence of fitness.",
     "news_feed_healthy": true,
-    "news_checked_at_utc": "2026-11-01T13:07:18.838692+00:00",
-    "news_players_checked": 20,
+    "news_checked_at_utc": "2026-11-01T18:30:32.370765+00:00",
+    "news_players_checked": 19,
     "news_query_failures": 0,
     "first_step_sensitivity": {
       "method": "Deterministic first-transfer comparison; hold each resulting squad for two GWs, no future transfers or Monte Carlo. Both-cleared and both-miss are hypothetical, not forecasts.",
@@ -503,20 +503,20 @@
             {
               "option": "roll",
               "route": "Roll",
-              "next_gw": 57.54,
-              "next_two_gw": 115.57
+              "next_gw": 57.42,
+              "next_two_gw": 115.35
             },
             {
               "option": "one_now",
               "route": "Maguire → Tarkowski",
-              "next_gw": 60.01,
-              "next_two_gw": 119.59
+              "next_gw": 59.89,
+              "next_two_gw": 119.38
             },
             {
               "option": "staged",
               "route": "Roll",
-              "next_gw": 57.54,
-              "next_two_gw": 115.57
+              "next_gw": 57.42,
+              "next_two_gw": 115.35
             }
           ]
         },
@@ -526,20 +526,20 @@
             {
               "option": "roll",
               "route": "Roll",
-              "next_gw": 57.54,
-              "next_two_gw": 115.57
+              "next_gw": 57.42,
+              "next_two_gw": 115.35
             },
             {
               "option": "one_now",
               "route": "Maguire → Tarkowski",
-              "next_gw": 60.01,
-              "next_two_gw": 119.59
+              "next_gw": 59.89,
+              "next_two_gw": 119.38
             },
             {
               "option": "staged",
               "route": "Roll",
-              "next_gw": 57.54,
-              "next_two_gw": 115.57
+              "next_gw": 57.42,
+              "next_two_gw": 115.35
             }
           ]
         },
@@ -549,20 +549,20 @@
             {
               "option": "roll",
               "route": "Roll",
-              "next_gw": 57.54,
-              "next_two_gw": 115.57
+              "next_gw": 57.42,
+              "next_two_gw": 115.35
             },
             {
               "option": "one_now",
               "route": "Maguire → Tarkowski",
-              "next_gw": 60.01,
-              "next_two_gw": 119.59
+              "next_gw": 59.89,
+              "next_two_gw": 119.38
             },
             {
               "option": "staged",
               "route": "Roll",
-              "next_gw": 57.54,
-              "next_two_gw": 115.57
+              "next_gw": 57.42,
+              "next_two_gw": 115.35
             }
           ]
         }
@@ -585,7 +585,7 @@
               "route": "Maguire → Tarkowski",
               "out_id": 418,
               "in_id": 229,
-              "uplift": 6.85,
+              "uplift": 6.84,
               "addresses_short_term_risk": false
             }
           ],
@@ -603,7 +603,7 @@
               "route": "Bogle → Van Hecke",
               "out_id": 330,
               "in_id": 112,
-              "uplift": 3.93,
+              "uplift": 3.92,
               "addresses_short_term_risk": false
             }
           ],
@@ -621,7 +621,7 @@
               "route": "Hughes → Manzambi",
               "out_id": 212,
               "in_id": 53,
-              "uplift": 2.39,
+              "uplift": 2.43,
               "addresses_short_term_risk": false
             }
           ],
@@ -639,7 +639,7 @@
               "route": "Cherki → Rogers",
               "out_id": 399,
               "in_id": 40,
-              "uplift": 1.06,
+              "uplift": 1.19,
               "addresses_short_term_risk": false
             }
           ],
@@ -650,22 +650,22 @@
       ],
       "chip": "Bench Boost",
       "chip_gw": 13,
-      "expected_points": 255.6,
-      "chip_incremental_expected_points": 12.78,
-      "p10_points": 218.93,
-      "p90_points": 294.91,
-      "expected_rank_after_path": 1.06,
+      "expected_points": 256.38,
+      "chip_incremental_expected_points": 12.81,
+      "p10_points": 217.91,
+      "p90_points": 297.85,
+      "expected_rank_after_path": 1.12,
       "prob_finish_ahead_each_rival": [
-        0.975,
-        0.983,
-        0.977,
+        0.915,
+        0.978,
+        0.986,
         1.0,
         1.0,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 250.872
+      "utility_score": 256.157
     },
     "portfolio_pressure": "comfortable",
     "latest_safe_start_gw": 17
