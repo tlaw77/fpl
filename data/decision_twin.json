@@ -1,9 +1,9 @@
 {
   "status": "SUCCESS",
   "version": 1,
-  "generated_at_utc": "2026-10-10T08:56:26.721800+00:00",
-  "current_gw": 5,
-  "next_gw": 6,
+  "generated_at_utc": "2026-11-06T01:30:28.408065+00:00",
+  "current_gw": 9,
+  "next_gw": 10,
   "progress": {
     "label": "Decision Twin v1",
     "completion_pct": 100,
@@ -12,20 +12,20 @@
     "state": "COMPLETE"
   },
   "decision_certificate": {
-    "certificate_id": "DT-9A53B5B7BE0E",
-    "action": "TRANSFER",
-    "headline": "Gabriel → Tarkowski",
-    "confidence": 84,
+    "certificate_id": "DT-ECEBD9636B71",
+    "action": "HOLD",
+    "headline": "Hold / roll",
+    "confidence": 76,
     "objective": "Maximise mini-league winning potential while protecting downside and future flexibility.",
-    "six_gw_edge_over_hold": 6.0,
-    "probability_gain_league_place_pct": 0.0,
-    "strongest_alternative": "Maguire → Schuster",
-    "alternative_expected_points_6gw": 390.3,
-    "rationale": "The leading move clears the 6.0-point robustness hurdle after hit cost and the same measured route is supported by 2/3 decision models. Holding moves the bank from 0/5 to 1/5; no free transfer expires. The incoming player has the easier immediate fixture run.",
+    "six_gw_edge_over_hold": 14.51,
+    "probability_gain_league_place_pct": 70.6,
+    "strongest_alternative": "Dubravka → Verbruggen",
+    "alternative_expected_points_6gw": 343.08,
+    "rationale": "The leading transfer edge is 14.5 projected points over holding and does not yet clear the full evidence hurdle with sufficient agreement on that exact route. Holding moves the bank from 1/5 to 2/5; no free transfer expires. The incoming player has the easier immediate fixture run.",
     "evidence": {
-      "newest_at_utc": "2026-10-10T06:19:20.096660+00:00",
-      "oldest_at_utc": "2026-10-09T23:29:35.434996+00:00",
-      "age_minutes": 157,
+      "newest_at_utc": "2026-11-05T22:39:39.443929+00:00",
+      "oldest_at_utc": "2026-11-05T22:38:12.849014+00:00",
+      "age_minutes": 171,
       "sources_available": 12
     }
   },
@@ -34,8 +34,8 @@
       "agent": "Quant Analyst",
       "focus": "Magnitude and model agreement",
       "verdict": "SUPPORT",
-      "confidence": 84,
-      "argument": "The authoritative route is Gabriel → Tarkowski. Its 6.00-point edge is tested against a 6.00-point hurdle; model agreement is 2/2.",
+      "confidence": 76,
+      "argument": "The authoritative route is Calvert-Lewin → N.Jackson. Its 14.51-point edge is tested against a 2.00-point hurdle; model agreement is 1/2.",
       "evidence": [
         "simulation",
         "path_simulation",
@@ -45,9 +45,9 @@
     {
       "agent": "Rival Strategist",
       "focus": "Mini-league consequence",
-      "verdict": "CHALLENGE",
-      "confidence": 100,
-      "argument": "The simulated route has a 0.0% probability of gaining a league place against 8 modelled rivals; adaptive rivals prefer ROLL.",
+      "verdict": "SUPPORT",
+      "confidence": 71,
+      "argument": "The simulated route has a 70.6% probability of gaining a league place against 8 modelled rivals; adaptive rivals prefer Maguire → Van Hecke.",
       "evidence": [
         "simulation",
         "adaptive_rival_simulation"
@@ -57,8 +57,8 @@
       "agent": "Evidence Scout",
       "focus": "News, role and availability",
       "verdict": "WATCH",
-      "confidence": 72,
-      "argument": "The evidence layer covers 152 public Scout/news items and 79 matched players. 2 current-squad players carry a press-conference signal.",
+      "confidence": 80,
+      "argument": "The evidence layer covers 189 public Scout/news items and 69 matched players. 2 current-squad players carry a press-conference signal.",
       "evidence": [
         "scout_consensus",
         "press_conference_watch"
@@ -68,8 +68,8 @@
       "agent": "Risk Officer",
       "focus": "Downside and fragility",
       "verdict": "WATCH",
-      "confidence": 82,
-      "argument": "The simulated six-GW outcome range spans 107.2 points. Action persistence is 33% across 9 effective stability runs.",
+      "confidence": 78,
+      "argument": "The simulated six-GW outcome range spans 90.8 points. Action persistence is 100% across 12 effective stability runs.",
       "evidence": [
         "simulation",
         "simulation_stability"
@@ -80,7 +80,7 @@
       "focus": "Portfolio option value",
       "verdict": "WATCH",
       "confidence": 72,
-      "argument": "Portfolio pressure is comfortable. Active watchlist: Triple Captain.",
+      "argument": "Portfolio pressure is comfortable. Active watchlist: Wildcard, Triple Captain.",
       "evidence": [
         "chip_activation_gate"
       ]
@@ -88,9 +88,9 @@
     {
       "agent": "Decision Chair",
       "focus": "Resolved recommendation",
-      "verdict": "CONTESTED",
-      "confidence": 84,
-      "argument": "Keep the authoritative action: Gabriel → Tarkowski. It remains live but is challenged by Rival Strategist.",
+      "verdict": "SUPPORT",
+      "confidence": 76,
+      "argument": "Keep the authoritative action: Hold / roll. No specialist presents enough contrary evidence to overturn it.",
       "evidence": [
         "decision_synthesis",
         "specialist_council"
@@ -98,12 +98,10 @@
     }
   ],
   "council_summary": {
-    "state": "CONTESTED",
-    "model_route_agreement_pct": 67,
-    "challengers": [
-      "Rival Strategist"
-    ],
-    "resolved_position": "Gabriel → Tarkowski",
+    "state": "ALIGNED",
+    "model_route_agreement_pct": 33,
+    "challengers": [],
+    "resolved_position": "Hold / roll",
     "rule": "Specialists may challenge the authoritative synthesis but cannot silently replace it."
   },
   "change_radar": {
@@ -112,18 +110,18 @@
       "action",
       "headline"
     ],
-    "previous_certificate_id": "DT-D8369E056131",
+    "previous_certificate_id": "DT-9A53B5B7BE0E",
     "decision_breakers": [
       {
         "signal": "model_consensus",
-        "state": "2/2 support",
+        "state": "1/2 support",
         "review_when": "support reaches 2 models or the leader changes",
         "priority": "high"
       },
       {
         "signal": "edge_over_hold",
-        "state": "6.00 points",
-        "review_when": "edge crosses the 6.00-point action hurdle",
+        "state": "14.51 points",
+        "review_when": "edge crosses the 2.00-point action hurdle",
         "priority": "high"
       },
       {
@@ -134,13 +132,13 @@
       },
       {
         "signal": "market_flexibility",
-        "state": "7 relevant price watches",
+        "state": "9 relevant price watches",
         "review_when": "a preferred route becomes unaffordable or an owned player loses value",
         "priority": "medium"
       },
       {
         "signal": "captaincy_separation",
-        "state": "0.51 score edge",
+        "state": "0.56 score edge",
         "review_when": "captain leader changes or the top-two gap materially widens",
         "priority": "medium"
       }
@@ -148,32 +146,32 @@
     "notification_rule": "Notify only when action/headline changes or a high-priority breaker crosses its stated review condition."
   },
   "learning_contract": {
-    "target_gw": 6,
-    "decision_certificate_id": "DT-9A53B5B7BE0E",
-    "recommended_action": "TRANSFER",
-    "recommended_route": "Gabriel → Tarkowski",
+    "target_gw": 10,
+    "decision_certificate_id": "DT-ECEBD9636B71",
+    "recommended_action": "HOLD",
+    "recommended_route": "Calvert-Lewin → N.Jackson",
     "baseline_xi_ids": [
       572,
-      650,
       115,
       4,
+      650,
       330,
       124,
-      426,
-      94,
-      399,
-      165,
-      411
+      101,
+      286,
+      411,
+      379,
+      346
     ],
-    "baseline_captain_id": 124,
+    "baseline_captain_id": 411,
     "alternative_routes": [
-      "Maguire → Schuster",
-      "Roll / no transfer",
-      "Calvert-Lewin → Kostoulas"
+      "Dubravka → Verbruggen",
+      "Maguire → Konsa",
+      "Tzolakis → Verbruggen"
     ],
-    "evaluable_gameweeks": 2,
-    "learning_stage": "collecting",
-    "tuning_allowed": false,
+    "evaluable_gameweeks": 6,
+    "learning_stage": "calibrating",
+    "tuning_allowed": true,
     "rule": "Score decision quality and calibration after the target GW; do not tune from isolated outcomes."
   },
   "what_if_prompts": [
