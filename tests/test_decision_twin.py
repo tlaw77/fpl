@@ -52,8 +52,21 @@ class DecisionTwinContractTest(unittest.TestCase):
         xi = {int(value) for value in contract["baseline_xi_ids"]}
         self.assertEqual(len(xi), 11)
         self.assertIn(int(contract["baseline_captain_id"]), xi)
-        self.assertFalse(contract["tuning_allowed"])
-        self.assertEqual(contract["learning_stage"], "collecting")
+
+    def test_learning_stage_and_tuning_follow_evidence_thresholds(self):
+        for count, stage, tuning in (
+            (0, "collecting", False), (2, "collecting", False),
+            (3, "provisional", False), (5, "provisional", False),
+            (6, "calibrating", True), (9, "calibrating", True),
+            (10, "adaptive", True), (12, "adaptive", True),
+        ):
+            with self.subTest(evaluable_gameweeks=count):
+                inputs = dict(self.inputs)
+                inputs["backtest_summary"] = {"evaluable_gameweeks": count}
+                contract = build(inputs)["learning_contract"]
+                self.assertEqual(contract["evaluable_gameweeks"], count)
+                self.assertEqual(contract["learning_stage"], stage)
+                self.assertEqual(contract["tuning_allowed"], tuning)
 
     def test_same_inputs_produce_same_certificate(self):
         again = build(self.inputs, now=datetime(2026, 9, 4, 15, 0, tzinfo=timezone.utc))
