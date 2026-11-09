@@ -1,7 +1,7 @@
 {
   "status": "SUCCESS",
   "version": 1,
-  "generated_at_utc": "2026-11-08T23:12:47.054393+00:00",
+  "generated_at_utc": "2026-11-09T02:44:57.492080+00:00",
   "current_gw": 10,
   "next_gw": 11,
   "progress": {
@@ -12,20 +12,20 @@
     "state": "COMPLETE"
   },
   "decision_certificate": {
-    "certificate_id": "DT-B275794BEED8",
-    "action": "HOLD",
-    "headline": "Hold / roll",
-    "confidence": 75,
+    "certificate_id": "DT-131EA042C2EC",
+    "action": "TRANSFER",
+    "headline": "Maguire → Vuskovic + Calvert-Lewin → N.Jackson",
+    "confidence": 80,
     "objective": "Maximise mini-league winning potential while protecting downside and future flexibility.",
-    "six_gw_edge_over_hold": 14.25,
-    "probability_gain_league_place_pct": 77.4,
-    "strongest_alternative": "Maguire → Konsa",
-    "alternative_expected_points_6gw": 369.81,
-    "rationale": "The leading transfer edge is 14.2 projected points over holding and does not yet clear the full evidence hurdle with sufficient agreement on that exact route. Holding moves the bank from 2/5 to 3/5; no free transfer expires. The incoming player has the easier immediate fixture run.",
+    "six_gw_edge_over_hold": 8.15,
+    "probability_gain_league_place_pct": 75.0,
+    "strongest_alternative": "Calvert-Lewin → N.Jackson",
+    "alternative_expected_points_6gw": 375.13,
+    "rationale": "The best path uses 2 free transfers together and is 8.2 projected points ahead of rolling now across the path horizon. It clears the higher 3.5-point multi-transfer hurdle, has adaptive-rival support and costs no hit. Holding moves the bank from 2/5 to 3/5; no free transfer expires.",
     "evidence": {
-      "newest_at_utc": "2026-11-08T22:49:45.012594+00:00",
-      "oldest_at_utc": "2026-11-08T22:48:35.824983+00:00",
-      "age_minutes": 23,
+      "newest_at_utc": "2026-11-09T02:33:45.909105+00:00",
+      "oldest_at_utc": "2026-11-09T02:32:11.833555+00:00",
+      "age_minutes": 11,
       "sources_available": 12
     }
   },
@@ -34,8 +34,8 @@
       "agent": "Quant Analyst",
       "focus": "Magnitude and model agreement",
       "verdict": "SUPPORT",
-      "confidence": 75,
-      "argument": "The authoritative route is Calvert-Lewin → N.Jackson. Its 14.25-point edge is tested against a 2.00-point hurdle; model agreement is 1/2.",
+      "confidence": 80,
+      "argument": "The authoritative route is Maguire → Vuskovic + Calvert-Lewin → N.Jackson. Its 8.15-point edge is tested against a 3.50-point hurdle; adaptive-rival test is passed.",
       "evidence": [
         "simulation",
         "path_simulation",
@@ -46,8 +46,8 @@
       "agent": "Rival Strategist",
       "focus": "Mini-league consequence",
       "verdict": "SUPPORT",
-      "confidence": 77,
-      "argument": "The simulated route has a 77.4% probability of gaining a league place against 8 modelled rivals; adaptive rivals prefer Calvert-Lewin → N.Jackson + Affengruber → Vuskovic.",
+      "confidence": 75,
+      "argument": "The simulated route has a 75.0% probability of gaining a league place against 8 modelled rivals; adaptive rivals prefer Maguire → Vuskovic + Calvert-Lewin → N.Jackson.",
       "evidence": [
         "simulation",
         "adaptive_rival_simulation"
@@ -58,7 +58,7 @@
       "focus": "News, role and availability",
       "verdict": "WATCH",
       "confidence": 74,
-      "argument": "The evidence layer covers 161 public Scout/news items and 80 matched players. 2 current-squad players carry a press-conference signal.",
+      "argument": "The evidence layer covers 158 public Scout/news items and 80 matched players. 1 current-squad players carry a press-conference signal.",
       "evidence": [
         "scout_consensus",
         "press_conference_watch"
@@ -69,7 +69,7 @@
       "focus": "Downside and fragility",
       "verdict": "WATCH",
       "confidence": 79,
-      "argument": "The simulated six-GW outcome range spans 96.3 points. Action persistence is 62% across 11 effective stability runs.",
+      "argument": "The simulated six-GW outcome range spans 97.6 points. Action persistence is 47% across 11 effective stability runs.",
       "evidence": [
         "simulation",
         "simulation_stability"
@@ -89,8 +89,8 @@
       "agent": "Decision Chair",
       "focus": "Resolved recommendation",
       "verdict": "SUPPORT",
-      "confidence": 75,
-      "argument": "Keep the authoritative action: Hold / roll. No specialist presents enough contrary evidence to overturn it.",
+      "confidence": 80,
+      "argument": "Keep the authoritative action: Maguire → Vuskovic + Calvert-Lewin → N.Jackson. No specialist presents enough contrary evidence to overturn it.",
       "evidence": [
         "decision_synthesis",
         "specialist_council"
@@ -99,15 +99,18 @@
   ],
   "council_summary": {
     "state": "ALIGNED",
-    "model_route_agreement_pct": 33,
+    "model_route_agreement_pct": 100,
     "challengers": [],
-    "resolved_position": "Hold / roll",
+    "resolved_position": "Maguire → Vuskovic + Calvert-Lewin → N.Jackson",
     "rule": "Specialists may challenge the authoritative synthesis but cannot silently replace it."
   },
   "change_radar": {
-    "decision_changed": false,
-    "changed_fields": [],
-    "previous_certificate_id": "DT-08134DEE7130",
+    "decision_changed": true,
+    "changed_fields": [
+      "action",
+      "headline"
+    ],
+    "previous_certificate_id": "DT-B275794BEED8",
     "decision_breakers": [
       {
         "signal": "model_consensus",
@@ -117,13 +120,13 @@
       },
       {
         "signal": "edge_over_hold",
-        "state": "14.25 points",
-        "review_when": "edge crosses the 2.00-point action hurdle",
+        "state": "8.15 points",
+        "review_when": "edge crosses the 3.50-point action hurdle",
         "priority": "high"
       },
       {
         "signal": "availability_news",
-        "state": "2 squad signals",
+        "state": "1 squad signals",
         "review_when": "official or press-conference evidence changes expected minutes",
         "priority": "high"
       },
@@ -144,9 +147,9 @@
   },
   "learning_contract": {
     "target_gw": 11,
-    "decision_certificate_id": "DT-B275794BEED8",
-    "recommended_action": "HOLD",
-    "recommended_route": "Calvert-Lewin → N.Jackson",
+    "decision_certificate_id": "DT-131EA042C2EC",
+    "recommended_action": "TRANSFER",
+    "recommended_route": "Maguire → Vuskovic + Calvert-Lewin → N.Jackson",
     "baseline_xi_ids": [
       572,
       115,
