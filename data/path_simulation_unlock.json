@@ -1,6 +1,6 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-11-12T20:24:29.459084+00:00",
+  "generated_at_utc": "2026-11-13T01:26:20.233922+00:00",
   "engine_version": 7,
   "planner": "bounded same-deadline multi-transfer beam search + GW-specific shared-outcome Monte Carlo + live FT state + season calibration + shared captaincy + deadline-aware sampling + enabling-downgrade retention",
   "projection_model": "season-maturity calibrated + shared captaincy model",
@@ -16,7 +16,7 @@
   "iteration_policy": {
     "layer": "path",
     "deadline_phase": "normal",
-    "hours_to_deadline": 206.62,
+    "hours_to_deadline": 201.59,
     "iterations": 1200,
     "policy": "lighter normal-week sampling; higher precision inside 72h/24h/6h of official FPL deadline"
   },
@@ -147,7 +147,7 @@
             "route": "Calvert-Lewin → N.Jackson",
             "out_id": 346,
             "in_id": 166,
-            "uplift": 5.7,
+            "uplift": 6.58,
             "addresses_short_term_risk": false
           }
         ],
@@ -160,19 +160,19 @@
       {
         "gw": 12,
         "action": "TRANSFER",
-        "route": "Belloumi → Tavernier",
+        "route": "Hughes → Tavernier",
         "transfer_count": 1,
         "transfers": [
           {
-            "route": "Belloumi → Tavernier",
-            "out_id": 286,
+            "route": "Hughes → Tavernier",
+            "out_id": 212,
             "in_id": 68,
-            "uplift": 3.45,
+            "uplift": 3.63,
             "addresses_short_term_risk": false
           }
         ],
         "hit": 0,
-        "out_id": 286,
+        "out_id": 212,
         "in_id": 68,
         "enabler": false,
         "bank_released": 0.0
@@ -200,48 +200,55 @@
       {
         "gw": 14,
         "action": "TRANSFER",
-        "route": "Tzolakis → Verbruggen",
+        "route": "Cherki → Hughes",
         "transfer_count": 1,
         "transfers": [
           {
-            "route": "Tzolakis → Verbruggen",
-            "out_id": 572,
-            "in_id": 109,
-            "uplift": 1.42,
+            "route": "Cherki → Hughes",
+            "out_id": 399,
+            "in_id": 212,
+            "uplift": 0.0,
             "addresses_short_term_risk": false
           }
         ],
         "hit": 0,
-        "out_id": 572,
-        "in_id": 109,
-        "enabler": false,
-        "bank_released": 0.0
+        "out_id": 399,
+        "in_id": 212,
+        "enabler": true,
+        "bank_released": 3.4
       }
     ],
-    "expected_points": 267.44,
-    "p10_points": 225.35,
-    "p90_points": 311.03,
-    "expected_rank_after_path": 1.06,
+    "expected_points": 264.94,
+    "p10_points": 224.19,
+    "p90_points": 307.12,
+    "expected_rank_after_path": 1.09,
     "prob_gain_league_place": 0.0,
     "prob_finish_ahead_each_rival": [
-      0.959,
-      0.984,
-      0.995,
+      0.942,
+      0.976,
+      0.988,
       1.0,
       1.0,
       1.0,
       1.0,
       1.0
     ],
-    "next_gw_expected_points": 67.63,
-    "next_two_gw_expected_points": 133.04,
-    "ending_bank": 1.6,
+    "next_gw_expected_points": 67.62,
+    "next_two_gw_expected_points": 133.09,
+    "ending_bank": 4.2,
     "ending_free_transfers": 1,
     "first_transfer_incoming_starts": true,
     "first_deadline_transfer_count": 2,
-    "utility_score": 262.426,
-    "contains_enabler": false,
-    "unlock_sequence": null
+    "utility_score": 259.929,
+    "contains_enabler": true,
+    "unlock_sequence": {
+      "enabler_gw": 14,
+      "enabler_route": "Cherki → Hughes",
+      "bank_released": 3.4,
+      "follow_up_gw": null,
+      "follow_up_route": null,
+      "completed_unlock": false
+    }
   },
   "paths": [
     {
@@ -263,243 +270,7 @@
               "route": "Calvert-Lewin → N.Jackson",
               "out_id": 346,
               "in_id": 166,
-              "uplift": 5.7,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 504,
-          "enabler": false,
-          "bank_released": 0.0
-        },
-        {
-          "gw": 12,
-          "action": "TRANSFER",
-          "route": "Belloumi → Tavernier",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Belloumi → Tavernier",
-              "out_id": 286,
-              "in_id": 68,
-              "uplift": 3.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 286,
-          "in_id": 68,
-          "enabler": false,
-          "bank_released": 0.0
-        },
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Affengruber → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Tarkowski",
-              "out_id": 650,
-              "in_id": 229,
-              "uplift": 1.88,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
-          "in_id": 229,
-          "enabler": false,
-          "bank_released": 0.0
-        },
-        {
-          "gw": 14,
-          "action": "TRANSFER",
-          "route": "Tzolakis → Verbruggen",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Tzolakis → Verbruggen",
-              "out_id": 572,
-              "in_id": 109,
-              "uplift": 1.42,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 572,
-          "in_id": 109,
-          "enabler": false,
-          "bank_released": 0.0
-        }
-      ],
-      "expected_points": 267.44,
-      "p10_points": 225.35,
-      "p90_points": 311.03,
-      "expected_rank_after_path": 1.06,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.959,
-        0.984,
-        0.995,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "next_gw_expected_points": 67.63,
-      "next_two_gw_expected_points": 133.04,
-      "ending_bank": 1.6,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 2,
-      "utility_score": 262.426,
-      "contains_enabler": false
-    },
-    {
-      "actions": [
-        {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Maguire → Vuskovic + Calvert-Lewin → N.Jackson",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Maguire → Vuskovic",
-              "out_id": 418,
-              "in_id": 504,
-              "uplift": 9.43,
-              "addresses_short_term_risk": false
-            },
-            {
-              "route": "Calvert-Lewin → N.Jackson",
-              "out_id": 346,
-              "in_id": 166,
-              "uplift": 5.7,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 504,
-          "enabler": false,
-          "bank_released": 0.0
-        },
-        {
-          "gw": 12,
-          "action": "TRANSFER",
-          "route": "Belloumi → Tavernier",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Belloumi → Tavernier",
-              "out_id": 286,
-              "in_id": 68,
-              "uplift": 3.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 286,
-          "in_id": 68,
-          "enabler": false,
-          "bank_released": 0.0
-        },
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Affengruber → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Tarkowski",
-              "out_id": 650,
-              "in_id": 229,
-              "uplift": 1.88,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
-          "in_id": 229,
-          "enabler": false,
-          "bank_released": 0.0
-        },
-        {
-          "gw": 14,
-          "action": "TRANSFER",
-          "route": "Cherki → McAteer",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Cherki → McAteer",
-              "out_id": 399,
-              "in_id": 323,
-              "uplift": 0.0,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 399,
-          "in_id": 323,
-          "enabler": true,
-          "bank_released": 3.4
-        }
-      ],
-      "expected_points": 266.09,
-      "p10_points": 224.54,
-      "p90_points": 310.07,
-      "expected_rank_after_path": 1.08,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.948,
-        0.983,
-        0.993,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "next_gw_expected_points": 67.63,
-      "next_two_gw_expected_points": 133.04,
-      "ending_bank": 5.1,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 2,
-      "utility_score": 261.067,
-      "contains_enabler": true,
-      "unlock_sequence": {
-        "enabler_gw": 14,
-        "enabler_route": "Cherki → McAteer",
-        "bank_released": 3.4,
-        "follow_up_gw": null,
-        "follow_up_route": null,
-        "completed_unlock": false
-      }
-    },
-    {
-      "actions": [
-        {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Maguire → Vuskovic + Calvert-Lewin → N.Jackson",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Maguire → Vuskovic",
-              "out_id": 418,
-              "in_id": 504,
-              "uplift": 9.43,
-              "addresses_short_term_risk": false
-            },
-            {
-              "route": "Calvert-Lewin → N.Jackson",
-              "out_id": 346,
-              "in_id": 166,
-              "uplift": 5.7,
+              "uplift": 6.58,
               "addresses_short_term_risk": false
             }
           ],
@@ -519,7 +290,7 @@
               "route": "Hughes → Tavernier",
               "out_id": 212,
               "in_id": 68,
-              "uplift": 3.45,
+              "uplift": 3.63,
               "addresses_short_term_risk": false
             }
           ],
@@ -570,28 +341,28 @@
           "bank_released": 3.4
         }
       ],
-      "expected_points": 266.09,
-      "p10_points": 224.54,
-      "p90_points": 310.07,
-      "expected_rank_after_path": 1.08,
+      "expected_points": 264.94,
+      "p10_points": 224.19,
+      "p90_points": 307.12,
+      "expected_rank_after_path": 1.09,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.948,
-        0.983,
-        0.993,
+        0.942,
+        0.976,
+        0.988,
         1.0,
         1.0,
         1.0,
         1.0,
         1.0
       ],
-      "next_gw_expected_points": 67.63,
-      "next_two_gw_expected_points": 133.04,
+      "next_gw_expected_points": 67.62,
+      "next_two_gw_expected_points": 133.09,
       "ending_bank": 4.2,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
       "first_deadline_transfer_count": 2,
-      "utility_score": 261.067,
+      "utility_score": 259.929,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 14,
@@ -621,7 +392,7 @@
               "route": "Calvert-Lewin → N.Jackson",
               "out_id": 346,
               "in_id": 166,
-              "uplift": 5.7,
+              "uplift": 6.58,
               "addresses_short_term_risk": false
             }
           ],
@@ -641,7 +412,7 @@
               "route": "Henderson → Tavernier",
               "out_id": 101,
               "in_id": 68,
-              "uplift": 3.45,
+              "uplift": 3.63,
               "addresses_short_term_risk": false
             }
           ],
@@ -692,28 +463,28 @@
           "bank_released": 3.4
         }
       ],
-      "expected_points": 266.09,
-      "p10_points": 224.54,
-      "p90_points": 310.07,
-      "expected_rank_after_path": 1.08,
+      "expected_points": 264.94,
+      "p10_points": 224.19,
+      "p90_points": 307.12,
+      "expected_rank_after_path": 1.09,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.948,
-        0.983,
-        0.993,
+        0.942,
+        0.976,
+        0.988,
         1.0,
         1.0,
         1.0,
         1.0,
         1.0
       ],
-      "next_gw_expected_points": 67.63,
-      "next_two_gw_expected_points": 133.04,
+      "next_gw_expected_points": 67.62,
+      "next_two_gw_expected_points": 133.09,
       "ending_bank": 4.8,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
       "first_deadline_transfer_count": 2,
-      "utility_score": 261.067,
+      "utility_score": 259.929,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 14,
@@ -743,7 +514,129 @@
               "route": "Calvert-Lewin → N.Jackson",
               "out_id": 346,
               "in_id": 166,
-              "uplift": 5.7,
+              "uplift": 6.58,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 504,
+          "enabler": false,
+          "bank_released": 0.0
+        },
+        {
+          "gw": 12,
+          "action": "TRANSFER",
+          "route": "Belloumi → Tavernier",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Belloumi → Tavernier",
+              "out_id": 286,
+              "in_id": 68,
+              "uplift": 3.63,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 286,
+          "in_id": 68,
+          "enabler": false,
+          "bank_released": 0.0
+        },
+        {
+          "gw": 13,
+          "action": "TRANSFER",
+          "route": "Affengruber → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Affengruber → Tarkowski",
+              "out_id": 650,
+              "in_id": 229,
+              "uplift": 1.88,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 650,
+          "in_id": 229,
+          "enabler": false,
+          "bank_released": 0.0
+        },
+        {
+          "gw": 14,
+          "action": "TRANSFER",
+          "route": "Cherki → McAteer",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Cherki → McAteer",
+              "out_id": 399,
+              "in_id": 323,
+              "uplift": 0.0,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 323,
+          "enabler": true,
+          "bank_released": 3.4
+        }
+      ],
+      "expected_points": 264.94,
+      "p10_points": 224.19,
+      "p90_points": 307.12,
+      "expected_rank_after_path": 1.09,
+      "prob_gain_league_place": 0.0,
+      "prob_finish_ahead_each_rival": [
+        0.942,
+        0.976,
+        0.988,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "next_gw_expected_points": 67.62,
+      "next_two_gw_expected_points": 133.09,
+      "ending_bank": 5.1,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 2,
+      "utility_score": 259.929,
+      "contains_enabler": true,
+      "unlock_sequence": {
+        "enabler_gw": 14,
+        "enabler_route": "Cherki → McAteer",
+        "bank_released": 3.4,
+        "follow_up_gw": null,
+        "follow_up_route": null,
+        "completed_unlock": false
+      }
+    },
+    {
+      "actions": [
+        {
+          "gw": 11,
+          "action": "TRANSFER",
+          "route": "Maguire → Vuskovic + Calvert-Lewin → N.Jackson",
+          "transfer_count": 2,
+          "transfers": [
+            {
+              "route": "Maguire → Vuskovic",
+              "out_id": 418,
+              "in_id": 504,
+              "uplift": 9.43,
+              "addresses_short_term_risk": false
+            },
+            {
+              "route": "Calvert-Lewin → N.Jackson",
+              "out_id": 346,
+              "in_id": 166,
+              "uplift": 6.58,
               "addresses_short_term_risk": false
             }
           ],
@@ -763,7 +656,7 @@
               "route": "Cherki → Tavernier",
               "out_id": 399,
               "in_id": 68,
-              "uplift": 3.23,
+              "uplift": 3.42,
               "addresses_short_term_risk": false
             }
           ],
@@ -814,28 +707,28 @@
           "bank_released": 2.9
         }
       ],
-      "expected_points": 265.91,
-      "p10_points": 223.41,
-      "p90_points": 310.14,
+      "expected_points": 265.01,
+      "p10_points": 222.73,
+      "p90_points": 307.78,
       "expected_rank_after_path": 1.08,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.949,
-        0.981,
-        0.994,
+        0.948,
+        0.977,
+        0.993,
         1.0,
         1.0,
         1.0,
         1.0,
         1.0
       ],
-      "next_gw_expected_points": 67.63,
-      "next_two_gw_expected_points": 133.04,
+      "next_gw_expected_points": 67.62,
+      "next_two_gw_expected_points": 133.09,
       "ending_bank": 7.1,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
       "first_deadline_transfer_count": 2,
-      "utility_score": 260.783,
+      "utility_score": 259.875,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 14,
@@ -865,7 +758,7 @@
               "route": "Calvert-Lewin → N.Jackson",
               "out_id": 346,
               "in_id": 166,
-              "uplift": 5.7,
+              "uplift": 6.58,
               "addresses_short_term_risk": false
             }
           ],
@@ -885,7 +778,7 @@
               "route": "Belloumi → Tavernier",
               "out_id": 286,
               "in_id": 68,
-              "uplift": 3.45,
+              "uplift": 3.63,
               "addresses_short_term_risk": false
             }
           ],
@@ -936,28 +829,28 @@
           "bank_released": 3.4
         }
       ],
-      "expected_points": 265.53,
-      "p10_points": 223.76,
-      "p90_points": 310.25,
-      "expected_rank_after_path": 1.07,
+      "expected_points": 264.56,
+      "p10_points": 225.0,
+      "p90_points": 306.08,
+      "expected_rank_after_path": 1.09,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.951,
-        0.982,
-        0.993,
+        0.941,
+        0.977,
+        0.992,
         1.0,
         1.0,
         1.0,
         1.0,
         1.0
       ],
-      "next_gw_expected_points": 67.63,
-      "next_two_gw_expected_points": 133.04,
+      "next_gw_expected_points": 67.62,
+      "next_two_gw_expected_points": 133.09,
       "ending_bank": 6.1,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
       "first_deadline_transfer_count": 2,
-      "utility_score": 260.494,
+      "utility_score": 259.712,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 14,
@@ -973,14 +866,21 @@
         {
           "gw": 11,
           "action": "TRANSFER",
-          "route": "Maguire → Vuskovic",
-          "transfer_count": 1,
+          "route": "Maguire → Vuskovic + Calvert-Lewin → N.Jackson",
+          "transfer_count": 2,
           "transfers": [
             {
               "route": "Maguire → Vuskovic",
               "out_id": 418,
               "in_id": 504,
               "uplift": 9.43,
+              "addresses_short_term_risk": false
+            },
+            {
+              "route": "Calvert-Lewin → N.Jackson",
+              "out_id": 346,
+              "in_id": 166,
+              "uplift": 6.58,
               "addresses_short_term_risk": false
             }
           ],
@@ -993,149 +893,20 @@
         {
           "gw": 12,
           "action": "TRANSFER",
-          "route": "Hughes → Rogers + Calvert-Lewin → N.Jackson",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Hughes → Rogers",
-              "out_id": 212,
-              "in_id": 40,
-              "uplift": 3.43,
-              "addresses_short_term_risk": false
-            },
-            {
-              "route": "Calvert-Lewin → N.Jackson",
-              "out_id": 346,
-              "in_id": 166,
-              "uplift": 2.99,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 40,
-          "enabler": false,
-          "bank_released": 0.0
-        },
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Cherki → Tavernier",
+          "route": "Henderson → Tavernier",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Cherki → Tavernier",
-              "out_id": 399,
+              "route": "Henderson → Tavernier",
+              "out_id": 101,
               "in_id": 68,
-              "uplift": 1.63,
+              "uplift": 3.63,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
-          "out_id": 399,
+          "out_id": 101,
           "in_id": 68,
-          "enabler": false,
-          "bank_released": 1.0
-        },
-        {
-          "gw": 14,
-          "action": "TRANSFER",
-          "route": "Rogers → Hughes",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Rogers → Hughes",
-              "out_id": 40,
-              "in_id": 212,
-              "uplift": 0.0,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 40,
-          "in_id": 212,
-          "enabler": true,
-          "bank_released": 3.9
-        }
-      ],
-      "expected_points": 263.18,
-      "p10_points": 222.66,
-      "p90_points": 306.19,
-      "expected_rank_after_path": 1.08,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.948,
-        0.981,
-        0.991,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "next_gw_expected_points": 65.33,
-      "next_two_gw_expected_points": 130.95,
-      "ending_bank": 5.9,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 1,
-      "utility_score": 258.269,
-      "contains_enabler": true,
-      "unlock_sequence": {
-        "enabler_gw": 14,
-        "enabler_route": "Rogers → Hughes",
-        "bank_released": 3.9,
-        "follow_up_gw": null,
-        "follow_up_route": null,
-        "completed_unlock": false
-      }
-    },
-    {
-      "actions": [
-        {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Maguire → Vuskovic",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Maguire → Vuskovic",
-              "out_id": 418,
-              "in_id": 504,
-              "uplift": 9.43,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 504,
-          "enabler": false,
-          "bank_released": 0.0
-        },
-        {
-          "gw": 12,
-          "action": "TRANSFER",
-          "route": "Hughes → Rogers + Calvert-Lewin → N.Jackson",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Hughes → Rogers",
-              "out_id": 212,
-              "in_id": 40,
-              "uplift": 3.43,
-              "addresses_short_term_risk": false
-            },
-            {
-              "route": "Calvert-Lewin → N.Jackson",
-              "out_id": 346,
-              "in_id": 166,
-              "uplift": 2.99,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 40,
           "enabler": false,
           "bank_released": 0.0
         },
@@ -1162,51 +933,51 @@
         {
           "gw": 14,
           "action": "TRANSFER",
-          "route": "Rogers → Kamara",
+          "route": "Cherki → McAteer",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Rogers → Kamara",
-              "out_id": 40,
-              "in_id": 47,
-              "uplift": 0.1,
+              "route": "Cherki → McAteer",
+              "out_id": 399,
+              "in_id": 323,
+              "uplift": 0.0,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
-          "out_id": 40,
-          "in_id": 47,
+          "out_id": 399,
+          "in_id": 323,
           "enabler": true,
-          "bank_released": 3.2
+          "bank_released": 3.4
         }
       ],
-      "expected_points": 263.15,
-      "p10_points": 222.18,
-      "p90_points": 305.76,
+      "expected_points": 264.56,
+      "p10_points": 225.0,
+      "p90_points": 306.08,
       "expected_rank_after_path": 1.09,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.948,
-        0.974,
-        0.991,
+        0.941,
+        0.977,
+        0.992,
         1.0,
         1.0,
         1.0,
         1.0,
         1.0
       ],
-      "next_gw_expected_points": 65.33,
-      "next_two_gw_expected_points": 130.95,
-      "ending_bank": 3.5,
+      "next_gw_expected_points": 67.62,
+      "next_two_gw_expected_points": 133.09,
+      "ending_bank": 5.8,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 1,
-      "utility_score": 258.146,
+      "first_deadline_transfer_count": 2,
+      "utility_score": 259.712,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 14,
-        "enabler_route": "Rogers → Kamara",
-        "bank_released": 3.2,
+        "enabler_route": "Cherki → McAteer",
+        "bank_released": 3.4,
         "follow_up_gw": null,
         "follow_up_route": null,
         "completed_unlock": false
@@ -1217,180 +988,67 @@
         {
           "gw": 11,
           "action": "TRANSFER",
-          "route": "Maguire → Vuskovic",
+          "route": "Hughes → Tavernier",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Maguire → Vuskovic",
-              "out_id": 418,
-              "in_id": 504,
-              "uplift": 9.43,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 504,
-          "enabler": false,
-          "bank_released": 0.0
-        },
-        {
-          "gw": 12,
-          "action": "TRANSFER",
-          "route": "Hughes → Rogers + Calvert-Lewin → N.Jackson",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Hughes → Rogers",
+              "route": "Hughes → Tavernier",
               "out_id": 212,
-              "in_id": 40,
-              "uplift": 3.43,
-              "addresses_short_term_risk": false
-            },
-            {
-              "route": "Calvert-Lewin → N.Jackson",
-              "out_id": 346,
-              "in_id": 166,
-              "uplift": 2.99,
+              "in_id": 68,
+              "uplift": 5.95,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
           "out_id": 212,
-          "in_id": 40,
+          "in_id": 68,
           "enabler": false,
           "bank_released": 0.0
-        },
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Dubravka → Trafford",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Dubravka → Trafford",
-              "out_id": 497,
-              "in_id": 385,
-              "uplift": 1.42,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 497,
-          "in_id": 385,
-          "enabler": false,
-          "bank_released": 0.0
-        },
-        {
-          "gw": 14,
-          "action": "TRANSFER",
-          "route": "Rogers → Kamara",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Rogers → Kamara",
-              "out_id": 40,
-              "in_id": 47,
-              "uplift": 0.1,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 40,
-          "in_id": 47,
-          "enabler": true,
-          "bank_released": 3.2
-        }
-      ],
-      "expected_points": 263.24,
-      "p10_points": 221.71,
-      "p90_points": 304.6,
-      "expected_rank_after_path": 1.09,
-      "prob_gain_league_place": 0.0,
-      "prob_finish_ahead_each_rival": [
-        0.943,
-        0.974,
-        0.99,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "next_gw_expected_points": 65.33,
-      "next_two_gw_expected_points": 130.95,
-      "ending_bank": 3.2,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 1,
-      "utility_score": 258.139,
-      "contains_enabler": true,
-      "unlock_sequence": {
-        "enabler_gw": 14,
-        "enabler_route": "Rogers → Kamara",
-        "bank_released": 3.2,
-        "follow_up_gw": null,
-        "follow_up_route": null,
-        "completed_unlock": false
-      }
-    },
-    {
-      "actions": [
-        {
-          "gw": 11,
-          "action": "ROLL"
         },
         {
           "gw": 12,
           "action": "TRANSFER",
-          "route": "Maguire → Muharemović",
-          "transfer_count": 1,
+          "route": "Calvert-Lewin → N.Jackson + Maguire → Muharemović",
+          "transfer_count": 2,
           "transfers": [
+            {
+              "route": "Calvert-Lewin → N.Jackson",
+              "out_id": 346,
+              "in_id": 166,
+              "uplift": 4.52,
+              "addresses_short_term_risk": false
+            },
             {
               "route": "Maguire → Muharemović",
               "out_id": 418,
               "in_id": 334,
-              "uplift": 4.63,
+              "uplift": 3.85,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
-          "out_id": 418,
-          "in_id": 334,
+          "out_id": 346,
+          "in_id": 166,
           "enabler": false,
           "bank_released": 0.0
         },
         {
           "gw": 13,
           "action": "TRANSFER",
-          "route": "Belloumi → Tavernier + Affengruber → Vuskovic + Calvert-Lewin → N.Jackson",
-          "transfer_count": 3,
+          "route": "Bogle → Vuskovic",
+          "transfer_count": 1,
           "transfers": [
             {
-              "route": "Belloumi → Tavernier",
-              "out_id": 286,
-              "in_id": 68,
-              "uplift": 2.88,
-              "addresses_short_term_risk": false
-            },
-            {
-              "route": "Affengruber → Vuskovic",
-              "out_id": 650,
+              "route": "Bogle → Vuskovic",
+              "out_id": 330,
               "in_id": 504,
-              "uplift": 2.55,
-              "addresses_short_term_risk": false
-            },
-            {
-              "route": "Calvert-Lewin → N.Jackson",
-              "out_id": 346,
-              "in_id": 166,
-              "uplift": 2.11,
+              "uplift": 2.12,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
-          "out_id": 286,
-          "in_id": 68,
+          "out_id": 330,
+          "in_id": 504,
           "enabler": false,
           "bank_released": 0.0
         },
@@ -1415,35 +1073,51 @@
           "bank_released": 0.0
         }
       ],
-      "expected_points": 259.11,
-      "p10_points": 217.1,
-      "p90_points": 304.26,
-      "expected_rank_after_path": 1.13,
+      "expected_points": 261.63,
+      "p10_points": 221.79,
+      "p90_points": 302.59,
+      "expected_rank_after_path": 1.09,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.916,
-        0.966,
-        0.985,
+        0.944,
+        0.969,
+        0.993,
         1.0,
         1.0,
         1.0,
         1.0,
         1.0
       ],
-      "next_gw_expected_points": 62.47,
-      "next_two_gw_expected_points": 125.65,
-      "ending_bank": 2.7,
+      "next_gw_expected_points": 64.04,
+      "next_two_gw_expected_points": 129.32,
+      "ending_bank": 1.9,
       "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": null,
-      "first_deadline_transfer_count": 0,
-      "utility_score": 253.753,
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 1,
+      "utility_score": 256.731,
       "contains_enabler": false
     },
     {
       "actions": [
         {
           "gw": 11,
-          "action": "ROLL"
+          "action": "TRANSFER",
+          "route": "Affengruber → Vuskovic",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Affengruber → Vuskovic",
+              "out_id": 650,
+              "in_id": 504,
+              "uplift": 6.73,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 650,
+          "in_id": 504,
+          "enabler": false,
+          "bank_released": 0.0
         },
         {
           "gw": 12,
@@ -1468,28 +1142,21 @@
         {
           "gw": 13,
           "action": "TRANSFER",
-          "route": "Belloumi → Tavernier + Affengruber → Vuskovic + Calvert-Lewin → Evanilson",
-          "transfer_count": 3,
+          "route": "Belloumi → Tavernier + Calvert-Lewin → Evanilson",
+          "transfer_count": 2,
           "transfers": [
             {
               "route": "Belloumi → Tavernier",
               "out_id": 286,
               "in_id": 68,
-              "uplift": 2.88,
-              "addresses_short_term_risk": false
-            },
-            {
-              "route": "Affengruber → Vuskovic",
-              "out_id": 650,
-              "in_id": 504,
-              "uplift": 2.55,
+              "uplift": 2.62,
               "addresses_short_term_risk": false
             },
             {
               "route": "Calvert-Lewin → Evanilson",
               "out_id": 346,
               "in_id": 79,
-              "uplift": 1.85,
+              "uplift": 2.4,
               "addresses_short_term_risk": false
             }
           ],
@@ -1520,28 +1187,263 @@
           "bank_released": 3.4
         }
       ],
-      "expected_points": 257.34,
-      "p10_points": 214.2,
-      "p90_points": 300.86,
-      "expected_rank_after_path": 1.16,
+      "expected_points": 261.25,
+      "p10_points": 219.92,
+      "p90_points": 304.24,
+      "expected_rank_after_path": 1.13,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.911,
-        0.953,
+        0.932,
+        0.963,
         0.974,
+        1.0,
+        1.0,
+        0.998,
+        1.0,
+        1.0
+      ],
+      "next_gw_expected_points": 65.17,
+      "next_two_gw_expected_points": 129.53,
+      "ending_bank": 6.8,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 1,
+      "utility_score": 255.983,
+      "contains_enabler": true,
+      "unlock_sequence": {
+        "enabler_gw": 14,
+        "enabler_route": "Cherki → McAteer",
+        "bank_released": 3.4,
+        "follow_up_gw": null,
+        "follow_up_route": null,
+        "completed_unlock": false
+      }
+    },
+    {
+      "actions": [
+        {
+          "gw": 11,
+          "action": "TRANSFER",
+          "route": "Hughes → Tavernier",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Hughes → Tavernier",
+              "out_id": 212,
+              "in_id": 68,
+              "uplift": 5.95,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 68,
+          "enabler": false,
+          "bank_released": 0.0
+        },
+        {
+          "gw": 12,
+          "action": "TRANSFER",
+          "route": "Calvert-Lewin → N.Jackson + Maguire → Muharemović",
+          "transfer_count": 2,
+          "transfers": [
+            {
+              "route": "Calvert-Lewin → N.Jackson",
+              "out_id": 346,
+              "in_id": 166,
+              "uplift": 4.52,
+              "addresses_short_term_risk": false
+            },
+            {
+              "route": "Maguire → Muharemović",
+              "out_id": 418,
+              "in_id": 334,
+              "uplift": 3.85,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 346,
+          "in_id": 166,
+          "enabler": false,
+          "bank_released": 0.0
+        },
+        {
+          "gw": 13,
+          "action": "TRANSFER",
+          "route": "Bogle → Vuskovic",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Bogle → Vuskovic",
+              "out_id": 330,
+              "in_id": 504,
+              "uplift": 2.12,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 330,
+          "in_id": 504,
+          "enabler": false,
+          "bank_released": 0.0
+        },
+        {
+          "gw": 14,
+          "action": "TRANSFER",
+          "route": "Cherki → Hughes",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Cherki → Hughes",
+              "out_id": 399,
+              "in_id": 212,
+              "uplift": 0.0,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 212,
+          "enabler": true,
+          "bank_released": 3.4
+        }
+      ],
+      "expected_points": 260.31,
+      "p10_points": 220.03,
+      "p90_points": 301.11,
+      "expected_rank_after_path": 1.11,
+      "prob_gain_league_place": 0.0,
+      "prob_finish_ahead_each_rival": [
+        0.932,
+        0.968,
+        0.988,
         1.0,
         1.0,
         1.0,
         1.0,
         1.0
       ],
-      "next_gw_expected_points": 62.47,
-      "next_two_gw_expected_points": 125.65,
-      "ending_bank": 6.8,
+      "next_gw_expected_points": 64.04,
+      "next_two_gw_expected_points": 129.32,
+      "ending_bank": 5.4,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 1,
+      "utility_score": 255.268,
+      "contains_enabler": true,
+      "unlock_sequence": {
+        "enabler_gw": 14,
+        "enabler_route": "Cherki → Hughes",
+        "bank_released": 3.4,
+        "follow_up_gw": null,
+        "follow_up_route": null,
+        "completed_unlock": false
+      }
+    },
+    {
+      "actions": [
+        {
+          "gw": 11,
+          "action": "ROLL"
+        },
+        {
+          "gw": 12,
+          "action": "TRANSFER",
+          "route": "Maguire → Muharemović",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Maguire → Muharemović",
+              "out_id": 418,
+              "in_id": 334,
+              "uplift": 4.63,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 334,
+          "enabler": false,
+          "bank_released": 0.0
+        },
+        {
+          "gw": 13,
+          "action": "TRANSFER",
+          "route": "Calvert-Lewin → N.Jackson + Belloumi → Tavernier + Bogle → Vuskovic",
+          "transfer_count": 3,
+          "transfers": [
+            {
+              "route": "Calvert-Lewin → N.Jackson",
+              "out_id": 346,
+              "in_id": 166,
+              "uplift": 2.92,
+              "addresses_short_term_risk": false
+            },
+            {
+              "route": "Belloumi → Tavernier",
+              "out_id": 286,
+              "in_id": 68,
+              "uplift": 2.79,
+              "addresses_short_term_risk": false
+            },
+            {
+              "route": "Bogle → Vuskovic",
+              "out_id": 330,
+              "in_id": 504,
+              "uplift": 2.12,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 346,
+          "in_id": 166,
+          "enabler": false,
+          "bank_released": 0.0
+        },
+        {
+          "gw": 14,
+          "action": "TRANSFER",
+          "route": "Cherki → McAteer",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Cherki → McAteer",
+              "out_id": 399,
+              "in_id": 323,
+              "uplift": 0.0,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 323,
+          "enabler": true,
+          "bank_released": 3.4
+        }
+      ],
+      "expected_points": 256.67,
+      "p10_points": 216.78,
+      "p90_points": 299.93,
+      "expected_rank_after_path": 1.16,
+      "prob_gain_league_place": 0.0,
+      "prob_finish_ahead_each_rival": [
+        0.915,
+        0.95,
+        0.979,
+        1.0,
+        1.0,
+        0.999,
+        1.0,
+        1.0
+      ],
+      "next_gw_expected_points": 62.31,
+      "next_two_gw_expected_points": 125.35,
+      "ending_bank": 6.3,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": null,
       "first_deadline_transfer_count": 0,
-      "utility_score": 251.703,
+      "utility_score": 251.453,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 14,
@@ -1581,85 +1483,198 @@
         {
           "gw": 13,
           "action": "TRANSFER",
-          "route": "Hughes → Tavernier + Affengruber → Vuskovic + Calvert-Lewin → Evanilson",
+          "route": "Calvert-Lewin → N.Jackson + Henderson → Tavernier + Bogle → Vuskovic",
           "transfer_count": 3,
           "transfers": [
             {
-              "route": "Hughes → Tavernier",
-              "out_id": 212,
-              "in_id": 68,
-              "uplift": 2.88,
-              "addresses_short_term_risk": false
-            },
-            {
-              "route": "Affengruber → Vuskovic",
-              "out_id": 650,
-              "in_id": 504,
-              "uplift": 2.55,
-              "addresses_short_term_risk": false
-            },
-            {
-              "route": "Calvert-Lewin → Evanilson",
+              "route": "Calvert-Lewin → N.Jackson",
               "out_id": 346,
-              "in_id": 79,
-              "uplift": 1.85,
+              "in_id": 166,
+              "uplift": 2.92,
+              "addresses_short_term_risk": false
+            },
+            {
+              "route": "Henderson → Tavernier",
+              "out_id": 101,
+              "in_id": 68,
+              "uplift": 2.6,
+              "addresses_short_term_risk": false
+            },
+            {
+              "route": "Bogle → Vuskovic",
+              "out_id": 330,
+              "in_id": 504,
+              "uplift": 2.31,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
-          "out_id": 212,
-          "in_id": 68,
+          "out_id": 346,
+          "in_id": 166,
           "enabler": false,
           "bank_released": 0.0
         },
         {
           "gw": 14,
           "action": "TRANSFER",
-          "route": "Cherki → Hughes",
+          "route": "Cherki → McAteer",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Cherki → Hughes",
+              "route": "Cherki → McAteer",
               "out_id": 399,
-              "in_id": 212,
+              "in_id": 323,
               "uplift": 0.0,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
           "out_id": 399,
-          "in_id": 212,
+          "in_id": 323,
           "enabler": true,
           "bank_released": 3.4
         }
       ],
-      "expected_points": 257.34,
-      "p10_points": 214.2,
-      "p90_points": 300.86,
+      "expected_points": 256.67,
+      "p10_points": 216.78,
+      "p90_points": 299.93,
       "expected_rank_after_path": 1.16,
       "prob_gain_league_place": 0.0,
       "prob_finish_ahead_each_rival": [
-        0.911,
-        0.953,
-        0.974,
+        0.915,
+        0.95,
+        0.979,
         1.0,
         1.0,
-        1.0,
+        0.999,
         1.0,
         1.0
       ],
-      "next_gw_expected_points": 62.47,
-      "next_two_gw_expected_points": 125.65,
-      "ending_bank": 5.9,
+      "next_gw_expected_points": 62.31,
+      "next_two_gw_expected_points": 125.35,
+      "ending_bank": 6.0,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": null,
       "first_deadline_transfer_count": 0,
-      "utility_score": 251.703,
+      "utility_score": 251.453,
       "contains_enabler": true,
       "unlock_sequence": {
         "enabler_gw": 14,
-        "enabler_route": "Cherki → Hughes",
+        "enabler_route": "Cherki → McAteer",
         "bank_released": 3.4,
+        "follow_up_gw": null,
+        "follow_up_route": null,
+        "completed_unlock": false
+      }
+    },
+    {
+      "actions": [
+        {
+          "gw": 11,
+          "action": "ROLL"
+        },
+        {
+          "gw": 12,
+          "action": "TRANSFER",
+          "route": "Maguire → Muharemović",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Maguire → Muharemović",
+              "out_id": 418,
+              "in_id": 334,
+              "uplift": 4.63,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 418,
+          "in_id": 334,
+          "enabler": false,
+          "bank_released": 0.0
+        },
+        {
+          "gw": 13,
+          "action": "TRANSFER",
+          "route": "Calvert-Lewin → N.Jackson + Cherki → Tavernier + Bogle → Vuskovic",
+          "transfer_count": 3,
+          "transfers": [
+            {
+              "route": "Calvert-Lewin → N.Jackson",
+              "out_id": 346,
+              "in_id": 166,
+              "uplift": 2.92,
+              "addresses_short_term_risk": false
+            },
+            {
+              "route": "Cherki → Tavernier",
+              "out_id": 399,
+              "in_id": 68,
+              "uplift": 2.38,
+              "addresses_short_term_risk": false
+            },
+            {
+              "route": "Bogle → Vuskovic",
+              "out_id": 330,
+              "in_id": 504,
+              "uplift": 2.31,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 346,
+          "in_id": 166,
+          "enabler": false,
+          "bank_released": 1.0
+        },
+        {
+          "gw": 14,
+          "action": "TRANSFER",
+          "route": "Isak → Kostoulas",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Isak → Kostoulas",
+              "out_id": 379,
+              "in_id": 138,
+              "uplift": -0.34,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 379,
+          "in_id": 138,
+          "enabler": true,
+          "bank_released": 3.3
+        }
+      ],
+      "expected_points": 256.34,
+      "p10_points": 216.64,
+      "p90_points": 301.1,
+      "expected_rank_after_path": 1.16,
+      "prob_gain_league_place": 0.0,
+      "prob_finish_ahead_each_rival": [
+        0.914,
+        0.953,
+        0.978,
+        1.0,
+        1.0,
+        0.999,
+        1.0,
+        1.0
+      ],
+      "next_gw_expected_points": 62.31,
+      "next_two_gw_expected_points": 125.35,
+      "ending_bank": 8.7,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": null,
+      "first_deadline_transfer_count": 0,
+      "utility_score": 251.144,
+      "contains_enabler": true,
+      "unlock_sequence": {
+        "enabler_gw": 14,
+        "enabler_route": "Isak → Kostoulas",
+        "bank_released": 3.3,
         "follow_up_gw": null,
         "follow_up_route": null,
         "completed_unlock": false
