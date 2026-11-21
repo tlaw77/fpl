@@ -2,6 +2,11 @@
 const n=(v,d=0)=>Number.isFinite(Number(v))?Number(v):d;
 function fromSynthesis(syn={}){
  const a=syn.current_action||{},r=syn.robustness||{};
+ if(a.completed_transfer?.source==='local_execution_confirmation'){
+  return{action:'HOLD',type:'awaiting_squad_refresh',multi:false,route:'',edge:0,required:0,
+   edgeClear:false,validationKind:'pending',validationLabel:'Updated squad',validationValue:'Pending',
+   validationClear:false,gateClear:false,score:0,hitCost:n(a.next_transfer_hit_cost),transferCount:0};
+ }
  const action=String(a.action||'HOLD').toUpperCase();
  const inferredMulti=action==='TRANSFER'&&!!r.multi_transfer_clears_gate&&!r.transfer_clears_gate;
  const type=r.active_route_type||(inferredMulti?'multi_transfer':action==='TRANSFER'?'single_transfer':'single_transfer_challenger');

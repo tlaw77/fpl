@@ -61,3 +61,13 @@ assert.ok(postTransferTrend.includes('POST-TRANSFER WATCH'));
 assert.ok(postTransferTrend.includes('Tracking additional moves only'));
 
 console.log('monitoring session wording tests passed');
+
+const pending = {
+  completed: 'Maguire → Vuskovic + Calvert-Lewin → N.Jackson',
+  route_type: 'awaiting_squad_refresh',
+};
+const stale = {completed: pending.completed, leader: 'Calvert-Lewin → N.Jackson'};
+const pendingCard = context.window.FPLMonitoringSessionTest.changeSet(pending, stale);
+assert.deepEqual(Array.from(pendingCard.items, x => x[0]), ['Completed route', 'Additional moves']);
+assert.equal(pendingCard.items[1][1], 'Awaiting updated squad analysis');
+assert.equal(context.window.FPLMonitoringSessionTest.trendHtml(pending, stale), '');

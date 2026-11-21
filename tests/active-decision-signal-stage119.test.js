@@ -69,3 +69,16 @@ const held=api.execution({next_gw:9,decision_synthesis:extra},api.fromSynthesis(
 assert.equal(held.state,'hold');assert.equal(held.copy,'Waiting beats the hit.');
 extra.current_action.completed_transfer.source='local_execution_confirmation';
 assert.equal(api.execution({next_gw:9,decision_synthesis:extra},api.fromSynthesis(extra)).state,'completed');
+
+const preTransferModel = {
+  current_action: {
+    action: 'HOLD',
+    completed_transfer: {route: 'Maguire → Vuskovic + Calvert-Lewin → N.Jackson', source: 'local_execution_confirmation'},
+  },
+  robustness: {active_route: 'Calvert-Lewin → N.Jackson', active_edge_over_hold_6gw: 8},
+};
+const pending = api.fromSynthesis(preTransferModel);
+assert.equal(pending.type, 'awaiting_squad_refresh');
+assert.equal(pending.route, '');
+assert.equal(pending.edge, 0);
+assert.equal(pending.gateClear, false);
