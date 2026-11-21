@@ -1,23 +1,23 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-11-21T06:55:09.716371+00:00",
+  "generated_at_utc": "2026-11-21T15:15:49.910823+00:00",
   "engine_version": 3,
-  "iterations": 2400,
+  "iterations": 1200,
   "iteration_policy": {
     "layer": "chip",
-    "deadline_phase": "final",
-    "hours_to_deadline": 4.1,
-    "iterations": 2400,
+    "deadline_phase": "normal",
+    "hours_to_deadline": 147.26,
+    "iterations": 1200,
     "policy": "lighter normal-week sampling; higher precision inside 72h/24h/6h of official FPL deadline"
   },
   "horizon_gws": [
-    11,
     12,
     13,
-    14
+    14,
+    15
   ],
   "projection_model": "season-maturity calibrated + shared captaincy model",
-  "season_maturity_weight": 0.625,
+  "season_maturity_weight": 0.647,
   "rival_policy": "probabilistic observed-behaviour challenger",
   "exact_chip_branches": [
     "Triple Captain",
@@ -30,330 +30,288 @@
   "recommendation": {
     "actions": [
       {
-        "gw": 11,
-        "action": "TRANSFER",
-        "route": "Maguire → Vuskovic + Calvert-Lewin → N.Jackson",
-        "transfer_count": 2,
-        "transfers": [
-          {
-            "route": "Maguire → Vuskovic",
-            "out_id": 418,
-            "in_id": 504,
-            "uplift": 9.32,
-            "addresses_short_term_risk": false
-          },
-          {
-            "route": "Calvert-Lewin → N.Jackson",
-            "out_id": 346,
-            "in_id": 166,
-            "uplift": 6.45,
-            "addresses_short_term_risk": false
-          }
-        ],
-        "hit": 0,
-        "out_id": 418,
-        "in_id": 504
-      },
-      {
         "gw": 12,
-        "action": "TRANSFER",
-        "route": "Hughes → Tavernier",
-        "transfer_count": 1,
-        "transfers": [
-          {
-            "route": "Hughes → Tavernier",
-            "out_id": 212,
-            "in_id": 68,
-            "uplift": 3.22,
-            "addresses_short_term_risk": false
-          }
-        ],
-        "hit": 0,
-        "out_id": 212,
-        "in_id": 68
+        "action": "ROLL"
       },
       {
         "gw": 13,
         "action": "TRANSFER",
-        "route": "Affengruber → Tarkowski",
-        "transfer_count": 1,
+        "route": "Bogle → Tarkowski + Cherki → Dewsbury-Hall",
+        "transfer_count": 2,
         "transfers": [
           {
-            "route": "Affengruber → Tarkowski",
-            "out_id": 650,
+            "route": "Bogle → Tarkowski",
+            "out_id": 330,
             "in_id": 229,
-            "uplift": 1.91,
+            "uplift": 2.42,
+            "addresses_short_term_risk": false
+          },
+          {
+            "route": "Cherki → Dewsbury-Hall",
+            "out_id": 399,
+            "in_id": 236,
+            "uplift": 2.05,
             "addresses_short_term_risk": false
           }
         ],
         "hit": 0,
-        "out_id": 650,
+        "out_id": 330,
         "in_id": 229
       },
       {
         "gw": 14,
         "action": "TRANSFER",
-        "route": "Tzolakis → Verbruggen",
+        "route": "Dubravka → Raya",
         "transfer_count": 1,
         "transfers": [
           {
-            "route": "Tzolakis → Verbruggen",
-            "out_id": 572,
-            "in_id": 109,
-            "uplift": 1.43,
+            "route": "Dubravka → Raya",
+            "out_id": 497,
+            "in_id": 1,
+            "uplift": 1.89,
             "addresses_short_term_risk": false
           }
         ],
         "hit": 0,
-        "out_id": 572,
-        "in_id": 109
+        "out_id": 497,
+        "in_id": 1
+      },
+      {
+        "gw": 15,
+        "action": "TRANSFER",
+        "route": "Tarkowski → Konsa",
+        "transfer_count": 1,
+        "transfers": [
+          {
+            "route": "Tarkowski → Konsa",
+            "out_id": 229,
+            "in_id": 31,
+            "uplift": 0.93,
+            "addresses_short_term_risk": false
+          }
+        ],
+        "hit": 0,
+        "out_id": 229,
+        "in_id": 31
       }
     ],
     "chip": "Bench Boost",
-    "chip_gw": 13,
-    "expected_points": 279.77,
-    "chip_incremental_expected_points": 12.64,
-    "p10_points": 238.54,
-    "p90_points": 322.43,
-    "expected_rank_after_path": 1.09,
+    "chip_gw": 15,
+    "expected_points": 264.27,
+    "chip_incremental_expected_points": 12.19,
+    "p10_points": 224.32,
+    "p90_points": 302.98,
+    "expected_rank_after_path": 1.25,
     "prob_finish_ahead_each_rival": [
-      0.945,
-      0.974,
-      0.995,
+      0.883,
+      0.874,
+      0.993,
       1.0,
       1.0,
       1.0,
       1.0,
       1.0
     ],
-    "utility_score": 274.397
+    "utility_score": 258.228
   },
   "best_no_chip_path": {
     "actions": [
       {
-        "gw": 11,
-        "action": "TRANSFER",
-        "route": "Maguire → Vuskovic + Calvert-Lewin → N.Jackson",
-        "transfer_count": 2,
-        "transfers": [
-          {
-            "route": "Maguire → Vuskovic",
-            "out_id": 418,
-            "in_id": 504,
-            "uplift": 9.32,
-            "addresses_short_term_risk": false
-          },
-          {
-            "route": "Calvert-Lewin → N.Jackson",
-            "out_id": 346,
-            "in_id": 166,
-            "uplift": 6.45,
-            "addresses_short_term_risk": false
-          }
-        ],
-        "hit": 0,
-        "out_id": 418,
-        "in_id": 504
-      },
-      {
         "gw": 12,
-        "action": "TRANSFER",
-        "route": "Henderson → Tavernier",
-        "transfer_count": 1,
-        "transfers": [
-          {
-            "route": "Henderson → Tavernier",
-            "out_id": 101,
-            "in_id": 68,
-            "uplift": 3.22,
-            "addresses_short_term_risk": false
-          }
-        ],
-        "hit": 0,
-        "out_id": 101,
-        "in_id": 68
+        "action": "ROLL"
       },
       {
         "gw": 13,
         "action": "TRANSFER",
-        "route": "Affengruber → Tarkowski",
-        "transfer_count": 1,
+        "route": "Bogle → Tarkowski + Belloumi → Dewsbury-Hall",
+        "transfer_count": 2,
         "transfers": [
           {
-            "route": "Affengruber → Tarkowski",
-            "out_id": 650,
+            "route": "Bogle → Tarkowski",
+            "out_id": 330,
             "in_id": 229,
-            "uplift": 1.91,
+            "uplift": 2.42,
+            "addresses_short_term_risk": false
+          },
+          {
+            "route": "Belloumi → Dewsbury-Hall",
+            "out_id": 286,
+            "in_id": 236,
+            "uplift": 1.97,
             "addresses_short_term_risk": false
           }
         ],
         "hit": 0,
-        "out_id": 650,
+        "out_id": 330,
         "in_id": 229
       },
       {
         "gw": 14,
         "action": "TRANSFER",
-        "route": "Tzolakis → Verbruggen",
+        "route": "Tzolakis → Raya",
         "transfer_count": 1,
         "transfers": [
           {
-            "route": "Tzolakis → Verbruggen",
+            "route": "Tzolakis → Raya",
             "out_id": 572,
-            "in_id": 109,
-            "uplift": 1.43,
+            "in_id": 1,
+            "uplift": 1.89,
             "addresses_short_term_risk": false
           }
         ],
         "hit": 0,
         "out_id": 572,
-        "in_id": 109
+        "in_id": 1
+      },
+      {
+        "gw": 15,
+        "action": "TRANSFER",
+        "route": "Tarkowski → Konsa",
+        "transfer_count": 1,
+        "transfers": [
+          {
+            "route": "Tarkowski → Konsa",
+            "out_id": 229,
+            "in_id": 31,
+            "uplift": 0.93,
+            "addresses_short_term_risk": false
+          }
+        ],
+        "hit": 0,
+        "out_id": 229,
+        "in_id": 31
       }
     ],
     "chip": null,
     "chip_gw": null,
-    "expected_points": 267.13,
+    "expected_points": 252.03,
     "chip_incremental_expected_points": 0.0,
-    "p10_points": 226.71,
-    "p90_points": 310.1,
-    "expected_rank_after_path": 1.2,
+    "p10_points": 212.46,
+    "p90_points": 290.97,
+    "expected_rank_after_path": 1.48,
     "prob_finish_ahead_each_rival": [
-      0.873,
-      0.934,
-      0.99,
+      0.761,
+      0.784,
+      0.977,
       1.0,
       1.0,
       1.0,
       1.0,
       1.0
     ],
-    "utility_score": 261.271
+    "utility_score": 244.888
   },
   "best_triple_captain_window": null,
   "best_bench_boost_window": {
     "actions": [
       {
-        "gw": 11,
-        "action": "TRANSFER",
-        "route": "Maguire → Vuskovic + Calvert-Lewin → N.Jackson",
-        "transfer_count": 2,
-        "transfers": [
-          {
-            "route": "Maguire → Vuskovic",
-            "out_id": 418,
-            "in_id": 504,
-            "uplift": 9.32,
-            "addresses_short_term_risk": false
-          },
-          {
-            "route": "Calvert-Lewin → N.Jackson",
-            "out_id": 346,
-            "in_id": 166,
-            "uplift": 6.45,
-            "addresses_short_term_risk": false
-          }
-        ],
-        "hit": 0,
-        "out_id": 418,
-        "in_id": 504
-      },
-      {
         "gw": 12,
-        "action": "TRANSFER",
-        "route": "Hughes → Tavernier",
-        "transfer_count": 1,
-        "transfers": [
-          {
-            "route": "Hughes → Tavernier",
-            "out_id": 212,
-            "in_id": 68,
-            "uplift": 3.22,
-            "addresses_short_term_risk": false
-          }
-        ],
-        "hit": 0,
-        "out_id": 212,
-        "in_id": 68
+        "action": "ROLL"
       },
       {
         "gw": 13,
         "action": "TRANSFER",
-        "route": "Affengruber → Tarkowski",
-        "transfer_count": 1,
+        "route": "Bogle → Tarkowski + Cherki → Dewsbury-Hall",
+        "transfer_count": 2,
         "transfers": [
           {
-            "route": "Affengruber → Tarkowski",
-            "out_id": 650,
+            "route": "Bogle → Tarkowski",
+            "out_id": 330,
             "in_id": 229,
-            "uplift": 1.91,
+            "uplift": 2.42,
+            "addresses_short_term_risk": false
+          },
+          {
+            "route": "Cherki → Dewsbury-Hall",
+            "out_id": 399,
+            "in_id": 236,
+            "uplift": 2.05,
             "addresses_short_term_risk": false
           }
         ],
         "hit": 0,
-        "out_id": 650,
+        "out_id": 330,
         "in_id": 229
       },
       {
         "gw": 14,
         "action": "TRANSFER",
-        "route": "Tzolakis → Verbruggen",
+        "route": "Dubravka → Raya",
         "transfer_count": 1,
         "transfers": [
           {
-            "route": "Tzolakis → Verbruggen",
-            "out_id": 572,
-            "in_id": 109,
-            "uplift": 1.43,
+            "route": "Dubravka → Raya",
+            "out_id": 497,
+            "in_id": 1,
+            "uplift": 1.89,
             "addresses_short_term_risk": false
           }
         ],
         "hit": 0,
-        "out_id": 572,
-        "in_id": 109
+        "out_id": 497,
+        "in_id": 1
+      },
+      {
+        "gw": 15,
+        "action": "TRANSFER",
+        "route": "Tarkowski → Konsa",
+        "transfer_count": 1,
+        "transfers": [
+          {
+            "route": "Tarkowski → Konsa",
+            "out_id": 229,
+            "in_id": 31,
+            "uplift": 0.93,
+            "addresses_short_term_risk": false
+          }
+        ],
+        "hit": 0,
+        "out_id": 229,
+        "in_id": 31
       }
     ],
     "chip": "Bench Boost",
-    "chip_gw": 13,
-    "expected_points": 279.77,
-    "chip_incremental_expected_points": 12.64,
-    "p10_points": 238.54,
-    "p90_points": 322.43,
-    "expected_rank_after_path": 1.09,
+    "chip_gw": 15,
+    "expected_points": 264.27,
+    "chip_incremental_expected_points": 12.19,
+    "p10_points": 224.32,
+    "p90_points": 302.98,
+    "expected_rank_after_path": 1.25,
     "prob_finish_ahead_each_rival": [
-      0.945,
-      0.974,
-      0.995,
+      0.883,
+      0.874,
+      0.993,
       1.0,
       1.0,
       1.0,
       1.0,
       1.0
     ],
-    "utility_score": 274.397
+    "utility_score": 258.228
   },
   "rival_behaviour": [
     {
       "entry_id": 7711703,
       "team_name": "Shamrock Sheilas",
-      "observed_transfer_events": 1,
-      "observed_transfers": 4,
+      "observed_transfer_events": 2,
+      "observed_transfers": 9,
       "action_probability": 0.32,
       "hit_probability": 0.2
     },
     {
       "entry_id": 5129943,
       "team_name": "YesWeCanice FC",
-      "observed_transfer_events": 7,
-      "observed_transfers": 7,
-      "action_probability": 0.639,
-      "hit_probability": 0.023
+      "observed_transfer_events": 8,
+      "observed_transfers": 20,
+      "action_probability": 0.662,
+      "hit_probability": 0.2
     },
     {
       "entry_id": 6324266,
       "team_name": "Ballon Dorgu",
-      "observed_transfer_events": 6,
-      "observed_transfers": 24,
-      "action_probability": 0.569,
+      "observed_transfer_events": 7,
+      "observed_transfers": 27,
+      "action_probability": 0.597,
       "hit_probability": 0.2
     },
     {
@@ -362,30 +320,30 @@
       "observed_transfer_events": 0,
       "observed_transfers": 0,
       "action_probability": 0.32,
-      "hit_probability": 0.023
+      "hit_probability": 0.021
     },
     {
       "entry_id": 5202441,
       "team_name": "Rayan Kirk-i",
       "observed_transfer_events": 5,
       "observed_transfers": 14,
-      "action_probability": 0.5,
+      "action_probability": 0.468,
       "hit_probability": 0.2
     },
     {
       "entry_id": 9967314,
       "team_name": "the Four Horseman",
-      "observed_transfer_events": 5,
-      "observed_transfers": 7,
-      "action_probability": 0.5,
-      "hit_probability": 0.177
+      "observed_transfer_events": 6,
+      "observed_transfers": 8,
+      "action_probability": 0.532,
+      "hit_probability": 0.164
     },
     {
       "entry_id": 5227829,
       "team_name": "De-Mainoo Event",
-      "observed_transfer_events": 4,
-      "observed_transfers": 9,
-      "action_probability": 0.431,
+      "observed_transfer_events": 5,
+      "observed_transfers": 11,
+      "action_probability": 0.468,
       "hit_probability": 0.2
     },
     {
@@ -393,7 +351,7 @@
       "team_name": "Johnians 2026Taepotz",
       "observed_transfer_events": 5,
       "observed_transfers": 20,
-      "action_probability": 0.5,
+      "action_probability": 0.468,
       "hit_probability": 0.2
     }
   ],
@@ -401,2527 +359,2177 @@
     {
       "actions": [
         {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Maguire → Vuskovic + Calvert-Lewin → N.Jackson",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Maguire → Vuskovic",
-              "out_id": 418,
-              "in_id": 504,
-              "uplift": 9.32,
-              "addresses_short_term_risk": false
-            },
-            {
-              "route": "Calvert-Lewin → N.Jackson",
-              "out_id": 346,
-              "in_id": 166,
-              "uplift": 6.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 504
-        },
-        {
           "gw": 12,
-          "action": "TRANSFER",
-          "route": "Hughes → Tavernier",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Hughes → Tavernier",
-              "out_id": 212,
-              "in_id": 68,
-              "uplift": 3.22,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 68
+          "action": "ROLL"
         },
         {
           "gw": 13,
           "action": "TRANSFER",
-          "route": "Affengruber → Tarkowski",
-          "transfer_count": 1,
+          "route": "Bogle → Tarkowski + Cherki → Dewsbury-Hall",
+          "transfer_count": 2,
           "transfers": [
             {
-              "route": "Affengruber → Tarkowski",
-              "out_id": 650,
+              "route": "Bogle → Tarkowski",
+              "out_id": 330,
               "in_id": 229,
-              "uplift": 1.91,
+              "uplift": 2.42,
+              "addresses_short_term_risk": false
+            },
+            {
+              "route": "Cherki → Dewsbury-Hall",
+              "out_id": 399,
+              "in_id": 236,
+              "uplift": 2.05,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
-          "out_id": 650,
+          "out_id": 330,
           "in_id": 229
         },
         {
           "gw": 14,
           "action": "TRANSFER",
-          "route": "Tzolakis → Verbruggen",
+          "route": "Dubravka → Raya",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Tzolakis → Verbruggen",
-              "out_id": 572,
-              "in_id": 109,
-              "uplift": 1.43,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 572,
-          "in_id": 109
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 13,
-      "expected_points": 279.77,
-      "chip_incremental_expected_points": 12.64,
-      "p10_points": 238.54,
-      "p90_points": 322.43,
-      "expected_rank_after_path": 1.09,
-      "prob_finish_ahead_each_rival": [
-        0.945,
-        0.974,
-        0.995,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "utility_score": 274.397
-    },
-    {
-      "actions": [
-        {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Maguire → Vuskovic + Calvert-Lewin → N.Jackson",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Maguire → Vuskovic",
-              "out_id": 418,
-              "in_id": 504,
-              "uplift": 9.32,
-              "addresses_short_term_risk": false
-            },
-            {
-              "route": "Calvert-Lewin → N.Jackson",
-              "out_id": 346,
-              "in_id": 166,
-              "uplift": 6.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 504
-        },
-        {
-          "gw": 12,
-          "action": "TRANSFER",
-          "route": "Hughes → Tavernier",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Hughes → Tavernier",
-              "out_id": 212,
-              "in_id": 68,
-              "uplift": 3.22,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 68
-        },
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Affengruber → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Tarkowski",
-              "out_id": 650,
-              "in_id": 229,
-              "uplift": 1.91,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
-          "in_id": 229
-        },
-        {
-          "gw": 14,
-          "action": "TRANSFER",
-          "route": "Tzolakis → Verbruggen",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Tzolakis → Verbruggen",
-              "out_id": 572,
-              "in_id": 109,
-              "uplift": 1.43,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 572,
-          "in_id": 109
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 12,
-      "expected_points": 279.56,
-      "chip_incremental_expected_points": 12.43,
-      "p10_points": 239.28,
-      "p90_points": 322.72,
-      "expected_rank_after_path": 1.08,
-      "prob_finish_ahead_each_rival": [
-        0.945,
-        0.975,
-        0.997,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "utility_score": 274.311
-    },
-    {
-      "actions": [
-        {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Maguire → Vuskovic + Calvert-Lewin → N.Jackson",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Maguire → Vuskovic",
-              "out_id": 418,
-              "in_id": 504,
-              "uplift": 9.32,
-              "addresses_short_term_risk": false
-            },
-            {
-              "route": "Calvert-Lewin → N.Jackson",
-              "out_id": 346,
-              "in_id": 166,
-              "uplift": 6.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 504
-        },
-        {
-          "gw": 12,
-          "action": "TRANSFER",
-          "route": "Belloumi → Tavernier",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Belloumi → Tavernier",
-              "out_id": 286,
-              "in_id": 68,
-              "uplift": 3.22,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 286,
-          "in_id": 68
-        },
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Affengruber → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Tarkowski",
-              "out_id": 650,
-              "in_id": 229,
-              "uplift": 1.91,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
-          "in_id": 229
-        },
-        {
-          "gw": 14,
-          "action": "TRANSFER",
-          "route": "Dubravka → Verbruggen",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Dubravka → Verbruggen",
+              "route": "Dubravka → Raya",
               "out_id": 497,
-              "in_id": 109,
-              "uplift": 1.43,
+              "in_id": 1,
+              "uplift": 1.89,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
           "out_id": 497,
-          "in_id": 109
+          "in_id": 1
+        },
+        {
+          "gw": 15,
+          "action": "TRANSFER",
+          "route": "Tarkowski → Konsa",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Tarkowski → Konsa",
+              "out_id": 229,
+              "in_id": 31,
+              "uplift": 0.93,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 229,
+          "in_id": 31
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 15,
+      "expected_points": 264.27,
+      "chip_incremental_expected_points": 12.19,
+      "p10_points": 224.32,
+      "p90_points": 302.98,
+      "expected_rank_after_path": 1.25,
+      "prob_finish_ahead_each_rival": [
+        0.883,
+        0.874,
+        0.993,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "utility_score": 258.228
+    },
+    {
+      "actions": [
+        {
+          "gw": 12,
+          "action": "ROLL"
+        },
+        {
+          "gw": 13,
+          "action": "TRANSFER",
+          "route": "Bogle → Tarkowski + Cherki → Dewsbury-Hall",
+          "transfer_count": 2,
+          "transfers": [
+            {
+              "route": "Bogle → Tarkowski",
+              "out_id": 330,
+              "in_id": 229,
+              "uplift": 2.42,
+              "addresses_short_term_risk": false
+            },
+            {
+              "route": "Cherki → Dewsbury-Hall",
+              "out_id": 399,
+              "in_id": 236,
+              "uplift": 2.05,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 330,
+          "in_id": 229
+        },
+        {
+          "gw": 14,
+          "action": "TRANSFER",
+          "route": "Dubravka → Raya",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Dubravka → Raya",
+              "out_id": 497,
+              "in_id": 1,
+              "uplift": 1.89,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 497,
+          "in_id": 1
+        },
+        {
+          "gw": 15,
+          "action": "TRANSFER",
+          "route": "Affengruber → Konsa",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Affengruber → Konsa",
+              "out_id": 650,
+              "in_id": 31,
+              "uplift": 0.83,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 650,
+          "in_id": 31
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 15,
+      "expected_points": 264.22,
+      "chip_incremental_expected_points": 12.19,
+      "p10_points": 223.71,
+      "p90_points": 302.75,
+      "expected_rank_after_path": 1.25,
+      "prob_finish_ahead_each_rival": [
+        0.885,
+        0.874,
+        0.992,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "utility_score": 258.116
+    },
+    {
+      "actions": [
+        {
+          "gw": 12,
+          "action": "ROLL"
+        },
+        {
+          "gw": 13,
+          "action": "TRANSFER",
+          "route": "Bogle → Tarkowski + Cherki → Dewsbury-Hall",
+          "transfer_count": 2,
+          "transfers": [
+            {
+              "route": "Bogle → Tarkowski",
+              "out_id": 330,
+              "in_id": 229,
+              "uplift": 2.42,
+              "addresses_short_term_risk": false
+            },
+            {
+              "route": "Cherki → Dewsbury-Hall",
+              "out_id": 399,
+              "in_id": 236,
+              "uplift": 2.05,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 330,
+          "in_id": 229
+        },
+        {
+          "gw": 14,
+          "action": "TRANSFER",
+          "route": "Dubravka → Raya",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Dubravka → Raya",
+              "out_id": 497,
+              "in_id": 1,
+              "uplift": 1.89,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 497,
+          "in_id": 1
+        },
+        {
+          "gw": 15,
+          "action": "TRANSFER",
+          "route": "Tarkowski → Konsa",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Tarkowski → Konsa",
+              "out_id": 229,
+              "in_id": 31,
+              "uplift": 0.93,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 229,
+          "in_id": 31
         }
       ],
       "chip": "Bench Boost",
       "chip_gw": 14,
-      "expected_points": 278.66,
-      "chip_incremental_expected_points": 11.52,
-      "p10_points": 237.84,
-      "p90_points": 321.58,
-      "expected_rank_after_path": 1.09,
+      "expected_points": 263.78,
+      "chip_incremental_expected_points": 11.7,
+      "p10_points": 223.86,
+      "p90_points": 302.22,
+      "expected_rank_after_path": 1.25,
       "prob_finish_ahead_each_rival": [
-        0.94,
-        0.973,
-        0.995,
+        0.883,
+        0.87,
+        0.993,
         1.0,
         1.0,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 273.303
+      "utility_score": 257.725
     },
     {
       "actions": [
         {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Maguire → Vuskovic + Calvert-Lewin → N.Jackson",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Maguire → Vuskovic",
-              "out_id": 418,
-              "in_id": 504,
-              "uplift": 9.32,
-              "addresses_short_term_risk": false
-            },
-            {
-              "route": "Calvert-Lewin → N.Jackson",
-              "out_id": 346,
-              "in_id": 166,
-              "uplift": 6.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 504
-        },
-        {
           "gw": 12,
-          "action": "TRANSFER",
-          "route": "Henderson → Tavernier",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Henderson → Tavernier",
-              "out_id": 101,
-              "in_id": 68,
-              "uplift": 3.22,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 101,
-          "in_id": 68
+          "action": "ROLL"
         },
         {
           "gw": 13,
           "action": "TRANSFER",
-          "route": "Affengruber → Tarkowski",
-          "transfer_count": 1,
+          "route": "Bogle → Tarkowski + Cherki → Dewsbury-Hall",
+          "transfer_count": 2,
           "transfers": [
             {
-              "route": "Affengruber → Tarkowski",
-              "out_id": 650,
+              "route": "Bogle → Tarkowski",
+              "out_id": 330,
               "in_id": 229,
-              "uplift": 1.91,
+              "uplift": 2.42,
+              "addresses_short_term_risk": false
+            },
+            {
+              "route": "Cherki → Dewsbury-Hall",
+              "out_id": 399,
+              "in_id": 236,
+              "uplift": 2.05,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
-          "out_id": 650,
+          "out_id": 330,
           "in_id": 229
         },
         {
           "gw": 14,
           "action": "TRANSFER",
-          "route": "Dubravka → Verbruggen",
+          "route": "Dubravka → Raya",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Dubravka → Verbruggen",
+              "route": "Dubravka → Raya",
               "out_id": 497,
-              "in_id": 109,
-              "uplift": 1.43,
+              "in_id": 1,
+              "uplift": 1.89,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
           "out_id": 497,
-          "in_id": 109
+          "in_id": 1
+        },
+        {
+          "gw": 15,
+          "action": "TRANSFER",
+          "route": "Affengruber → Konsa",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Affengruber → Konsa",
+              "out_id": 650,
+              "in_id": 31,
+              "uplift": 0.83,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 650,
+          "in_id": 31
         }
       ],
       "chip": "Bench Boost",
       "chip_gw": 14,
-      "expected_points": 278.67,
-      "chip_incremental_expected_points": 11.54,
-      "p10_points": 237.68,
-      "p90_points": 321.63,
-      "expected_rank_after_path": 1.09,
+      "expected_points": 263.73,
+      "chip_incremental_expected_points": 11.7,
+      "p10_points": 224.03,
+      "p90_points": 302.63,
+      "expected_rank_after_path": 1.25,
       "prob_finish_ahead_each_rival": [
-        0.942,
-        0.973,
-        0.995,
+        0.887,
+        0.868,
+        0.992,
         1.0,
         1.0,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 273.301
+      "utility_score": 257.703
     },
     {
       "actions": [
         {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Maguire → Vuskovic + Calvert-Lewin → N.Jackson",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Maguire → Vuskovic",
-              "out_id": 418,
-              "in_id": 504,
-              "uplift": 9.32,
-              "addresses_short_term_risk": false
-            },
-            {
-              "route": "Calvert-Lewin → N.Jackson",
-              "out_id": 346,
-              "in_id": 166,
-              "uplift": 6.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 504
-        },
-        {
           "gw": 12,
-          "action": "TRANSFER",
-          "route": "Hughes → Tavernier",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Hughes → Tavernier",
-              "out_id": 212,
-              "in_id": 68,
-              "uplift": 3.22,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 68
+          "action": "ROLL"
         },
         {
           "gw": 13,
           "action": "TRANSFER",
-          "route": "Affengruber → Tarkowski",
-          "transfer_count": 1,
+          "route": "Bogle → Tarkowski + Cherki → Dewsbury-Hall",
+          "transfer_count": 2,
           "transfers": [
             {
-              "route": "Affengruber → Tarkowski",
-              "out_id": 650,
+              "route": "Bogle → Tarkowski",
+              "out_id": 330,
               "in_id": 229,
-              "uplift": 1.91,
+              "uplift": 2.42,
+              "addresses_short_term_risk": false
+            },
+            {
+              "route": "Cherki → Dewsbury-Hall",
+              "out_id": 399,
+              "in_id": 236,
+              "uplift": 2.05,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
-          "out_id": 650,
+          "out_id": 330,
           "in_id": 229
         },
         {
           "gw": 14,
           "action": "TRANSFER",
-          "route": "Tzolakis → Verbruggen",
+          "route": "Tzolakis → Raya",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Tzolakis → Verbruggen",
+              "route": "Tzolakis → Raya",
               "out_id": 572,
-              "in_id": 109,
-              "uplift": 1.43,
+              "in_id": 1,
+              "uplift": 1.89,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
           "out_id": 572,
-          "in_id": 109
+          "in_id": 1
+        },
+        {
+          "gw": 15,
+          "action": "TRANSFER",
+          "route": "Tarkowski → Konsa",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Tarkowski → Konsa",
+              "out_id": 229,
+              "in_id": 31,
+              "uplift": 0.93,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 229,
+          "in_id": 31
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 13,
+      "expected_points": 261.57,
+      "chip_incremental_expected_points": 9.49,
+      "p10_points": 221.91,
+      "p90_points": 301.77,
+      "expected_rank_after_path": 1.29,
+      "prob_finish_ahead_each_rival": [
+        0.862,
+        0.856,
+        0.991,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "utility_score": 255.354
+    },
+    {
+      "actions": [
+        {
+          "gw": 12,
+          "action": "ROLL"
+        },
+        {
+          "gw": 13,
+          "action": "TRANSFER",
+          "route": "Bogle → Tarkowski + Cherki → Dewsbury-Hall",
+          "transfer_count": 2,
+          "transfers": [
+            {
+              "route": "Bogle → Tarkowski",
+              "out_id": 330,
+              "in_id": 229,
+              "uplift": 2.42,
+              "addresses_short_term_risk": false
+            },
+            {
+              "route": "Cherki → Dewsbury-Hall",
+              "out_id": 399,
+              "in_id": 236,
+              "uplift": 2.05,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 330,
+          "in_id": 229
+        },
+        {
+          "gw": 14,
+          "action": "TRANSFER",
+          "route": "Dubravka → Raya",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Dubravka → Raya",
+              "out_id": 497,
+              "in_id": 1,
+              "uplift": 1.89,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 497,
+          "in_id": 1
+        },
+        {
+          "gw": 15,
+          "action": "TRANSFER",
+          "route": "Tarkowski → Konsa",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Tarkowski → Konsa",
+              "out_id": 229,
+              "in_id": 31,
+              "uplift": 0.93,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 229,
+          "in_id": 31
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 13,
+      "expected_points": 261.57,
+      "chip_incremental_expected_points": 9.49,
+      "p10_points": 221.91,
+      "p90_points": 301.77,
+      "expected_rank_after_path": 1.29,
+      "prob_finish_ahead_each_rival": [
+        0.862,
+        0.856,
+        0.991,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "utility_score": 255.354
+    },
+    {
+      "actions": [
+        {
+          "gw": 12,
+          "action": "ROLL"
+        },
+        {
+          "gw": 13,
+          "action": "TRANSFER",
+          "route": "Bogle → Tarkowski + Cherki → Dewsbury-Hall",
+          "transfer_count": 2,
+          "transfers": [
+            {
+              "route": "Bogle → Tarkowski",
+              "out_id": 330,
+              "in_id": 229,
+              "uplift": 2.42,
+              "addresses_short_term_risk": false
+            },
+            {
+              "route": "Cherki → Dewsbury-Hall",
+              "out_id": 399,
+              "in_id": 236,
+              "uplift": 2.05,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 330,
+          "in_id": 229
+        },
+        {
+          "gw": 14,
+          "action": "TRANSFER",
+          "route": "Tzolakis → Raya",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Tzolakis → Raya",
+              "out_id": 572,
+              "in_id": 1,
+              "uplift": 1.89,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 572,
+          "in_id": 1
+        },
+        {
+          "gw": 15,
+          "action": "TRANSFER",
+          "route": "Affengruber → Konsa",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Affengruber → Konsa",
+              "out_id": 650,
+              "in_id": 31,
+              "uplift": 0.83,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 650,
+          "in_id": 31
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 13,
+      "expected_points": 261.52,
+      "chip_incremental_expected_points": 9.49,
+      "p10_points": 222.15,
+      "p90_points": 300.48,
+      "expected_rank_after_path": 1.3,
+      "prob_finish_ahead_each_rival": [
+        0.861,
+        0.853,
+        0.988,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "utility_score": 255.306
+    },
+    {
+      "actions": [
+        {
+          "gw": 12,
+          "action": "ROLL"
+        },
+        {
+          "gw": 13,
+          "action": "TRANSFER",
+          "route": "Bogle → Tarkowski + Cherki → Dewsbury-Hall",
+          "transfer_count": 2,
+          "transfers": [
+            {
+              "route": "Bogle → Tarkowski",
+              "out_id": 330,
+              "in_id": 229,
+              "uplift": 2.42,
+              "addresses_short_term_risk": false
+            },
+            {
+              "route": "Cherki → Dewsbury-Hall",
+              "out_id": 399,
+              "in_id": 236,
+              "uplift": 2.05,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 330,
+          "in_id": 229
+        },
+        {
+          "gw": 14,
+          "action": "TRANSFER",
+          "route": "Dubravka → Raya",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Dubravka → Raya",
+              "out_id": 497,
+              "in_id": 1,
+              "uplift": 1.89,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 497,
+          "in_id": 1
+        },
+        {
+          "gw": 15,
+          "action": "TRANSFER",
+          "route": "Affengruber → Konsa",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Affengruber → Konsa",
+              "out_id": 650,
+              "in_id": 31,
+              "uplift": 0.83,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 650,
+          "in_id": 31
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 13,
+      "expected_points": 261.52,
+      "chip_incremental_expected_points": 9.49,
+      "p10_points": 222.15,
+      "p90_points": 300.48,
+      "expected_rank_after_path": 1.3,
+      "prob_finish_ahead_each_rival": [
+        0.861,
+        0.853,
+        0.988,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "utility_score": 255.306
+    },
+    {
+      "actions": [
+        {
+          "gw": 12,
+          "action": "ROLL"
+        },
+        {
+          "gw": 13,
+          "action": "TRANSFER",
+          "route": "Bogle → Tarkowski + Belloumi → Dewsbury-Hall",
+          "transfer_count": 2,
+          "transfers": [
+            {
+              "route": "Bogle → Tarkowski",
+              "out_id": 330,
+              "in_id": 229,
+              "uplift": 2.42,
+              "addresses_short_term_risk": false
+            },
+            {
+              "route": "Belloumi → Dewsbury-Hall",
+              "out_id": 286,
+              "in_id": 236,
+              "uplift": 1.97,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 330,
+          "in_id": 229
+        },
+        {
+          "gw": 14,
+          "action": "TRANSFER",
+          "route": "Tzolakis → Raya",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Tzolakis → Raya",
+              "out_id": 572,
+              "in_id": 1,
+              "uplift": 1.89,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 572,
+          "in_id": 1
+        },
+        {
+          "gw": 15,
+          "action": "TRANSFER",
+          "route": "Tarkowski → Konsa",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Tarkowski → Konsa",
+              "out_id": 229,
+              "in_id": 31,
+              "uplift": 0.93,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 229,
+          "in_id": 31
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 13,
+      "expected_points": 261.44,
+      "chip_incremental_expected_points": 9.41,
+      "p10_points": 221.35,
+      "p90_points": 300.78,
+      "expected_rank_after_path": 1.28,
+      "prob_finish_ahead_each_rival": [
+        0.863,
+        0.861,
+        0.992,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "utility_score": 255.203
+    },
+    {
+      "actions": [
+        {
+          "gw": 12,
+          "action": "ROLL"
+        },
+        {
+          "gw": 13,
+          "action": "TRANSFER",
+          "route": "Bogle → Tarkowski + Cherki → Dewsbury-Hall",
+          "transfer_count": 2,
+          "transfers": [
+            {
+              "route": "Bogle → Tarkowski",
+              "out_id": 330,
+              "in_id": 229,
+              "uplift": 2.42,
+              "addresses_short_term_risk": false
+            },
+            {
+              "route": "Cherki → Dewsbury-Hall",
+              "out_id": 399,
+              "in_id": 236,
+              "uplift": 2.05,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 330,
+          "in_id": 229
+        },
+        {
+          "gw": 14,
+          "action": "TRANSFER",
+          "route": "Tzolakis → Raya",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Tzolakis → Raya",
+              "out_id": 572,
+              "in_id": 1,
+              "uplift": 1.89,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 572,
+          "in_id": 1
+        },
+        {
+          "gw": 15,
+          "action": "TRANSFER",
+          "route": "Tarkowski → Konsa",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Tarkowski → Konsa",
+              "out_id": 229,
+              "in_id": 31,
+              "uplift": 0.93,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 229,
+          "in_id": 31
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 12,
+      "expected_points": 260.5,
+      "chip_incremental_expected_points": 8.42,
+      "p10_points": 221.03,
+      "p90_points": 298.82,
+      "expected_rank_after_path": 1.31,
+      "prob_finish_ahead_each_rival": [
+        0.851,
+        0.851,
+        0.992,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "utility_score": 254.233
+    },
+    {
+      "actions": [
+        {
+          "gw": 12,
+          "action": "ROLL"
+        },
+        {
+          "gw": 13,
+          "action": "TRANSFER",
+          "route": "Bogle → Tarkowski + Cherki → Dewsbury-Hall",
+          "transfer_count": 2,
+          "transfers": [
+            {
+              "route": "Bogle → Tarkowski",
+              "out_id": 330,
+              "in_id": 229,
+              "uplift": 2.42,
+              "addresses_short_term_risk": false
+            },
+            {
+              "route": "Cherki → Dewsbury-Hall",
+              "out_id": 399,
+              "in_id": 236,
+              "uplift": 2.05,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 330,
+          "in_id": 229
+        },
+        {
+          "gw": 14,
+          "action": "TRANSFER",
+          "route": "Dubravka → Raya",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Dubravka → Raya",
+              "out_id": 497,
+              "in_id": 1,
+              "uplift": 1.89,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 497,
+          "in_id": 1
+        },
+        {
+          "gw": 15,
+          "action": "TRANSFER",
+          "route": "Tarkowski → Konsa",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Tarkowski → Konsa",
+              "out_id": 229,
+              "in_id": 31,
+              "uplift": 0.93,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 229,
+          "in_id": 31
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 12,
+      "expected_points": 260.5,
+      "chip_incremental_expected_points": 8.42,
+      "p10_points": 221.03,
+      "p90_points": 298.82,
+      "expected_rank_after_path": 1.31,
+      "prob_finish_ahead_each_rival": [
+        0.851,
+        0.851,
+        0.992,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "utility_score": 254.233
+    },
+    {
+      "actions": [
+        {
+          "gw": 12,
+          "action": "ROLL"
+        },
+        {
+          "gw": 13,
+          "action": "TRANSFER",
+          "route": "Bogle → Tarkowski + Belloumi → Dewsbury-Hall",
+          "transfer_count": 2,
+          "transfers": [
+            {
+              "route": "Bogle → Tarkowski",
+              "out_id": 330,
+              "in_id": 229,
+              "uplift": 2.42,
+              "addresses_short_term_risk": false
+            },
+            {
+              "route": "Belloumi → Dewsbury-Hall",
+              "out_id": 286,
+              "in_id": 236,
+              "uplift": 1.97,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 330,
+          "in_id": 229
+        },
+        {
+          "gw": 14,
+          "action": "TRANSFER",
+          "route": "Tzolakis → Raya",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Tzolakis → Raya",
+              "out_id": 572,
+              "in_id": 1,
+              "uplift": 1.89,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 572,
+          "in_id": 1
+        },
+        {
+          "gw": 15,
+          "action": "TRANSFER",
+          "route": "Tarkowski → Konsa",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Tarkowski → Konsa",
+              "out_id": 229,
+              "in_id": 31,
+              "uplift": 0.93,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 229,
+          "in_id": 31
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 12,
+      "expected_points": 260.45,
+      "chip_incremental_expected_points": 8.42,
+      "p10_points": 220.45,
+      "p90_points": 299.35,
+      "expected_rank_after_path": 1.3,
+      "prob_finish_ahead_each_rival": [
+        0.849,
+        0.861,
+        0.988,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "utility_score": 254.135
+    },
+    {
+      "actions": [
+        {
+          "gw": 12,
+          "action": "ROLL"
+        },
+        {
+          "gw": 13,
+          "action": "TRANSFER",
+          "route": "Bogle → Tarkowski + Cherki → Dewsbury-Hall",
+          "transfer_count": 2,
+          "transfers": [
+            {
+              "route": "Bogle → Tarkowski",
+              "out_id": 330,
+              "in_id": 229,
+              "uplift": 2.42,
+              "addresses_short_term_risk": false
+            },
+            {
+              "route": "Cherki → Dewsbury-Hall",
+              "out_id": 399,
+              "in_id": 236,
+              "uplift": 2.05,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 330,
+          "in_id": 229
+        },
+        {
+          "gw": 14,
+          "action": "TRANSFER",
+          "route": "Tzolakis → Raya",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Tzolakis → Raya",
+              "out_id": 572,
+              "in_id": 1,
+              "uplift": 1.89,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 572,
+          "in_id": 1
+        },
+        {
+          "gw": 15,
+          "action": "TRANSFER",
+          "route": "Affengruber → Konsa",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Affengruber → Konsa",
+              "out_id": 650,
+              "in_id": 31,
+              "uplift": 0.83,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 650,
+          "in_id": 31
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 12,
+      "expected_points": 260.45,
+      "chip_incremental_expected_points": 8.42,
+      "p10_points": 220.42,
+      "p90_points": 298.97,
+      "expected_rank_after_path": 1.3,
+      "prob_finish_ahead_each_rival": [
+        0.857,
+        0.853,
+        0.987,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "utility_score": 254.133
+    },
+    {
+      "actions": [
+        {
+          "gw": 12,
+          "action": "ROLL"
+        },
+        {
+          "gw": 13,
+          "action": "TRANSFER",
+          "route": "Bogle → Tarkowski + Cherki → Dewsbury-Hall",
+          "transfer_count": 2,
+          "transfers": [
+            {
+              "route": "Bogle → Tarkowski",
+              "out_id": 330,
+              "in_id": 229,
+              "uplift": 2.42,
+              "addresses_short_term_risk": false
+            },
+            {
+              "route": "Cherki → Dewsbury-Hall",
+              "out_id": 399,
+              "in_id": 236,
+              "uplift": 2.05,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 330,
+          "in_id": 229
+        },
+        {
+          "gw": 14,
+          "action": "TRANSFER",
+          "route": "Dubravka → Raya",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Dubravka → Raya",
+              "out_id": 497,
+              "in_id": 1,
+              "uplift": 1.89,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 497,
+          "in_id": 1
+        },
+        {
+          "gw": 15,
+          "action": "TRANSFER",
+          "route": "Affengruber → Konsa",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Affengruber → Konsa",
+              "out_id": 650,
+              "in_id": 31,
+              "uplift": 0.83,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 650,
+          "in_id": 31
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 12,
+      "expected_points": 260.45,
+      "chip_incremental_expected_points": 8.42,
+      "p10_points": 220.42,
+      "p90_points": 298.97,
+      "expected_rank_after_path": 1.3,
+      "prob_finish_ahead_each_rival": [
+        0.857,
+        0.853,
+        0.987,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "utility_score": 254.133
+    },
+    {
+      "actions": [
+        {
+          "gw": 12,
+          "action": "ROLL"
+        },
+        {
+          "gw": 13,
+          "action": "TRANSFER",
+          "route": "Bogle → Tarkowski + Cherki → Dewsbury-Hall",
+          "transfer_count": 2,
+          "transfers": [
+            {
+              "route": "Bogle → Tarkowski",
+              "out_id": 330,
+              "in_id": 229,
+              "uplift": 2.42,
+              "addresses_short_term_risk": false
+            },
+            {
+              "route": "Cherki → Dewsbury-Hall",
+              "out_id": 399,
+              "in_id": 236,
+              "uplift": 2.05,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 330,
+          "in_id": 229
+        },
+        {
+          "gw": 14,
+          "action": "TRANSFER",
+          "route": "Tzolakis → Raya",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Tzolakis → Raya",
+              "out_id": 572,
+              "in_id": 1,
+              "uplift": 1.89,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 572,
+          "in_id": 1
+        },
+        {
+          "gw": 15,
+          "action": "TRANSFER",
+          "route": "Affengruber → Konsa",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Affengruber → Konsa",
+              "out_id": 650,
+              "in_id": 31,
+              "uplift": 0.83,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 650,
+          "in_id": 31
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 15,
+      "expected_points": 260.33,
+      "chip_incremental_expected_points": 8.3,
+      "p10_points": 220.52,
+      "p90_points": 299.11,
+      "expected_rank_after_path": 1.3,
+      "prob_finish_ahead_each_rival": [
+        0.856,
+        0.854,
+        0.99,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "utility_score": 254.053
+    },
+    {
+      "actions": [
+        {
+          "gw": 12,
+          "action": "ROLL"
+        },
+        {
+          "gw": 13,
+          "action": "TRANSFER",
+          "route": "Bogle → Tarkowski + Cherki → Dewsbury-Hall",
+          "transfer_count": 2,
+          "transfers": [
+            {
+              "route": "Bogle → Tarkowski",
+              "out_id": 330,
+              "in_id": 229,
+              "uplift": 2.42,
+              "addresses_short_term_risk": false
+            },
+            {
+              "route": "Cherki → Dewsbury-Hall",
+              "out_id": 399,
+              "in_id": 236,
+              "uplift": 2.05,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 330,
+          "in_id": 229
+        },
+        {
+          "gw": 14,
+          "action": "TRANSFER",
+          "route": "Tzolakis → Raya",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Tzolakis → Raya",
+              "out_id": 572,
+              "in_id": 1,
+              "uplift": 1.89,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 572,
+          "in_id": 1
+        },
+        {
+          "gw": 15,
+          "action": "TRANSFER",
+          "route": "Tarkowski → Konsa",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Tarkowski → Konsa",
+              "out_id": 229,
+              "in_id": 31,
+              "uplift": 0.93,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 229,
+          "in_id": 31
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 15,
+      "expected_points": 260.38,
+      "chip_incremental_expected_points": 8.3,
+      "p10_points": 220.42,
+      "p90_points": 298.91,
+      "expected_rank_after_path": 1.31,
+      "prob_finish_ahead_each_rival": [
+        0.853,
+        0.851,
+        0.989,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "utility_score": 254.051
+    },
+    {
+      "actions": [
+        {
+          "gw": 12,
+          "action": "ROLL"
+        },
+        {
+          "gw": 13,
+          "action": "TRANSFER",
+          "route": "Bogle → Tarkowski + Cherki → Dewsbury-Hall",
+          "transfer_count": 2,
+          "transfers": [
+            {
+              "route": "Bogle → Tarkowski",
+              "out_id": 330,
+              "in_id": 229,
+              "uplift": 2.42,
+              "addresses_short_term_risk": false
+            },
+            {
+              "route": "Cherki → Dewsbury-Hall",
+              "out_id": 399,
+              "in_id": 236,
+              "uplift": 2.05,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 330,
+          "in_id": 229
+        },
+        {
+          "gw": 14,
+          "action": "TRANSFER",
+          "route": "Tzolakis → Raya",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Tzolakis → Raya",
+              "out_id": 572,
+              "in_id": 1,
+              "uplift": 1.89,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 572,
+          "in_id": 1
+        },
+        {
+          "gw": 15,
+          "action": "TRANSFER",
+          "route": "Affengruber → Konsa",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Affengruber → Konsa",
+              "out_id": 650,
+              "in_id": 31,
+              "uplift": 0.83,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 650,
+          "in_id": 31
         }
       ],
       "chip": "Bench Boost",
       "chip_gw": 14,
-      "expected_points": 278.33,
-      "chip_incremental_expected_points": 11.2,
-      "p10_points": 237.08,
-      "p90_points": 321.36,
-      "expected_rank_after_path": 1.1,
+      "expected_points": 260.28,
+      "chip_incremental_expected_points": 8.25,
+      "p10_points": 220.62,
+      "p90_points": 299.25,
+      "expected_rank_after_path": 1.31,
       "prob_finish_ahead_each_rival": [
-        0.935,
-        0.971,
-        0.995,
+        0.858,
+        0.848,
+        0.988,
         1.0,
         1.0,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 272.894
+      "utility_score": 253.989
     },
     {
       "actions": [
         {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Maguire → Vuskovic + Calvert-Lewin → N.Jackson",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Maguire → Vuskovic",
-              "out_id": 418,
-              "in_id": 504,
-              "uplift": 9.32,
-              "addresses_short_term_risk": false
-            },
-            {
-              "route": "Calvert-Lewin → N.Jackson",
-              "out_id": 346,
-              "in_id": 166,
-              "uplift": 6.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 504
-        },
-        {
           "gw": 12,
-          "action": "TRANSFER",
-          "route": "Belloumi → Tavernier",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Belloumi → Tavernier",
-              "out_id": 286,
-              "in_id": 68,
-              "uplift": 3.22,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 286,
-          "in_id": 68
+          "action": "ROLL"
         },
         {
           "gw": 13,
           "action": "TRANSFER",
-          "route": "Affengruber → Tarkowski",
-          "transfer_count": 1,
+          "route": "Bogle → Tarkowski + Cherki → Dewsbury-Hall",
+          "transfer_count": 2,
           "transfers": [
             {
-              "route": "Affengruber → Tarkowski",
-              "out_id": 650,
+              "route": "Bogle → Tarkowski",
+              "out_id": 330,
               "in_id": 229,
-              "uplift": 1.91,
+              "uplift": 2.42,
+              "addresses_short_term_risk": false
+            },
+            {
+              "route": "Cherki → Dewsbury-Hall",
+              "out_id": 399,
+              "in_id": 236,
+              "uplift": 2.05,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
-          "out_id": 650,
+          "out_id": 330,
           "in_id": 229
         },
         {
           "gw": 14,
           "action": "TRANSFER",
-          "route": "Tzolakis → Verbruggen",
+          "route": "Tzolakis → Raya",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Tzolakis → Verbruggen",
+              "route": "Tzolakis → Raya",
               "out_id": 572,
-              "in_id": 109,
-              "uplift": 1.43,
+              "in_id": 1,
+              "uplift": 1.89,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
           "out_id": 572,
-          "in_id": 109
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 13,
-      "expected_points": 276.04,
-      "chip_incremental_expected_points": 8.91,
-      "p10_points": 235.18,
-      "p90_points": 319.27,
-      "expected_rank_after_path": 1.12,
-      "prob_finish_ahead_each_rival": [
-        0.926,
-        0.961,
-        0.995,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "utility_score": 270.548
-    },
-    {
-      "actions": [
-        {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Maguire → Vuskovic + Calvert-Lewin → N.Jackson",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Maguire → Vuskovic",
-              "out_id": 418,
-              "in_id": 504,
-              "uplift": 9.32,
-              "addresses_short_term_risk": false
-            },
-            {
-              "route": "Calvert-Lewin → N.Jackson",
-              "out_id": 346,
-              "in_id": 166,
-              "uplift": 6.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 504
+          "in_id": 1
         },
         {
-          "gw": 12,
+          "gw": 15,
           "action": "TRANSFER",
-          "route": "Belloumi → Tavernier",
+          "route": "Tarkowski → Konsa",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Belloumi → Tavernier",
-              "out_id": 286,
-              "in_id": 68,
-              "uplift": 3.22,
+              "route": "Tarkowski → Konsa",
+              "out_id": 229,
+              "in_id": 31,
+              "uplift": 0.93,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
-          "out_id": 286,
-          "in_id": 68
-        },
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Affengruber → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Tarkowski",
-              "out_id": 650,
-              "in_id": 229,
-              "uplift": 1.91,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
-          "in_id": 229
-        },
-        {
-          "gw": 14,
-          "action": "TRANSFER",
-          "route": "Dubravka → Verbruggen",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Dubravka → Verbruggen",
-              "out_id": 497,
-              "in_id": 109,
-              "uplift": 1.43,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 497,
-          "in_id": 109
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 13,
-      "expected_points": 276.04,
-      "chip_incremental_expected_points": 8.91,
-      "p10_points": 235.18,
-      "p90_points": 319.27,
-      "expected_rank_after_path": 1.12,
-      "prob_finish_ahead_each_rival": [
-        0.926,
-        0.961,
-        0.995,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "utility_score": 270.548
-    },
-    {
-      "actions": [
-        {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Maguire → Vuskovic + Calvert-Lewin → N.Jackson",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Maguire → Vuskovic",
-              "out_id": 418,
-              "in_id": 504,
-              "uplift": 9.32,
-              "addresses_short_term_risk": false
-            },
-            {
-              "route": "Calvert-Lewin → N.Jackson",
-              "out_id": 346,
-              "in_id": 166,
-              "uplift": 6.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 504
-        },
-        {
-          "gw": 12,
-          "action": "TRANSFER",
-          "route": "Henderson → Tavernier",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Henderson → Tavernier",
-              "out_id": 101,
-              "in_id": 68,
-              "uplift": 3.22,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 101,
-          "in_id": 68
-        },
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Affengruber → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Tarkowski",
-              "out_id": 650,
-              "in_id": 229,
-              "uplift": 1.91,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
-          "in_id": 229
-        },
-        {
-          "gw": 14,
-          "action": "TRANSFER",
-          "route": "Tzolakis → Verbruggen",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Tzolakis → Verbruggen",
-              "out_id": 572,
-              "in_id": 109,
-              "uplift": 1.43,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 572,
-          "in_id": 109
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 13,
-      "expected_points": 276.03,
-      "chip_incremental_expected_points": 8.89,
-      "p10_points": 234.7,
-      "p90_points": 319.31,
-      "expected_rank_after_path": 1.11,
-      "prob_finish_ahead_each_rival": [
-        0.932,
-        0.966,
-        0.994,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "utility_score": 270.528
-    },
-    {
-      "actions": [
-        {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Maguire → Vuskovic + Calvert-Lewin → N.Jackson",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Maguire → Vuskovic",
-              "out_id": 418,
-              "in_id": 504,
-              "uplift": 9.32,
-              "addresses_short_term_risk": false
-            },
-            {
-              "route": "Calvert-Lewin → N.Jackson",
-              "out_id": 346,
-              "in_id": 166,
-              "uplift": 6.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 504
-        },
-        {
-          "gw": 12,
-          "action": "TRANSFER",
-          "route": "Henderson → Tavernier",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Henderson → Tavernier",
-              "out_id": 101,
-              "in_id": 68,
-              "uplift": 3.22,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 101,
-          "in_id": 68
-        },
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Affengruber → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Tarkowski",
-              "out_id": 650,
-              "in_id": 229,
-              "uplift": 1.91,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
-          "in_id": 229
-        },
-        {
-          "gw": 14,
-          "action": "TRANSFER",
-          "route": "Dubravka → Verbruggen",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Dubravka → Verbruggen",
-              "out_id": 497,
-              "in_id": 109,
-              "uplift": 1.43,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 497,
-          "in_id": 109
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 13,
-      "expected_points": 276.03,
-      "chip_incremental_expected_points": 8.89,
-      "p10_points": 234.7,
-      "p90_points": 319.31,
-      "expected_rank_after_path": 1.11,
-      "prob_finish_ahead_each_rival": [
-        0.932,
-        0.966,
-        0.994,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "utility_score": 270.528
-    },
-    {
-      "actions": [
-        {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Maguire → Vuskovic + Calvert-Lewin → N.Jackson",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Maguire → Vuskovic",
-              "out_id": 418,
-              "in_id": 504,
-              "uplift": 9.32,
-              "addresses_short_term_risk": false
-            },
-            {
-              "route": "Calvert-Lewin → N.Jackson",
-              "out_id": 346,
-              "in_id": 166,
-              "uplift": 6.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 504
-        },
-        {
-          "gw": 12,
-          "action": "TRANSFER",
-          "route": "Henderson → Tavernier",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Henderson → Tavernier",
-              "out_id": 101,
-              "in_id": 68,
-              "uplift": 3.22,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 101,
-          "in_id": 68
-        },
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Affengruber → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Tarkowski",
-              "out_id": 650,
-              "in_id": 229,
-              "uplift": 1.91,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
-          "in_id": 229
-        },
-        {
-          "gw": 14,
-          "action": "TRANSFER",
-          "route": "Tzolakis → Verbruggen",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Tzolakis → Verbruggen",
-              "out_id": 572,
-              "in_id": 109,
-              "uplift": 1.43,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 572,
-          "in_id": 109
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 12,
-      "expected_points": 275.91,
-      "chip_incremental_expected_points": 8.78,
-      "p10_points": 235.48,
-      "p90_points": 319.44,
-      "expected_rank_after_path": 1.11,
-      "prob_finish_ahead_each_rival": [
-        0.929,
-        0.967,
-        0.995,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "utility_score": 270.512
-    },
-    {
-      "actions": [
-        {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Maguire → Vuskovic + Calvert-Lewin → N.Jackson",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Maguire → Vuskovic",
-              "out_id": 418,
-              "in_id": 504,
-              "uplift": 9.32,
-              "addresses_short_term_risk": false
-            },
-            {
-              "route": "Calvert-Lewin → N.Jackson",
-              "out_id": 346,
-              "in_id": 166,
-              "uplift": 6.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 504
-        },
-        {
-          "gw": 12,
-          "action": "TRANSFER",
-          "route": "Henderson → Tavernier",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Henderson → Tavernier",
-              "out_id": 101,
-              "in_id": 68,
-              "uplift": 3.22,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 101,
-          "in_id": 68
-        },
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Affengruber → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Tarkowski",
-              "out_id": 650,
-              "in_id": 229,
-              "uplift": 1.91,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
-          "in_id": 229
-        },
-        {
-          "gw": 14,
-          "action": "TRANSFER",
-          "route": "Dubravka → Verbruggen",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Dubravka → Verbruggen",
-              "out_id": 497,
-              "in_id": 109,
-              "uplift": 1.43,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 497,
-          "in_id": 109
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 12,
-      "expected_points": 275.91,
-      "chip_incremental_expected_points": 8.78,
-      "p10_points": 235.48,
-      "p90_points": 319.44,
-      "expected_rank_after_path": 1.11,
-      "prob_finish_ahead_each_rival": [
-        0.929,
-        0.967,
-        0.995,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "utility_score": 270.512
-    },
-    {
-      "actions": [
-        {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Maguire → Vuskovic + Calvert-Lewin → N.Jackson",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Maguire → Vuskovic",
-              "out_id": 418,
-              "in_id": 504,
-              "uplift": 9.32,
-              "addresses_short_term_risk": false
-            },
-            {
-              "route": "Calvert-Lewin → N.Jackson",
-              "out_id": 346,
-              "in_id": 166,
-              "uplift": 6.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 504
-        },
-        {
-          "gw": 12,
-          "action": "TRANSFER",
-          "route": "Henderson → Tavernier",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Henderson → Tavernier",
-              "out_id": 101,
-              "in_id": 68,
-              "uplift": 3.22,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 101,
-          "in_id": 68
-        },
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Affengruber → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Tarkowski",
-              "out_id": 650,
-              "in_id": 229,
-              "uplift": 1.91,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
-          "in_id": 229
-        },
-        {
-          "gw": 14,
-          "action": "TRANSFER",
-          "route": "Tzolakis → Verbruggen",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Tzolakis → Verbruggen",
-              "out_id": 572,
-              "in_id": 109,
-              "uplift": 1.43,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 572,
-          "in_id": 109
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 11,
-      "expected_points": 275.67,
-      "chip_incremental_expected_points": 8.53,
-      "p10_points": 235.33,
-      "p90_points": 318.7,
-      "expected_rank_after_path": 1.12,
-      "prob_finish_ahead_each_rival": [
-        0.924,
-        0.961,
-        0.995,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "utility_score": 270.229
-    },
-    {
-      "actions": [
-        {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Maguire → Vuskovic + Calvert-Lewin → N.Jackson",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Maguire → Vuskovic",
-              "out_id": 418,
-              "in_id": 504,
-              "uplift": 9.32,
-              "addresses_short_term_risk": false
-            },
-            {
-              "route": "Calvert-Lewin → N.Jackson",
-              "out_id": 346,
-              "in_id": 166,
-              "uplift": 6.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 504
-        },
-        {
-          "gw": 12,
-          "action": "TRANSFER",
-          "route": "Henderson → Tavernier",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Henderson → Tavernier",
-              "out_id": 101,
-              "in_id": 68,
-              "uplift": 3.22,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 101,
-          "in_id": 68
-        },
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Affengruber → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Tarkowski",
-              "out_id": 650,
-              "in_id": 229,
-              "uplift": 1.91,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
-          "in_id": 229
-        },
-        {
-          "gw": 14,
-          "action": "TRANSFER",
-          "route": "Dubravka → Verbruggen",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Dubravka → Verbruggen",
-              "out_id": 497,
-              "in_id": 109,
-              "uplift": 1.43,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 497,
-          "in_id": 109
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 11,
-      "expected_points": 275.67,
-      "chip_incremental_expected_points": 8.53,
-      "p10_points": 235.33,
-      "p90_points": 318.7,
-      "expected_rank_after_path": 1.12,
-      "prob_finish_ahead_each_rival": [
-        0.924,
-        0.961,
-        0.995,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "utility_score": 270.229
-    },
-    {
-      "actions": [
-        {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Maguire → Vuskovic + Calvert-Lewin → N.Jackson",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Maguire → Vuskovic",
-              "out_id": 418,
-              "in_id": 504,
-              "uplift": 9.32,
-              "addresses_short_term_risk": false
-            },
-            {
-              "route": "Calvert-Lewin → N.Jackson",
-              "out_id": 346,
-              "in_id": 166,
-              "uplift": 6.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 504
-        },
-        {
-          "gw": 12,
-          "action": "TRANSFER",
-          "route": "Belloumi → Tavernier",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Belloumi → Tavernier",
-              "out_id": 286,
-              "in_id": 68,
-              "uplift": 3.22,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 286,
-          "in_id": 68
-        },
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Affengruber → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Tarkowski",
-              "out_id": 650,
-              "in_id": 229,
-              "uplift": 1.91,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
-          "in_id": 229
-        },
-        {
-          "gw": 14,
-          "action": "TRANSFER",
-          "route": "Tzolakis → Verbruggen",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Tzolakis → Verbruggen",
-              "out_id": 572,
-              "in_id": 109,
-              "uplift": 1.43,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 572,
-          "in_id": 109
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 11,
-      "expected_points": 275.67,
-      "chip_incremental_expected_points": 8.53,
-      "p10_points": 235.33,
-      "p90_points": 318.7,
-      "expected_rank_after_path": 1.12,
-      "prob_finish_ahead_each_rival": [
-        0.924,
-        0.961,
-        0.995,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "utility_score": 270.229
-    },
-    {
-      "actions": [
-        {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Maguire → Vuskovic + Calvert-Lewin → N.Jackson",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Maguire → Vuskovic",
-              "out_id": 418,
-              "in_id": 504,
-              "uplift": 9.32,
-              "addresses_short_term_risk": false
-            },
-            {
-              "route": "Calvert-Lewin → N.Jackson",
-              "out_id": 346,
-              "in_id": 166,
-              "uplift": 6.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 504
-        },
-        {
-          "gw": 12,
-          "action": "TRANSFER",
-          "route": "Belloumi → Tavernier",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Belloumi → Tavernier",
-              "out_id": 286,
-              "in_id": 68,
-              "uplift": 3.22,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 286,
-          "in_id": 68
-        },
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Affengruber → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Tarkowski",
-              "out_id": 650,
-              "in_id": 229,
-              "uplift": 1.91,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
-          "in_id": 229
-        },
-        {
-          "gw": 14,
-          "action": "TRANSFER",
-          "route": "Dubravka → Verbruggen",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Dubravka → Verbruggen",
-              "out_id": 497,
-              "in_id": 109,
-              "uplift": 1.43,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 497,
-          "in_id": 109
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 11,
-      "expected_points": 275.67,
-      "chip_incremental_expected_points": 8.53,
-      "p10_points": 235.33,
-      "p90_points": 318.7,
-      "expected_rank_after_path": 1.12,
-      "prob_finish_ahead_each_rival": [
-        0.924,
-        0.961,
-        0.995,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "utility_score": 270.229
-    },
-    {
-      "actions": [
-        {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Maguire → Vuskovic + Calvert-Lewin → N.Jackson",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Maguire → Vuskovic",
-              "out_id": 418,
-              "in_id": 504,
-              "uplift": 9.32,
-              "addresses_short_term_risk": false
-            },
-            {
-              "route": "Calvert-Lewin → N.Jackson",
-              "out_id": 346,
-              "in_id": 166,
-              "uplift": 6.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 504
-        },
-        {
-          "gw": 12,
-          "action": "TRANSFER",
-          "route": "Hughes → Tavernier",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Hughes → Tavernier",
-              "out_id": 212,
-              "in_id": 68,
-              "uplift": 3.22,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 68
-        },
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Affengruber → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Tarkowski",
-              "out_id": 650,
-              "in_id": 229,
-              "uplift": 1.91,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
-          "in_id": 229
-        },
-        {
-          "gw": 14,
-          "action": "TRANSFER",
-          "route": "Tzolakis → Verbruggen",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Tzolakis → Verbruggen",
-              "out_id": 572,
-              "in_id": 109,
-              "uplift": 1.43,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 572,
-          "in_id": 109
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 11,
-      "expected_points": 275.67,
-      "chip_incremental_expected_points": 8.53,
-      "p10_points": 235.33,
-      "p90_points": 318.7,
-      "expected_rank_after_path": 1.12,
-      "prob_finish_ahead_each_rival": [
-        0.924,
-        0.961,
-        0.995,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "utility_score": 270.229
-    },
-    {
-      "actions": [
-        {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Maguire → Vuskovic + Calvert-Lewin → N.Jackson",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Maguire → Vuskovic",
-              "out_id": 418,
-              "in_id": 504,
-              "uplift": 9.32,
-              "addresses_short_term_risk": false
-            },
-            {
-              "route": "Calvert-Lewin → N.Jackson",
-              "out_id": 346,
-              "in_id": 166,
-              "uplift": 6.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 504
-        },
-        {
-          "gw": 12,
-          "action": "TRANSFER",
-          "route": "Belloumi → Tavernier",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Belloumi → Tavernier",
-              "out_id": 286,
-              "in_id": 68,
-              "uplift": 3.22,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 286,
-          "in_id": 68
-        },
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Affengruber → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Tarkowski",
-              "out_id": 650,
-              "in_id": 229,
-              "uplift": 1.91,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
-          "in_id": 229
-        },
-        {
-          "gw": 14,
-          "action": "TRANSFER",
-          "route": "Tzolakis → Verbruggen",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Tzolakis → Verbruggen",
-              "out_id": 572,
-              "in_id": 109,
-              "uplift": 1.43,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 572,
-          "in_id": 109
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 12,
-      "expected_points": 275.65,
-      "chip_incremental_expected_points": 8.51,
-      "p10_points": 234.83,
-      "p90_points": 318.73,
-      "expected_rank_after_path": 1.11,
-      "prob_finish_ahead_each_rival": [
-        0.927,
-        0.968,
-        0.994,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "utility_score": 270.188
-    },
-    {
-      "actions": [
-        {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Maguire → Vuskovic + Calvert-Lewin → N.Jackson",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Maguire → Vuskovic",
-              "out_id": 418,
-              "in_id": 504,
-              "uplift": 9.32,
-              "addresses_short_term_risk": false
-            },
-            {
-              "route": "Calvert-Lewin → N.Jackson",
-              "out_id": 346,
-              "in_id": 166,
-              "uplift": 6.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 504
-        },
-        {
-          "gw": 12,
-          "action": "TRANSFER",
-          "route": "Belloumi → Tavernier",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Belloumi → Tavernier",
-              "out_id": 286,
-              "in_id": 68,
-              "uplift": 3.22,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 286,
-          "in_id": 68
-        },
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Affengruber → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Tarkowski",
-              "out_id": 650,
-              "in_id": 229,
-              "uplift": 1.91,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
-          "in_id": 229
-        },
-        {
-          "gw": 14,
-          "action": "TRANSFER",
-          "route": "Dubravka → Verbruggen",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Dubravka → Verbruggen",
-              "out_id": 497,
-              "in_id": 109,
-              "uplift": 1.43,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 497,
-          "in_id": 109
-        }
-      ],
-      "chip": "Bench Boost",
-      "chip_gw": 12,
-      "expected_points": 275.65,
-      "chip_incremental_expected_points": 8.51,
-      "p10_points": 234.83,
-      "p90_points": 318.73,
-      "expected_rank_after_path": 1.11,
-      "prob_finish_ahead_each_rival": [
-        0.927,
-        0.968,
-        0.994,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "utility_score": 270.188
-    },
-    {
-      "actions": [
-        {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Maguire → Vuskovic + Calvert-Lewin → N.Jackson",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Maguire → Vuskovic",
-              "out_id": 418,
-              "in_id": 504,
-              "uplift": 9.32,
-              "addresses_short_term_risk": false
-            },
-            {
-              "route": "Calvert-Lewin → N.Jackson",
-              "out_id": 346,
-              "in_id": 166,
-              "uplift": 6.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 504
-        },
-        {
-          "gw": 12,
-          "action": "TRANSFER",
-          "route": "Belloumi → Tavernier",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Belloumi → Tavernier",
-              "out_id": 286,
-              "in_id": 68,
-              "uplift": 3.22,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 286,
-          "in_id": 68
-        },
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Affengruber → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Tarkowski",
-              "out_id": 650,
-              "in_id": 229,
-              "uplift": 1.91,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
-          "in_id": 229
-        },
-        {
-          "gw": 14,
-          "action": "TRANSFER",
-          "route": "Tzolakis → Verbruggen",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Tzolakis → Verbruggen",
-              "out_id": 572,
-              "in_id": 109,
-              "uplift": 1.43,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 572,
-          "in_id": 109
+          "out_id": 229,
+          "in_id": 31
         }
       ],
       "chip": "Bench Boost",
       "chip_gw": 14,
-      "expected_points": 275.26,
+      "expected_points": 260.33,
+      "chip_incremental_expected_points": 8.25,
+      "p10_points": 220.27,
+      "p90_points": 300.1,
+      "expected_rank_after_path": 1.31,
+      "prob_finish_ahead_each_rival": [
+        0.854,
+        0.845,
+        0.989,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "utility_score": 253.964
+    },
+    {
+      "actions": [
+        {
+          "gw": 12,
+          "action": "ROLL"
+        },
+        {
+          "gw": 13,
+          "action": "TRANSFER",
+          "route": "Bogle → Tarkowski + Belloumi → Dewsbury-Hall",
+          "transfer_count": 2,
+          "transfers": [
+            {
+              "route": "Bogle → Tarkowski",
+              "out_id": 330,
+              "in_id": 229,
+              "uplift": 2.42,
+              "addresses_short_term_risk": false
+            },
+            {
+              "route": "Belloumi → Dewsbury-Hall",
+              "out_id": 286,
+              "in_id": 236,
+              "uplift": 1.97,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 330,
+          "in_id": 229
+        },
+        {
+          "gw": 14,
+          "action": "TRANSFER",
+          "route": "Tzolakis → Raya",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Tzolakis → Raya",
+              "out_id": 572,
+              "in_id": 1,
+              "uplift": 1.89,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 572,
+          "in_id": 1
+        },
+        {
+          "gw": 15,
+          "action": "TRANSFER",
+          "route": "Tarkowski → Konsa",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Tarkowski → Konsa",
+              "out_id": 229,
+              "in_id": 31,
+              "uplift": 0.93,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 229,
+          "in_id": 31
+        }
+      ],
+      "chip": "Bench Boost",
+      "chip_gw": 14,
+      "expected_points": 260.15,
       "chip_incremental_expected_points": 8.13,
-      "p10_points": 234.3,
-      "p90_points": 318.77,
-      "expected_rank_after_path": 1.12,
+      "p10_points": 219.99,
+      "p90_points": 299.44,
+      "expected_rank_after_path": 1.31,
       "prob_finish_ahead_each_rival": [
-        0.923,
-        0.96,
-        0.995,
+        0.853,
+        0.848,
+        0.987,
         1.0,
         1.0,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 269.73
+      "utility_score": 253.777
     },
     {
       "actions": [
         {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Maguire → Vuskovic + Calvert-Lewin → N.Jackson",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Maguire → Vuskovic",
-              "out_id": 418,
-              "in_id": 504,
-              "uplift": 9.32,
-              "addresses_short_term_risk": false
-            },
-            {
-              "route": "Calvert-Lewin → N.Jackson",
-              "out_id": 346,
-              "in_id": 166,
-              "uplift": 6.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 504
-        },
-        {
           "gw": 12,
-          "action": "TRANSFER",
-          "route": "Henderson → Tavernier",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Henderson → Tavernier",
-              "out_id": 101,
-              "in_id": 68,
-              "uplift": 3.22,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 101,
-          "in_id": 68
+          "action": "ROLL"
         },
         {
           "gw": 13,
           "action": "TRANSFER",
-          "route": "Affengruber → Tarkowski",
-          "transfer_count": 1,
+          "route": "Bogle → Tarkowski + Belloumi → Dewsbury-Hall",
+          "transfer_count": 2,
           "transfers": [
             {
-              "route": "Affengruber → Tarkowski",
-              "out_id": 650,
+              "route": "Bogle → Tarkowski",
+              "out_id": 330,
               "in_id": 229,
-              "uplift": 1.91,
+              "uplift": 2.42,
+              "addresses_short_term_risk": false
+            },
+            {
+              "route": "Belloumi → Dewsbury-Hall",
+              "out_id": 286,
+              "in_id": 236,
+              "uplift": 1.97,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
-          "out_id": 650,
+          "out_id": 330,
           "in_id": 229
         },
         {
           "gw": 14,
           "action": "TRANSFER",
-          "route": "Tzolakis → Verbruggen",
+          "route": "Tzolakis → Raya",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Tzolakis → Verbruggen",
+              "route": "Tzolakis → Raya",
               "out_id": 572,
-              "in_id": 109,
-              "uplift": 1.43,
+              "in_id": 1,
+              "uplift": 1.89,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
           "out_id": 572,
-          "in_id": 109
+          "in_id": 1
+        },
+        {
+          "gw": 15,
+          "action": "TRANSFER",
+          "route": "Tarkowski → Konsa",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Tarkowski → Konsa",
+              "out_id": 229,
+              "in_id": 31,
+              "uplift": 0.93,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 229,
+          "in_id": 31
         }
       ],
       "chip": "Bench Boost",
-      "chip_gw": 14,
-      "expected_points": 275.28,
-      "chip_incremental_expected_points": 8.14,
-      "p10_points": 234.07,
-      "p90_points": 318.2,
-      "expected_rank_after_path": 1.12,
+      "chip_gw": 15,
+      "expected_points": 259.7,
+      "chip_incremental_expected_points": 7.67,
+      "p10_points": 219.53,
+      "p90_points": 299.14,
+      "expected_rank_after_path": 1.33,
       "prob_finish_ahead_each_rival": [
-        0.922,
-        0.961,
-        0.995,
+        0.838,
+        0.847,
+        0.989,
         1.0,
         1.0,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 269.721
+      "utility_score": 253.247
     },
     {
       "actions": [
         {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Maguire → Vuskovic + Calvert-Lewin → N.Jackson",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Maguire → Vuskovic",
-              "out_id": 418,
-              "in_id": 504,
-              "uplift": 9.32,
-              "addresses_short_term_risk": false
-            },
-            {
-              "route": "Calvert-Lewin → N.Jackson",
-              "out_id": 346,
-              "in_id": 166,
-              "uplift": 6.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 504
-        },
-        {
           "gw": 12,
-          "action": "TRANSFER",
-          "route": "Henderson → Tavernier",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Henderson → Tavernier",
-              "out_id": 101,
-              "in_id": 68,
-              "uplift": 3.22,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 101,
-          "in_id": 68
+          "action": "ROLL"
         },
         {
           "gw": 13,
           "action": "TRANSFER",
-          "route": "Affengruber → Tarkowski",
-          "transfer_count": 1,
+          "route": "Bogle → Tarkowski + Belloumi → Dewsbury-Hall",
+          "transfer_count": 2,
           "transfers": [
             {
-              "route": "Affengruber → Tarkowski",
-              "out_id": 650,
+              "route": "Bogle → Tarkowski",
+              "out_id": 330,
               "in_id": 229,
-              "uplift": 1.91,
+              "uplift": 2.42,
+              "addresses_short_term_risk": false
+            },
+            {
+              "route": "Belloumi → Dewsbury-Hall",
+              "out_id": 286,
+              "in_id": 236,
+              "uplift": 1.97,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
-          "out_id": 650,
+          "out_id": 330,
           "in_id": 229
         },
         {
           "gw": 14,
           "action": "TRANSFER",
-          "route": "Tzolakis → Verbruggen",
+          "route": "Tzolakis → Raya",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Tzolakis → Verbruggen",
+              "route": "Tzolakis → Raya",
               "out_id": 572,
-              "in_id": 109,
-              "uplift": 1.43,
+              "in_id": 1,
+              "uplift": 1.89,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
           "out_id": 572,
-          "in_id": 109
+          "in_id": 1
+        },
+        {
+          "gw": 15,
+          "action": "TRANSFER",
+          "route": "Tarkowski → Konsa",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Tarkowski → Konsa",
+              "out_id": 229,
+              "in_id": 31,
+              "uplift": 0.93,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 229,
+          "in_id": 31
         }
       ],
       "chip": null,
       "chip_gw": null,
-      "expected_points": 267.13,
+      "expected_points": 252.03,
       "chip_incremental_expected_points": 0.0,
-      "p10_points": 226.71,
-      "p90_points": 310.1,
-      "expected_rank_after_path": 1.2,
+      "p10_points": 212.46,
+      "p90_points": 290.97,
+      "expected_rank_after_path": 1.48,
       "prob_finish_ahead_each_rival": [
-        0.873,
-        0.934,
-        0.99,
+        0.761,
+        0.784,
+        0.977,
         1.0,
         1.0,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 261.271
+      "utility_score": 244.888
     },
     {
       "actions": [
         {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Maguire → Vuskovic + Calvert-Lewin → N.Jackson",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Maguire → Vuskovic",
-              "out_id": 418,
-              "in_id": 504,
-              "uplift": 9.32,
-              "addresses_short_term_risk": false
-            },
-            {
-              "route": "Calvert-Lewin → N.Jackson",
-              "out_id": 346,
-              "in_id": 166,
-              "uplift": 6.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 504
-        },
-        {
           "gw": 12,
-          "action": "TRANSFER",
-          "route": "Henderson → Tavernier",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Henderson → Tavernier",
-              "out_id": 101,
-              "in_id": 68,
-              "uplift": 3.22,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 101,
-          "in_id": 68
+          "action": "ROLL"
         },
         {
           "gw": 13,
           "action": "TRANSFER",
-          "route": "Affengruber → Tarkowski",
-          "transfer_count": 1,
+          "route": "Bogle → Tarkowski + Cherki → Dewsbury-Hall",
+          "transfer_count": 2,
           "transfers": [
             {
-              "route": "Affengruber → Tarkowski",
-              "out_id": 650,
+              "route": "Bogle → Tarkowski",
+              "out_id": 330,
               "in_id": 229,
-              "uplift": 1.91,
+              "uplift": 2.42,
+              "addresses_short_term_risk": false
+            },
+            {
+              "route": "Cherki → Dewsbury-Hall",
+              "out_id": 399,
+              "in_id": 236,
+              "uplift": 2.05,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
-          "out_id": 650,
+          "out_id": 330,
           "in_id": 229
         },
         {
           "gw": 14,
           "action": "TRANSFER",
-          "route": "Dubravka → Verbruggen",
+          "route": "Tzolakis → Raya",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Dubravka → Verbruggen",
+              "route": "Tzolakis → Raya",
+              "out_id": 572,
+              "in_id": 1,
+              "uplift": 1.89,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 572,
+          "in_id": 1
+        },
+        {
+          "gw": 15,
+          "action": "TRANSFER",
+          "route": "Affengruber → Konsa",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Affengruber → Konsa",
+              "out_id": 650,
+              "in_id": 31,
+              "uplift": 0.83,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 650,
+          "in_id": 31
+        }
+      ],
+      "chip": null,
+      "chip_gw": null,
+      "expected_points": 252.03,
+      "chip_incremental_expected_points": 0.0,
+      "p10_points": 212.65,
+      "p90_points": 290.13,
+      "expected_rank_after_path": 1.48,
+      "prob_finish_ahead_each_rival": [
+        0.763,
+        0.773,
+        0.979,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "utility_score": 244.886
+    },
+    {
+      "actions": [
+        {
+          "gw": 12,
+          "action": "ROLL"
+        },
+        {
+          "gw": 13,
+          "action": "TRANSFER",
+          "route": "Bogle → Tarkowski + Cherki → Dewsbury-Hall",
+          "transfer_count": 2,
+          "transfers": [
+            {
+              "route": "Bogle → Tarkowski",
+              "out_id": 330,
+              "in_id": 229,
+              "uplift": 2.42,
+              "addresses_short_term_risk": false
+            },
+            {
+              "route": "Cherki → Dewsbury-Hall",
+              "out_id": 399,
+              "in_id": 236,
+              "uplift": 2.05,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 330,
+          "in_id": 229
+        },
+        {
+          "gw": 14,
+          "action": "TRANSFER",
+          "route": "Dubravka → Raya",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Dubravka → Raya",
               "out_id": 497,
-              "in_id": 109,
-              "uplift": 1.43,
+              "in_id": 1,
+              "uplift": 1.89,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
           "out_id": 497,
-          "in_id": 109
+          "in_id": 1
+        },
+        {
+          "gw": 15,
+          "action": "TRANSFER",
+          "route": "Affengruber → Konsa",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Affengruber → Konsa",
+              "out_id": 650,
+              "in_id": 31,
+              "uplift": 0.83,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 650,
+          "in_id": 31
         }
       ],
       "chip": null,
       "chip_gw": null,
-      "expected_points": 267.13,
+      "expected_points": 252.03,
       "chip_incremental_expected_points": 0.0,
-      "p10_points": 226.71,
-      "p90_points": 310.1,
-      "expected_rank_after_path": 1.2,
+      "p10_points": 212.65,
+      "p90_points": 290.13,
+      "expected_rank_after_path": 1.48,
       "prob_finish_ahead_each_rival": [
-        0.873,
-        0.934,
-        0.99,
+        0.763,
+        0.773,
+        0.979,
         1.0,
         1.0,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 261.271
+      "utility_score": 244.886
     },
     {
       "actions": [
         {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Maguire → Vuskovic + Calvert-Lewin → N.Jackson",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Maguire → Vuskovic",
-              "out_id": 418,
-              "in_id": 504,
-              "uplift": 9.32,
-              "addresses_short_term_risk": false
-            },
-            {
-              "route": "Calvert-Lewin → N.Jackson",
-              "out_id": 346,
-              "in_id": 166,
-              "uplift": 6.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 504
-        },
-        {
           "gw": 12,
-          "action": "TRANSFER",
-          "route": "Belloumi → Tavernier",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Belloumi → Tavernier",
-              "out_id": 286,
-              "in_id": 68,
-              "uplift": 3.22,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 286,
-          "in_id": 68
+          "action": "ROLL"
         },
         {
           "gw": 13,
           "action": "TRANSFER",
-          "route": "Affengruber → Tarkowski",
-          "transfer_count": 1,
+          "route": "Bogle → Tarkowski + Cherki → Dewsbury-Hall",
+          "transfer_count": 2,
           "transfers": [
             {
-              "route": "Affengruber → Tarkowski",
-              "out_id": 650,
+              "route": "Bogle → Tarkowski",
+              "out_id": 330,
               "in_id": 229,
-              "uplift": 1.91,
+              "uplift": 2.42,
+              "addresses_short_term_risk": false
+            },
+            {
+              "route": "Cherki → Dewsbury-Hall",
+              "out_id": 399,
+              "in_id": 236,
+              "uplift": 2.05,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
-          "out_id": 650,
+          "out_id": 330,
           "in_id": 229
         },
         {
           "gw": 14,
           "action": "TRANSFER",
-          "route": "Tzolakis → Verbruggen",
+          "route": "Tzolakis → Raya",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Tzolakis → Verbruggen",
+              "route": "Tzolakis → Raya",
               "out_id": 572,
-              "in_id": 109,
-              "uplift": 1.43,
+              "in_id": 1,
+              "uplift": 1.89,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
           "out_id": 572,
-          "in_id": 109
+          "in_id": 1
+        },
+        {
+          "gw": 15,
+          "action": "TRANSFER",
+          "route": "Tarkowski → Konsa",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Tarkowski → Konsa",
+              "out_id": 229,
+              "in_id": 31,
+              "uplift": 0.93,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 229,
+          "in_id": 31
         }
       ],
       "chip": null,
       "chip_gw": null,
-      "expected_points": 267.13,
+      "expected_points": 252.08,
       "chip_incremental_expected_points": 0.0,
-      "p10_points": 226.71,
-      "p90_points": 310.1,
-      "expected_rank_after_path": 1.2,
+      "p10_points": 212.6,
+      "p90_points": 291.11,
+      "expected_rank_after_path": 1.5,
       "prob_finish_ahead_each_rival": [
-        0.873,
-        0.934,
-        0.99,
+        0.754,
+        0.772,
+        0.973,
         1.0,
         1.0,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 261.271
+      "utility_score": 244.846
     },
     {
       "actions": [
         {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Maguire → Vuskovic + Calvert-Lewin → N.Jackson",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Maguire → Vuskovic",
-              "out_id": 418,
-              "in_id": 504,
-              "uplift": 9.32,
-              "addresses_short_term_risk": false
-            },
-            {
-              "route": "Calvert-Lewin → N.Jackson",
-              "out_id": 346,
-              "in_id": 166,
-              "uplift": 6.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 504
-        },
-        {
           "gw": 12,
-          "action": "TRANSFER",
-          "route": "Belloumi → Tavernier",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Belloumi → Tavernier",
-              "out_id": 286,
-              "in_id": 68,
-              "uplift": 3.22,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 286,
-          "in_id": 68
+          "action": "ROLL"
         },
         {
           "gw": 13,
           "action": "TRANSFER",
-          "route": "Affengruber → Tarkowski",
-          "transfer_count": 1,
+          "route": "Bogle → Tarkowski + Cherki → Dewsbury-Hall",
+          "transfer_count": 2,
           "transfers": [
             {
-              "route": "Affengruber → Tarkowski",
-              "out_id": 650,
+              "route": "Bogle → Tarkowski",
+              "out_id": 330,
               "in_id": 229,
-              "uplift": 1.91,
+              "uplift": 2.42,
+              "addresses_short_term_risk": false
+            },
+            {
+              "route": "Cherki → Dewsbury-Hall",
+              "out_id": 399,
+              "in_id": 236,
+              "uplift": 2.05,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
-          "out_id": 650,
+          "out_id": 330,
           "in_id": 229
         },
         {
           "gw": 14,
           "action": "TRANSFER",
-          "route": "Dubravka → Verbruggen",
+          "route": "Dubravka → Raya",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Dubravka → Verbruggen",
+              "route": "Dubravka → Raya",
               "out_id": 497,
-              "in_id": 109,
-              "uplift": 1.43,
+              "in_id": 1,
+              "uplift": 1.89,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
           "out_id": 497,
-          "in_id": 109
+          "in_id": 1
+        },
+        {
+          "gw": 15,
+          "action": "TRANSFER",
+          "route": "Tarkowski → Konsa",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Tarkowski → Konsa",
+              "out_id": 229,
+              "in_id": 31,
+              "uplift": 0.93,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 229,
+          "in_id": 31
         }
       ],
       "chip": null,
       "chip_gw": null,
-      "expected_points": 267.13,
+      "expected_points": 252.08,
       "chip_incremental_expected_points": 0.0,
-      "p10_points": 226.71,
-      "p90_points": 310.1,
-      "expected_rank_after_path": 1.2,
+      "p10_points": 212.6,
+      "p90_points": 291.11,
+      "expected_rank_after_path": 1.5,
       "prob_finish_ahead_each_rival": [
-        0.873,
-        0.934,
-        0.99,
+        0.754,
+        0.772,
+        0.973,
         1.0,
         1.0,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 261.271
-    },
-    {
-      "actions": [
-        {
-          "gw": 11,
-          "action": "TRANSFER",
-          "route": "Maguire → Vuskovic + Calvert-Lewin → N.Jackson",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Maguire → Vuskovic",
-              "out_id": 418,
-              "in_id": 504,
-              "uplift": 9.32,
-              "addresses_short_term_risk": false
-            },
-            {
-              "route": "Calvert-Lewin → N.Jackson",
-              "out_id": 346,
-              "in_id": 166,
-              "uplift": 6.45,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 418,
-          "in_id": 504
-        },
-        {
-          "gw": 12,
-          "action": "TRANSFER",
-          "route": "Hughes → Tavernier",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Hughes → Tavernier",
-              "out_id": 212,
-              "in_id": 68,
-              "uplift": 3.22,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 68
-        },
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Affengruber → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Tarkowski",
-              "out_id": 650,
-              "in_id": 229,
-              "uplift": 1.91,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
-          "in_id": 229
-        },
-        {
-          "gw": 14,
-          "action": "TRANSFER",
-          "route": "Tzolakis → Verbruggen",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Tzolakis → Verbruggen",
-              "out_id": 572,
-              "in_id": 109,
-              "uplift": 1.43,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 572,
-          "in_id": 109
-        }
-      ],
-      "chip": null,
-      "chip_gw": null,
-      "expected_points": 267.13,
-      "chip_incremental_expected_points": 0.0,
-      "p10_points": 226.71,
-      "p90_points": 310.1,
-      "expected_rank_after_path": 1.2,
-      "prob_finish_ahead_each_rival": [
-        0.873,
-        0.934,
-        0.99,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "utility_score": 261.271
+      "utility_score": 244.846
     }
   ],
   "method_note": "Triple Captain and Bench Boost are scored exactly on calibrated transfer paths against probabilistic rival behaviour. Values are opportunity windows, not automatic play recommendations. Sampling precision increases as the official FPL deadline approaches. Wildcard and Free Hit are handled by the separate legal full-squad optimiser and activation gate."

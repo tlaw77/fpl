@@ -1,8 +1,8 @@
 {
   "version": 4,
-  "generated_at_utc": "2026-11-21T06:53:57.409753+00:00",
+  "generated_at_utc": "2026-11-21T15:14:41.549568+00:00",
   "entry_id": 5332809,
-  "current_gw": 10,
+  "current_gw": 11,
   "weeks": [
     {
       "event": 1,
@@ -497,6 +497,83 @@
       "active_chip": null,
       "transfers": [],
       "source": "official_fpl_history"
+    },
+    {
+      "event": 11,
+      "captain_id": 411,
+      "captain_name": "Haaland",
+      "vice_id": 379,
+      "vice_name": "Isak",
+      "active_chip": null,
+      "transfers": [
+        {
+          "event": 11,
+          "time": "2026-11-08T18:05:03.284240Z",
+          "element_out": 418,
+          "out_name": "Maguire",
+          "element_in": 504,
+          "in_name": "Vuskovic",
+          "out_cost": 4.6,
+          "in_cost": 5.2,
+          "source": "official_transfer_history",
+          "status": "confirmed",
+          "recommendation_context": null
+        },
+        {
+          "event": 11,
+          "time": "2026-11-08T18:05:03.287870Z",
+          "element_out": 346,
+          "out_name": "Calvert-Lewin",
+          "element_in": 166,
+          "in_name": "N.Jackson",
+          "out_cost": 6.0,
+          "in_cost": 7.1,
+          "source": "official_transfer_history",
+          "status": "confirmed",
+          "recommendation_context": {
+            "matched": true,
+            "match_type": "exact_route",
+            "snapshot_at_utc": "2026-11-07T16:47:17.136569+00:00",
+            "strategy": "Balanced+ / controlled leverage",
+            "team_rank_at_snapshot": 1,
+            "bank_at_snapshot": 6.7,
+            "lenses": [
+              {
+                "type": "lower_variance",
+                "label": "Lower variance",
+                "model_uplift": 9.786,
+                "target_rival_ownership_pct": 0.0,
+                "next3": [
+                  {
+                    "gw": 11,
+                    "opponent": "Sunderland",
+                    "venue": "H",
+                    "fdr": 2
+                  },
+                  {
+                    "gw": 12,
+                    "opponent": "Ipswich Town",
+                    "venue": "A",
+                    "fdr": 2
+                  },
+                  {
+                    "gw": 13,
+                    "opponent": "Everton",
+                    "venue": "H",
+                    "fdr": 3
+                  }
+                ],
+                "rationale": [
+                  "Next-3 fixtures: Sunderland H FDR 2, Ipswich Town A FDR 2, Everton H FDR 3",
+                  "Nearest-rival ownership 0%: ownership context only; the football case still leads.",
+                  "Model uplift 9.8 versus the outgoing player on the dashboard heuristic."
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "source": "official_fpl_history"
     }
   ],
   "decisions": [
@@ -887,6 +964,72 @@
       "source": "official_transfer_history",
       "status": "confirmed",
       "recommendation_context": null
+    },
+    {
+      "event": 11,
+      "time": "2026-11-08T18:05:03.284240Z",
+      "element_out": 418,
+      "out_name": "Maguire",
+      "element_in": 504,
+      "in_name": "Vuskovic",
+      "out_cost": 4.6,
+      "in_cost": 5.2,
+      "source": "official_transfer_history",
+      "status": "confirmed",
+      "recommendation_context": null
+    },
+    {
+      "event": 11,
+      "time": "2026-11-08T18:05:03.287870Z",
+      "element_out": 346,
+      "out_name": "Calvert-Lewin",
+      "element_in": 166,
+      "in_name": "N.Jackson",
+      "out_cost": 6.0,
+      "in_cost": 7.1,
+      "source": "official_transfer_history",
+      "status": "confirmed",
+      "recommendation_context": {
+        "matched": true,
+        "match_type": "exact_route",
+        "snapshot_at_utc": "2026-11-07T16:47:17.136569+00:00",
+        "strategy": "Balanced+ / controlled leverage",
+        "team_rank_at_snapshot": 1,
+        "bank_at_snapshot": 6.7,
+        "lenses": [
+          {
+            "type": "lower_variance",
+            "label": "Lower variance",
+            "model_uplift": 9.786,
+            "target_rival_ownership_pct": 0.0,
+            "next3": [
+              {
+                "gw": 11,
+                "opponent": "Sunderland",
+                "venue": "H",
+                "fdr": 2
+              },
+              {
+                "gw": 12,
+                "opponent": "Ipswich Town",
+                "venue": "A",
+                "fdr": 2
+              },
+              {
+                "gw": 13,
+                "opponent": "Everton",
+                "venue": "H",
+                "fdr": 3
+              }
+            ],
+            "rationale": [
+              "Next-3 fixtures: Sunderland H FDR 2, Ipswich Town A FDR 2, Everton H FDR 3",
+              "Nearest-rival ownership 0%: ownership context only; the football case still leads.",
+              "Model uplift 9.8 versus the outgoing player on the dashboard heuristic."
+            ]
+          }
+        ]
+      }
     }
   ],
   "recommendation_evidence": "Exact pre-transfer route matches only; no rationale is invented for unmatched decisions."
