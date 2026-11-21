@@ -1,7 +1,7 @@
 {
   "status": "SUCCESS",
   "version": 2,
-  "generated_at_utc": "2026-11-21T06:55:32.586599+00:00",
+  "generated_at_utc": "2026-11-21T15:16:16.182183+00:00",
   "finalized_gameweeks": [
     1,
     2,
@@ -11,17 +11,18 @@
     6,
     7,
     8,
-    9
+    9,
+    10
   ],
-  "evaluable_gameweeks": 7,
+  "evaluable_gameweeks": 8,
   "summary": {
-    "captain_evaluable_gameweeks": 7,
-    "transfer_evaluable_gameweeks": 7,
-    "captain_best_shortlist_rate_pct": 14.3,
-    "average_captain_regret_points": 4.86,
-    "average_captain_forecast_error": -0.46,
-    "transfer_decision_best_rate_pct": 60.0,
-    "average_transfer_decision_regret_points": 1.6,
+    "captain_evaluable_gameweeks": 8,
+    "transfer_evaluable_gameweeks": 8,
+    "captain_best_shortlist_rate_pct": 12.5,
+    "average_captain_regret_points": 5.25,
+    "average_captain_forecast_error": -0.91,
+    "transfer_decision_best_rate_pct": 50.0,
+    "average_transfer_decision_regret_points": 2.5,
     "message": "Early backtest only. Treat these results as descriptive until several completed Gameweeks accumulate."
   },
   "rows": [
@@ -895,6 +896,131 @@
             "expected_points_6gw": 346.44,
             "expected_rank_after_horizon": 1.15,
             "incoming_starts": false
+          }
+        ],
+        "method_note": "Uses the XI/captain frozen in the simulation at decision time and scores those exact lineups against archived all-player outcomes. No hindsight lineup optimisation is allowed."
+      }
+    },
+    {
+      "decision_archive_gw": 9,
+      "evaluated_gw": 10,
+      "captaincy": {
+        "captain": "Haaland",
+        "captain_player_id": 411,
+        "captain_forecast_points": 6.05,
+        "captain_actual_points": 2.0,
+        "captain_forecast_error": -4.05,
+        "best_shortlisted_player": "Groß",
+        "best_shortlisted_actual_points": 10.0,
+        "captain_regret_points": 8.0,
+        "captain_was_best_shortlisted": false,
+        "shortlist": [
+          {
+            "player_id": 411,
+            "player": "Haaland",
+            "forecast_points": 6.05,
+            "actual_points": 2.0,
+            "forecast_error": -4.05
+          },
+          {
+            "player_id": 379,
+            "player": "Isak",
+            "forecast_points": 6.13,
+            "actual_points": 8.0,
+            "forecast_error": 1.87
+          },
+          {
+            "player_id": 4,
+            "player": "Gabriel",
+            "forecast_points": 5.53,
+            "actual_points": 8.0,
+            "forecast_error": 2.47
+          },
+          {
+            "player_id": 115,
+            "player": "De Cuyper",
+            "forecast_points": 5.96,
+            "actual_points": 6.0,
+            "forecast_error": 0.04
+          },
+          {
+            "player_id": 124,
+            "player": "Groß",
+            "forecast_points": 5.13,
+            "actual_points": 10.0,
+            "forecast_error": 4.87
+          }
+        ],
+        "tc_review_status": "WATCH",
+        "tc_candidate": "Gabriel",
+        "tc_candidate_actual_points": 8.0,
+        "hypothetical_extra_tc_points": 8.0
+      },
+      "transfer_decision": {
+        "authoritative_action": "HOLD",
+        "chosen_label": "HOLD",
+        "hold_realized_score": 55.0,
+        "best_transfer_route": "Calvert-Lewin → Evanilson",
+        "best_transfer_realized_score": 62.0,
+        "best_transfer_delta_vs_hold": 7.0,
+        "chosen_realized_score": 55.0,
+        "decision_regret_points": 7.0,
+        "decision_was_best_available": false,
+        "routes": [
+          {
+            "route": "Calvert-Lewin → Evanilson",
+            "out_player_id": 346,
+            "in_player_id": 79,
+            "hit_cost": 0.0,
+            "realized_gw_score": 62.0,
+            "realized_delta_vs_hold": 7.0,
+            "expected_points_6gw": 352.4,
+            "expected_rank_after_horizon": 1.42,
+            "incoming_starts": true
+          },
+          {
+            "route": "Maguire → Konsa",
+            "out_player_id": 418,
+            "in_player_id": 31,
+            "hit_cost": 0.0,
+            "realized_gw_score": 61.0,
+            "realized_delta_vs_hold": 6.0,
+            "expected_points_6gw": 346.5,
+            "expected_rank_after_horizon": 1.51,
+            "incoming_starts": true
+          },
+          {
+            "route": "Bogle → Konsa",
+            "out_player_id": 330,
+            "in_player_id": 31,
+            "hit_cost": 0.0,
+            "realized_gw_score": 56.0,
+            "realized_delta_vs_hold": 1.0,
+            "expected_points_6gw": 336.53,
+            "expected_rank_after_horizon": 1.72,
+            "incoming_starts": true
+          },
+          {
+            "route": "Dubravka → Verbruggen",
+            "out_player_id": 497,
+            "in_player_id": 109,
+            "hit_cost": 0.0,
+            "realized_gw_score": 55.0,
+            "realized_delta_vs_hold": 0.0,
+            "expected_points_6gw": 342.19,
+            "expected_rank_after_horizon": 1.58,
+            "incoming_starts": true
+          },
+          {
+            "route": "Tzolakis → Verbruggen",
+            "out_player_id": 572,
+            "in_player_id": 109,
+            "hit_cost": 0.0,
+            "realized_gw_score": 55.0,
+            "realized_delta_vs_hold": 0.0,
+            "expected_points_6gw": 341.26,
+            "expected_rank_after_horizon": 1.61,
+            "incoming_starts": true
           }
         ],
         "method_note": "Uses the XI/captain frozen in the simulation at decision time and scores those exact lineups against archived all-player outcomes. No hindsight lineup optimisation is allowed."
