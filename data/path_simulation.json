@@ -1,6 +1,6 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-11-22T23:30:42.104866+00:00",
+  "generated_at_utc": "2026-11-23T03:58:31.507102+00:00",
   "engine_version": 7,
   "planner": "bounded same-deadline multi-transfer beam search + GW-specific shared-outcome Monte Carlo + live FT state + season calibration + shared captaincy + deadline-aware sampling",
   "projection_model": "season-maturity calibrated + shared captaincy model",
@@ -16,7 +16,7 @@
   "iteration_policy": {
     "layer": "path",
     "deadline_phase": "normal",
-    "hours_to_deadline": 115.0,
+    "hours_to_deadline": 110.54,
     "iterations": 1200,
     "policy": "lighter normal-week sampling; higher precision inside 72h/24h/6h of official FPL deadline"
   },
@@ -151,67 +151,67 @@
       {
         "gw": 13,
         "action": "TRANSFER",
-        "route": "Bogle → Tarkowski",
+        "route": "Cherki → Wirtz",
         "transfer_count": 1,
         "transfers": [
           {
-            "route": "Bogle → Tarkowski",
-            "out_id": 330,
-            "in_id": 229,
-            "uplift": 2.3,
-            "addresses_short_term_risk": false
-          }
-        ],
-        "hit": 0,
-        "out_id": 330,
-        "in_id": 229
-      },
-      {
-        "gw": 14,
-        "action": "TRANSFER",
-        "route": "Cherki → Dewsbury-Hall",
-        "transfer_count": 1,
-        "transfers": [
-          {
-            "route": "Cherki → Dewsbury-Hall",
+            "route": "Cherki → Wirtz",
             "out_id": 399,
-            "in_id": 236,
-            "uplift": 1.62,
+            "in_id": 366,
+            "uplift": 2.56,
             "addresses_short_term_risk": false
           }
         ],
         "hit": 0,
         "out_id": 399,
-        "in_id": 236
+        "in_id": 366
       },
       {
-        "gw": 15,
+        "gw": 14,
         "action": "TRANSFER",
-        "route": "Tarkowski → Konsa",
+        "route": "Henderson → Tavernier",
         "transfer_count": 1,
         "transfers": [
           {
-            "route": "Tarkowski → Konsa",
-            "out_id": 229,
-            "in_id": 31,
-            "uplift": 0.67,
+            "route": "Henderson → Tavernier",
+            "out_id": 101,
+            "in_id": 68,
+            "uplift": 1.13,
             "addresses_short_term_risk": false
           }
         ],
         "hit": 0,
-        "out_id": 229,
+        "out_id": 101,
+        "in_id": 68
+      },
+      {
+        "gw": 15,
+        "action": "TRANSFER",
+        "route": "Bogle → Konsa",
+        "transfer_count": 1,
+        "transfers": [
+          {
+            "route": "Bogle → Konsa",
+            "out_id": 330,
+            "in_id": 31,
+            "uplift": 0.99,
+            "addresses_short_term_risk": false
+          }
+        ],
+        "hit": 0,
+        "out_id": 330,
         "in_id": 31
       }
     ],
-    "expected_points": 248.98,
-    "p10_points": 210.67,
-    "p90_points": 289.98,
-    "expected_rank_after_path": 1.64,
-    "prob_gain_league_place": 0.407,
+    "expected_points": 251.3,
+    "p10_points": 211.73,
+    "p90_points": 293.31,
+    "expected_rank_after_path": 1.62,
+    "prob_gain_league_place": 0.417,
     "prob_finish_ahead_each_rival": [
-      0.411,
-      0.948,
-      0.998,
+      0.428,
+      0.951,
+      1.0,
       1.0,
       1.0,
       1.0,
@@ -219,12 +219,12 @@
       1.0
     ],
     "next_gw_expected_points": 61.44,
-    "next_two_gw_expected_points": 123.23,
-    "ending_bank": 5.0,
+    "next_two_gw_expected_points": 123.44,
+    "ending_bank": 2.5,
     "ending_free_transfers": 1,
     "first_transfer_incoming_starts": true,
     "first_deadline_transfer_count": 1,
-    "utility_score": 246.514
+    "utility_score": 248.798
   },
   "paths": [
     {
@@ -250,263 +250,67 @@
         {
           "gw": 13,
           "action": "TRANSFER",
-          "route": "Bogle → Tarkowski",
+          "route": "Cherki → Wirtz",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Bogle → Tarkowski",
-              "out_id": 330,
-              "in_id": 229,
-              "uplift": 2.3,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 330,
-          "in_id": 229
-        },
-        {
-          "gw": 14,
-          "action": "TRANSFER",
-          "route": "Cherki → Dewsbury-Hall",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Cherki → Dewsbury-Hall",
+              "route": "Cherki → Wirtz",
               "out_id": 399,
-              "in_id": 236,
-              "uplift": 1.62,
+              "in_id": 366,
+              "uplift": 2.56,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
           "out_id": 399,
-          "in_id": 236
-        },
-        {
-          "gw": 15,
-          "action": "TRANSFER",
-          "route": "Tarkowski → Konsa",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Tarkowski → Konsa",
-              "out_id": 229,
-              "in_id": 31,
-              "uplift": 0.67,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 229,
-          "in_id": 31
-        }
-      ],
-      "expected_points": 248.98,
-      "p10_points": 210.67,
-      "p90_points": 289.98,
-      "expected_rank_after_path": 1.64,
-      "prob_gain_league_place": 0.407,
-      "prob_finish_ahead_each_rival": [
-        0.411,
-        0.948,
-        0.998,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "next_gw_expected_points": 61.44,
-      "next_two_gw_expected_points": 123.23,
-      "ending_bank": 5.0,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 1,
-      "utility_score": 246.514
-    },
-    {
-      "actions": [
-        {
-          "gw": 12,
-          "action": "TRANSFER",
-          "route": "Affengruber → Van Hecke",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Van Hecke",
-              "out_id": 650,
-              "in_id": 112,
-              "uplift": 2.81,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
-          "in_id": 112
-        },
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Bogle → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Bogle → Tarkowski",
-              "out_id": 330,
-              "in_id": 229,
-              "uplift": 2.3,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 330,
-          "in_id": 229
+          "in_id": 366
         },
         {
           "gw": 14,
           "action": "TRANSFER",
-          "route": "Henderson → Dewsbury-Hall",
+          "route": "Henderson → Tavernier",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Henderson → Dewsbury-Hall",
+              "route": "Henderson → Tavernier",
               "out_id": 101,
-              "in_id": 236,
-              "uplift": 1.62,
+              "in_id": 68,
+              "uplift": 1.13,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
           "out_id": 101,
-          "in_id": 236
+          "in_id": 68
         },
         {
           "gw": 15,
           "action": "TRANSFER",
-          "route": "Tarkowski → Konsa",
+          "route": "Bogle → Konsa",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Tarkowski → Konsa",
-              "out_id": 229,
-              "in_id": 31,
-              "uplift": 0.67,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 229,
-          "in_id": 31
-        }
-      ],
-      "expected_points": 248.98,
-      "p10_points": 210.67,
-      "p90_points": 289.98,
-      "expected_rank_after_path": 1.64,
-      "prob_gain_league_place": 0.407,
-      "prob_finish_ahead_each_rival": [
-        0.411,
-        0.948,
-        0.998,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "next_gw_expected_points": 61.44,
-      "next_two_gw_expected_points": 123.23,
-      "ending_bank": 2.2,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 1,
-      "utility_score": 246.514
-    },
-    {
-      "actions": [
-        {
-          "gw": 12,
-          "action": "TRANSFER",
-          "route": "Affengruber → Van Hecke",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Van Hecke",
-              "out_id": 650,
-              "in_id": 112,
-              "uplift": 2.81,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
-          "in_id": 112
-        },
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Bogle → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Bogle → Tarkowski",
+              "route": "Bogle → Konsa",
               "out_id": 330,
-              "in_id": 229,
-              "uplift": 2.3,
+              "in_id": 31,
+              "uplift": 0.99,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
           "out_id": 330,
-          "in_id": 229
-        },
-        {
-          "gw": 14,
-          "action": "TRANSFER",
-          "route": "Hughes → Dewsbury-Hall",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Hughes → Dewsbury-Hall",
-              "out_id": 212,
-              "in_id": 236,
-              "uplift": 1.62,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 236
-        },
-        {
-          "gw": 15,
-          "action": "TRANSFER",
-          "route": "Tarkowski → Konsa",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Tarkowski → Konsa",
-              "out_id": 229,
-              "in_id": 31,
-              "uplift": 0.67,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 229,
           "in_id": 31
         }
       ],
-      "expected_points": 248.98,
-      "p10_points": 210.67,
-      "p90_points": 289.98,
-      "expected_rank_after_path": 1.64,
-      "prob_gain_league_place": 0.407,
+      "expected_points": 251.3,
+      "p10_points": 211.73,
+      "p90_points": 293.31,
+      "expected_rank_after_path": 1.62,
+      "prob_gain_league_place": 0.417,
       "prob_finish_ahead_each_rival": [
-        0.411,
-        0.948,
-        0.998,
+        0.428,
+        0.951,
+        1.0,
         1.0,
         1.0,
         1.0,
@@ -514,12 +318,12 @@
         1.0
       ],
       "next_gw_expected_points": 61.44,
-      "next_two_gw_expected_points": 123.23,
-      "ending_bank": 1.6,
+      "next_two_gw_expected_points": 123.44,
+      "ending_bank": 2.5,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
       "first_deadline_transfer_count": 1,
-      "utility_score": 246.514
+      "utility_score": 248.798
     },
     {
       "actions": [
@@ -551,7 +355,7 @@
               "route": "Cherki → Wirtz",
               "out_id": 399,
               "in_id": 366,
-              "uplift": 2.38,
+              "uplift": 2.56,
               "addresses_short_term_risk": false
             }
           ],
@@ -562,19 +366,19 @@
         {
           "gw": 14,
           "action": "TRANSFER",
-          "route": "Henderson → Tavernier",
+          "route": "Hughes → Tavernier",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Henderson → Tavernier",
-              "out_id": 101,
+              "route": "Hughes → Tavernier",
+              "out_id": 212,
               "in_id": 68,
-              "uplift": 1.18,
+              "uplift": 1.13,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
-          "out_id": 101,
+          "out_id": 212,
           "in_id": 68
         },
         {
@@ -596,15 +400,15 @@
           "in_id": 31
         }
       ],
-      "expected_points": 248.9,
-      "p10_points": 211.14,
-      "p90_points": 288.5,
-      "expected_rank_after_path": 1.65,
-      "prob_gain_league_place": 0.403,
+      "expected_points": 251.3,
+      "p10_points": 211.73,
+      "p90_points": 293.31,
+      "expected_rank_after_path": 1.62,
+      "prob_gain_league_place": 0.417,
       "prob_finish_ahead_each_rival": [
-        0.407,
-        0.948,
-        0.998,
+        0.428,
+        0.951,
+        1.0,
         1.0,
         1.0,
         1.0,
@@ -612,110 +416,12 @@
         1.0
       ],
       "next_gw_expected_points": 61.44,
-      "next_two_gw_expected_points": 123.37,
-      "ending_bank": 2.6,
+      "next_two_gw_expected_points": 123.44,
+      "ending_bank": 1.9,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
       "first_deadline_transfer_count": 1,
-      "utility_score": 246.483
-    },
-    {
-      "actions": [
-        {
-          "gw": 12,
-          "action": "TRANSFER",
-          "route": "Cherki → Rogers",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Cherki → Rogers",
-              "out_id": 399,
-              "in_id": 40,
-              "uplift": 2.87,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 399,
-          "in_id": 40
-        },
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Bogle → Van Hecke",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Bogle → Van Hecke",
-              "out_id": 330,
-              "in_id": 112,
-              "uplift": 2.62,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 330,
-          "in_id": 112
-        },
-        {
-          "gw": 14,
-          "action": "TRANSFER",
-          "route": "Affengruber → Tarkowski",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Tarkowski",
-              "out_id": 650,
-              "in_id": 229,
-              "uplift": 1.29,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
-          "in_id": 229
-        },
-        {
-          "gw": 15,
-          "action": "TRANSFER",
-          "route": "Tarkowski → Konsa",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Tarkowski → Konsa",
-              "out_id": 229,
-              "in_id": 31,
-              "uplift": 0.67,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 229,
-          "in_id": 31
-        }
-      ],
-      "expected_points": 248.78,
-      "p10_points": 211.83,
-      "p90_points": 288.13,
-      "expected_rank_after_path": 1.67,
-      "prob_gain_league_place": 0.394,
-      "prob_finish_ahead_each_rival": [
-        0.401,
-        0.936,
-        0.998,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "next_gw_expected_points": 61.82,
-      "next_two_gw_expected_points": 124.14,
-      "ending_bank": 3.4,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 1,
-      "utility_score": 246.367
+      "utility_score": 248.798
     },
     {
       "actions": [
@@ -792,15 +498,15 @@
           "in_id": 31
         }
       ],
-      "expected_points": 248.83,
-      "p10_points": 210.73,
-      "p90_points": 290.0,
-      "expected_rank_after_path": 1.66,
-      "prob_gain_league_place": 0.393,
+      "expected_points": 251.25,
+      "p10_points": 212.33,
+      "p90_points": 294.01,
+      "expected_rank_after_path": 1.63,
+      "prob_gain_league_place": 0.418,
       "prob_finish_ahead_each_rival": [
-        0.398,
+        0.426,
         0.946,
-        0.998,
+        0.999,
         1.0,
         1.0,
         1.0,
@@ -813,7 +519,7 @@
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
       "first_deadline_transfer_count": 1,
-      "utility_score": 246.313
+      "utility_score": 248.786
     },
     {
       "actions": [
@@ -890,15 +596,15 @@
           "in_id": 31
         }
       ],
-      "expected_points": 248.83,
-      "p10_points": 210.73,
-      "p90_points": 290.0,
-      "expected_rank_after_path": 1.66,
-      "prob_gain_league_place": 0.393,
+      "expected_points": 251.25,
+      "p10_points": 212.33,
+      "p90_points": 294.01,
+      "expected_rank_after_path": 1.63,
+      "prob_gain_league_place": 0.418,
       "prob_finish_ahead_each_rival": [
-        0.398,
+        0.426,
         0.946,
-        0.998,
+        0.999,
         1.0,
         1.0,
         1.0,
@@ -911,7 +617,7 @@
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
       "first_deadline_transfer_count": 1,
-      "utility_score": 246.313
+      "utility_score": 248.786
     },
     {
       "actions": [
@@ -988,15 +694,15 @@
           "in_id": 31
         }
       ],
-      "expected_points": 248.83,
-      "p10_points": 210.73,
-      "p90_points": 290.0,
-      "expected_rank_after_path": 1.66,
-      "prob_gain_league_place": 0.393,
+      "expected_points": 251.25,
+      "p10_points": 212.33,
+      "p90_points": 294.01,
+      "expected_rank_after_path": 1.63,
+      "prob_gain_league_place": 0.418,
       "prob_finish_ahead_each_rival": [
-        0.398,
+        0.426,
         0.946,
-        0.998,
+        0.999,
         1.0,
         1.0,
         1.0,
@@ -1009,7 +715,392 @@
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
       "first_deadline_transfer_count": 1,
-      "utility_score": 246.313
+      "utility_score": 248.786
+    },
+    {
+      "actions": [
+        {
+          "gw": 12,
+          "action": "TRANSFER",
+          "route": "Affengruber → Van Hecke",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Affengruber → Van Hecke",
+              "out_id": 650,
+              "in_id": 112,
+              "uplift": 2.81,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 650,
+          "in_id": 112
+        },
+        {
+          "gw": 13,
+          "action": "TRANSFER",
+          "route": "Bogle → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Bogle → Tarkowski",
+              "out_id": 330,
+              "in_id": 229,
+              "uplift": 2.3,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 330,
+          "in_id": 229
+        },
+        {
+          "gw": 14,
+          "action": "TRANSFER",
+          "route": "Cherki → Dewsbury-Hall",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Cherki → Dewsbury-Hall",
+              "out_id": 399,
+              "in_id": 236,
+              "uplift": 1.62,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 236
+        },
+        {
+          "gw": 15,
+          "action": "TRANSFER",
+          "route": "Tarkowski → Konsa",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Tarkowski → Konsa",
+              "out_id": 229,
+              "in_id": 31,
+              "uplift": 0.67,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 229,
+          "in_id": 31
+        }
+      ],
+      "expected_points": 251.01,
+      "p10_points": 212.54,
+      "p90_points": 294.49,
+      "expected_rank_after_path": 1.63,
+      "prob_gain_league_place": 0.417,
+      "prob_finish_ahead_each_rival": [
+        0.424,
+        0.944,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "next_gw_expected_points": 61.44,
+      "next_two_gw_expected_points": 123.23,
+      "ending_bank": 5.0,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 1,
+      "utility_score": 248.581
+    },
+    {
+      "actions": [
+        {
+          "gw": 12,
+          "action": "ROLL"
+        },
+        {
+          "gw": 13,
+          "action": "TRANSFER",
+          "route": "Bogle → Van Hecke + Belloumi → Wirtz",
+          "transfer_count": 2,
+          "transfers": [
+            {
+              "route": "Bogle → Van Hecke",
+              "out_id": 330,
+              "in_id": 112,
+              "uplift": 2.82,
+              "addresses_short_term_risk": false
+            },
+            {
+              "route": "Belloumi → Wirtz",
+              "out_id": 286,
+              "in_id": 366,
+              "uplift": 2.14,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 330,
+          "in_id": 112
+        },
+        {
+          "gw": 14,
+          "action": "TRANSFER",
+          "route": "Affengruber → Tarkowski",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Affengruber → Tarkowski",
+              "out_id": 650,
+              "in_id": 229,
+              "uplift": 1.29,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 650,
+          "in_id": 229
+        },
+        {
+          "gw": 15,
+          "action": "TRANSFER",
+          "route": "Tarkowski → Konsa",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Tarkowski → Konsa",
+              "out_id": 229,
+              "in_id": 31,
+              "uplift": 0.67,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 229,
+          "in_id": 31
+        }
+      ],
+      "expected_points": 250.91,
+      "p10_points": 212.63,
+      "p90_points": 290.96,
+      "expected_rank_after_path": 1.62,
+      "prob_gain_league_place": 0.422,
+      "prob_finish_ahead_each_rival": [
+        0.43,
+        0.953,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "next_gw_expected_points": 61.07,
+      "next_two_gw_expected_points": 123.3,
+      "ending_bank": 1.8,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": null,
+      "first_deadline_transfer_count": 0,
+      "utility_score": 248.578
+    },
+    {
+      "actions": [
+        {
+          "gw": 12,
+          "action": "TRANSFER",
+          "route": "Affengruber → Van Hecke",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Affengruber → Van Hecke",
+              "out_id": 650,
+              "in_id": 112,
+              "uplift": 2.81,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 650,
+          "in_id": 112
+        },
+        {
+          "gw": 13,
+          "action": "TRANSFER",
+          "route": "Cherki → Wirtz",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Cherki → Wirtz",
+              "out_id": 399,
+              "in_id": 366,
+              "uplift": 2.56,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 366
+        },
+        {
+          "gw": 14,
+          "action": "TRANSFER",
+          "route": "Hughes → Dewsbury-Hall",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Hughes → Dewsbury-Hall",
+              "out_id": 212,
+              "in_id": 236,
+              "uplift": 1.12,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 236
+        },
+        {
+          "gw": 15,
+          "action": "TRANSFER",
+          "route": "Bogle → Konsa",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Bogle → Konsa",
+              "out_id": 330,
+              "in_id": 31,
+              "uplift": 0.99,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 330,
+          "in_id": 31
+        }
+      ],
+      "expected_points": 251.05,
+      "p10_points": 211.12,
+      "p90_points": 293.42,
+      "expected_rank_after_path": 1.62,
+      "prob_gain_league_place": 0.416,
+      "prob_finish_ahead_each_rival": [
+        0.422,
+        0.959,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "next_gw_expected_points": 61.44,
+      "next_two_gw_expected_points": 123.44,
+      "ending_bank": 1.9,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 1,
+      "utility_score": 248.52
+    },
+    {
+      "actions": [
+        {
+          "gw": 12,
+          "action": "TRANSFER",
+          "route": "Affengruber → Van Hecke",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Affengruber → Van Hecke",
+              "out_id": 650,
+              "in_id": 112,
+              "uplift": 2.81,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 650,
+          "in_id": 112
+        },
+        {
+          "gw": 13,
+          "action": "TRANSFER",
+          "route": "Cherki → Wirtz",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Cherki → Wirtz",
+              "out_id": 399,
+              "in_id": 366,
+              "uplift": 2.56,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 366
+        },
+        {
+          "gw": 14,
+          "action": "TRANSFER",
+          "route": "Henderson → Dewsbury-Hall",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Henderson → Dewsbury-Hall",
+              "out_id": 101,
+              "in_id": 236,
+              "uplift": 1.12,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 101,
+          "in_id": 236
+        },
+        {
+          "gw": 15,
+          "action": "TRANSFER",
+          "route": "Bogle → Konsa",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Bogle → Konsa",
+              "out_id": 330,
+              "in_id": 31,
+              "uplift": 0.99,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 330,
+          "in_id": 31
+        }
+      ],
+      "expected_points": 251.05,
+      "p10_points": 211.12,
+      "p90_points": 293.42,
+      "expected_rank_after_path": 1.62,
+      "prob_gain_league_place": 0.416,
+      "prob_finish_ahead_each_rival": [
+        0.422,
+        0.959,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "next_gw_expected_points": 61.44,
+      "next_two_gw_expected_points": 123.44,
+      "ending_bank": 2.5,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 1,
+      "utility_score": 248.52
     },
     {
       "actions": [
@@ -1070,31 +1161,31 @@
         {
           "gw": 15,
           "action": "TRANSFER",
-          "route": "Belloumi → Wirtz",
+          "route": "Tarkowski → Konsa",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Belloumi → Wirtz",
-              "out_id": 286,
-              "in_id": 366,
-              "uplift": 0.52,
+              "route": "Tarkowski → Konsa",
+              "out_id": 229,
+              "in_id": 31,
+              "uplift": 0.67,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
-          "out_id": 286,
-          "in_id": 366
+          "out_id": 229,
+          "in_id": 31
         }
       ],
-      "expected_points": 248.52,
-      "p10_points": 211.89,
-      "p90_points": 287.64,
-      "expected_rank_after_path": 1.68,
-      "prob_gain_league_place": 0.383,
+      "expected_points": 250.93,
+      "p10_points": 211.83,
+      "p90_points": 293.48,
+      "expected_rank_after_path": 1.63,
+      "prob_gain_league_place": 0.416,
       "prob_finish_ahead_each_rival": [
-        0.388,
-        0.939,
-        0.996,
+        0.426,
+        0.948,
+        1.0,
         1.0,
         1.0,
         1.0,
@@ -1103,11 +1194,11 @@
       ],
       "next_gw_expected_points": 61.82,
       "next_two_gw_expected_points": 124.14,
-      "ending_bank": 0.0,
+      "ending_bank": 3.4,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
       "first_deadline_transfer_count": 1,
-      "utility_score": 246.089
+      "utility_score": 248.456
     },
     {
       "actions": [
@@ -1132,7 +1223,7 @@
               "route": "Belloumi → Wirtz",
               "out_id": 286,
               "in_id": 366,
-              "uplift": 1.96,
+              "uplift": 2.14,
               "addresses_short_term_risk": false
             }
           ],
@@ -1160,32 +1251,18 @@
         },
         {
           "gw": 15,
-          "action": "TRANSFER",
-          "route": "Tarkowski → Konsa",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Tarkowski → Konsa",
-              "out_id": 229,
-              "in_id": 31,
-              "uplift": 0.67,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 229,
-          "in_id": 31
+          "action": "ROLL"
         }
       ],
-      "expected_points": 248.07,
-      "p10_points": 211.27,
-      "p90_points": 289.26,
-      "expected_rank_after_path": 1.67,
-      "prob_gain_league_place": 0.377,
+      "expected_points": 250.23,
+      "p10_points": 210.6,
+      "p90_points": 290.53,
+      "expected_rank_after_path": 1.65,
+      "prob_gain_league_place": 0.394,
       "prob_finish_ahead_each_rival": [
-        0.38,
-        0.949,
-        0.998,
+        0.402,
+        0.948,
+        1.0,
         1.0,
         1.0,
         1.0,
@@ -1193,12 +1270,12 @@
         1.0
       ],
       "next_gw_expected_points": 61.07,
-      "next_two_gw_expected_points": 123.23,
-      "ending_bank": 1.9,
-      "ending_free_transfers": 1,
+      "next_two_gw_expected_points": 123.3,
+      "ending_bank": 0.5,
+      "ending_free_transfers": 2,
       "first_transfer_incoming_starts": null,
       "first_deadline_transfer_count": 0,
-      "utility_score": 245.646
+      "utility_score": 247.923
     },
     {
       "actions": [
@@ -1209,7 +1286,7 @@
         {
           "gw": 13,
           "action": "TRANSFER",
-          "route": "Bogle → Van Hecke + Belloumi → Wirtz",
+          "route": "Bogle → Van Hecke + Hughes → Wirtz",
           "transfer_count": 2,
           "transfers": [
             {
@@ -1220,10 +1297,10 @@
               "addresses_short_term_risk": false
             },
             {
-              "route": "Belloumi → Wirtz",
-              "out_id": 286,
+              "route": "Hughes → Wirtz",
+              "out_id": 212,
               "in_id": 366,
-              "uplift": 1.96,
+              "uplift": 2.14,
               "addresses_short_term_risk": false
             }
           ],
@@ -1234,140 +1311,35 @@
         {
           "gw": 14,
           "action": "TRANSFER",
-          "route": "Cherki → Tavernier",
+          "route": "Cherki → Dewsbury-Hall",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Cherki → Tavernier",
+              "route": "Cherki → Dewsbury-Hall",
               "out_id": 399,
-              "in_id": 68,
-              "uplift": 1.18,
+              "in_id": 236,
+              "uplift": 1.12,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
           "out_id": 399,
-          "in_id": 68
+          "in_id": 236
         },
         {
           "gw": 15,
-          "action": "TRANSFER",
-          "route": "Affengruber → Konsa",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Konsa",
-              "out_id": 650,
-              "in_id": 31,
-              "uplift": 0.57,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
-          "in_id": 31
-        }
-      ],
-      "expected_points": 247.98,
-      "p10_points": 210.05,
-      "p90_points": 289.76,
-      "expected_rank_after_path": 1.69,
-      "prob_gain_league_place": 0.37,
-      "prob_finish_ahead_each_rival": [
-        0.375,
-        0.939,
-        0.998,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "next_gw_expected_points": 61.07,
-      "next_two_gw_expected_points": 123.23,
-      "ending_bank": 2.9,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": null,
-      "first_deadline_transfer_count": 0,
-      "utility_score": 245.34
-    },
-    {
-      "actions": [
-        {
-          "gw": 12,
           "action": "ROLL"
-        },
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Bogle → Van Hecke + Belloumi → Wirtz",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Bogle → Van Hecke",
-              "out_id": 330,
-              "in_id": 112,
-              "uplift": 2.82,
-              "addresses_short_term_risk": false
-            },
-            {
-              "route": "Belloumi → Wirtz",
-              "out_id": 286,
-              "in_id": 366,
-              "uplift": 1.96,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 330,
-          "in_id": 112
-        },
-        {
-          "gw": 14,
-          "action": "TRANSFER",
-          "route": "Henderson → Tavernier",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Henderson → Tavernier",
-              "out_id": 101,
-              "in_id": 68,
-              "uplift": 1.18,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 101,
-          "in_id": 68
-        },
-        {
-          "gw": 15,
-          "action": "TRANSFER",
-          "route": "Affengruber → Konsa",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Affengruber → Konsa",
-              "out_id": 650,
-              "in_id": 31,
-              "uplift": 0.57,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 650,
-          "in_id": 31
         }
       ],
-      "expected_points": 247.98,
-      "p10_points": 210.05,
-      "p90_points": 289.76,
-      "expected_rank_after_path": 1.69,
-      "prob_gain_league_place": 0.37,
+      "expected_points": 249.81,
+      "p10_points": 210.44,
+      "p90_points": 290.39,
+      "expected_rank_after_path": 1.64,
+      "prob_gain_league_place": 0.391,
       "prob_finish_ahead_each_rival": [
-        0.375,
-        0.939,
-        0.998,
+        0.4,
+        0.958,
+        1.0,
         1.0,
         1.0,
         1.0,
@@ -1375,12 +1347,12 @@
         1.0
       ],
       "next_gw_expected_points": 61.07,
-      "next_two_gw_expected_points": 123.23,
-      "ending_bank": 0.1,
-      "ending_free_transfers": 1,
+      "next_two_gw_expected_points": 123.3,
+      "ending_bank": 2.3,
+      "ending_free_transfers": 2,
       "first_transfer_incoming_starts": null,
       "first_deadline_transfer_count": 0,
-      "utility_score": 245.34
+      "utility_score": 247.575
     }
   ],
   "method_note": "Each path is scored with the actual squad owned in each Gameweek. A deadline may use one, two or three transfers up to the available free-transfer bank; a no-FT state retains only a single-hit contingency. Current-deadline hits use live FT state. Early-season extremes are shrunk toward priors. Legal XI selection uses the shared captaincy model. Monte Carlo sampling is lighter midweek and increases close to the official FPL deadline without changing decision thresholds."
