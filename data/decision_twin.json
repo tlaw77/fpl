@@ -1,7 +1,7 @@
 {
   "status": "SUCCESS",
   "version": 1,
-  "generated_at_utc": "2026-11-23T00:27:21.190642+00:00",
+  "generated_at_utc": "2026-11-23T08:09:08.102507+00:00",
   "current_gw": 11,
   "next_gw": 12,
   "progress": {
@@ -12,20 +12,20 @@
     "state": "COMPLETE"
   },
   "decision_certificate": {
-    "certificate_id": "DT-022BDBBA9F28",
-    "action": "TRANSFER",
-    "headline": "Affengruber → Van Hecke",
-    "confidence": 86,
+    "certificate_id": "DT-8398712DEB64",
+    "action": "HOLD",
+    "headline": "Hold / roll",
+    "confidence": 75,
     "objective": "Maximise mini-league winning potential while protecting downside and future flexibility.",
-    "six_gw_edge_over_hold": 4.34,
+    "six_gw_edge_over_hold": 4.62,
     "probability_gain_league_place_pct": 35.4,
-    "strongest_alternative": "Hughes → Wirtz",
-    "alternative_expected_points_6gw": 371.15,
-    "rationale": "The leading move clears the 2.0-point robustness hurdle after hit cost and the same measured route is supported by 3/3 decision models. Holding moves the bank from 1/5 to 2/5; no free transfer expires. The fixture swing is broadly balanced rather than time-critical.",
+    "strongest_alternative": "Henderson → Wirtz",
+    "alternative_expected_points_6gw": 370.46,
+    "rationale": "The leading transfer edge is 4.6 projected points over holding and does not yet clear the full evidence hurdle with sufficient agreement on that exact route. Holding moves the bank from 1/5 to 2/5; no free transfer expires. The outgoing player has the easier immediate fixture; the move can wait unless other evidence changes.",
     "evidence": {
-      "newest_at_utc": "2026-11-22T23:31:16.424164+00:00",
-      "oldest_at_utc": "2026-11-22T23:30:07.072065+00:00",
-      "age_minutes": 56,
+      "newest_at_utc": "2026-11-23T03:59:10.922042+00:00",
+      "oldest_at_utc": "2026-11-23T03:57:51.003766+00:00",
+      "age_minutes": 250,
       "sources_available": 12
     }
   },
@@ -34,8 +34,8 @@
       "agent": "Quant Analyst",
       "focus": "Magnitude and model agreement",
       "verdict": "SUPPORT",
-      "confidence": 86,
-      "argument": "The authoritative route is Affengruber → Van Hecke. Its 4.34-point edge is tested against a 2.00-point hurdle; model agreement is 3/2.",
+      "confidence": 75,
+      "argument": "The authoritative route is Hughes → Wirtz. Its 4.62-point edge is tested against a 2.00-point hurdle; model agreement is 1/2.",
       "evidence": [
         "simulation",
         "path_simulation",
@@ -58,7 +58,7 @@
       "focus": "News, role and availability",
       "verdict": "WATCH",
       "confidence": 66,
-      "argument": "The evidence layer covers 122 public Scout/news items and 74 matched players. 2 current-squad players carry a press-conference signal.",
+      "argument": "The evidence layer covers 119 public Scout/news items and 76 matched players. 2 current-squad players carry a press-conference signal.",
       "evidence": [
         "scout_consensus",
         "press_conference_watch"
@@ -69,7 +69,7 @@
       "focus": "Downside and fragility",
       "verdict": "WATCH",
       "confidence": 79,
-      "argument": "The simulated six-GW outcome range spans 97.7 points. Action persistence is 56% across 11 effective stability runs.",
+      "argument": "The simulated six-GW outcome range spans 96.1 points. Action persistence is 53% across 11 effective stability runs.",
       "evidence": [
         "simulation",
         "simulation_stability"
@@ -89,8 +89,8 @@
       "agent": "Decision Chair",
       "focus": "Resolved recommendation",
       "verdict": "CONTESTED",
-      "confidence": 86,
-      "argument": "Keep the authoritative action: Affengruber → Van Hecke. It remains live but is challenged by Rival Strategist.",
+      "confidence": 75,
+      "argument": "Keep the authoritative action: Hold / roll. It remains live but is challenged by Rival Strategist.",
       "evidence": [
         "decision_synthesis",
         "specialist_council"
@@ -99,27 +99,30 @@
   ],
   "council_summary": {
     "state": "CONTESTED",
-    "model_route_agreement_pct": 100,
+    "model_route_agreement_pct": 33,
     "challengers": [
       "Rival Strategist"
     ],
-    "resolved_position": "Affengruber → Van Hecke",
+    "resolved_position": "Hold / roll",
     "rule": "Specialists may challenge the authoritative synthesis but cannot silently replace it."
   },
   "change_radar": {
-    "decision_changed": false,
-    "changed_fields": [],
+    "decision_changed": true,
+    "changed_fields": [
+      "action",
+      "headline"
+    ],
     "previous_certificate_id": "DT-022BDBBA9F28",
     "decision_breakers": [
       {
         "signal": "model_consensus",
-        "state": "3/2 support",
+        "state": "1/2 support",
         "review_when": "support reaches 2 models or the leader changes",
         "priority": "high"
       },
       {
         "signal": "edge_over_hold",
-        "state": "4.34 points",
+        "state": "4.62 points",
         "review_when": "edge crosses the 2.00-point action hurdle",
         "priority": "high"
       },
@@ -146,9 +149,9 @@
   },
   "learning_contract": {
     "target_gw": 12,
-    "decision_certificate_id": "DT-022BDBBA9F28",
-    "recommended_action": "TRANSFER",
-    "recommended_route": "Affengruber → Van Hecke",
+    "decision_certificate_id": "DT-8398712DEB64",
+    "recommended_action": "HOLD",
+    "recommended_route": "Hughes → Wirtz",
     "baseline_xi_ids": [
       572,
       330,
@@ -164,9 +167,9 @@
     ],
     "baseline_captain_id": 166,
     "alternative_routes": [
-      "Hughes → Wirtz",
       "Henderson → Wirtz",
-      "Belloumi → Wirtz"
+      "Affengruber → Van Hecke",
+      "Cherki → Wirtz"
     ],
     "evaluable_gameweeks": 8,
     "learning_stage": "calibrating",
