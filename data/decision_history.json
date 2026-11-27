@@ -1,8 +1,8 @@
 {
   "version": 4,
-  "generated_at_utc": "2026-11-27T11:19:08.927739+00:00",
+  "generated_at_utc": "2026-11-27T20:13:08.277792+00:00",
   "entry_id": 5332809,
-  "current_gw": 11,
+  "current_gw": 12,
   "weeks": [
     {
       "event": 1,
@@ -574,6 +574,70 @@
         }
       ],
       "source": "official_fpl_history"
+    },
+    {
+      "event": 12,
+      "captain_id": 379,
+      "captain_name": "Isak",
+      "vice_id": 166,
+      "vice_name": "N.Jackson",
+      "active_chip": null,
+      "transfers": [
+        {
+          "event": 12,
+          "time": "2026-11-23T01:14:02.191811Z",
+          "element_out": 650,
+          "out_name": "Affengruber",
+          "element_in": 112,
+          "in_name": "Van Hecke",
+          "out_cost": 4.5,
+          "in_cost": 5.2,
+          "source": "official_transfer_history",
+          "status": "confirmed",
+          "recommendation_context": {
+            "matched": true,
+            "match_type": "exact_route",
+            "snapshot_at_utc": "2026-11-22T23:30:07.235862+00:00",
+            "strategy": "Balanced+ / controlled leverage",
+            "team_rank_at_snapshot": 2,
+            "bank_at_snapshot": 5.0,
+            "lenses": [
+              {
+                "type": "lower_variance",
+                "label": "Lower variance",
+                "model_uplift": 15.414,
+                "target_rival_ownership_pct": 100.0,
+                "next3": [
+                  {
+                    "gw": 12,
+                    "opponent": "Sunderland",
+                    "venue": "A",
+                    "fdr": 3
+                  },
+                  {
+                    "gw": 13,
+                    "opponent": "Fulham",
+                    "venue": "H",
+                    "fdr": 2
+                  },
+                  {
+                    "gw": 14,
+                    "opponent": "Arsenal",
+                    "venue": "H",
+                    "fdr": 4
+                  }
+                ],
+                "rationale": [
+                  "Next-3 fixtures: Sunderland A FDR 3, Fulham H FDR 2, Arsenal H FDR 4",
+                  "Nearest-rival ownership 100%: ownership context only; the football case still leads.",
+                  "Model uplift 15.4 versus the outgoing player on the dashboard heuristic."
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "source": "official_fpl_history"
     }
   ],
   "decisions": [
@@ -1026,6 +1090,59 @@
               "Next-3 fixtures: Sunderland H FDR 2, Ipswich Town A FDR 2, Everton H FDR 3",
               "Nearest-rival ownership 0%: ownership context only; the football case still leads.",
               "Model uplift 9.8 versus the outgoing player on the dashboard heuristic."
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "event": 12,
+      "time": "2026-11-23T01:14:02.191811Z",
+      "element_out": 650,
+      "out_name": "Affengruber",
+      "element_in": 112,
+      "in_name": "Van Hecke",
+      "out_cost": 4.5,
+      "in_cost": 5.2,
+      "source": "official_transfer_history",
+      "status": "confirmed",
+      "recommendation_context": {
+        "matched": true,
+        "match_type": "exact_route",
+        "snapshot_at_utc": "2026-11-22T23:30:07.235862+00:00",
+        "strategy": "Balanced+ / controlled leverage",
+        "team_rank_at_snapshot": 2,
+        "bank_at_snapshot": 5.0,
+        "lenses": [
+          {
+            "type": "lower_variance",
+            "label": "Lower variance",
+            "model_uplift": 15.414,
+            "target_rival_ownership_pct": 100.0,
+            "next3": [
+              {
+                "gw": 12,
+                "opponent": "Sunderland",
+                "venue": "A",
+                "fdr": 3
+              },
+              {
+                "gw": 13,
+                "opponent": "Fulham",
+                "venue": "H",
+                "fdr": 2
+              },
+              {
+                "gw": 14,
+                "opponent": "Arsenal",
+                "venue": "H",
+                "fdr": 4
+              }
+            ],
+            "rationale": [
+              "Next-3 fixtures: Sunderland A FDR 3, Fulham H FDR 2, Arsenal H FDR 4",
+              "Nearest-rival ownership 100%: ownership context only; the football case still leads.",
+              "Model uplift 15.4 versus the outgoing player on the dashboard heuristic."
             ]
           }
         ]
