@@ -1,7 +1,7 @@
 {
   "status": "SUCCESS",
   "version": 2,
-  "generated_at_utc": "2026-11-27T11:20:39.896599+00:00",
+  "generated_at_utc": "2026-11-27T20:14:16.788486+00:00",
   "finalized_gameweeks": [
     1,
     2,
@@ -12,17 +12,18 @@
     7,
     8,
     9,
-    10
+    10,
+    11
   ],
-  "evaluable_gameweeks": 8,
+  "evaluable_gameweeks": 9,
   "summary": {
-    "captain_evaluable_gameweeks": 8,
-    "transfer_evaluable_gameweeks": 8,
-    "captain_best_shortlist_rate_pct": 12.5,
-    "average_captain_regret_points": 5.25,
-    "average_captain_forecast_error": -0.91,
-    "transfer_decision_best_rate_pct": 50.0,
-    "average_transfer_decision_regret_points": 2.5,
+    "captain_evaluable_gameweeks": 9,
+    "transfer_evaluable_gameweeks": 9,
+    "captain_best_shortlist_rate_pct": 11.1,
+    "average_captain_regret_points": 5.0,
+    "average_captain_forecast_error": -1.35,
+    "transfer_decision_best_rate_pct": 57.1,
+    "average_transfer_decision_regret_points": 2.14,
     "message": "Early backtest only. Treat these results as descriptive until several completed Gameweeks accumulate."
   },
   "rows": [
@@ -1020,6 +1021,131 @@
             "realized_delta_vs_hold": 0.0,
             "expected_points_6gw": 341.26,
             "expected_rank_after_horizon": 1.61,
+            "incoming_starts": true
+          }
+        ],
+        "method_note": "Uses the XI/captain frozen in the simulation at decision time and scores those exact lineups against archived all-player outcomes. No hindsight lineup optimisation is allowed."
+      }
+    },
+    {
+      "decision_archive_gw": 10,
+      "evaluated_gw": 11,
+      "captaincy": {
+        "captain": "Haaland",
+        "captain_player_id": 411,
+        "captain_forecast_points": 6.91,
+        "captain_actual_points": 2.0,
+        "captain_forecast_error": -4.91,
+        "best_shortlisted_player": "Isak",
+        "best_shortlisted_actual_points": 5.0,
+        "captain_regret_points": 3.0,
+        "captain_was_best_shortlisted": false,
+        "shortlist": [
+          {
+            "player_id": 411,
+            "player": "Haaland",
+            "forecast_points": 6.91,
+            "actual_points": 2.0,
+            "forecast_error": -4.91
+          },
+          {
+            "player_id": 379,
+            "player": "Isak",
+            "forecast_points": 6.04,
+            "actual_points": 5.0,
+            "forecast_error": -1.04
+          },
+          {
+            "player_id": 124,
+            "player": "Groß",
+            "forecast_points": 6.3,
+            "actual_points": 4.0,
+            "forecast_error": -2.3
+          },
+          {
+            "player_id": 4,
+            "player": "Gabriel",
+            "forecast_points": 5.77,
+            "actual_points": 1.0,
+            "forecast_error": -4.77
+          },
+          {
+            "player_id": 115,
+            "player": "De Cuyper",
+            "forecast_points": 6.21,
+            "actual_points": 1.0,
+            "forecast_error": -5.21
+          }
+        ],
+        "tc_review_status": "WATCH",
+        "tc_candidate": "Haaland",
+        "tc_candidate_actual_points": 2.0,
+        "hypothetical_extra_tc_points": 2.0
+      },
+      "transfer_decision": {
+        "authoritative_action": "HOLD",
+        "chosen_label": "HOLD",
+        "hold_realized_score": 43.0,
+        "best_transfer_route": "Haaland → N.Jackson",
+        "best_transfer_realized_score": 43.0,
+        "best_transfer_delta_vs_hold": 0.0,
+        "chosen_realized_score": 43.0,
+        "decision_regret_points": 0.0,
+        "decision_was_best_available": true,
+        "routes": [
+          {
+            "route": "Haaland → N.Jackson",
+            "out_player_id": 411,
+            "in_player_id": 166,
+            "hit_cost": 0.0,
+            "realized_gw_score": 43.0,
+            "realized_delta_vs_hold": 0.0,
+            "expected_points_6gw": 356.66,
+            "expected_rank_after_horizon": 1.68,
+            "incoming_starts": true
+          },
+          {
+            "route": "Calvert-Lewin → N.Jackson",
+            "out_player_id": 346,
+            "in_player_id": 166,
+            "hit_cost": 0.0,
+            "realized_gw_score": 41.0,
+            "realized_delta_vs_hold": -2.0,
+            "expected_points_6gw": 374.07,
+            "expected_rank_after_horizon": 1.27,
+            "incoming_starts": true
+          },
+          {
+            "route": "Maguire → Konsa",
+            "out_player_id": 418,
+            "in_player_id": 31,
+            "hit_cost": 0.0,
+            "realized_gw_score": 40.0,
+            "realized_delta_vs_hold": -3.0,
+            "expected_points_6gw": 368.01,
+            "expected_rank_after_horizon": 1.37,
+            "incoming_starts": true
+          },
+          {
+            "route": "Affengruber → Konsa",
+            "out_player_id": 650,
+            "in_player_id": 31,
+            "hit_cost": 0.0,
+            "realized_gw_score": 40.0,
+            "realized_delta_vs_hold": -3.0,
+            "expected_points_6gw": 364.22,
+            "expected_rank_after_horizon": 1.42,
+            "incoming_starts": true
+          },
+          {
+            "route": "Bogle → Konsa",
+            "out_player_id": 330,
+            "in_player_id": 31,
+            "hit_cost": 0.0,
+            "realized_gw_score": 40.0,
+            "realized_delta_vs_hold": -3.0,
+            "expected_points_6gw": 358.26,
+            "expected_rank_after_horizon": 1.54,
             "incoming_starts": true
           }
         ],
