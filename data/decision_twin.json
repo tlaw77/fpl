@@ -1,9 +1,9 @@
 {
   "status": "SUCCESS",
   "version": 1,
-  "generated_at_utc": "2026-11-27T12:03:12.179906+00:00",
-  "current_gw": 11,
-  "next_gw": 12,
+  "generated_at_utc": "2026-11-27T21:07:59.612128+00:00",
+  "current_gw": 12,
+  "next_gw": 13,
   "progress": {
     "label": "Decision Twin v1",
     "completion_pct": 100,
@@ -12,20 +12,20 @@
     "state": "COMPLETE"
   },
   "decision_certificate": {
-    "certificate_id": "DT-00F2E8DAF073",
+    "certificate_id": "DT-B7DB997E52A6",
     "action": "HOLD",
     "headline": "Hold / roll",
     "confidence": 75,
     "objective": "Maximise mini-league winning potential while protecting downside and future flexibility.",
-    "six_gw_edge_over_hold": 5.3,
-    "probability_gain_league_place_pct": 32.8,
-    "strongest_alternative": "Hughes → Wirtz",
-    "alternative_expected_points_6gw": 376.2,
-    "rationale": "The leading transfer edge is 5.3 projected points over holding and does not yet clear the full evidence hurdle with sufficient agreement on that exact route. Holding moves the bank from 1/5 to 2/5; no free transfer expires. The fixture swing is broadly balanced rather than time-critical.",
+    "six_gw_edge_over_hold": 7.04,
+    "probability_gain_league_place_pct": 38.7,
+    "strongest_alternative": "Henderson → Wirtz",
+    "alternative_expected_points_6gw": 392.85,
+    "rationale": "The leading transfer edge is 7.0 projected points over holding and does not yet clear the full evidence hurdle with sufficient agreement on that exact route. Holding moves the bank from 1/5 to 2/5; no free transfer expires. The incoming player has the easier immediate fixture run.",
     "evidence": {
-      "newest_at_utc": "2026-11-27T11:20:39.896599+00:00",
-      "oldest_at_utc": "2026-11-27T11:19:06.254588+00:00",
-      "age_minutes": 43,
+      "newest_at_utc": "2026-11-27T20:14:16.788486+00:00",
+      "oldest_at_utc": "2026-11-27T20:13:06.377729+00:00",
+      "age_minutes": 54,
       "sources_available": 12
     }
   },
@@ -35,7 +35,7 @@
       "focus": "Magnitude and model agreement",
       "verdict": "SUPPORT",
       "confidence": 75,
-      "argument": "The authoritative route is Affengruber → Van Hecke. Its 5.30-point edge is tested against a 2.00-point hurdle; model agreement is 1/2.",
+      "argument": "The authoritative route is Hughes → Wirtz. Its 7.04-point edge is tested against a 2.00-point hurdle; model agreement is 1/2.",
       "evidence": [
         "simulation",
         "path_simulation",
@@ -46,8 +46,8 @@
       "agent": "Rival Strategist",
       "focus": "Mini-league consequence",
       "verdict": "CHALLENGE",
-      "confidence": 67,
-      "argument": "The simulated route has a 32.8% probability of gaining a league place against 8 modelled rivals; adaptive rivals prefer Cherki → Tavernier.",
+      "confidence": 61,
+      "argument": "The simulated route has a 38.7% probability of gaining a league place against 8 modelled rivals; adaptive rivals prefer Henderson → Tavernier.",
       "evidence": [
         "simulation",
         "adaptive_rival_simulation"
@@ -57,8 +57,8 @@
       "agent": "Evidence Scout",
       "focus": "News, role and availability",
       "verdict": "SUPPORT",
-      "confidence": 82,
-      "argument": "The evidence layer covers 200 public Scout/news items and 79 matched players. 0 current-squad players carry a press-conference signal.",
+      "confidence": 75,
+      "argument": "The evidence layer covers 164 public Scout/news items and 80 matched players. 0 current-squad players carry a press-conference signal.",
       "evidence": [
         "scout_consensus",
         "press_conference_watch"
@@ -68,8 +68,8 @@
       "agent": "Risk Officer",
       "focus": "Downside and fragility",
       "verdict": "WATCH",
-      "confidence": 79,
-      "argument": "The simulated six-GW outcome range spans 95.7 points. Action persistence is 67% across 12 effective stability runs.",
+      "confidence": 78,
+      "argument": "The simulated six-GW outcome range spans 93.5 points. Action persistence is 67% across 12 effective stability runs.",
       "evidence": [
         "simulation",
         "simulation_stability"
@@ -78,9 +78,9 @@
     {
       "agent": "Chip Planner",
       "focus": "Portfolio option value",
-      "verdict": "HOLD",
+      "verdict": "WATCH",
       "confidence": 72,
-      "argument": "Portfolio pressure is watch. All four chips remain below activation level.",
+      "argument": "Portfolio pressure is watch. Active watchlist: Triple Captain.",
       "evidence": [
         "chip_activation_gate"
       ]
@@ -119,7 +119,7 @@
       },
       {
         "signal": "edge_over_hold",
-        "state": "5.30 points",
+        "state": "7.04 points",
         "review_when": "edge crosses the 2.00-point action hurdle",
         "priority": "high"
       },
@@ -131,13 +131,13 @@
       },
       {
         "signal": "market_flexibility",
-        "state": "6 relevant price watches",
+        "state": "0 relevant price watches",
         "review_when": "a preferred route becomes unaffordable or an owned player loses value",
         "priority": "medium"
       },
       {
         "signal": "captaincy_separation",
-        "state": "0.17 score edge",
+        "state": "1.06 score edge",
         "review_when": "captain leader changes or the top-two gap materially widens",
         "priority": "medium"
       }
@@ -145,30 +145,30 @@
     "notification_rule": "Notify only when action/headline changes or a high-priority breaker crosses its stated review condition."
   },
   "learning_contract": {
-    "target_gw": 12,
-    "decision_certificate_id": "DT-00F2E8DAF073",
+    "target_gw": 13,
+    "decision_certificate_id": "DT-B7DB997E52A6",
     "recommended_action": "HOLD",
-    "recommended_route": "Affengruber → Van Hecke",
+    "recommended_route": "Hughes → Wirtz",
     "baseline_xi_ids": [
       572,
+      112,
       504,
-      115,
-      330,
       4,
-      650,
+      115,
       124,
       286,
+      399,
       379,
-      166,
-      411
+      411,
+      166
     ],
     "baseline_captain_id": 379,
     "alternative_routes": [
-      "Hughes → Wirtz",
       "Henderson → Wirtz",
-      "Cherki → Wirtz"
+      "Cherki → Wirtz",
+      "Belloumi → Wirtz"
     ],
-    "evaluable_gameweeks": 8,
+    "evaluable_gameweeks": 9,
     "learning_stage": "calibrating",
     "tuning_allowed": true,
     "rule": "Score decision quality and calibration after the target GW; do not tune from isolated outcomes."
