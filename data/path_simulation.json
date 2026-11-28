@@ -1,6 +1,6 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-11-28T02:55:53.468179+00:00",
+  "generated_at_utc": "2026-11-28T11:35:58.961816+00:00",
   "engine_version": 7,
   "planner": "bounded same-deadline multi-transfer beam search + GW-specific shared-outcome Monte Carlo + live FT state + season calibration + shared captaincy + deadline-aware sampling",
   "projection_model": "season-maturity calibrated + shared captaincy model",
@@ -16,7 +16,7 @@
   "iteration_policy": {
     "layer": "path",
     "deadline_phase": "normal",
-    "hours_to_deadline": 87.58,
+    "hours_to_deadline": 78.91,
     "iterations": 1200,
     "policy": "lighter normal-week sampling; higher precision inside 72h/24h/6h of official FPL deadline"
   },
@@ -133,19 +133,19 @@
       {
         "gw": 13,
         "action": "TRANSFER",
-        "route": "Cherki → Tavernier",
+        "route": "Henderson → Tavernier",
         "transfer_count": 1,
         "transfers": [
           {
-            "route": "Cherki → Tavernier",
-            "out_id": 399,
+            "route": "Henderson → Tavernier",
+            "out_id": 101,
             "in_id": 68,
-            "uplift": 5.37,
+            "uplift": 4.92,
             "addresses_short_term_risk": false
           }
         ],
         "hit": 0,
-        "out_id": 399,
+        "out_id": 101,
         "in_id": 68
       },
       {
@@ -169,19 +169,19 @@
       {
         "gw": 15,
         "action": "TRANSFER",
-        "route": "Belloumi → Wirtz",
+        "route": "Cherki → Wirtz",
         "transfer_count": 1,
         "transfers": [
           {
-            "route": "Belloumi → Wirtz",
-            "out_id": 286,
+            "route": "Cherki → Wirtz",
+            "out_id": 399,
             "in_id": 366,
-            "uplift": 1.54,
+            "uplift": 1.58,
             "addresses_short_term_risk": false
           }
         ],
         "hit": 0,
-        "out_id": 286,
+        "out_id": 399,
         "in_id": 366
       },
       {
@@ -194,7 +194,7 @@
             "route": "N.Jackson → Evanilson",
             "out_id": 166,
             "in_id": 79,
-            "uplift": 1.6,
+            "uplift": 1.56,
             "addresses_short_term_risk": false
           }
         ],
@@ -203,14 +203,14 @@
         "in_id": 79
       }
     ],
-    "expected_points": 269.64,
-    "p10_points": 231.61,
-    "p90_points": 310.23,
-    "expected_rank_after_path": 1.58,
-    "prob_gain_league_place": 0.454,
+    "expected_points": 269.63,
+    "p10_points": 233.46,
+    "p90_points": 307.85,
+    "expected_rank_after_path": 1.57,
+    "prob_gain_league_place": 0.458,
     "prob_finish_ahead_each_rival": [
-      0.457,
-      0.961,
+      0.459,
+      0.973,
       1.0,
       1.0,
       1.0,
@@ -218,13 +218,13 @@
       1.0,
       1.0
     ],
-    "next_gw_expected_points": 64.16,
-    "next_two_gw_expected_points": 131.34,
-    "ending_bank": 2.5,
+    "next_gw_expected_points": 64.43,
+    "next_two_gw_expected_points": 131.56,
+    "ending_bank": 2.2,
     "ending_free_transfers": 1,
     "first_transfer_incoming_starts": true,
     "first_deadline_transfer_count": 1,
-    "utility_score": 267.514
+    "utility_score": 267.807
   },
   "paths": [
     {
@@ -232,202 +232,6 @@
         {
           "gw": 13,
           "action": "TRANSFER",
-          "route": "Cherki → Tavernier",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Cherki → Tavernier",
-              "out_id": 399,
-              "in_id": 68,
-              "uplift": 5.37,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 399,
-          "in_id": 68
-        },
-        {
-          "gw": 14,
-          "action": "TRANSFER",
-          "route": "Dubravka → Verbruggen",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Dubravka → Verbruggen",
-              "out_id": 497,
-              "in_id": 109,
-              "uplift": 2.63,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 497,
-          "in_id": 109
-        },
-        {
-          "gw": 15,
-          "action": "TRANSFER",
-          "route": "Belloumi → Wirtz",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Belloumi → Wirtz",
-              "out_id": 286,
-              "in_id": 366,
-              "uplift": 1.54,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 286,
-          "in_id": 366
-        },
-        {
-          "gw": 16,
-          "action": "TRANSFER",
-          "route": "N.Jackson → Evanilson",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "N.Jackson → Evanilson",
-              "out_id": 166,
-              "in_id": 79,
-              "uplift": 1.6,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 166,
-          "in_id": 79
-        }
-      ],
-      "expected_points": 269.64,
-      "p10_points": 231.61,
-      "p90_points": 310.23,
-      "expected_rank_after_path": 1.58,
-      "prob_gain_league_place": 0.454,
-      "prob_finish_ahead_each_rival": [
-        0.457,
-        0.961,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "next_gw_expected_points": 64.16,
-      "next_two_gw_expected_points": 131.34,
-      "ending_bank": 2.5,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 1,
-      "utility_score": 267.514
-    },
-    {
-      "actions": [
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Cherki → Tavernier",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Cherki → Tavernier",
-              "out_id": 399,
-              "in_id": 68,
-              "uplift": 5.37,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 399,
-          "in_id": 68
-        },
-        {
-          "gw": 14,
-          "action": "TRANSFER",
-          "route": "Tzolakis → Verbruggen",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Tzolakis → Verbruggen",
-              "out_id": 572,
-              "in_id": 109,
-              "uplift": 2.63,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 572,
-          "in_id": 109
-        },
-        {
-          "gw": 15,
-          "action": "TRANSFER",
-          "route": "Belloumi → Wirtz",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Belloumi → Wirtz",
-              "out_id": 286,
-              "in_id": 366,
-              "uplift": 1.54,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 286,
-          "in_id": 366
-        },
-        {
-          "gw": 16,
-          "action": "TRANSFER",
-          "route": "N.Jackson → Evanilson",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "N.Jackson → Evanilson",
-              "out_id": 166,
-              "in_id": 79,
-              "uplift": 1.6,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 166,
-          "in_id": 79
-        }
-      ],
-      "expected_points": 269.39,
-      "p10_points": 233.25,
-      "p90_points": 311.03,
-      "expected_rank_after_path": 1.6,
-      "prob_gain_league_place": 0.432,
-      "prob_finish_ahead_each_rival": [
-        0.436,
-        0.963,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "next_gw_expected_points": 64.16,
-      "next_two_gw_expected_points": 131.34,
-      "ending_bank": 3.2,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 1,
-      "utility_score": 267.392
-    },
-    {
-      "actions": [
-        {
-          "gw": 13,
-          "action": "TRANSFER",
           "route": "Henderson → Tavernier",
           "transfer_count": 1,
           "transfers": [
@@ -435,7 +239,7 @@
               "route": "Henderson → Tavernier",
               "out_id": 101,
               "in_id": 68,
-              "uplift": 5.49,
+              "uplift": 4.92,
               "addresses_short_term_risk": false
             }
           ],
@@ -489,7 +293,7 @@
               "route": "N.Jackson → Evanilson",
               "out_id": 166,
               "in_id": 79,
-              "uplift": 1.6,
+              "uplift": 1.56,
               "addresses_short_term_risk": false
             }
           ],
@@ -498,14 +302,14 @@
           "in_id": 79
         }
       ],
-      "expected_points": 269.48,
-      "p10_points": 231.36,
-      "p90_points": 309.75,
-      "expected_rank_after_path": 1.6,
-      "prob_gain_league_place": 0.432,
+      "expected_points": 269.63,
+      "p10_points": 233.46,
+      "p90_points": 307.85,
+      "expected_rank_after_path": 1.57,
+      "prob_gain_league_place": 0.458,
       "prob_finish_ahead_each_rival": [
-        0.438,
-        0.958,
+        0.459,
+        0.973,
         1.0,
         1.0,
         1.0,
@@ -513,13 +317,13 @@
         1.0,
         1.0
       ],
-      "next_gw_expected_points": 64.16,
-      "next_two_gw_expected_points": 131.34,
+      "next_gw_expected_points": 64.43,
+      "next_two_gw_expected_points": 131.56,
       "ending_bank": 2.2,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
       "first_deadline_transfer_count": 1,
-      "utility_score": 267.229
+      "utility_score": 267.807
     },
     {
       "actions": [
@@ -533,7 +337,7 @@
               "route": "Hughes → Tavernier",
               "out_id": 212,
               "in_id": 68,
-              "uplift": 5.49,
+              "uplift": 4.92,
               "addresses_short_term_risk": false
             }
           ],
@@ -587,7 +391,399 @@
               "route": "N.Jackson → Evanilson",
               "out_id": 166,
               "in_id": 79,
-              "uplift": 1.6,
+              "uplift": 1.56,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 166,
+          "in_id": 79
+        }
+      ],
+      "expected_points": 269.63,
+      "p10_points": 233.46,
+      "p90_points": 307.85,
+      "expected_rank_after_path": 1.57,
+      "prob_gain_league_place": 0.458,
+      "prob_finish_ahead_each_rival": [
+        0.459,
+        0.973,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "next_gw_expected_points": 64.43,
+      "next_two_gw_expected_points": 131.56,
+      "ending_bank": 1.6,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 1,
+      "utility_score": 267.807
+    },
+    {
+      "actions": [
+        {
+          "gw": 13,
+          "action": "TRANSFER",
+          "route": "Henderson → Tavernier",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Henderson → Tavernier",
+              "out_id": 101,
+              "in_id": 68,
+              "uplift": 4.92,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 101,
+          "in_id": 68
+        },
+        {
+          "gw": 14,
+          "action": "TRANSFER",
+          "route": "Tzolakis → Verbruggen",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Tzolakis → Verbruggen",
+              "out_id": 572,
+              "in_id": 109,
+              "uplift": 2.63,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 572,
+          "in_id": 109
+        },
+        {
+          "gw": 15,
+          "action": "TRANSFER",
+          "route": "Cherki → Wirtz",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Cherki → Wirtz",
+              "out_id": 399,
+              "in_id": 366,
+              "uplift": 1.58,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 366
+        },
+        {
+          "gw": 16,
+          "action": "TRANSFER",
+          "route": "N.Jackson → Evanilson",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "N.Jackson → Evanilson",
+              "out_id": 166,
+              "in_id": 79,
+              "uplift": 1.56,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 166,
+          "in_id": 79
+        }
+      ],
+      "expected_points": 269.58,
+      "p10_points": 232.25,
+      "p90_points": 308.49,
+      "expected_rank_after_path": 1.57,
+      "prob_gain_league_place": 0.456,
+      "prob_finish_ahead_each_rival": [
+        0.456,
+        0.977,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "next_gw_expected_points": 64.43,
+      "next_two_gw_expected_points": 131.56,
+      "ending_bank": 2.9,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 1,
+      "utility_score": 267.616
+    },
+    {
+      "actions": [
+        {
+          "gw": 13,
+          "action": "TRANSFER",
+          "route": "Hughes → Tavernier",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Hughes → Tavernier",
+              "out_id": 212,
+              "in_id": 68,
+              "uplift": 4.92,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 68
+        },
+        {
+          "gw": 14,
+          "action": "TRANSFER",
+          "route": "Tzolakis → Verbruggen",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Tzolakis → Verbruggen",
+              "out_id": 572,
+              "in_id": 109,
+              "uplift": 2.63,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 572,
+          "in_id": 109
+        },
+        {
+          "gw": 15,
+          "action": "TRANSFER",
+          "route": "Cherki → Wirtz",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Cherki → Wirtz",
+              "out_id": 399,
+              "in_id": 366,
+              "uplift": 1.58,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 366
+        },
+        {
+          "gw": 16,
+          "action": "TRANSFER",
+          "route": "N.Jackson → Evanilson",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "N.Jackson → Evanilson",
+              "out_id": 166,
+              "in_id": 79,
+              "uplift": 1.56,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 166,
+          "in_id": 79
+        }
+      ],
+      "expected_points": 269.58,
+      "p10_points": 232.25,
+      "p90_points": 308.49,
+      "expected_rank_after_path": 1.57,
+      "prob_gain_league_place": 0.456,
+      "prob_finish_ahead_each_rival": [
+        0.456,
+        0.977,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "next_gw_expected_points": 64.43,
+      "next_two_gw_expected_points": 131.56,
+      "ending_bank": 2.3,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 1,
+      "utility_score": 267.616
+    },
+    {
+      "actions": [
+        {
+          "gw": 13,
+          "action": "TRANSFER",
+          "route": "Cherki → Tavernier",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Cherki → Tavernier",
+              "out_id": 399,
+              "in_id": 68,
+              "uplift": 4.91,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 68
+        },
+        {
+          "gw": 14,
+          "action": "TRANSFER",
+          "route": "Dubravka → Verbruggen",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Dubravka → Verbruggen",
+              "out_id": 497,
+              "in_id": 109,
+              "uplift": 2.63,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 497,
+          "in_id": 109
+        },
+        {
+          "gw": 15,
+          "action": "TRANSFER",
+          "route": "Belloumi → Wirtz",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Belloumi → Wirtz",
+              "out_id": 286,
+              "in_id": 366,
+              "uplift": 1.43,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 286,
+          "in_id": 366
+        },
+        {
+          "gw": 16,
+          "action": "TRANSFER",
+          "route": "N.Jackson → Evanilson",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "N.Jackson → Evanilson",
+              "out_id": 166,
+              "in_id": 79,
+              "uplift": 1.56,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 166,
+          "in_id": 79
+        }
+      ],
+      "expected_points": 269.47,
+      "p10_points": 232.48,
+      "p90_points": 309.39,
+      "expected_rank_after_path": 1.57,
+      "prob_gain_league_place": 0.454,
+      "prob_finish_ahead_each_rival": [
+        0.457,
+        0.973,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "next_gw_expected_points": 64.43,
+      "next_two_gw_expected_points": 131.56,
+      "ending_bank": 2.5,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 1,
+      "utility_score": 267.524
+    },
+    {
+      "actions": [
+        {
+          "gw": 13,
+          "action": "TRANSFER",
+          "route": "Henderson → Tavernier",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Henderson → Tavernier",
+              "out_id": 101,
+              "in_id": 68,
+              "uplift": 4.92,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 101,
+          "in_id": 68
+        },
+        {
+          "gw": 14,
+          "action": "TRANSFER",
+          "route": "Tzolakis → Verbruggen",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Tzolakis → Verbruggen",
+              "out_id": 572,
+              "in_id": 109,
+              "uplift": 2.63,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 572,
+          "in_id": 109
+        },
+        {
+          "gw": 15,
+          "action": "TRANSFER",
+          "route": "Cherki → Gomez",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Cherki → Gomez",
+              "out_id": 399,
+              "in_id": 127,
+              "uplift": 1.29,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 127
+        },
+        {
+          "gw": 16,
+          "action": "TRANSFER",
+          "route": "N.Jackson → Evanilson",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "N.Jackson → Evanilson",
+              "out_id": 166,
+              "in_id": 79,
+              "uplift": 1.56,
               "addresses_short_term_risk": false
             }
           ],
@@ -597,13 +793,13 @@
         }
       ],
       "expected_points": 269.48,
-      "p10_points": 231.36,
-      "p90_points": 309.75,
-      "expected_rank_after_path": 1.6,
-      "prob_gain_league_place": 0.432,
+      "p10_points": 231.87,
+      "p90_points": 307.47,
+      "expected_rank_after_path": 1.57,
+      "prob_gain_league_place": 0.464,
       "prob_finish_ahead_each_rival": [
-        0.438,
-        0.958,
+        0.464,
+        0.968,
         1.0,
         1.0,
         1.0,
@@ -611,646 +807,18 @@
         1.0,
         1.0
       ],
-      "next_gw_expected_points": 64.16,
-      "next_two_gw_expected_points": 131.34,
-      "ending_bank": 1.6,
+      "next_gw_expected_points": 64.43,
+      "next_two_gw_expected_points": 131.56,
+      "ending_bank": 5.4,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": true,
       "first_deadline_transfer_count": 1,
-      "utility_score": 267.229
+      "utility_score": 267.477
     },
     {
       "actions": [
         {
           "gw": 13,
-          "action": "TRANSFER",
-          "route": "Henderson → Tavernier",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Henderson → Tavernier",
-              "out_id": 101,
-              "in_id": 68,
-              "uplift": 5.49,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 101,
-          "in_id": 68
-        },
-        {
-          "gw": 14,
-          "action": "TRANSFER",
-          "route": "Tzolakis → Verbruggen",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Tzolakis → Verbruggen",
-              "out_id": 572,
-              "in_id": 109,
-              "uplift": 2.63,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 572,
-          "in_id": 109
-        },
-        {
-          "gw": 15,
-          "action": "TRANSFER",
-          "route": "Hughes → Gomez",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Hughes → Gomez",
-              "out_id": 212,
-              "in_id": 127,
-              "uplift": 1.34,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 127
-        },
-        {
-          "gw": 16,
-          "action": "TRANSFER",
-          "route": "N.Jackson → Evanilson",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "N.Jackson → Evanilson",
-              "out_id": 166,
-              "in_id": 79,
-              "uplift": 1.54,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 166,
-          "in_id": 79
-        }
-      ],
-      "expected_points": 269.16,
-      "p10_points": 232.8,
-      "p90_points": 309.72,
-      "expected_rank_after_path": 1.59,
-      "prob_gain_league_place": 0.441,
-      "prob_finish_ahead_each_rival": [
-        0.444,
-        0.965,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "next_gw_expected_points": 64.16,
-      "next_two_gw_expected_points": 131.34,
-      "ending_bank": 2.0,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 1,
-      "utility_score": 267.193
-    },
-    {
-      "actions": [
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Henderson → Tavernier",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Henderson → Tavernier",
-              "out_id": 101,
-              "in_id": 68,
-              "uplift": 5.49,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 101,
-          "in_id": 68
-        },
-        {
-          "gw": 14,
-          "action": "TRANSFER",
-          "route": "Tzolakis → Verbruggen",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Tzolakis → Verbruggen",
-              "out_id": 572,
-              "in_id": 109,
-              "uplift": 2.63,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 572,
-          "in_id": 109
-        },
-        {
-          "gw": 15,
-          "action": "TRANSFER",
-          "route": "Cherki → Wirtz",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Cherki → Wirtz",
-              "out_id": 399,
-              "in_id": 366,
-              "uplift": 1.58,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 399,
-          "in_id": 366
-        },
-        {
-          "gw": 16,
-          "action": "TRANSFER",
-          "route": "N.Jackson → Evanilson",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "N.Jackson → Evanilson",
-              "out_id": 166,
-              "in_id": 79,
-              "uplift": 1.6,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 166,
-          "in_id": 79
-        }
-      ],
-      "expected_points": 269.23,
-      "p10_points": 231.8,
-      "p90_points": 309.54,
-      "expected_rank_after_path": 1.61,
-      "prob_gain_league_place": 0.427,
-      "prob_finish_ahead_each_rival": [
-        0.432,
-        0.962,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "next_gw_expected_points": 64.16,
-      "next_two_gw_expected_points": 131.34,
-      "ending_bank": 2.9,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 1,
-      "utility_score": 267.051
-    },
-    {
-      "actions": [
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Hughes → Tavernier",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Hughes → Tavernier",
-              "out_id": 212,
-              "in_id": 68,
-              "uplift": 5.49,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 68
-        },
-        {
-          "gw": 14,
-          "action": "TRANSFER",
-          "route": "Tzolakis → Verbruggen",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Tzolakis → Verbruggen",
-              "out_id": 572,
-              "in_id": 109,
-              "uplift": 2.63,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 572,
-          "in_id": 109
-        },
-        {
-          "gw": 15,
-          "action": "TRANSFER",
-          "route": "Cherki → Wirtz",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Cherki → Wirtz",
-              "out_id": 399,
-              "in_id": 366,
-              "uplift": 1.58,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 399,
-          "in_id": 366
-        },
-        {
-          "gw": 16,
-          "action": "TRANSFER",
-          "route": "N.Jackson → Evanilson",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "N.Jackson → Evanilson",
-              "out_id": 166,
-              "in_id": 79,
-              "uplift": 1.6,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 166,
-          "in_id": 79
-        }
-      ],
-      "expected_points": 269.23,
-      "p10_points": 231.8,
-      "p90_points": 309.54,
-      "expected_rank_after_path": 1.61,
-      "prob_gain_league_place": 0.427,
-      "prob_finish_ahead_each_rival": [
-        0.432,
-        0.962,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "next_gw_expected_points": 64.16,
-      "next_two_gw_expected_points": 131.34,
-      "ending_bank": 2.3,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 1,
-      "utility_score": 267.051
-    },
-    {
-      "actions": [
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Henderson → Tavernier",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Henderson → Tavernier",
-              "out_id": 101,
-              "in_id": 68,
-              "uplift": 5.49,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 101,
-          "in_id": 68
-        },
-        {
-          "gw": 14,
-          "action": "TRANSFER",
-          "route": "Dubravka → Trafford",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Dubravka → Trafford",
-              "out_id": 497,
-              "in_id": 385,
-              "uplift": 2.42,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 497,
-          "in_id": 385
-        },
-        {
-          "gw": 15,
-          "action": "TRANSFER",
-          "route": "Cherki → Wirtz",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Cherki → Wirtz",
-              "out_id": 399,
-              "in_id": 366,
-              "uplift": 1.58,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 399,
-          "in_id": 366
-        },
-        {
-          "gw": 16,
-          "action": "TRANSFER",
-          "route": "N.Jackson → Evanilson",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "N.Jackson → Evanilson",
-              "out_id": 166,
-              "in_id": 79,
-              "uplift": 1.6,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 166,
-          "in_id": 79
-        }
-      ],
-      "expected_points": 269.19,
-      "p10_points": 231.2,
-      "p90_points": 309.59,
-      "expected_rank_after_path": 1.6,
-      "prob_gain_league_place": 0.44,
-      "prob_finish_ahead_each_rival": [
-        0.443,
-        0.957,
-        0.999,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "next_gw_expected_points": 64.16,
-      "next_two_gw_expected_points": 131.33,
-      "ending_bank": 1.9,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 1,
-      "utility_score": 266.975
-    },
-    {
-      "actions": [
-        {
-          "gw": 13,
-          "action": "TRANSFER",
-          "route": "Hughes → Tavernier",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Hughes → Tavernier",
-              "out_id": 212,
-              "in_id": 68,
-              "uplift": 5.49,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 212,
-          "in_id": 68
-        },
-        {
-          "gw": 14,
-          "action": "TRANSFER",
-          "route": "Dubravka → Trafford",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Dubravka → Trafford",
-              "out_id": 497,
-              "in_id": 385,
-              "uplift": 2.42,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 497,
-          "in_id": 385
-        },
-        {
-          "gw": 15,
-          "action": "TRANSFER",
-          "route": "Cherki → Wirtz",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Cherki → Wirtz",
-              "out_id": 399,
-              "in_id": 366,
-              "uplift": 1.58,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 399,
-          "in_id": 366
-        },
-        {
-          "gw": 16,
-          "action": "TRANSFER",
-          "route": "N.Jackson → Evanilson",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "N.Jackson → Evanilson",
-              "out_id": 166,
-              "in_id": 79,
-              "uplift": 1.6,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 166,
-          "in_id": 79
-        }
-      ],
-      "expected_points": 269.19,
-      "p10_points": 231.2,
-      "p90_points": 309.59,
-      "expected_rank_after_path": 1.6,
-      "prob_gain_league_place": 0.44,
-      "prob_finish_ahead_each_rival": [
-        0.443,
-        0.957,
-        0.999,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "next_gw_expected_points": 64.16,
-      "next_two_gw_expected_points": 131.33,
-      "ending_bank": 1.3,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": true,
-      "first_deadline_transfer_count": 1,
-      "utility_score": 266.975
-    },
-    {
-      "actions": [
-        {
-          "gw": 13,
-          "action": "ROLL"
-        },
-        {
-          "gw": 14,
-          "action": "TRANSFER",
-          "route": "Henderson → Gomez",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Henderson → Gomez",
-              "out_id": 101,
-              "in_id": 127,
-              "uplift": 2.82,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 101,
-          "in_id": 127
-        },
-        {
-          "gw": 15,
-          "action": "TRANSFER",
-          "route": "Tzolakis → Verbruggen",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Tzolakis → Verbruggen",
-              "out_id": 572,
-              "in_id": 109,
-              "uplift": 1.66,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 572,
-          "in_id": 109
-        },
-        {
-          "gw": 16,
-          "action": "TRANSFER",
-          "route": "Belloumi → Tavernier + N.Jackson → Evanilson",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Belloumi → Tavernier",
-              "out_id": 286,
-              "in_id": 68,
-              "uplift": 1.63,
-              "addresses_short_term_risk": false
-            },
-            {
-              "route": "N.Jackson → Evanilson",
-              "out_id": 166,
-              "in_id": 79,
-              "uplift": 1.54,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 286,
-          "in_id": 68
-        }
-      ],
-      "expected_points": 266.27,
-      "p10_points": 229.51,
-      "p90_points": 307.75,
-      "expected_rank_after_path": 1.67,
-      "prob_gain_league_place": 0.394,
-      "prob_finish_ahead_each_rival": [
-        0.399,
-        0.936,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "next_gw_expected_points": 63.29,
-      "next_two_gw_expected_points": 127.99,
-      "ending_bank": 2.9,
-      "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": null,
-      "first_deadline_transfer_count": 0,
-      "utility_score": 263.88
-    },
-    {
-      "actions": [
-        {
-          "gw": 13,
-          "action": "ROLL"
-        },
-        {
-          "gw": 14,
-          "action": "TRANSFER",
-          "route": "Henderson → Gomez",
-          "transfer_count": 1,
-          "transfers": [
-            {
-              "route": "Henderson → Gomez",
-              "out_id": 101,
-              "in_id": 127,
-              "uplift": 2.82,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 101,
-          "in_id": 127
-        },
-        {
-          "gw": 15,
-          "action": "TRANSFER",
-          "route": "Tzolakis → Verbruggen + Hughes → Wirtz",
-          "transfer_count": 2,
-          "transfers": [
-            {
-              "route": "Tzolakis → Verbruggen",
-              "out_id": 572,
-              "in_id": 109,
-              "uplift": 1.66,
-              "addresses_short_term_risk": false
-            },
-            {
-              "route": "Hughes → Wirtz",
-              "out_id": 212,
-              "in_id": 366,
-              "uplift": 1.47,
-              "addresses_short_term_risk": false
-            }
-          ],
-          "hit": 0,
-          "out_id": 572,
-          "in_id": 109
-        },
-        {
-          "gw": 16,
           "action": "TRANSFER",
           "route": "Cherki → Tavernier",
           "transfer_count": 1,
@@ -1259,23 +827,77 @@
               "route": "Cherki → Tavernier",
               "out_id": 399,
               "in_id": 68,
-              "uplift": 1.58,
+              "uplift": 4.91,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
           "out_id": 399,
           "in_id": 68
+        },
+        {
+          "gw": 14,
+          "action": "TRANSFER",
+          "route": "Tzolakis → Verbruggen",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Tzolakis → Verbruggen",
+              "out_id": 572,
+              "in_id": 109,
+              "uplift": 2.63,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 572,
+          "in_id": 109
+        },
+        {
+          "gw": 15,
+          "action": "TRANSFER",
+          "route": "Belloumi → Wirtz",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Belloumi → Wirtz",
+              "out_id": 286,
+              "in_id": 366,
+              "uplift": 1.43,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 286,
+          "in_id": 366
+        },
+        {
+          "gw": 16,
+          "action": "TRANSFER",
+          "route": "N.Jackson → Evanilson",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "N.Jackson → Evanilson",
+              "out_id": 166,
+              "in_id": 79,
+              "uplift": 1.56,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 166,
+          "in_id": 79
         }
       ],
-      "expected_points": 266.01,
-      "p10_points": 229.01,
-      "p90_points": 307.75,
-      "expected_rank_after_path": 1.68,
-      "prob_gain_league_place": 0.373,
+      "expected_points": 269.42,
+      "p10_points": 232.2,
+      "p90_points": 308.69,
+      "expected_rank_after_path": 1.57,
+      "prob_gain_league_place": 0.454,
       "prob_finish_ahead_each_rival": [
-        0.38,
-        0.943,
+        0.456,
+        0.976,
         1.0,
         1.0,
         1.0,
@@ -1283,13 +905,209 @@
         1.0,
         1.0
       ],
-      "next_gw_expected_points": 63.29,
-      "next_two_gw_expected_points": 127.99,
-      "ending_bank": 1.5,
+      "next_gw_expected_points": 64.43,
+      "next_two_gw_expected_points": 131.56,
+      "ending_bank": 3.2,
       "ending_free_transfers": 1,
-      "first_transfer_incoming_starts": null,
-      "first_deadline_transfer_count": 0,
-      "utility_score": 263.529
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 1,
+      "utility_score": 267.458
+    },
+    {
+      "actions": [
+        {
+          "gw": 13,
+          "action": "TRANSFER",
+          "route": "Henderson → Tavernier",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Henderson → Tavernier",
+              "out_id": 101,
+              "in_id": 68,
+              "uplift": 4.92,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 101,
+          "in_id": 68
+        },
+        {
+          "gw": 14,
+          "action": "TRANSFER",
+          "route": "Dubravka → Trafford",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Dubravka → Trafford",
+              "out_id": 497,
+              "in_id": 385,
+              "uplift": 2.42,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 497,
+          "in_id": 385
+        },
+        {
+          "gw": 15,
+          "action": "TRANSFER",
+          "route": "Cherki → Wirtz",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Cherki → Wirtz",
+              "out_id": 399,
+              "in_id": 366,
+              "uplift": 1.58,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 366
+        },
+        {
+          "gw": 16,
+          "action": "TRANSFER",
+          "route": "N.Jackson → Evanilson",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "N.Jackson → Evanilson",
+              "out_id": 166,
+              "in_id": 79,
+              "uplift": 1.56,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 166,
+          "in_id": 79
+        }
+      ],
+      "expected_points": 269.45,
+      "p10_points": 232.04,
+      "p90_points": 308.24,
+      "expected_rank_after_path": 1.58,
+      "prob_gain_league_place": 0.453,
+      "prob_finish_ahead_each_rival": [
+        0.457,
+        0.966,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "next_gw_expected_points": 64.43,
+      "next_two_gw_expected_points": 131.54,
+      "ending_bank": 1.9,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 1,
+      "utility_score": 267.419
+    },
+    {
+      "actions": [
+        {
+          "gw": 13,
+          "action": "TRANSFER",
+          "route": "Hughes → Tavernier",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Hughes → Tavernier",
+              "out_id": 212,
+              "in_id": 68,
+              "uplift": 4.92,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 68
+        },
+        {
+          "gw": 14,
+          "action": "TRANSFER",
+          "route": "Dubravka → Trafford",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Dubravka → Trafford",
+              "out_id": 497,
+              "in_id": 385,
+              "uplift": 2.42,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 497,
+          "in_id": 385
+        },
+        {
+          "gw": 15,
+          "action": "TRANSFER",
+          "route": "Cherki → Wirtz",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Cherki → Wirtz",
+              "out_id": 399,
+              "in_id": 366,
+              "uplift": 1.58,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 399,
+          "in_id": 366
+        },
+        {
+          "gw": 16,
+          "action": "TRANSFER",
+          "route": "N.Jackson → Evanilson",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "N.Jackson → Evanilson",
+              "out_id": 166,
+              "in_id": 79,
+              "uplift": 1.56,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 166,
+          "in_id": 79
+        }
+      ],
+      "expected_points": 269.45,
+      "p10_points": 232.04,
+      "p90_points": 308.24,
+      "expected_rank_after_path": 1.58,
+      "prob_gain_league_place": 0.453,
+      "prob_finish_ahead_each_rival": [
+        0.457,
+        0.966,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "next_gw_expected_points": 64.43,
+      "next_two_gw_expected_points": 131.54,
+      "ending_bank": 1.3,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": true,
+      "first_deadline_transfer_count": 1,
+      "utility_score": 267.419
     },
     {
       "actions": [
@@ -1307,7 +1125,7 @@
               "route": "Henderson → Gomez",
               "out_id": 101,
               "in_id": 127,
-              "uplift": 2.82,
+              "uplift": 2.71,
               "addresses_short_term_risk": false
             }
           ],
@@ -1332,7 +1150,7 @@
               "route": "Belloumi → Wirtz",
               "out_id": 286,
               "in_id": 366,
-              "uplift": 1.47,
+              "uplift": 1.42,
               "addresses_short_term_risk": false
             }
           ],
@@ -1350,7 +1168,7 @@
               "route": "N.Jackson → Evanilson",
               "out_id": 166,
               "in_id": 79,
-              "uplift": 1.54,
+              "uplift": 1.56,
               "addresses_short_term_risk": false
             }
           ],
@@ -1359,14 +1177,14 @@
           "in_id": 79
         }
       ],
-      "expected_points": 266.16,
-      "p10_points": 228.24,
-      "p90_points": 307.99,
-      "expected_rank_after_path": 1.69,
-      "prob_gain_league_place": 0.372,
+      "expected_points": 266.5,
+      "p10_points": 230.15,
+      "p90_points": 304.9,
+      "expected_rank_after_path": 1.64,
+      "prob_gain_league_place": 0.408,
       "prob_finish_ahead_each_rival": [
-        0.378,
-        0.936,
+        0.41,
+        0.949,
         1.0,
         1.0,
         1.0,
@@ -1374,13 +1192,195 @@
         1.0,
         1.0
       ],
-      "next_gw_expected_points": 63.29,
-      "next_two_gw_expected_points": 127.99,
+      "next_gw_expected_points": 63.56,
+      "next_two_gw_expected_points": 128.66,
       "ending_bank": 2.1,
       "ending_free_transfers": 1,
       "first_transfer_incoming_starts": null,
       "first_deadline_transfer_count": 0,
-      "utility_score": 263.523
+      "utility_score": 264.281
+    },
+    {
+      "actions": [
+        {
+          "gw": 13,
+          "action": "ROLL"
+        },
+        {
+          "gw": 14,
+          "action": "TRANSFER",
+          "route": "Henderson → Gomez",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Henderson → Gomez",
+              "out_id": 101,
+              "in_id": 127,
+              "uplift": 2.71,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 101,
+          "in_id": 127
+        },
+        {
+          "gw": 15,
+          "action": "TRANSFER",
+          "route": "Tzolakis → Verbruggen + Cherki → Wirtz",
+          "transfer_count": 2,
+          "transfers": [
+            {
+              "route": "Tzolakis → Verbruggen",
+              "out_id": 572,
+              "in_id": 109,
+              "uplift": 1.66,
+              "addresses_short_term_risk": false
+            },
+            {
+              "route": "Cherki → Wirtz",
+              "out_id": 399,
+              "in_id": 366,
+              "uplift": 1.42,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 572,
+          "in_id": 109
+        },
+        {
+          "gw": 16,
+          "action": "TRANSFER",
+          "route": "N.Jackson → Evanilson",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "N.Jackson → Evanilson",
+              "out_id": 166,
+              "in_id": 79,
+              "uplift": 1.56,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 166,
+          "in_id": 79
+        }
+      ],
+      "expected_points": 266.5,
+      "p10_points": 230.15,
+      "p90_points": 304.9,
+      "expected_rank_after_path": 1.64,
+      "prob_gain_league_place": 0.408,
+      "prob_finish_ahead_each_rival": [
+        0.41,
+        0.949,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "next_gw_expected_points": 63.56,
+      "next_two_gw_expected_points": 128.66,
+      "ending_bank": 4.6,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": null,
+      "first_deadline_transfer_count": 0,
+      "utility_score": 264.281
+    },
+    {
+      "actions": [
+        {
+          "gw": 13,
+          "action": "ROLL"
+        },
+        {
+          "gw": 14,
+          "action": "TRANSFER",
+          "route": "Hughes → Gomez",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "Hughes → Gomez",
+              "out_id": 212,
+              "in_id": 127,
+              "uplift": 2.71,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 212,
+          "in_id": 127
+        },
+        {
+          "gw": 15,
+          "action": "TRANSFER",
+          "route": "Tzolakis → Verbruggen + Belloumi → Wirtz",
+          "transfer_count": 2,
+          "transfers": [
+            {
+              "route": "Tzolakis → Verbruggen",
+              "out_id": 572,
+              "in_id": 109,
+              "uplift": 1.66,
+              "addresses_short_term_risk": false
+            },
+            {
+              "route": "Belloumi → Wirtz",
+              "out_id": 286,
+              "in_id": 366,
+              "uplift": 1.42,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 572,
+          "in_id": 109
+        },
+        {
+          "gw": 16,
+          "action": "TRANSFER",
+          "route": "N.Jackson → Evanilson",
+          "transfer_count": 1,
+          "transfers": [
+            {
+              "route": "N.Jackson → Evanilson",
+              "out_id": 166,
+              "in_id": 79,
+              "uplift": 1.56,
+              "addresses_short_term_risk": false
+            }
+          ],
+          "hit": 0,
+          "out_id": 166,
+          "in_id": 79
+        }
+      ],
+      "expected_points": 266.5,
+      "p10_points": 230.15,
+      "p90_points": 304.9,
+      "expected_rank_after_path": 1.64,
+      "prob_gain_league_place": 0.408,
+      "prob_finish_ahead_each_rival": [
+        0.41,
+        0.949,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "next_gw_expected_points": 63.56,
+      "next_two_gw_expected_points": 128.66,
+      "ending_bank": 1.5,
+      "ending_free_transfers": 1,
+      "first_transfer_incoming_starts": null,
+      "first_deadline_transfer_count": 0,
+      "utility_score": 264.281
     }
   ],
   "method_note": "Each path is scored with the actual squad owned in each Gameweek. A deadline may use one, two or three transfers up to the available free-transfer bank; a no-FT state retains only a single-hit contingency. Current-deadline hits use live FT state. Early-season extremes are shrunk toward priors. Legal XI selection uses the shared captaincy model. Monte Carlo sampling is lighter midweek and increases close to the official FPL deadline without changing decision thresholds."
