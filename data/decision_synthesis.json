@@ -1,6 +1,6 @@
 {
   "status": "SUCCESS",
-  "generated_at_utc": "2026-11-28T11:36:27.791517+00:00",
+  "generated_at_utc": "2026-11-28T19:54:00.183257+00:00",
   "version": 4,
   "current_gw": 12,
   "next_gw": 13,
@@ -8,9 +8,9 @@
     "action": "HOLD",
     "headline": "Hold / roll",
     "confidence": 75,
-    "execution_ready": true,
-    "execution_reason": "Current team-news checks completed; recheck before the deadline.",
-    "reason": "The leading transfer edge is 7.1 projected points over holding and does not yet clear the full evidence hurdle with sufficient agreement on that exact route. Holding moves the bank from 1/5 to 2/5; no free transfer expires. The incoming player has the easier immediate fixture run.",
+    "execution_ready": false,
+    "execution_reason": "Wait for updated team news: Bogle",
+    "reason": "The leading transfer edge is 12.1 projected points over holding and does not yet clear the full evidence hurdle with sufficient agreement on that exact route. Holding moves the bank from 1/5 to 2/5; no free transfer expires. The incoming player has the easier immediate fixture run.",
     "completed_transfer": null,
     "free_transfers_remaining": 1,
     "free_transfer_cap": 5,
@@ -20,8 +20,8 @@
   },
   "robustness": {
     "season_maturity_weight": 0.667,
-    "single_step_leader": "Cherki → Wirtz",
-    "single_step_edge_over_hold_6gw": 7.12,
+    "single_step_leader": "Hughes → Wirtz",
+    "single_step_edge_over_hold_6gw": 12.11,
     "multi_gw_first_action": "Henderson → Tavernier",
     "adaptive_rival_first_action": "Henderson → Tavernier",
     "exact_route_consensus_models": 2,
@@ -37,9 +37,9 @@
     "multi_transfer_count": 0,
     "multi_transfer_edge_over_roll": 0.0,
     "multi_transfer_required_edge": 3.5,
-    "active_route": "Cherki → Wirtz",
+    "active_route": "Hughes → Wirtz",
     "active_route_type": "single_transfer_challenger",
-    "active_edge_over_hold_6gw": 7.12,
+    "active_edge_over_hold_6gw": 12.11,
     "active_required_edge": 2.0,
     "active_validation_kind": "model_agreement",
     "active_validation_label": "Model agreement",
@@ -55,13 +55,13 @@
     "rollover_edge_credit": 0.0,
     "fixture_timing": {
       "available": true,
-      "route": "Cherki → Wirtz",
-      "next_fixture_swing": 1.0,
-      "weighted_three_fixture_swing": 0.7,
+      "route": "Hughes → Wirtz",
+      "next_fixture_swing": 2.0,
+      "weighted_three_fixture_swing": 0.8,
       "outgoing_difficulties": [
-        3.0,
         4.0,
-        4.0
+        3.0,
+        3.0
       ],
       "incoming_difficulties": [
         2.0,
@@ -88,7 +88,7 @@
           "route": "Henderson → Tavernier",
           "out_id": 101,
           "in_id": 68,
-          "uplift": 4.92,
+          "uplift": 6.73,
           "addresses_short_term_risk": false
         }
       ],
@@ -106,7 +106,7 @@
           "route": "Henderson → Tavernier",
           "out_id": 101,
           "in_id": 68,
-          "uplift": 4.92,
+          "uplift": 6.73,
           "addresses_short_term_risk": false
         }
       ],
@@ -130,32 +130,39 @@
       "later_action": {
         "gw": 14,
         "action": "TRANSFER",
-        "route": "Henderson → Gomez",
-        "transfer_count": 1,
+        "route": "Bogle → Muharemović + Cherki → Tavernier",
+        "transfer_count": 2,
         "transfers": [
           {
-            "route": "Henderson → Gomez",
-            "out_id": 101,
-            "in_id": 127,
-            "uplift": 2.71,
+            "route": "Bogle → Muharemović",
+            "out_id": 330,
+            "in_id": 334,
+            "uplift": 5.91,
+            "addresses_short_term_risk": false
+          },
+          {
+            "route": "Cherki → Tavernier",
+            "out_id": 399,
+            "in_id": 68,
+            "uplift": 3.9,
             "addresses_short_term_risk": false
           }
         ],
         "hit": 0,
-        "out_id": 101,
-        "in_id": 127
+        "out_id": 330,
+        "in_id": 334
       },
       "transfer_count_now": 0,
       "free_transfers_before": 1,
       "free_transfers_after_deadline": 2,
       "hit_cost": 0,
-      "expected_points": 266.5,
-      "next_gw_expected_points": 63.56,
-      "next_two_gw_expected_points": 128.66,
-      "p10_points": 230.15,
-      "p90_points": 304.9,
+      "expected_points": 265.81,
+      "next_gw_expected_points": 63.24,
+      "next_two_gw_expected_points": 130.01,
+      "p10_points": 227.64,
+      "p90_points": 305.73,
       "edge_vs_roll": 0.0,
-      "ending_bank": 2.1,
+      "ending_bank": 4.1,
       "ending_free_transfers": 1,
       "actions": [
         {
@@ -165,45 +172,45 @@
         {
           "gw": 14,
           "action": "TRANSFER",
-          "route": "Henderson → Gomez",
-          "transfer_count": 1,
+          "route": "Bogle → Muharemović + Cherki → Tavernier",
+          "transfer_count": 2,
           "transfers": [
             {
-              "route": "Henderson → Gomez",
-              "out_id": 101,
-              "in_id": 127,
-              "uplift": 2.71,
+              "route": "Bogle → Muharemović",
+              "out_id": 330,
+              "in_id": 334,
+              "uplift": 5.91,
+              "addresses_short_term_risk": false
+            },
+            {
+              "route": "Cherki → Tavernier",
+              "out_id": 399,
+              "in_id": 68,
+              "uplift": 3.9,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
-          "out_id": 101,
-          "in_id": 127
+          "out_id": 330,
+          "in_id": 334
         },
         {
           "gw": 15,
           "action": "TRANSFER",
-          "route": "Tzolakis → Verbruggen + Belloumi → Wirtz",
-          "transfer_count": 2,
+          "route": "Dubravka → Trafford",
+          "transfer_count": 1,
           "transfers": [
             {
-              "route": "Tzolakis → Verbruggen",
-              "out_id": 572,
-              "in_id": 109,
-              "uplift": 1.66,
-              "addresses_short_term_risk": false
-            },
-            {
-              "route": "Belloumi → Wirtz",
-              "out_id": 286,
-              "in_id": 366,
-              "uplift": 1.42,
+              "route": "Dubravka → Trafford",
+              "out_id": 497,
+              "in_id": 385,
+              "uplift": 1.58,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
-          "out_id": 572,
-          "in_id": 109
+          "out_id": 497,
+          "in_id": 385
         },
         {
           "gw": 16,
@@ -215,7 +222,7 @@
               "route": "N.Jackson → Evanilson",
               "out_id": 166,
               "in_id": 79,
-              "uplift": 1.56,
+              "uplift": 1.82,
               "addresses_short_term_risk": false
             }
           ],
@@ -230,7 +237,7 @@
       "label": "Use one free transfer now",
       "available": true,
       "recommended_path": true,
-      "adaptive_support": true,
+      "adaptive_support": false,
       "first_action": {
         "gw": 13,
         "action": "TRANSFER",
@@ -241,7 +248,7 @@
             "route": "Henderson → Tavernier",
             "out_id": 101,
             "in_id": 68,
-            "uplift": 4.92,
+            "uplift": 6.73,
             "addresses_short_term_risk": false
           }
         ],
@@ -252,32 +259,32 @@
       "later_action": {
         "gw": 14,
         "action": "TRANSFER",
-        "route": "Dubravka → Verbruggen",
+        "route": "Bogle → Muharemović",
         "transfer_count": 1,
         "transfers": [
           {
-            "route": "Dubravka → Verbruggen",
-            "out_id": 497,
-            "in_id": 109,
-            "uplift": 2.63,
+            "route": "Bogle → Muharemović",
+            "out_id": 330,
+            "in_id": 334,
+            "uplift": 4.23,
             "addresses_short_term_risk": false
           }
         ],
         "hit": 0,
-        "out_id": 497,
-        "in_id": 109
+        "out_id": 330,
+        "in_id": 334
       },
       "transfer_count_now": 1,
       "free_transfers_before": 1,
       "free_transfers_after_deadline": 1,
       "hit_cost": 0,
-      "expected_points": 269.63,
-      "next_gw_expected_points": 64.43,
-      "next_two_gw_expected_points": 131.56,
-      "p10_points": 233.46,
-      "p90_points": 307.85,
-      "edge_vs_roll": 3.13,
-      "ending_bank": 2.2,
+      "expected_points": 266.59,
+      "next_gw_expected_points": 64.11,
+      "next_two_gw_expected_points": 130.88,
+      "p10_points": 228.38,
+      "p90_points": 306.56,
+      "edge_vs_roll": 0.78,
+      "ending_bank": 1.3,
       "ending_free_transfers": 1,
       "actions": [
         {
@@ -290,7 +297,7 @@
               "route": "Henderson → Tavernier",
               "out_id": 101,
               "in_id": 68,
-              "uplift": 4.92,
+              "uplift": 6.73,
               "addresses_short_term_risk": false
             }
           ],
@@ -301,38 +308,38 @@
         {
           "gw": 14,
           "action": "TRANSFER",
-          "route": "Dubravka → Verbruggen",
+          "route": "Bogle → Muharemović",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Dubravka → Verbruggen",
-              "out_id": 497,
-              "in_id": 109,
-              "uplift": 2.63,
+              "route": "Bogle → Muharemović",
+              "out_id": 330,
+              "in_id": 334,
+              "uplift": 4.23,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
-          "out_id": 497,
-          "in_id": 109
+          "out_id": 330,
+          "in_id": 334
         },
         {
           "gw": 15,
           "action": "TRANSFER",
-          "route": "Cherki → Wirtz",
+          "route": "Dubravka → Trafford",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Cherki → Wirtz",
-              "out_id": 399,
-              "in_id": 366,
+              "route": "Dubravka → Trafford",
+              "out_id": 497,
+              "in_id": 385,
               "uplift": 1.58,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
-          "out_id": 399,
-          "in_id": 366
+          "out_id": 497,
+          "in_id": 385
         },
         {
           "gw": 16,
@@ -344,7 +351,7 @@
               "route": "N.Jackson → Evanilson",
               "out_id": 166,
               "in_id": 79,
-              "uplift": 1.56,
+              "uplift": 1.54,
               "addresses_short_term_risk": false
             }
           ],
@@ -372,32 +379,39 @@
       "later_action": {
         "gw": 14,
         "action": "TRANSFER",
-        "route": "Henderson → Gomez",
-        "transfer_count": 1,
+        "route": "Bogle → Muharemović + Cherki → Tavernier",
+        "transfer_count": 2,
         "transfers": [
           {
-            "route": "Henderson → Gomez",
-            "out_id": 101,
-            "in_id": 127,
-            "uplift": 2.71,
+            "route": "Bogle → Muharemović",
+            "out_id": 330,
+            "in_id": 334,
+            "uplift": 5.91,
+            "addresses_short_term_risk": false
+          },
+          {
+            "route": "Cherki → Tavernier",
+            "out_id": 399,
+            "in_id": 68,
+            "uplift": 3.9,
             "addresses_short_term_risk": false
           }
         ],
         "hit": 0,
-        "out_id": 101,
-        "in_id": 127
+        "out_id": 330,
+        "in_id": 334
       },
       "transfer_count_now": 0,
       "free_transfers_before": 1,
       "free_transfers_after_deadline": 2,
       "hit_cost": 0,
-      "expected_points": 266.5,
-      "next_gw_expected_points": 63.56,
-      "next_two_gw_expected_points": 128.66,
-      "p10_points": 230.15,
-      "p90_points": 304.9,
+      "expected_points": 265.81,
+      "next_gw_expected_points": 63.24,
+      "next_two_gw_expected_points": 130.01,
+      "p10_points": 227.64,
+      "p90_points": 305.73,
       "edge_vs_roll": 0.0,
-      "ending_bank": 2.1,
+      "ending_bank": 4.1,
       "ending_free_transfers": 1,
       "actions": [
         {
@@ -407,45 +421,45 @@
         {
           "gw": 14,
           "action": "TRANSFER",
-          "route": "Henderson → Gomez",
-          "transfer_count": 1,
+          "route": "Bogle → Muharemović + Cherki → Tavernier",
+          "transfer_count": 2,
           "transfers": [
             {
-              "route": "Henderson → Gomez",
-              "out_id": 101,
-              "in_id": 127,
-              "uplift": 2.71,
+              "route": "Bogle → Muharemović",
+              "out_id": 330,
+              "in_id": 334,
+              "uplift": 5.91,
+              "addresses_short_term_risk": false
+            },
+            {
+              "route": "Cherki → Tavernier",
+              "out_id": 399,
+              "in_id": 68,
+              "uplift": 3.9,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
-          "out_id": 101,
-          "in_id": 127
+          "out_id": 330,
+          "in_id": 334
         },
         {
           "gw": 15,
           "action": "TRANSFER",
-          "route": "Tzolakis → Verbruggen + Belloumi → Wirtz",
-          "transfer_count": 2,
+          "route": "Dubravka → Trafford",
+          "transfer_count": 1,
           "transfers": [
             {
-              "route": "Tzolakis → Verbruggen",
-              "out_id": 572,
-              "in_id": 109,
-              "uplift": 1.66,
-              "addresses_short_term_risk": false
-            },
-            {
-              "route": "Belloumi → Wirtz",
-              "out_id": 286,
-              "in_id": 366,
-              "uplift": 1.42,
+              "route": "Dubravka → Trafford",
+              "out_id": 497,
+              "in_id": 385,
+              "uplift": 1.58,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
-          "out_id": 572,
-          "in_id": 109
+          "out_id": 497,
+          "in_id": 385
         },
         {
           "gw": 16,
@@ -457,7 +471,7 @@
               "route": "N.Jackson → Evanilson",
               "out_id": 166,
               "in_id": 79,
-              "uplift": 1.56,
+              "uplift": 1.82,
               "addresses_short_term_risk": false
             }
           ],
@@ -470,16 +484,28 @@
   ],
   "team_news_review": {
     "status": "SUCCESS",
-    "generated_at_utc": "2026-11-28T11:35:30.379176+00:00",
+    "generated_at_utc": "2026-11-28T19:53:13.090806+00:00",
     "next_gw": 13,
-    "risks": [],
+    "risks": [
+      {
+        "player_id": 330,
+        "player": "Bogle",
+        "kind": "official_fpl_flag",
+        "summary": "Suspended until 5 Dec",
+        "assumption": "Official FPL availability",
+        "availability_by_gw": {},
+        "official_availability": 0.0,
+        "sources": [],
+        "unresolved": true
+      }
+    ],
     "expired_reviews": [],
     "squad_players_checked": 15,
     "reviewed_players": 0,
-    "execution_ready": true,
+    "execution_ready": false,
     "method_note": "Official FPL availability plus dated, sourced analyst minutes scenarios. Caps are assumptions, not injury probabilities. Minimum of official availability and scenario cap avoids double counting. Missing review is not evidence of fitness.",
     "news_feed_healthy": true,
-    "news_checked_at_utc": "2026-11-28T11:35:27.843411+00:00",
+    "news_checked_at_utc": "2026-11-28T19:53:10.257379+00:00",
     "news_players_checked": 18,
     "news_query_failures": 0,
     "first_step_sensitivity": {
@@ -491,20 +517,20 @@
             {
               "option": "roll",
               "route": "Roll",
-              "next_gw": 63.56,
-              "next_two_gw": 127.34
+              "next_gw": 63.24,
+              "next_two_gw": 125.31
             },
             {
               "option": "one_now",
               "route": "Henderson → Tavernier",
-              "next_gw": 64.43,
-              "next_two_gw": 130.58
+              "next_gw": 64.11,
+              "next_two_gw": 128.7
             },
             {
               "option": "staged",
               "route": "Roll",
-              "next_gw": 63.56,
-              "next_two_gw": 127.34
+              "next_gw": 63.24,
+              "next_two_gw": 125.31
             }
           ]
         },
@@ -514,20 +540,20 @@
             {
               "option": "roll",
               "route": "Roll",
-              "next_gw": 63.56,
-              "next_two_gw": 127.34
+              "next_gw": 63.24,
+              "next_two_gw": 125.31
             },
             {
               "option": "one_now",
               "route": "Henderson → Tavernier",
-              "next_gw": 64.43,
-              "next_two_gw": 130.58
+              "next_gw": 64.11,
+              "next_two_gw": 128.7
             },
             {
               "option": "staged",
               "route": "Roll",
-              "next_gw": 63.56,
-              "next_two_gw": 127.34
+              "next_gw": 63.24,
+              "next_two_gw": 125.31
             }
           ]
         },
@@ -537,20 +563,20 @@
             {
               "option": "roll",
               "route": "Roll",
-              "next_gw": 63.56,
-              "next_two_gw": 127.34
+              "next_gw": 63.24,
+              "next_two_gw": 125.31
             },
             {
               "option": "one_now",
               "route": "Henderson → Tavernier",
-              "next_gw": 64.43,
-              "next_two_gw": 130.58
+              "next_gw": 64.11,
+              "next_two_gw": 128.7
             },
             {
               "option": "staged",
               "route": "Roll",
-              "next_gw": 63.56,
-              "next_two_gw": 127.34
+              "next_gw": 63.24,
+              "next_two_gw": 125.31
             }
           ]
         }
@@ -559,7 +585,7 @@
   },
   "chips": {
     "action": "HOLD",
-    "reason": "Hold chips. Best visible TC uplift is 0.0 and BB uplift is 15.6, but the first-half portfolio remains watch with 4 slack Gameweeks. Preserve option value for stronger blank/double or squad-structure windows.",
+    "reason": "Hold chips. Best visible TC uplift is 0.0 and BB uplift is 14.9, but the first-half portfolio remains watch with 4 slack Gameweeks. Preserve option value for stronger blank/double or squad-structure windows.",
     "best_visible_triple_captain": {},
     "best_visible_bench_boost": {
       "actions": [
@@ -573,7 +599,7 @@
               "route": "Hughes → Tavernier",
               "out_id": 212,
               "in_id": 68,
-              "uplift": 4.92,
+              "uplift": 6.73,
               "addresses_short_term_risk": false
             }
           ],
@@ -584,38 +610,38 @@
         {
           "gw": 14,
           "action": "TRANSFER",
-          "route": "Dubravka → Verbruggen",
+          "route": "Bogle → Muharemović",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Dubravka → Verbruggen",
-              "out_id": 497,
-              "in_id": 109,
-              "uplift": 2.63,
+              "route": "Bogle → Muharemović",
+              "out_id": 330,
+              "in_id": 334,
+              "uplift": 4.23,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
-          "out_id": 497,
-          "in_id": 109
+          "out_id": 330,
+          "in_id": 334
         },
         {
           "gw": 15,
           "action": "TRANSFER",
-          "route": "Cherki → Wirtz",
+          "route": "Dubravka → Trafford",
           "transfer_count": 1,
           "transfers": [
             {
-              "route": "Cherki → Wirtz",
-              "out_id": 399,
-              "in_id": 366,
+              "route": "Dubravka → Trafford",
+              "out_id": 497,
+              "in_id": 385,
               "uplift": 1.58,
               "addresses_short_term_risk": false
             }
           ],
           "hit": 0,
-          "out_id": 399,
-          "in_id": 366
+          "out_id": 497,
+          "in_id": 385
         },
         {
           "gw": 16,
@@ -627,7 +653,7 @@
               "route": "N.Jackson → Evanilson",
               "out_id": 166,
               "in_id": 79,
-              "uplift": 1.56,
+              "uplift": 1.54,
               "addresses_short_term_risk": false
             }
           ],
@@ -637,23 +663,23 @@
         }
       ],
       "chip": "Bench Boost",
-      "chip_gw": 15,
-      "expected_points": 283.88,
-      "chip_incremental_expected_points": 15.64,
-      "p10_points": 245.64,
-      "p90_points": 324.59,
-      "expected_rank_after_path": 1.38,
+      "chip_gw": 16,
+      "expected_points": 280.91,
+      "chip_incremental_expected_points": 14.89,
+      "p10_points": 241.97,
+      "p90_points": 321.64,
+      "expected_rank_after_path": 1.34,
       "prob_finish_ahead_each_rival": [
-        0.637,
-        0.985,
-        1.0,
+        0.675,
+        0.989,
+        0.995,
         1.0,
         1.0,
         1.0,
         1.0,
         1.0
       ],
-      "utility_score": 282.402
+      "utility_score": 279.533
     },
     "portfolio_pressure": "watch",
     "latest_safe_start_gw": 17
